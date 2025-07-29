@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FinanKey.View.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Title="Iniciar sesión"
+    BackgroundColor="#f9f9fb">
+
+
+    <!--  Cambio de color de la barra  -->
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="Black" StatusBarStyle="Default" />
+    </ContentPage.Behaviors>
+
+    <Grid VerticalOptions="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="90*" />
+        </Grid.RowDefinitions>
+
+        <Border
+            Grid.Row="1"
+            Padding="15,0"
+            BackgroundColor="White"
+            HeightRequest="500"
+            HorizontalOptions="Center"
+            Stroke="#E3E5E8"
+            VerticalOptions="Center"
+            WidthRequest="370">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+            </Border.StrokeShape>
+
+            <Grid RowDefinitions="auto,auto,auto,auto,auto,auto,auto">
+                <!--  Logo  -->
+                <VerticalStackLayout Grid.Row="0">
+                    <Image
+                        HeightRequest="100"
+                        HorizontalOptions="Center"
+                        Source="dotnet_bot.png"
+                        VerticalOptions="Center" />
+                </VerticalStackLayout>
+                <!--  Bienvenida  -->
+                <Label
+                    Grid.Row="1"
+                    Margin="0,0,0,10"
+                    FontFamily="RobotoBold"
+                    FontSize="30"
+                    HorizontalOptions="Center"
+                    Text="Bienvenido a FinanKey"
+                    TextColor="#03060B" />
+                <!--  Descripcion  -->
+                <Label
+                    Grid.Row="2"
+                    Margin="0,0,0,20"
+                    FontFamily="RobotoRegular"
+                    FontSize="16"
+                    HorizontalTextAlignment="Center"
+                    Text="Ingresa tus datos para acceder a tu espacio financiero."
+                    TextColor="#a1a9b1"
+                    VerticalTextAlignment="Center"
+                    WidthRequest="350" />
+                <!--  Entrada Email  -->
+                <StackLayout
+                    Grid.Row="3"
+                    Margin="0,0,0,5"
+                    Spacing="5">
+                    <Label
+                        FontFamily="RobotoRegular"
+                        FontSize="16"
+                        Text="Email"
+                        TextColor="Black" />
+                    <Border BackgroundColor="#f9f9fb" Stroke="#E3E5E8">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Entry
+                            x:Name="Usuario"
+                            BackgroundColor="#f9f9fb"
+                            FontFamily="RobotoRegular"
+                            FontSize="16"
+                            Keyboard="Email"
+                            Placeholder="tu@gmail.com"
+                            PlaceholderColor="#717aa6"
+                            TextColor="Black" />
+                    </Border>
+                </StackLayout>
+                <!--  Entrada Password  -->
+                <StackLayout
+                    Grid.Row="4"
+                    Margin="0,0,0,5"
+                    Padding="5">
+                    <Label
+                        FontFamily="RobotoRegular"
+                        FontSize="16"
+                        Text="Contrasena"
+                        TextColor="Black" />
+                    <Border BackgroundColor="#f9f9fb" Stroke="#E3E5E8">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Entry
+                            x:Name="Contrasena"
+                            BackgroundColor="#f9f9fb"
+                            FontFamily="RobotoRegular"
+                            FontSize="16"
+                            IsPassword="True"
+                            PlaceholderColor="#717aa6"
+                            TextColor="Black" />
+                    </Border>
+                </StackLayout>
+                <!--  Switch Recordar  -->
+                <HorizontalStackLayout Grid.Row="5" HorizontalOptions="End">
+                    <Switch
+                        x:Name="Recuerdame"
+                        OnColor="Blue"
+                        ThumbColor="Blue"
+                        VerticalOptions="End" />
+                    <Label
+                        FontFamily="RobotoRegular"
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        Text="Recordar mis credenciales"
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <!--  Boton iniciar sesion  -->
+                <StackLayout Grid.Row="6" Margin="0,5">
+                    <Button
+                        BackgroundColor="#4B3FF2"
+                        Clicked="OnLoginButtonClicked"
+                        FontFamily="RobotoBold"
+                        Text="Iniciar Sesión"
+                        TextColor="White" />
+                </StackLayout>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

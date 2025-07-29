@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FinanKey.View.FinanzasPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Background="{StaticResource FondoPrincipal}">
+
+    <!--  Cambio de color de la barra  -->
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource FondoPrincipal}" StatusBarStyle="DarkContent" />
+    </ContentPage.Behaviors>
+    <!--  DESLIZAR PANATALLA  -->
+    <ScrollView>
+        <Grid Margin="16,16" RowDefinitions="auto,auto">
+            <Grid
+                Grid.Row="0"
+                RowDefinitions="10*,10*,10*,5*,25*,10*,auto"
+                RowSpacing="5">
+
+                <!--  ICONOS NOTIFICACION Y PERFIL  -->
+                <Grid
+                    Grid.Column="0"
+                    Margin="0,0,0,25"
+                    ColumnDefinitions="20*,60*,20*">
+                    <StackLayout
+                        Grid.Column="0"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center">
+                        <ImageButton
+                            Aspect="AspectFill"
+                            CornerRadius="10"
+                            HeightRequest="24"
+                            Source="campana.png"
+                            VerticalOptions="Start"
+                            WidthRequest="24" />
+                    </StackLayout>
+                    <HorizontalStackLayout
+                        Grid.Column="2"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center">
+                        <ImageButton
+                            Aspect="AspectFill"
+                            CornerRadius="10"
+                            HeightRequest="24"
+                            Source="usuario.svg"
+                            WidthRequest="24" />
+                    </HorizontalStackLayout>
+                </Grid>
+                <!--  BIENVENIDA Y SALUDOS  -->
+                <VerticalStackLayout Grid.Row="1">
+                    <Label
+                        FontFamily="PoppinsBold"
+                        FontSize="30"
+                        HorizontalOptions="Start"
+                        Text="¡Hola, Alexander!"
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+                    <Label
+                        FontFamily="PoppinsRegular"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="!Que tengas buenas noches"
+                        TextColor="{StaticResource ColorTextoSecundario}"
+                        VerticalOptions="Center" />
+                </VerticalStackLayout>
+                <!--  BARRA DE BUSQUEDA  -->
+                <Border
+                    x:Name="borderBarraBusqueda"
+                    Grid.Row="2"
+                    Margin="0,0,0,15"
+                    HeightRequest="50"
+                    Style="{StaticResource bordeFormulario}"
+                    VerticalOptions="End">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="{StaticResource RadioEsquinas}" />
+                    </Border.StrokeShape>
+                    <Grid ColumnDefinitions="12*,68*,12*">
+                        <Image
+                            Grid.Column="0"
+                            Margin="10,0,0,0"
+                            HeightRequest="20"
+                            HorizontalOptions="Start"
+                            Source="busqueda.svg"
+                            WidthRequest="20" />
+                        <Entry
+                            Grid.Column="1"
+                            Focused="Entry_Focused"
+                            FontFamily="PoppinsRegular"
+                            FontSize="14"
+                            HorizontalOptions="Start"
+                            Placeholder="Buscar transacciones..."
+                            TextColor="Black"
+                            Unfocused="Entry_Unfocused"
+                            VerticalOptions="Center" />
+                        <Image
+                            Grid.Column="2"
+                            Margin="10,0,0,0"
+                            HeightRequest="20"
+                            HorizontalOptions="Start"
+                            Source="filtro.svg"
+                            WidthRequest="20" />
+                    </Grid>
+                </Border>
+                <!--  TITULO COLECCION CUENTAS  -->
+                <StackLayout Grid.Row="3" VerticalOptions="End">
+                    <Label
+                        FontFamily="PoppinsSemibold"
+                        FontSize="18"
+                        HorizontalOptions="Start"
+                        Text="Cuentas"
+                        TextColor="Black"
+                        VerticalOptions="End" />
+                </StackLayout>
+                <!--  COLECCION DE CUENTAS  -->
+                <CollectionView
+                    Grid.Row="4"
+                    ItemsSource="{Binding ListaCuentas}"
+                    VerticalOptions="Center">
+                    <!--  VISTA DE CUENTAS CUANTO ESTA VACIA  -->
+                    <CollectionView.EmptyView>
+                        <Border
+                            Grid.Row="0"
+                            Padding="20"
+                            HeightRequest="100"
+                            IsVisible="{Binding HayMovimiento, Mode=TwoWay}"
+                            Stroke="{StaticResource TextoSecundario}"
+                            VerticalOptions="Start">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10" />
+                            </Border.StrokeShape>
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    FontFamily="PoppinsRegular"
+                                    FontSize="16"
+                                    HorizontalOptions="Center"
+                                    Text="No se encontraron cuentas agregadas"
+                                    TextColor="{StaticResource TextoSecundario}"
+                                    VerticalOptions="Center" />
+                            </StackLayout>
+                        </Border>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="12" Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Margin="0,0,0,15"
+                                Padding="12"
+                                BackgroundColor="{StaticResource ColorAcento}"
+                                HeightRequest="160"
+                                Stroke="{StaticResource ColorAcento}"
+                                StrokeShape="RoundRectangle 10"
+                                WidthRequest="160">
+                                <!--Cuando se toque-->
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                                </Border.GestureRecognizers>
+                                <Grid RowDefinitions="*,*,*" RowSpacing="8">
+                                    <!--  Fila 1: Tipo de cuenta  -->
+                                    <HorizontalStackLayout Grid.Row="0" Spacing="30">
+                                        <Image
+                                            Aspect="AspectFit"
+                                            HeightRequest="20"
+                                            Source="usuario.svg"
+                                            VerticalOptions="Center"
+                                            WidthRequest="20" />
+                                        <Label
+                                            FontFamily="PoppinsRegular"
+                                            FontSize="14"
+                                            LineBreakMode="TailTruncation"
+                                            MaxLines="1"
+                                            Text="{Binding TipoCuenta.Descripcion, Mode=TwoWay}"
+                                            TextColor="{StaticResource Suave}"
+                                            VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+
+                                    <!--  Fila 2: Nombre cuenta  -->
+                                    <StackLayout Grid.Row="1" VerticalOptions="End">
+                                        <Label
+                                            FontFamily="PoppinsSemibold"
+                                            FontSize="20"
+                                            LineBreakMode="WordWrap"
+                                            MaxLines="2"
+                                            Text="{Binding NombreCuenta, Mode=TwoWay}"
+                                            TextColor="{StaticResource Suave}" />
+                                    </StackLayout>
+
+                                    <!--  Fila 3: Saldo  -->
+                                    <HorizontalStackLayout Grid.Row="2">
+                                        <Label
+                                            FontFamily="PoppinsRegular"
+                                            FontSize="16"
+                                            Text="{Binding Saldo, StringFormat='{}{0:C}', Mode=TwoWay}"
+                                            TextColor="{StaticResource Suave}" />
+                                        <Label
+                                            FontSize="16"
+                                            Text=" $"
+                                            TextColor="{StaticResource Suave}" />
+                                    </HorizontalStackLayout>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <!--  TITULO MOVIMIENTOS RECIENTES Y BOTON VER MAS  -->
+                <Grid Grid.Row="5" ColumnDefinitions="70*,30*">
+                    <Label
+                        FontFamily="PoppinsSemibold"
+                        FontSize="18"
+                        HorizontalOptions="Start"
+                        Text="Movimientos Recientes"
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+                    <Button
+                        Grid.Column="1"
+                        BackgroundColor="Transparent"
+                        FontFamily="PoppinsMedium"
+                        FontSize="16"
+                        HeightRequest="50"
+                        HorizontalOptions="Center"
+                        Text="Ver más"
+                        TextColor="{StaticResource ColorAcento}"
+                        VerticalOptions="Center" />
+                </Grid>
+                <!--  INFORMACION QUE NO HAY MOVIMIENTOS ACTUALES  -->
+                <Grid Grid.Row="6" RowDefinitions="auto,*">
+                    <!--  MENSAJE CUANDO NO HAY MOVIMIENTOS  -->
+                    <Border
+                        Grid.Row="0"
+                        Padding="20"
+                        HeightRequest="100"
+                        IsVisible="{Binding HayMovimiento, Mode=TwoWay}"
+                        Stroke="{StaticResource TextoSecundario}"
+                        VerticalOptions="Start">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                            <Label
+                                FontFamily="PoppinsRegular"
+                                FontSize="16"
+                                HorizontalOptions="Center"
+                                Text="No se encontraron transacciones con los filtros actuales."
+                                TextColor="{StaticResource TextoSecundario}"
+                                VerticalOptions="Center" />
+                        </StackLayout>
+                    </Border>
+                    <!--  LISTA DE MOVIMIENTOS CUANDO HAY MOVIMIENTOS  -->
+                    <CollectionView
+                        Grid.Row="1"
+                        ItemsSource="{Binding Transacciones}"
+                        VerticalOptions="Center">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border
+                                    Margin="0,2"
+                                    Padding="5"
+                                    BackgroundColor="Transparent"
+                                    HeightRequest="75"
+                                    Stroke="{StaticResource ColorTarjeta}"
+                                    StrokeShape="RoundRectangle 10"
+                                    WidthRequest="380">
+                                    <Grid ColumnDefinitions="15*,45*,40*">
+                                        <!--  Fila Icono  -->
+                                        <StackLayout
+                                            Grid.Column="0"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center">
+                                            <Image
+                                                Aspect="AspectFit"
+                                                HeightRequest="24"
+                                                Source="billete.svg"
+                                                WidthRequest="24" />
+                                        </StackLayout>
+                                        <!--  DESCRIPCION Y CATEGORIA DEL MOVIMIENTOS  -->
+                                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                            <Label
+                                                FontFamily="PoppinsSemibold"
+                                                FontSize="16"
+                                                LineBreakMode="TailTruncation"
+                                                MaxLines="1"
+                                                Text="{Binding Descripcion, Mode=TwoWay}"
+                                                TextColor="{StaticResource ColorTextoPrimario}" />
+                                            <!--  CATEGORIA MOVIMIENTO  -->
+                                            <Label
+                                                FontFamily="PoppinsRegular"
+                                                FontSize="14"
+                                                LineBreakMode="TailTruncation"
+                                                MaxLines="1"
+                                                Text="{Binding TipoCategoria, Mode=TwoWay}"
+                                                TextColor="{StaticResource ColorTextoSecundario}" />
+                                        </VerticalStackLayout>
+                                        <!--  MONTO DEL MOVIMIENTO  -->
+                                        <VerticalStackLayout
+                                            Grid.Column="2"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center">
+                                            <Label
+                                                FontFamily="PoppinsBold"
+                                                FontSize="16"
+                                                Text="{Binding Monto, StringFormat='{}{0:C}', Mode=TwoWay}"
+                                                TextColor="{Binding ColorTransaccion}" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </Grid>
+            <!--  Cargador de estados  -->
+            <ActivityIndicator
+                Grid.Row="1"
+                HorizontalOptions="Center"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="Center"
+                Color="DarkBlue" />
+        </Grid>
+    </ScrollView>
+</ContentPage>

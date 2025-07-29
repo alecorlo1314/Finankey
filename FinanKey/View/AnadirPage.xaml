@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FinanKey.View.AnadirPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+    xmlns:local="clr-namespace:FinanKey.ViewModels"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Background="#ffffff">
+
+    <!--  Cambio de color de la barra  -->
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource FondoPrincipal}" StatusBarStyle="DarkContent" />
+    </ContentPage.Behaviors>
+
+    <VerticalStackLayout Padding="24" BackgroundColor="{StaticResource FondoPrincipal}">
+        <!--  TITULO DE PAGINA  -->
+        <Label
+            Margin="24"
+            FontFamily="PoppinsBold"
+            FontSize="20"
+            HorizontalOptions="Center"
+            Text="Añadir Nuevo"
+            TextColor="{StaticResource ColorTextoPrimario}"
+            VerticalOptions="Center" />
+        <!--  BOTONES  -->
+        <HorizontalStackLayout Margin="0,0,0,24" Spacing="8">
+
+            <Button
+                x:Name="btnGasto"
+                BackgroundColor="{StaticResource Primario}"
+                ImageSource="cartera_blanca.svg"
+                Pressed="btnGasto_Pressed"
+                Style="{StaticResource grupoBotones}"
+                Text="Gasto"
+                TextColor="{StaticResource TextoPrimario}" />
+
+            <Button
+                x:Name="btnIngreso"
+                BackgroundColor="{StaticResource FondoPrincipal}"
+                ImageSource="billete.svg"
+                Pressed="btnIngreso_Pressed"
+                Style="{StaticResource grupoBotones}"
+                Text="Ingreso"
+                TextColor="Black" />
+
+            <Button
+                x:Name="btnCuenta"
+                BackgroundColor="{StaticResource FondoPrincipal}"
+                ImageSource="banco.svg"
+                Pressed="btnCuenta_Pressed"
+                Style="{StaticResource grupoBotones}"
+                Text="Cuentas"
+                TextColor="Black" />
+        </HorizontalStackLayout>
+        <!--  FORMULARIO INGRESAR GASTO  -->
+        <Grid
+            x:Name="formularioGasto"
+            IsVisible="True"
+            RowDefinitions="*,*,*,*,*,*"
+            RowSpacing="16">
+            <!--  Monto  -->
+            <VerticalStackLayout Grid.Row="0" Spacing="8">
+                <Label Style="{StaticResource subtitulosFormularios}" Text="Monto del Gasto" />
+
+                <Border x:Name="borderMonto" Style="{StaticResource bordeFormulario}">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <Entry
+                        Focused="entradaMonto_Focused"
+                        Keyboard="Numeric"
+                        Placeholder="0"
+                        Style="{StaticResource entradaFormulario}"
+                        Text="{Binding MontoGasto, Mode=TwoWay}"
+                        Unfocused="entradaMonto_Unfocused" />
+                </Border>
+            </VerticalStackLayout>
+            <!--  Descripcion  -->
+            <VerticalStackLayout Grid.Row="1" Spacing="8">
+                <Label Style="{StaticResource subtitulosFormularios}" Text="Descripcion" />
+
+                <Border x:Name="borderTitulo" Style="{StaticResource bordeFormulario}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <HorizontalStackLayout>
+                        <Image
+                            Margin="10,0,5,0"
+                            HeightRequest="16"
+                            Source="lapiz.svg"
+                            VerticalOptions="Center" />
+                        <Entry
+                            x:Name="entradaDescripcionGasto"
+                            Focused="entradaDescripcionGasto_Focused"
+                            Placeholder="Ej: Cuenta de ahorros"
+                            Style="{StaticResource entradaFormulario}"
+                            Text="{Binding NombreCuenta, Mode=TwoWay}"
+                            Unfocused="entradaDescripcionGasto_Unfocused" />
+                    </HorizontalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+            <!--  Categoria de gasto  -->
+            <VerticalStackLayout Grid.Row="2" Spacing="8">
+                <Label Style="{StaticResource subtitulosFormularios}" Text="Categoria" />
+                <!--  Dropdown seleccion categoria  -->
+                <Border BackgroundColor="{StaticResource ColorTarjeta}" Stroke="{StaticResource ColorTarjeta}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <editors:SfComboBox
+                        x:Name="cmbCategoriaGasto"
+                        Margin="2,0"
+                        BackgroundColor="Transparent"
+                        DisplayMemberPath="tipoCategoria.Descripcion"
+                        DropDownBackground="#ffffff"
+                        FontFamily="PoppinsRegular"
+                        FontSize="16"
+                        HighlightedTextColor="{StaticResource Acento}"
+                        IsClearButtonVisible="True"
+                        ItemsSource="{Binding CategoriaGasto}"
+                        Placeholder="Seleccionar"
+                        PlaceholderColor="#6b7a99"
+                        SelectedItem="{Binding CategoriaGastoSeleccionado, Mode=TwoWay}"
+                        Stroke="Transparent">
+
+                        <editors:SfComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid
+                                        Margin="2,0,16,0"
+                                        ColumnDefinitions="48,220"
+                                        HorizontalOptions="Start"
+                                        RowDefinitions="50"
+                                        VerticalOptions="Center">
+                                        <Border
+                                            Grid.Column="0"
+                                            BackgroundColor="{Binding Color}"
+                                            HeightRequest="15"
+                                            Stroke="Transparent"
+                                            WidthRequest="15">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="50,50,50,50" />
+                                            </Border.StrokeShape>
+                                        </Border>
+
+                                        <StackLayout
+                                            Grid.Column="1"
+                                            HorizontalOptions="Start"
+                                            VerticalOptions="Center">
+                                            <Label
+                                                FontFamily="RobotoRegular"
+                                                FontSize="14"
+                                                HorizontalTextAlignment="Start"
+                                                Text="{Binding tipoCategoria.Descripcion}"
+                                                TextColor="Black"
+                                                VerticalTextAlignment="Center" />
+                                        </StackLayout>
+
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </editors:SfComboBox.ItemTemplate>
+                    </editors:SfComboBox>
+                </Border>
+            </VerticalStackLayout>
+            <!--  Tipos de Cuenta  -->
+            <VerticalStackLayout Grid.Row="3" Spacing="8">
+                <Label Style="{StaticResource subtitulosFormularios}" Text="Tipo de Cuenta" />
+                <!--  Dropdown seleccion cuenta  -->
+                <Border BackgroundColor="{StaticResource ColorTarjeta}" Stroke="{StaticResource ColorTarjeta}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+
+                    <editors:SfComboBox
+                        x:Name="cmbTipoCuentaGasto"
+                        BackgroundColor="Transparent"
+                        DisplayMemberPath="Descripcion"
+                        DropDownBackground="#ffffff"
+                        FontFamily="PoppinsRegular"
+                        FontSize="16"
+                        IsClearButtonVisible="True"
+                        ItemsSource="{Binding TiposDeCuenta}"
+                        Placeholder="Cuenta"
+                        PlaceholderColor="#6b7a99"
+                        SelectedItem="{Binding TipoCuentaSeleccionada, Mode=TwoWay}"
+                        Stroke="Transparent"
+                        TextMemberPath="Descripcion" />
+                </Border>
+            </VerticalStackLayout>
+            <!--  Fecha de Transaccion  -->
+            <VerticalStackLayout Grid.Row="4" Spacing="8">
+                <Label Style="{StaticResource subtitulosFormularios}" Text="Fecha" />
+                <Border Style="{StaticResource bordeFormulario}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <HorizontalStackLayout>
+                        <Image
+                            Margin="10,0,5,0"
+                            HeightRequest="16"
+                            Source="calendario.svg"
+                            VerticalOptions="Center" />
+                        <DatePicker
+                            x:Name="fechaTransaccionGasto"
+                            Background="Transparent"
+                            Date="{Binding FechaSeleccionada, Mode=TwoWay}"
+                            FontFamily="PoppinsRegular"
+                            FontSize="16"
+                            Format="dddd, dd MMMM yyyy"
+                            TextColor="Black" />
+                    </HorizontalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+            <!--  Boton Gasto  -->
+            <VerticalStackLayout Grid.Row="5">
+                <Button
+                    Command="{Binding GuardarGastoCommand}"
+                    IsEnabled="{Binding GuardarGastoCommand.CanExecute}"
+                    Style="{StaticResource botonPrimario}"
+                    Text="Guardar Gasto"
+                    TextColor="White" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <!--  FORMULARIO INGRESAR INGRESO  -->
+        <Grid
+            x:Name="formularioIngreso"
+            IsVisible="False"
+            RowDefinitions="*,*,*,*,*,*"
+            RowSpacing="16">
+            <!--  Monto  -->
+            <VerticalStackLayout Grid.Row="0" Spacing="8">
+                <Label Style="{StaticResource subtitulosFormularios}" Text="Monto del Ingreso" />
+                <Border x:Name="borderMontoIngreso" Style="{StaticResource bordeFormulario}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <Entry
+                        x:Name="entradaMontoIngreso"
+                        Focused="entradaMontoIngreso_Focused"
+                        Keyboard="Numeric"
+                        Placeholder="0"
+                        Style="{StaticResource entradaFormulario}"
+                        Text="{Binding MontoIngreso, Mode=TwoWay}"
+                        Unfocused="entradaMontoIngreso_Unfocused" />
+                </Border>
+            </VerticalStackLayout>
+            <!--  Descripción  -->
+            <VerticalStackLayout Grid.Row="1" Spacing="8">
+                <Label Style="{StaticResource subtitulosFormularios}" Text="Descripción" />
+                <Border x:Name="borderTituloIngreso" Style="{StaticResource bordeFormulario}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <HorizontalStackLayout>
+                        <Image
+                            Margin="10,0,5,0"
+                            HeightRequest="16"
+                            Source="lapiz.svg"
+                            VerticalOptions="Center" />
+                        <Entry
+                            x:Name="entradaTituloIngreso"
+                            ClearButtonVisibility="WhileEditing"
+                            Focused="entradaTituloIngreso_Focused"
+                            Placeholder="Salario mensual"
+                            Style="{StaticResource entradaFormulario}"
+                            Text="{Binding DescripcionIngreso, Mode=TwoWay}"
+                            Unfocused="entradaTituloIngreso_Unfocused" />
+                    </HorizontalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+            <!--  Categoría de Ingreso  -->
+            <VerticalStackLayout Grid.Row="2" Spacing="8">
+                <Label Style="{StaticResource subtitulosFormularios}" Text="Categoría" />
+                <Border BackgroundColor="{StaticResource ColorTarjeta}" Stroke="{StaticResource ColorTarjeta}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <editors:SfComboBox
+                        x:Name="cmbCategoriaIngreso"
+                        Margin="2,0"
+                        BackgroundColor="Transparent"
+                        DisplayMemberPath="tipoCategoria.Descripcion"
+                        DropDownBackground="#ffffff"
+                        FontFamily="PoppinsRegular"
+                        FontSize="16"
+                        HighlightedTextColor="{StaticResource Acento}"
+                        IsClearButtonVisible="True"
+                        ItemsSource="{Binding CategoriaIngreso}"
+                        Placeholder="Seleccionar"
+                        PlaceholderColor="#6b7a99"
+                        SelectedItem="{Binding CategoriaIngresoSeleccionada, Mode=TwoWay}"
+                        Stroke="Transparent">
+
+                        <editors:SfComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid
+                                        Margin="2,0,16,0"
+                                        ColumnDefinitions="48,220"
+                                        HorizontalOptions="Start"
+                                        RowDefinitions="50"
+                                        VerticalOptions="Center">
+                                        <Border
+                                            Grid.Column="0"
+                                            BackgroundColor="{Binding Color}"
+                                            HeightRequest="15"
+                                            Stroke="Transparent"
+                                            WidthRequest="15">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="50,50,50,50" />
+                                            </Border.StrokeShape>
+                                        </Border>
+                                        <StackLayout
+                                            Grid.Column="1"
+                                            HorizontalOptions="Start"
+                                            VerticalOptions="Center">
+                                            <Label
+                                                FontFamily="RobotoRegular"
+                                                FontSize="14"
+                                                HorizontalTextAlignment="Start"
+                                                Text="{Binding tipoCategoria.Descripcion}"
+                                                TextColor="Black"
+                                                VerticalTextAlignment="Center" />
+                                        </StackLayout>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </editors:SfComboBox.ItemTemplate>
+                    </editors:SfComboBox>
+                </Border>
+            </VerticalStackLayout>
+            <!--  Tipo de Cuenta  -->
+            <VerticalStackLayout Grid.Row="3" Spacing="8">
+                <Label Style="{StaticResource subtitulosFormularios}" Text="Tipo de Cuenta" />
+                <Border BackgroundColor="{StaticResource ColorTarjeta}" Stroke="{StaticResource ColorTarjeta}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <editors:SfComboBox
+                        x:Name="cbTipoCuentaIngreso"
+                        BackgroundColor="Transparent"
+                        DisplayMemberPath="Descripcion"
+                        DropDownBackground="#ffffff"
+                        FontFamily="PoppinsRegular"
+                        FontSize="16"
+                        IsClearButtonVisible="True"
+                        ItemsSource="{Binding TiposDeCuenta}"
+                        Placeholder="Cuenta"
+                        PlaceholderColor="#6b7a99"
+                        SelectedItem="{Binding TipoCuentaIngresoSeleccionada, Mode=TwoWay}"
+                        Stroke="Transparent"
+                        TextMemberPath="Descripcion" />
+                </Border>
+            </VerticalStackLayout>
+            <!--  Fecha de Ingreso  -->
+            <VerticalStackLayout Grid.Row="4" Spacing="8">
+                <Label Style="{StaticResource subtitulosFormularios}" Text="Fecha" />
+                <Border Style="{StaticResource bordeFormulario}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <HorizontalStackLayout>
+                        <Image
+                            Margin="10,0,5,0"
+                            HeightRequest="16"
+                            Source="calendario.svg"
+                            VerticalOptions="Center" />
+                        <DatePicker
+                            Background="Transparent"
+                            Date="{Binding FechaIngresoSeleccionada, Mode=TwoWay}"
+                            FontFamily="PoppinsRegular"
+                            FontSize="16"
+                            Format="dddd, dd MMMM yyyy"
+                            TextColor="Black" />
+                    </HorizontalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+            <!--  Boton Ingreso  -->
+            <VerticalStackLayout Grid.Row="5">
+                <Button
+                    Command="{Binding GuardarIngresoCommand}"
+                    Style="{StaticResource botonPrimario}"
+                    Text="Guardar Ingreso"
+                    TextColor="White" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <!--  FORMULARIO INGRESAR CUENTA  -->
+        <Grid
+            x:Name="formularioCuenta"
+            IsVisible="False"
+            RowDefinitions="*,*,*,*,*,*"
+            RowSpacing="16">
+            <!--  Nombre de la Cuenta  -->
+            <VerticalStackLayout Grid.Row="0" Spacing="8">
+                <Label Style="{StaticResource subtitulosFormularios}" Text="Nombre de la Cuenta" />
+                <Border x:Name="borderNombreCuenta" Style="{StaticResource bordeFormulario}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <Entry
+                        x:Name="entradaNombreCuenta"
+                        Focused="entradaNombreCuenta_Focused"
+                        Placeholder="Ej: Cuenta de ahorros"
+                        Style="{StaticResource entradaFormulario}"
+                        Text="{Binding NombreCuenta, Mode=TwoWay}"
+                        Unfocused="entradaNombreCuenta_Unfocused" />
+                </Border>
+            </VerticalStackLayout>
+            <!--  Banco o Entidad  -->
+            <VerticalStackLayout Grid.Row="1" Spacing="8">
+                <Label Style="{StaticResource subtitulosFormularios}" Text="Banco o Entidad" />
+                <Border x:Name="borderBancoCuenta" Style="{StaticResource bordeFormulario}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <Entry
+                        x:Name="entradaBancoCuenta"
+                        Focused="entradaBancoCuenta_Focused"
+                        Placeholder="Ej: Banco Nacional"
+                        Style="{StaticResource entradaFormulario}"
+                        Text="{Binding NombreEntidadFinanciera, Mode=TwoWay}"
+                        Unfocused="entradaBancoCuenta_Unfocused" />
+                </Border>
+            </VerticalStackLayout>
+            <!--  Saldo Inicial  -->
+            <VerticalStackLayout Grid.Row="2" Spacing="8">
+                <Label Style="{StaticResource subtitulosFormularios}" Text="Saldo Inicial" />
+                <Border x:Name="borderSaldoInicialCuenta" Style="{StaticResource bordeFormulario}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <Entry
+                        x:Name="entradaSaldoInicialCuenta"
+                        Focused="entradaSaldoInicialCuenta_Focused"
+                        Keyboard="Numeric"
+                        Placeholder="0"
+                        Style="{StaticResource entradaFormulario}"
+                        Text="{Binding Saldo, Mode=TwoWay}"
+                        Unfocused="entradaSaldoInicialCuenta_Unfocused" />
+                </Border>
+            </VerticalStackLayout>
+            <!--  Tipo de Cuenta (Dropdown)  -->
+            <VerticalStackLayout Grid.Row="3" Spacing="8">
+                <Label Style="{StaticResource subtitulosFormularios}" Text="Tipo de Cuenta" />
+                <Border BackgroundColor="{StaticResource ColorTarjeta}" Stroke="{StaticResource ColorTarjeta}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <editors:SfComboBox
+                        x:Name="cmbTipoCuentaCuenta"
+                        BackgroundColor="Transparent"
+                        DisplayMemberPath="Descripcion"
+                        DropDownBackground="#ffffff"
+                        FontFamily="PoppinsRegular"
+                        FontSize="16"
+                        IsClearButtonVisible="True"
+                        ItemsSource="{Binding TipoCuenta}"
+                        Placeholder="Seleccionar tipo"
+                        PlaceholderColor="#6b7a99"
+                        SelectedItem="{Binding TipoCuentaSeleccionada, Mode=TwoWay}"
+                        Stroke="Transparent"
+                        TextMemberPath="Descripcion" />
+                </Border>
+
+            </VerticalStackLayout>
+            <!--  Botón Agregar Cuenta  -->
+            <VerticalStackLayout Grid.Row="4">
+                <Button
+                    Command="{Binding GuardarCuentaCommand}"
+                    Style="{StaticResource botonPrimario}"
+                    Text="Agregar Cuenta"
+                    TextColor="White" />
+            </VerticalStackLayout>
+        </Grid>
+
+    </VerticalStackLayout>
+</ContentPage>

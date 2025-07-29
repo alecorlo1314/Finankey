@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Application
+    x:Class="FinanKey.App"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:FinanKey">
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <!--  Tema claro  -->
+            <Color x:Key="FondoPrincipal">#F3F4F7</Color>
+            <Color x:Key="ColorTarjeta">#D9DDE3</Color>
+            <Color x:Key="ColorTextoPrimario">#000</Color>
+            <Color x:Key="ColorTextoSecundario">#64718b</Color>
+            <Color x:Key="ColorAcento">#6b4eff</Color>
+
+
+            <Color x:Key="VentanaEmergente">#ffffff</Color>
+            <Color x:Key="TextoVentanaEmergente">#0d0c0f</Color>
+
+            <Color x:Key="TextoPrimario">#ffffff</Color>
+
+            <Color x:Key="Secundario">#f1f3f8</Color>
+            <Color x:Key="TextoSecundario">#6b7a99</Color>
+
+            <Color x:Key="Suave">#f1f3f8</Color>
+            <Color x:Key="TextoSuave">#6b7a99</Color>
+
+            <Color x:Key="Acento">#ff4576</Color>
+            <Color x:Key="TextoAcento">#1a030d</Color>
+
+            <Color x:Key="Peligro">#e54848</Color>
+            <Color x:Key="TextoPeligro">#f7f7f9</Color>
+
+            <Color x:Key="Borde">#e5e7eb</Color>
+            <Color x:Key="Entrada">#e5e7eb</Color>
+
+            <Color x:Key="Anillo">#6b4eff</Color>
+            <x:Double x:Key="RadioEsquinas">12</x:Double>
+
+            <!--Colores de gráficas
+            <Color x:Key="Grafico1">#6b4eff</Color>
+            <Color x:Key="Grafico2">#22c55e</Color>
+            <Color x:Key="Grafico3">#ffae34</Color>
+            <Color x:Key="Grafico4">#3b82f6</Color>
+            <Color x:Key="Grafico5">#ef4444</Color>-->
+
+            <!--  Botón primario  -->
+            <Style x:Key="botonPrimario" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource ColorAcento}" />
+                <Setter Property="CornerRadius" Value="12" />
+                <Setter Property="Margin" Value="30,10" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontFamily" Value="PoppinsSemibold" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+            <!--  Grupo botones  -->
+            <Style x:Key="grupoBotones" TargetType="Button">
+                <Setter Property="Padding" Value="12" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontFamily" Value="PoppinsMedium" />
+                <Setter Property="TextColor" Value="{StaticResource ColorTextoPrimario}" />
+                <Setter Property="WidthRequest" Value="115" />
+                <Setter Property="HeightRequest" Value="50" />
+            </Style>
+            <!--  borde formularios  -->
+            <Style x:Key="bordeFormulario" TargetType="Border">
+                <Setter Property="Padding" Value="5,0" />
+                <Setter Property="BackgroundColor" Value="{StaticResource ColorTarjeta}" />
+                <Setter Property="Stroke" Value="{StaticResource ColorTarjeta}" />
+            </Style>
+            <!--  Entrada formularios  -->
+            <Style x:Key="entradaFormulario" TargetType="Entry">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="FontFamily" Value="PoppinsRegular" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="TextColor" Value="{StaticResource PrimaryDarkText}" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource ColorTextoSecundario}" />
+                <Setter Property="WidthRequest" Value="350" />
+            </Style>
+            <!--  subtitulos de formularios  -->
+            <Style x:Key="subtitulosFormularios" TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsMedium" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="TextColor" Value="{StaticResource ColorTextoSecundario}" />
+            </Style>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="FinanKey.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:paginas="clr-namespace:FinanKey.View"
+    Title="FinanKey"
+    Routing.Route="main"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.TabBarBackgroundColor="#ffffff"
+    Shell.TabBarForegroundColor="#4b3ff3"
+    Shell.TabBarTitleColor="#4b3ff3"
+    Shell.TabBarUnselectedColor="{StaticResource ColorTextoSecundario}">
+
+    <TabBar>
+        <Tab
+            Title="Finanzas"
+            Icon="banco.svg"
+            Route="finanzasPage">
+            <ShellContent ContentTemplate="{DataTemplate paginas:FinanzasPage}" />
+        </Tab>
+        <Tab
+            Title="Anadir"
+            Icon="agregar.svg"
+            Route="AnadirPage">
+            <ShellContent ContentTemplate="{DataTemplate paginas:AnadirPage}" />
+        </Tab>
+        <Tab
+            Title="Reportes"
+            Icon="grafico_histograma.svg"
+            Route="reportesPage">
+            <ShellContent ContentTemplate="{DataTemplate paginas:ReportesPage}" />
+        </Tab>
+        <Tab
+            Title="Configuracion"
+            Icon="ajustes.svg"
+            Route="configuracionPage">
+            <ShellContent ContentTemplate="{DataTemplate paginas:ConfiguracionesPage}" />
+        </Tab>
+    </TabBar>
+
+</Shell>
