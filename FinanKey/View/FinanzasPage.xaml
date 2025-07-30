@@ -269,23 +269,30 @@
                                 <Border
                                     Margin="0,2"
                                     Padding="7"
-                                    BackgroundColor="Transparent"
+                                    BackgroundColor="{StaticResource ColorTarjeta}"
                                     HeightRequest="79"
                                     Stroke="{StaticResource ColorTarjeta}"
                                     StrokeShape="RoundRectangle 20"
                                     WidthRequest="380">
-                                    <Grid ColumnDefinitions="15*,45*,40*">
+                                    <Grid ColumnDefinitions="20*,45*,40*" ColumnSpacing="5">
                                         <!--  Fila Icono  -->
-                                        <StackLayout
-                                            Grid.Column="0"
-                                            HorizontalOptions="Center"
-                                            VerticalOptions="Center">
-                                            <Image
-                                                Aspect="AspectFit"
-                                                HeightRequest="32"
-                                                Source="billete.svg"
-                                                WidthRequest="32" />
-                                        </StackLayout>
+                                        <Border Background="{StaticResource ColorAcentoSuave4}" Stroke="{StaticResource ColorAcentoSuave4}"
+                                                HeightRequest="65" WidthRequest="65">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="20"/>
+                                            </Border.StrokeShape>
+                                            <StackLayout
+                                                Grid.Column="0"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center">
+                                                <Image
+                                                    Aspect="AspectFit"
+                                                    HeightRequest="32"
+                                                    Source="billete.svg"
+                                                    WidthRequest="32" BackgroundColor="{StaticResource ColorAcento3}"/>
+                                            </StackLayout>
+                                        </Border>
+
                                         <!--  DESCRIPCION Y CATEGORIA DEL MOVIMIENTOS  -->
                                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                                             <Label
@@ -313,7 +320,7 @@
                                                 FontFamily="PoppinsBold"
                                                 FontSize="16"
                                                 Text="{Binding Monto, StringFormat='{}{0:C}', Mode=TwoWay}"
-                                                TextColor="{Binding ColorTransaccion}" />
+                                                TextColor="{StaticResource ColorTextoPrimario}" />
                                         </VerticalStackLayout>
                                     </Grid>
                                 </Border>
