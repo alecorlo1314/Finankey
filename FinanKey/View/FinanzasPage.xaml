@@ -74,7 +74,7 @@
                     VerticalOptions="End"
                     WidthRequest="360">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="15" />
+                        <RoundRectangle CornerRadius="20" />
                     </Border.StrokeShape>
                     <Border.Shadow>
                         <Shadow
@@ -262,17 +262,17 @@
                         ItemsSource="{Binding Transacciones}"
                         VerticalOptions="Center">
                         <CollectionView.ItemsLayout>
-                            <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                            <LinearItemsLayout ItemSpacing="16" Orientation="Vertical" />
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Border
                                     Margin="0,2"
-                                    Padding="5"
+                                    Padding="7"
                                     BackgroundColor="Transparent"
-                                    HeightRequest="75"
+                                    HeightRequest="79"
                                     Stroke="{StaticResource ColorTarjeta}"
-                                    StrokeShape="RoundRectangle 10"
+                                    StrokeShape="RoundRectangle 20"
                                     WidthRequest="380">
                                     <Grid ColumnDefinitions="15*,45*,40*">
                                         <!--  Fila Icono  -->
@@ -282,9 +282,9 @@
                                             VerticalOptions="Center">
                                             <Image
                                                 Aspect="AspectFit"
-                                                HeightRequest="24"
+                                                HeightRequest="32"
                                                 Source="billete.svg"
-                                                WidthRequest="24" />
+                                                WidthRequest="32" />
                                         </StackLayout>
                                         <!--  DESCRIPCION Y CATEGORIA DEL MOVIMIENTOS  -->
                                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
@@ -298,7 +298,7 @@
                                             <!--  CATEGORIA MOVIMIENTO  -->
                                             <Label
                                                 FontFamily="PoppinsRegular"
-                                                FontSize="14"
+                                                FontSize="12"
                                                 LineBreakMode="TailTruncation"
                                                 MaxLines="1"
                                                 Text="{Binding TipoCategoria, Mode=TwoWay}"

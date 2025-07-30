@@ -12,7 +12,7 @@
             <!--<Color x:Key="ColorTarjeta">#D9DDE3</Color>-->
             <!--<Color x:Key="ColorTextoPrimario">#000</Color>-->
             <!--<Color x:Key="ColorTextoSecundario">#64718b</Color>-->
-            <Color x:Key="ColorAcento">#6b4eff</Color>
+            <!--<Color x:Key="ColorAcento">#6b4eff</Color>-->
 
             <Color x:Key="VentanaEmergente">#ffffff</Color>
             <Color x:Key="TextoVentanaEmergente">#0d0c0f</Color>
@@ -33,7 +33,7 @@
             <!--  Nueva paleta de colores  -->
             <Color x:Key="FondoPrincipal">#F7FAFC</Color>
             <Color x:Key="ColorTarjeta">#ffffff</Color>
-            <Color x:Key="ColorFondoTargetaAzul">#2F2762</Color>
+            <Color x:Key="ColorAcento">#2F2762</Color>
             <Color x:Key="ColorTextoPrimario">#000000</Color>
             <Color x:Key="ColorTextoSecundario">#818181</Color>
             <Color x:Key="ColorInconoNoSelected">#B3B3B3</Color>
