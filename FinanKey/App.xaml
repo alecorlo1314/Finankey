@@ -11,7 +11,7 @@
             <!--<Color x:Key="FondoPrincipal">#F3F4F7</Color>-->
             <!--<Color x:Key="ColorTarjeta">#D9DDE3</Color>-->
             <!--<Color x:Key="ColorTextoPrimario">#000</Color>-->
-            <Color x:Key="ColorTextoSecundario">#64718b</Color>
+            <!--<Color x:Key="ColorTextoSecundario">#64718b</Color>-->
             <Color x:Key="ColorAcento">#6b4eff</Color>
 
             <Color x:Key="VentanaEmergente">#ffffff</Color>
@@ -35,7 +35,7 @@
             <Color x:Key="ColorTarjeta">#ffffff</Color>
             <Color x:Key="ColorFondoTargetaAzul">#2F2762</Color>
             <Color x:Key="ColorTextoPrimario">#000000</Color>
-            <Color x:Key="ColorTextoSecundarioGris">#818181</Color>
+            <Color x:Key="ColorTextoSecundario">#818181</Color>
             <Color x:Key="ColorInconoNoSelected">#B3B3B3</Color>
             <Color x:Key="ColorInconoSelected">#4E61B6</Color>
             <Color x:Key="ColorAcentoTarjetaIncome">#DAF0F6</Color>
