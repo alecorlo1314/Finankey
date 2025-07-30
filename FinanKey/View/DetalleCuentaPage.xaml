@@ -4,7 +4,6 @@
              x:Class="FinanKey.View.DetalleCuentaPage"
              Title="NewPage1">
     <VerticalStackLayout Padding="30">
-        <Label x:Name="labelNombre" FontSize="20"/>
-        <Label x:Name="labelEdad" FontSize="20"/>
+        <Label Text="Esta es la ventana de Detalles"/>
     </VerticalStackLayout>
 </ContentPage>

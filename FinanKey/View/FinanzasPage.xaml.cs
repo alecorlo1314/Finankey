@@ -35,8 +35,6 @@ public partial class FinanzasPage : ContentPage
     }
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
-        // Enviar parámetros
-        Shell.Current.GoToAsync($"{"detalleCuentaPage"}?nombre=Alexander&edad=25");
-        //Shell.Current.GoToAsync("detalleCuentaPage");
+        Shell.Current.GoToAsync("detalleCuentaPage");
     }
 }
