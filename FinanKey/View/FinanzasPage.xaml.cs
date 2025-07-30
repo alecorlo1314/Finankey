@@ -35,6 +35,6 @@ public partial class FinanzasPage : ContentPage
     }
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
-        Shell.Current.GoToAsync("detalleCuentaPage");
+        //elimine la parte de navegacion
     }
 }
