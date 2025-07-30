@@ -34,7 +34,11 @@
                         FontSize="16"
                         Text="Ahorro" />
                 </HorizontalStackLayout>
-                <Label Text="5250,75 €" FontSize="28" FontFamily="PoppinsBold" VerticalOptions="End"/>
+                <Label
+                    FontFamily="PoppinsBold"
+                    FontSize="28"
+                    Text="5250,75 €"
+                    VerticalOptions="End" />
             </VerticalStackLayout>
         </Border>
     </VerticalStackLayout>

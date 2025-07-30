@@ -14,30 +14,30 @@
             <Color x:Key="ColorTextoSecundario">#64718b</Color>
             <Color x:Key="ColorAcento">#6b4eff</Color>
 
-
+            
             <Color x:Key="VentanaEmergente">#ffffff</Color>
             <Color x:Key="TextoVentanaEmergente">#0d0c0f</Color>
-
             <Color x:Key="TextoPrimario">#ffffff</Color>
-
             <Color x:Key="Secundario">#f1f3f8</Color>
             <Color x:Key="TextoSecundario">#6b7a99</Color>
-
             <Color x:Key="Suave">#f1f3f8</Color>
             <Color x:Key="TextoSuave">#6b7a99</Color>
-
             <Color x:Key="Acento">#ff4576</Color>
             <Color x:Key="TextoAcento">#1a030d</Color>
-
             <Color x:Key="Peligro">#e54848</Color>
             <Color x:Key="TextoPeligro">#f7f7f9</Color>
-
             <Color x:Key="Borde">#e5e7eb</Color>
             <Color x:Key="Entrada">#e5e7eb</Color>
-
             <Color x:Key="Anillo">#6b4eff</Color>
             <x:Double x:Key="RadioEsquinas">12</x:Double>
 
+            <!--Nueva paleta de colores-->
+            <Color x:Key="ColorFondoPrimario">#F7FAFC</Color>
+            <Color x:Key="ColorFondoTargetaBlanco">#ffffff</Color>
+            <Color x:Key="ColorFondoTargetaAzul">#2F2762</Color>
+            <Color x:Key="ColorTextoNegro">#000000</Color>
+            <Color x:Key="ColorTextoSecundarioGris">#818181</Color>
+            <Color x:Key="ColorInconoNoSelected">#B3B3B3</Color>
             <!--Colores de gráficas
             <Color x:Key="Grafico1">#6b4eff</Color>
             <Color x:Key="Grafico2">#22c55e</Color>
