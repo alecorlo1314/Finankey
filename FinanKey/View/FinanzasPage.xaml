@@ -71,10 +71,18 @@
                     Margin="0,0,0,15"
                     HeightRequest="50"
                     Style="{StaticResource bordeFormulario}"
-                    VerticalOptions="End">
+                    VerticalOptions="End"
+                    WidthRequest="360">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="{StaticResource RadioEsquinas}" />
+                        <RoundRectangle CornerRadius="15" />
                     </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow
+                            Brush="{StaticResource ColorInconoNoSelected}"
+                            Opacity="0.1"
+                            Radius="20"
+                            Offset="-2,20" />
+                    </Border.Shadow>
                     <Grid ColumnDefinitions="12*,68*,12*">
                         <Image
                             Grid.Column="0"
