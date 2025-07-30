@@ -11,19 +11,30 @@
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource FondoPrincipal}" StatusBarStyle="DarkContent" />
     </ContentPage.Behaviors>
 
-    <VerticalStackLayout Padding="30">
+    <VerticalStackLayout Margin="16,0">
         <Label Text="Esta es la ventana de Detalles" />
         <Border
+            Padding="20"
             BackgroundColor="{StaticResource ColorAcento}"
+            HeightRequest="200"
             Stroke="{StaticResource ColorAcento}"
             StrokeShape="RoundRectangle 10">
             <VerticalStackLayout>
-                <Label Text="Cuenta Principal" />
+                <Label
+                    FontFamily="PoppinsBold"
+                    FontSize="24"
+                    Text="Cuenta Principal" />
                 <HorizontalStackLayout>
-                    <Label Text="Banco Sol" />
-                    <Label Text="Ahorro" />
+                    <Label
+                        FontFamily="PoppinsRegular"
+                        FontSize="16"
+                        Text="Banco Sol - " />
+                    <Label
+                        FontFamily="PoppinsRegular"
+                        FontSize="16"
+                        Text="Ahorro" />
                 </HorizontalStackLayout>
-                <Label Text="5250,75 €" />
+                <Label Text="5250,75 €" FontSize="28" FontFamily="PoppinsBold" VerticalOptions="End"/>
             </VerticalStackLayout>
         </Border>
     </VerticalStackLayout>
