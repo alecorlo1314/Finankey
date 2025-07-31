@@ -262,10 +262,11 @@
                         ItemsSource="{Binding Transacciones}"
                         VerticalOptions="Center">
                         <CollectionView.ItemsLayout>
-                            <LinearItemsLayout ItemSpacing="16" Orientation="Vertical" />
+                            <LinearItemsLayout Orientation="Vertical" />
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
+                                <StackLayout HeightRequest="100" WidthRequest="400">
                                 <Border
                                     Margin="0,2"
                                     Padding="7"
@@ -273,8 +274,15 @@
                                     HeightRequest="79"
                                     Stroke="{StaticResource ColorTarjeta}"
                                     StrokeShape="RoundRectangle 20"
-                                    WidthRequest="380">
-                                    <Grid ColumnDefinitions="20*,45*,40*" ColumnSpacing="5" >
+                                    WidthRequest="370">
+                                    <Border.Shadow>
+                                        <Shadow
+                                            Brush="{StaticResource ColorInconoNoSelected}"
+                                            Opacity="0.2"
+                                            Radius="20"
+                                            Offset="-3,1" />
+                                    </Border.Shadow>
+                                    <Grid ColumnDefinitions="20*,45*,40*" ColumnSpacing="5">
                                         <!--  Fila Icono  -->
                                         <Border
                                             Background="{StaticResource ColorAcentoSuave4}"
@@ -283,6 +291,7 @@
                                             Stroke="{StaticResource ColorAcentoSuave4}"
                                             VerticalOptions="Center"
                                             WidthRequest="65">
+
                                             <Border.StrokeShape>
                                                 <RoundRectangle CornerRadius="20" />
                                             </Border.StrokeShape>
@@ -299,8 +308,8 @@
                                                     WidthRequest="32" />
                                             </StackLayout>
                                         </Border>
-
-                                        <!--  DESCRIPCION Y CATEGORIA DEL MOVIMIENTOS  -->
+                                
+                                <!--  DESCRIPCION Y CATEGORIA DEL MOVIMIENTOS  -->
                                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                                             <Label
                                                 FontFamily="PoppinsSemibold"
@@ -331,6 +340,7 @@
                                         </VerticalStackLayout>
                                     </Grid>
                                 </Border>
+                                </StackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
