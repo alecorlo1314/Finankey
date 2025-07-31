@@ -1,6 +1,5 @@
 
 using FinanKey.ViewModels;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FinanKey.View;
 
