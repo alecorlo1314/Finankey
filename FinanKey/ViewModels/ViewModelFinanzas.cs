@@ -28,7 +28,7 @@ namespace FinanKey.ViewModels
         [ObservableProperty]
         private ObservableCollection<Transacciones> transacciones = new();
         [ObservableProperty]
-        Cuenta cuenta;
+        private Cuenta cuentaSeleccionada;
 
         //inicializar propiedades
         [ObservableProperty] 
@@ -115,7 +115,6 @@ namespace FinanKey.ViewModels
                 await Shell.Current.DisplayAlert("Error", $"Error al cargar cuentas: {ex.Message}", "OK");
             }
         }
-
         private async Task CargarListaMovimientosAsync()
         {
             try
@@ -181,14 +180,26 @@ namespace FinanKey.ViewModels
             {
                 await Shell.Current.DisplayAlert("Error", $"Error al cargar transacciones: {ex.Message}", "OK");
             }
+        }
+        ////terminar esto
+        //[RelayCommand(CanExecute = nameof(PuedeNavegarADetalle))]
+        //async Task NavegarADetalleCuenta() => await Shell.Current.GoToAsync(
+        //        $"{nameof(DetalleCuentaPage)}?id={cuentaSeleccionada.Id}",
+        //        new Dictionary<string, object>
+        //        {
+        //            ["Cuenta"] = cuentaSeleccionada
+        //        });
+        [RelayCommand]
+        private void NavegarADetalleCuenta()
+        {
+            // Navegación u otra lógica
+            Shell.Current.GoToAsync("DetalleCuentaPage");
+        }
+        private bool PuedeNavegarADetalle() => cuentaSeleccionada is not null;
 
-            [RelayCommand]
-            async Task navegarDetalleCuentaCommand() => 
-            await Shell.Current.GoToAsync($"{nameof(DetalleCuentaPage)}?{nameof(Cuenta)}={Cuenta.Id}",
-                    new Dictionary<string, object>
-                    {
-                        [nameof(Cuenta)] = Cuenta
-                    });
+        partial void OnCuentaSeleccionadaChanged(Cuenta value)
+        {
+            NavegarADetalleCuentaCommand.NotifyCanExecuteChanged();
         }
     }
 }
