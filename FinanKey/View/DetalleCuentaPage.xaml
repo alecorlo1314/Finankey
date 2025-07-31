@@ -4,15 +4,19 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    Title="paginaDetalleCuenta"
-    BackgroundColor="{StaticResource FondoPrincipal}">
+    Title=""
+    BackgroundColor="{StaticResource FondoPrincipal}"
+    Shell.BackgroundColor="{StaticResource FondoPrincipal}"
+    Shell.NavBarHasShadow="False">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IconOverride="regresar.svg" />
+    </Shell.BackButtonBehavior>
     <!--  Cambio de color de la barra  -->
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource FondoPrincipal}" StatusBarStyle="DarkContent" />
     </ContentPage.Behaviors>
 
     <VerticalStackLayout Margin="16,0">
-        <Label Text="Esta es la ventana de Detalles" />
         <Border
             BackgroundColor="Transparent"
             HeightRequest="200"
