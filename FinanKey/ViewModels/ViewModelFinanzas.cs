@@ -181,14 +181,14 @@ namespace FinanKey.ViewModels
                 await Shell.Current.DisplayAlert("Error", $"Error al cargar transacciones: {ex.Message}", "OK");
             }
         }
-        ////terminar esto
-        //[RelayCommand(CanExecute = nameof(PuedeNavegarADetalle))]
-        //async Task NavegarADetalleCuenta() => await Shell.Current.GoToAsync(
-        //        $"{nameof(DetalleCuentaPage)}?id={cuentaSeleccionada.Id}",
-        //        new Dictionary<string, object>
-        //        {
-        //            ["Cuenta"] = cuentaSeleccionada
-        //        });
+        //terminar esto
+        [RelayCommand(CanExecute = nameof(PuedeNavegarADetalle))]
+        async Task NavegarADetalleCuenta() => await Shell.Current.GoToAsync(
+                $"{nameof(DetalleCuentaPage)}?id={cuentaSeleccionada.Id}",
+                new Dictionary<string, object>
+                {
+                    ["Cuenta"] = cuentaSeleccionada
+                });
         private bool PuedeNavegarADetalle() => cuentaSeleccionada is not null;
 
         partial void OnCuentaSeleccionadaChanged(Cuenta value)
