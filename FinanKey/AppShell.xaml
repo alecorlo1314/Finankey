@@ -8,9 +8,9 @@
     Routing.Route="main"
     Shell.FlyoutBehavior="Disabled"
     Shell.TabBarBackgroundColor="#ffffff"
-    Shell.TabBarForegroundColor="#4b3ff3"
-    Shell.TabBarTitleColor="#4b3ff3"
-    Shell.TabBarUnselectedColor="{StaticResource ColorTextoSecundario}">
+    Shell.TabBarForegroundColor="{StaticResource ColorInconoSelected}"
+    Shell.TabBarTitleColor="{StaticResource ColorInconoSelected}"
+    Shell.TabBarUnselectedColor="{StaticResource ColorInconoNoSelected}">
 
     <TabBar>
         <Tab

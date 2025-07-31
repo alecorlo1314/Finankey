@@ -7,9 +7,12 @@
     Title=""
     BackgroundColor="{StaticResource FondoPrincipal}"
     Shell.BackgroundColor="{StaticResource FondoPrincipal}"
-    Shell.NavBarHasShadow="False">
+    Shell.NavBarHasShadow="False"
+    Shell.NavBarIsVisible="True"
+    Shell.TitleColor="Black"
+    Shell.ForegroundColor="Black">
     <Shell.BackButtonBehavior>
-        <BackButtonBehavior IconOverride="regresar.svg" />
+        <BackButtonBehavior IconOverride="regresar.png" IsVisible="True"/>
     </Shell.BackButtonBehavior>
     <!--  Cambio de color de la barra  -->
     <ContentPage.Behaviors>

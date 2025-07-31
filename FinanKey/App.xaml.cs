@@ -12,7 +12,7 @@ namespace FinanKey
             InitializeComponent();
 
             //verificamos si hay credenciales guardadas al iniciar la aplicación
-            if(Preferences.ContainsKey("Recuerdame") && Preferences.Get("Recuerdame", false))
+            if (Preferences.ContainsKey("Recuerdame") && Preferences.Get("Recuerdame", false))
             {
                 // Si hay credenciales guardadas, iniciamos sesión automáticamente
                 MainPage = new AppShell();
