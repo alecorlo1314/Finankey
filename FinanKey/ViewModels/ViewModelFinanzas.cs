@@ -1,10 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FinanKey.Models;
 using FinanKey.Servicios;
+using FinanKey.View;
 using System.Collections.ObjectModel;
 
 namespace FinanKey.ViewModels
 {
+    [QueryProperty(nameof(Cuenta), nameof(Cuenta))]
     public partial class ViewModelFinanzas : ObservableObject
     {
         //Inyección de dependencias 
@@ -24,6 +27,8 @@ namespace FinanKey.ViewModels
         private ObservableCollection<TipoCuenta> tipoCuenta = new();
         [ObservableProperty]
         private ObservableCollection<Transacciones> transacciones = new();
+        [ObservableProperty]
+        Cuenta cuenta;
 
         //inicializar propiedades
         [ObservableProperty] 
@@ -176,6 +181,14 @@ namespace FinanKey.ViewModels
             {
                 await Shell.Current.DisplayAlert("Error", $"Error al cargar transacciones: {ex.Message}", "OK");
             }
+
+            [RelayCommand]
+            async Task navegarDetalleCuentaCommand() => 
+            await Shell.Current.GoToAsync($"{nameof(DetalleCuentaPage)}?{nameof(Cuenta)}={Cuenta.Id}",
+                    new Dictionary<string, object>
+                    {
+                        [nameof(Cuenta)] = Cuenta
+                    });
         }
     }
 }

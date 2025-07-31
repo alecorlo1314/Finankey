@@ -33,9 +33,4 @@ public partial class FinanzasPage : ContentPage
     {
         borderBarraBusqueda.Stroke = Colors.Transparent;
     }
-    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
-    {
-        //Navegar a la página de detalle de cuenta
-        Shell.Current.GoToAsync("detalleCuentaPage");
-    }
 }
