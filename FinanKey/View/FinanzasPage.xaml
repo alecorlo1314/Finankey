@@ -137,9 +137,6 @@
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="10" />
                             </Border.StrokeShape>
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding NavegarADetalleCuentaCommand}" />
-                            </Border.GestureRecognizers>
                             <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
                                 <Label
                                     FontFamily="PoppinsRegular"
@@ -151,7 +148,7 @@
                             </StackLayout>
                         </Border>
                     </CollectionView.EmptyView>
-
+                    <!--  VISTA DE CUENTAS CUANDO HAY  -->
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout ItemSpacing="12" Orientation="Horizontal" />
                     </CollectionView.ItemsLayout>
@@ -167,7 +164,7 @@
                                 WidthRequest="160">
                                 <!--  Cuando se toque  -->
                                 <Border.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding NavegarDetalleCuentaCommand, Mode=TwoWay}" />
+                                    <TapGestureRecognizer Command="{Binding NavegarADetalleCuentaCommand}" />
                                 </Border.GestureRecognizers>
                                 <Grid RowDefinitions="*,*,*" RowSpacing="8">
                                     <!--  Fila 1: Tipo de cuenta  -->
@@ -264,90 +261,90 @@
                         Grid.Row="1"
                         ItemsSource="{Binding Transacciones}"
                         VerticalOptions="Center">
-                        
+
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout Orientation="Vertical" />
                         </CollectionView.ItemsLayout>
-                        
+
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <StackLayout HeightRequest="100" WidthRequest="400">
-                                <Border
-                                    Margin="0,2"
-                                    Padding="7"
-                                    BackgroundColor="{StaticResource ColorTarjeta}"
-                                    HeightRequest="79"
-                                    Stroke="{StaticResource ColorTarjeta}"
-                                    StrokeShape="RoundRectangle 20"
-                                    WidthRequest="370">
-                                    <Border.Shadow>
-                                        <Shadow
-                                            Brush="{StaticResource ColorInconoNoSelected}"
-                                            Opacity="0.2"
-                                            Radius="20"
-                                            Offset="-3,1" />
-                                    </Border.Shadow>
+                                    <Border
+                                        Margin="0,2"
+                                        Padding="7"
+                                        BackgroundColor="{StaticResource ColorTarjeta}"
+                                        HeightRequest="79"
+                                        Stroke="{StaticResource ColorTarjeta}"
+                                        StrokeShape="RoundRectangle 20"
+                                        WidthRequest="370">
+                                        <Border.Shadow>
+                                            <Shadow
+                                                Brush="{StaticResource ColorInconoNoSelected}"
+                                                Opacity="0.2"
+                                                Radius="20"
+                                                Offset="-3,1" />
+                                        </Border.Shadow>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding NavegarDetalleCuentaCommand, Mode=TwoWay}" />
                                         </Border.GestureRecognizers>
                                         <Grid ColumnDefinitions="20*,45*,40*" ColumnSpacing="5">
-                                        <!--  Fila Icono  -->
-                                        <Border
-                                            Background="{StaticResource ColorAcentoSuave4}"
-                                            HeightRequest="65"
-                                            HorizontalOptions="Center"
-                                            Stroke="{StaticResource ColorAcentoSuave4}"
-                                            VerticalOptions="Center"
-                                            WidthRequest="65">
+                                            <!--  Fila Icono  -->
+                                            <Border
+                                                Background="{StaticResource ColorAcentoSuave4}"
+                                                HeightRequest="65"
+                                                HorizontalOptions="Center"
+                                                Stroke="{StaticResource ColorAcentoSuave4}"
+                                                VerticalOptions="Center"
+                                                WidthRequest="65">
 
-                                            <Border.StrokeShape>
-                                                <RoundRectangle CornerRadius="20" />
-                                            </Border.StrokeShape>
-                                            <StackLayout
-                                                Grid.Column="0"
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="20" />
+                                                </Border.StrokeShape>
+                                                <StackLayout
+                                                    Grid.Column="0"
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Center">
+                                                    <Path
+                                                        Data="M12,12A6,6,0,1,0,6,6A6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6A4,4,0,0,1,12,2Z           M12,14a9.01,9.01,0,0,0-9,9a1,1,0,0,0,2,0a7,7,0,0,1,14,0a1,1,0,0,0,2,0A9.01,9.01,0,0,0,12,14Z"
+                                                        Fill="{StaticResource ColorAcento3}"
+                                                        HeightRequest="32"
+                                                        HorizontalOptions="Center"
+                                                        VerticalOptions="Center"
+                                                        WidthRequest="32" />
+                                                </StackLayout>
+                                            </Border>
+
+                                            <!--  DESCRIPCION Y CATEGORIA DEL MOVIMIENTOS  -->
+                                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                                <Label
+                                                    FontFamily="PoppinsSemibold"
+                                                    FontSize="16"
+                                                    LineBreakMode="TailTruncation"
+                                                    MaxLines="1"
+                                                    Text="{Binding Descripcion, Mode=TwoWay}"
+                                                    TextColor="{StaticResource ColorTextoPrimario}" />
+                                                <!--  CATEGORIA MOVIMIENTO  -->
+                                                <Label
+                                                    FontFamily="PoppinsRegular"
+                                                    FontSize="12"
+                                                    LineBreakMode="TailTruncation"
+                                                    MaxLines="1"
+                                                    Text="{Binding TipoCategoria, Mode=TwoWay}"
+                                                    TextColor="{StaticResource ColorTextoSecundario}" />
+                                            </VerticalStackLayout>
+                                            <!--  MONTO DEL MOVIMIENTO  -->
+                                            <VerticalStackLayout
+                                                Grid.Column="2"
                                                 HorizontalOptions="Center"
                                                 VerticalOptions="Center">
-                                                <Path
-                                                    Data="M12,12A6,6,0,1,0,6,6A6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6A4,4,0,0,1,12,2Z           M12,14a9.01,9.01,0,0,0-9,9a1,1,0,0,0,2,0a7,7,0,0,1,14,0a1,1,0,0,0,2,0A9.01,9.01,0,0,0,12,14Z"
-                                                    Fill="{StaticResource ColorAcento3}"
-                                                    HeightRequest="32"
-                                                    HorizontalOptions="Center"
-                                                    VerticalOptions="Center"
-                                                    WidthRequest="32" />
-                                            </StackLayout>
-                                        </Border>
-                                
-                                <!--  DESCRIPCION Y CATEGORIA DEL MOVIMIENTOS  -->
-                                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                                            <Label
-                                                FontFamily="PoppinsSemibold"
-                                                FontSize="16"
-                                                LineBreakMode="TailTruncation"
-                                                MaxLines="1"
-                                                Text="{Binding Descripcion, Mode=TwoWay}"
-                                                TextColor="{StaticResource ColorTextoPrimario}" />
-                                            <!--  CATEGORIA MOVIMIENTO  -->
-                                            <Label
-                                                FontFamily="PoppinsRegular"
-                                                FontSize="12"
-                                                LineBreakMode="TailTruncation"
-                                                MaxLines="1"
-                                                Text="{Binding TipoCategoria, Mode=TwoWay}"
-                                                TextColor="{StaticResource ColorTextoSecundario}" />
-                                        </VerticalStackLayout>
-                                        <!--  MONTO DEL MOVIMIENTO  -->
-                                        <VerticalStackLayout
-                                            Grid.Column="2"
-                                            HorizontalOptions="Center"
-                                            VerticalOptions="Center">
-                                            <Label
-                                                FontFamily="PoppinsBold"
-                                                FontSize="16"
-                                                Text="{Binding Monto, StringFormat='{}{0:C}', Mode=TwoWay}"
-                                                TextColor="{StaticResource ColorTextoPrimario}" />
-                                        </VerticalStackLayout>
-                                    </Grid>
-                                </Border>
+                                                <Label
+                                                    FontFamily="PoppinsBold"
+                                                    FontSize="16"
+                                                    Text="{Binding Monto, StringFormat='{}{0:C}', Mode=TwoWay}"
+                                                    TextColor="{StaticResource ColorTextoPrimario}" />
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                    </Border>
                                 </StackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
