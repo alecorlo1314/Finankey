@@ -182,18 +182,20 @@ namespace FinanKey.ViewModels
             }
         }
         //terminar esto
-        [RelayCommand(CanExecute = nameof(PuedeNavegarADetalle))]
-        async Task NavegarADetalleCuenta() => await Shell.Current.GoToAsync(
-                $"{nameof(DetalleCuentaPage)}?id={cuentaSeleccionada.Id}",
+        [RelayCommand]
+        async Task NavegarADetalleCuenta(Cuenta cuenta)
+        {
+            if (cuenta is null)
+                return;
+
+            cuentaSeleccionada = cuenta;
+
+            await Shell.Current.GoToAsync(
+                $"{nameof(DetalleCuentaPage)}?id={cuenta.Id}",
                 new Dictionary<string, object>
                 {
-                    ["Cuenta"] = cuentaSeleccionada
+                    ["Cuenta"] = cuenta
                 });
-        private bool PuedeNavegarADetalle() => cuentaSeleccionada is not null;
-
-        partial void OnCuentaSeleccionadaChanged(Cuenta value)
-        {
-            NavegarADetalleCuentaCommand.NotifyCanExecuteChanged();
         }
     }
 }
