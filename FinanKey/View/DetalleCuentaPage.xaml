@@ -14,32 +14,41 @@
     <VerticalStackLayout Margin="16,0">
         <Label Text="Esta es la ventana de Detalles" />
         <Border
-            Padding="20"
-            BackgroundColor="{StaticResource ColorAcento}"
+            BackgroundColor="Transparent"
             HeightRequest="200"
-            Stroke="{StaticResource ColorAcento}"
-            StrokeShape="RoundRectangle 10">
-            <VerticalStackLayout>
-                <Label
-                    FontFamily="PoppinsBold"
-                    FontSize="24"
-                    Text="Cuenta Principal" />
-                <HorizontalStackLayout>
+            Stroke="Transparent"
+            StrokeShape="RoundRectangle 20">
+            <!--  Imagen como fondo  -->
+            <Grid RowDefinitions="50*,50*">
+                <Image
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Aspect="AspectFit"
+                    Source="fondo_tarjeta_cuenta.svg" />
+                <VerticalStackLayout Grid.Row="0" Padding="16">
                     <Label
-                        FontFamily="PoppinsRegular"
-                        FontSize="16"
-                        Text="Banco Sol - " />
+                        FontFamily="PoppinsBold"
+                        FontSize="24"
+                        Text="Cuenta Principal" />
+                    <HorizontalStackLayout Margin="0,0,0,20">
+                        <Label
+                            FontFamily="PoppinsRegular"
+                            FontSize="16"
+                            Text="Banco Sol - " />
+                        <Label
+                            FontFamily="PoppinsRegular"
+                            FontSize="16"
+                            Text="Ahorro" />
+                    </HorizontalStackLayout>
                     <Label
-                        FontFamily="PoppinsRegular"
-                        FontSize="16"
-                        Text="Ahorro" />
-                </HorizontalStackLayout>
-                <Label
-                    FontFamily="PoppinsBold"
-                    FontSize="28"
-                    Text="5250,75 €"
-                    VerticalOptions="End" />
-            </VerticalStackLayout>
+                        Grid.Row="1"
+                        FontFamily="PoppinsBold"
+                        FontSize="28"
+                        Text="5250,75 €"
+                        VerticalOptions="End" />
+                </VerticalStackLayout>
+            </Grid>
+
         </Border>
     </VerticalStackLayout>
 </ContentPage>
