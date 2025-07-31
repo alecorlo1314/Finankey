@@ -274,12 +274,14 @@
                                     Stroke="{StaticResource ColorTarjeta}"
                                     StrokeShape="RoundRectangle 20"
                                     WidthRequest="380">
-                                    <Grid ColumnDefinitions="20*,45*,40*" ColumnSpacing="5">
+                                    <Grid ColumnDefinitions="20*,45*,40*" ColumnSpacing="5" >
                                         <!--  Fila Icono  -->
                                         <Border
                                             Background="{StaticResource ColorAcentoSuave4}"
                                             HeightRequest="65"
+                                            HorizontalOptions="Center"
                                             Stroke="{StaticResource ColorAcentoSuave4}"
+                                            VerticalOptions="Center"
                                             WidthRequest="65">
                                             <Border.StrokeShape>
                                                 <RoundRectangle CornerRadius="20" />
@@ -292,13 +294,9 @@
                                                     Data="M12,12A6,6,0,1,0,6,6A6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6A4,4,0,0,1,12,2Z           M12,14a9.01,9.01,0,0,0-9,9a1,1,0,0,0,2,0a7,7,0,0,1,14,0a1,1,0,0,0,2,0A9.01,9.01,0,0,0,12,14Z"
                                                     Fill="{StaticResource ColorAcento3}"
                                                     HeightRequest="32"
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Center"
                                                     WidthRequest="32" />
-
-                                                <!--<Image
-                                                    Aspect="AspectFit"
-                                                    HeightRequest="32"
-                                                    Source="billete.svg"
-                                                    WidthRequest="32" BackgroundColor="{StaticResource ColorAcento3}"/>-->
                                             </StackLayout>
                                         </Border>
 
