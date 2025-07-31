@@ -137,6 +137,9 @@
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="10" />
                             </Border.StrokeShape>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NavegarADetalleCuentaCommand}" />
+                            </Border.GestureRecognizers>
                             <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
                                 <Label
                                     FontFamily="PoppinsRegular"
