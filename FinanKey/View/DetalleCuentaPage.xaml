@@ -7,10 +7,10 @@
     Title=""
     BackgroundColor="{StaticResource FondoPrincipal}"
     Shell.BackgroundColor="{StaticResource FondoPrincipal}"
+    Shell.ForegroundColor="Black"
     Shell.NavBarHasShadow="False"
     Shell.NavBarIsVisible="True"
-    Shell.TitleColor="Black"
-    Shell.ForegroundColor="Black">
+    Shell.TitleColor="Black">
 
     <!--  Cambio de color de la barra  -->
     <ContentPage.Behaviors>

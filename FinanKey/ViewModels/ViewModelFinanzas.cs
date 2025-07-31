@@ -189,12 +189,6 @@ namespace FinanKey.ViewModels
         //        {
         //            ["Cuenta"] = cuentaSeleccionada
         //        });
-        [RelayCommand]
-        private void NavegarADetalleCuenta()
-        {
-            // Navegación u otra lógica
-            Shell.Current.GoToAsync("DetalleCuentaPage");
-        }
         private bool PuedeNavegarADetalle() => cuentaSeleccionada is not null;
 
         partial void OnCuentaSeleccionadaChanged(Cuenta value)
