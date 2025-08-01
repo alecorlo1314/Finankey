@@ -7,7 +7,6 @@ using System.Collections.ObjectModel;
 
 namespace FinanKey.ViewModels
 {
-    [QueryProperty(nameof(Cuenta), nameof(Cuenta))]
     public partial class ViewModelFinanzas : ObservableObject
     {
         //Inyección de dependencias 
