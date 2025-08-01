@@ -6,7 +6,7 @@ using FinanKey.View;
 using FinanKey.Servicios;
 using FinanKey.ViewModels;
 using FinanKey.Datos;
-
+using Xe.AcrylicView;
 
 namespace FinanKey
 {
@@ -34,6 +34,7 @@ namespace FinanKey
                 .UseMauiCommunityToolkit()
                 .ConfigureSyncfusionToolkit()
                 .ConfigureSyncfusionCore()
+                .UseAcrylicView()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
