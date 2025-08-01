@@ -48,6 +48,7 @@ namespace FinanKey
             builder.Services.AddSingleton<AnadirPage>();
             builder.Services.AddSingleton<ConfiguracionesPage>();
             builder.Services.AddSingleton<FinanzasPage>();
+            builder.Services.AddSingleton<DetalleCuentaPage>();
             builder.Services.AddTransient<LoginPage>();
             //Registrar ViewModels con inyección de dependencias
             builder.Services.AddSingleton<ViewModelGasto>();
@@ -55,6 +56,7 @@ namespace FinanKey
             builder.Services.AddSingleton<ViewModelCuenta>();
             builder.Services.AddTransient<ViewModelLogin>();
             builder.Services.AddSingleton<ViewModelFinanzas>();
+            builder.Services.AddSingleton<ViewModelDetalleCuenta>();
             //Registrar servicios con inyección de dependencias contexto de datos
             builder.Services.AddSingleton<ContextoDatosCuenta>();
             builder.Services.AddSingleton<ContextoDatosGasto>();

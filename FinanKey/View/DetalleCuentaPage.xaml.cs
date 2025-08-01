@@ -1,9 +1,12 @@
+using FinanKey.ViewModels;
+
 namespace FinanKey.View;
 
 public partial class DetalleCuentaPage : ContentPage
 {
-	public DetalleCuentaPage()
+	public DetalleCuentaPage(ViewModelDetalleCuenta viewModelDetalleCuenta)
 	{
 		InitializeComponent();
-	}
+		BindingContext = viewModelDetalleCuenta;
+    }
 }
