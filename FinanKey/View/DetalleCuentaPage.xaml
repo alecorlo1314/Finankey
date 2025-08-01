@@ -49,13 +49,22 @@
                             FontSize="16"
                             Text="Ahorro" />
                     </HorizontalStackLayout>
-                    <Label
-                        Grid.Row="1"
-                        FontFamily="PoppinsBold"
-                        FontSize="28"
-                        Text="{Binding Cuenta.Saldo}"
-                        TextColor="#ffffff"
-                        VerticalOptions="End" />
+                    <HorizontalStackLayout Grid.Row="1">
+                        <Label
+                            FontFamily="PoppinsBold"
+                            FontSize="28"
+                            Text=" ₡"
+                            TextColor="#ffffff"
+                            VerticalOptions="End" />
+                        <Label
+                            FontFamily="PoppinsBold"
+                            FontSize="28"
+                            Text="{Binding Cuenta.Saldo, StringFormat='{}{0:F2}'}"
+                            TextColor="#ffffff"
+                            VerticalOptions="End" />
+
+                    </HorizontalStackLayout>
+
                 </VerticalStackLayout>
             </Grid>
 
