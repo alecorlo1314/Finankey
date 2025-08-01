@@ -190,7 +190,7 @@ namespace FinanKey.ViewModels
             cuentaSeleccionada = cuenta;
 
             await Shell.Current.GoToAsync(
-                $"{nameof(DetalleCuentaPage)}?id={cuentaSeleccionada.Id}",
+                $"{nameof(DetalleCuentaPage)}?Id={cuentaSeleccionada.Id}",
                 new Dictionary<string, object>
                 {
                     ["Cuenta"] = cuentaSeleccionada
