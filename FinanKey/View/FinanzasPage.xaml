@@ -268,7 +268,7 @@
 
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <StackLayout HeightRequest="100" WidthRequest="400">
+                                <StackLayout HeightRequest="95" WidthRequest="400">
                                     <Border
                                         Padding="7"
                                         BackgroundColor="{StaticResource ColorTarjeta}"
