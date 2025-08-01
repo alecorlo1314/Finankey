@@ -8,7 +8,7 @@ namespace FinanKey
             InitializeComponent();
             // Registrar rutas para la navegación
             Routing.RegisterRoute("loginPage", typeof(LoginPage));
-            Routing.RegisterRoute("detalleCuentaPage", typeof(DetalleCuentaPage));
+            Routing.RegisterRoute(nameof(DetalleCuentaPage), typeof(DetalleCuentaPage));
         }
     }
 }
