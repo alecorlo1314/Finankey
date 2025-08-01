@@ -9,4 +9,9 @@ public partial class DetalleCuentaPage : ContentPage
 		InitializeComponent();
 		BindingContext = viewModelDetalleCuenta;
     }
+
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+    }
 }
