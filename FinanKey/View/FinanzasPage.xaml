@@ -164,8 +164,7 @@
                                 WidthRequest="160">
                                 <!--  Cuando se toque  -->
                                 <Border.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding NavegarADetalleCuentaCommand}" 
-                                                          CommandParameter="{Binding .}" />
+                                    <TapGestureRecognizer Command="{Binding NavegarADetalleCuentaCommand}" />
                                 </Border.GestureRecognizers>
                                 <Grid RowDefinitions="*,*,*" RowSpacing="8">
                                     <!--  Fila 1: Tipo de cuenta  -->
