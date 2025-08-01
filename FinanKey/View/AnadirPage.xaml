@@ -8,7 +8,6 @@
     xmlns:local="clr-namespace:FinanKey.ViewModels"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     Background="#ffffff">
-
     <!--  Cambio de color de la barra  -->
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource FondoPrincipal}" StatusBarStyle="DarkContent" />

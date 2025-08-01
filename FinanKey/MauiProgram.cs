@@ -34,7 +34,6 @@ namespace FinanKey
                 .UseMauiCommunityToolkit()
                 .ConfigureSyncfusionToolkit()
                 .ConfigureSyncfusionCore()
-                .UseAcrylicView()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
