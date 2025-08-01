@@ -7,6 +7,6 @@ namespace FinanKey.ViewModels
     public partial class ViewModelDetalleCuenta : ObservableObject
     {
         [ObservableProperty]
-         Cuenta cuenta;
+        private Cuenta cuenta;
     }
 }

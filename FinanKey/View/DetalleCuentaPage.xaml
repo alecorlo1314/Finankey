@@ -34,12 +34,16 @@
                     <Label
                         FontFamily="PoppinsBold"
                         FontSize="24"
-                        Text="Cuenta Principal" />
+                        Text="{Binding Cuenta.NombreCuenta}" />
                     <HorizontalStackLayout Margin="0,0,0,20">
                         <Label
                             FontFamily="PoppinsRegular"
                             FontSize="16"
-                            Text="Banco Sol - " />
+                            Text="{Binding Cuenta.NombreEntidadFinanciera}" />
+                        <Label
+                            FontFamily="PoppinsRegular"
+                            FontSize="16"
+                            Text=" - " />
                         <Label
                             FontFamily="PoppinsRegular"
                             FontSize="16"
@@ -49,7 +53,8 @@
                         Grid.Row="1"
                         FontFamily="PoppinsBold"
                         FontSize="28"
-                        Text="5250,75 €"
+                        Text="{Binding Cuenta.Saldo}"
+                        TextColor="#ffffff"
                         VerticalOptions="End" />
                 </VerticalStackLayout>
             </Grid>

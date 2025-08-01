@@ -160,12 +160,11 @@
                                 BackgroundColor="{StaticResource ColorAcento}"
                                 HeightRequest="160"
                                 Stroke="{StaticResource ColorAcento}"
-                                StrokeShape="RoundRectangle 10"
+                                StrokeShape="RoundRectangle 20"
                                 WidthRequest="160">
                                 <!--  Cuando se toque  -->
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding BindingContext.NavegarADetalleCuentaCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" CommandParameter="{Binding .}" />
-                                    <!--<TapGestureRecognizer Command="{Binding NavegarADetalleCuentaCommand}" />-->
                                 </Border.GestureRecognizers>
                                 <Grid RowDefinitions="*,*,*" RowSpacing="8">
                                     <!--  Fila 1: Tipo de cuenta  -->
@@ -234,7 +233,7 @@
                         TextColor="{StaticResource ColorAcento}"
                         VerticalOptions="Center" />
                 </Grid>
-                <!--  INFORMACION QUE NO HAY MOVIMIENTOS ACTUALES  -->
+                <!--  INFORMACION MOVIMIENTOS  -->
                 <Grid Grid.Row="6" RowDefinitions="auto,*">
                     <!--  MENSAJE CUANDO NO HAY MOVIMIENTOS  -->
                     <Border
@@ -271,7 +270,6 @@
                             <DataTemplate>
                                 <StackLayout HeightRequest="100" WidthRequest="400">
                                     <Border
-                                        Margin="0,2"
                                         Padding="7"
                                         BackgroundColor="{StaticResource ColorTarjeta}"
                                         HeightRequest="79"
@@ -291,9 +289,9 @@
                                         <Grid ColumnDefinitions="20*,45*,40*" ColumnSpacing="5">
                                             <!--  Fila Icono  -->
                                             <Border
+                                                Grid.Column="0"
                                                 Background="{StaticResource ColorAcentoSuave4}"
                                                 HeightRequest="65"
-                                                HorizontalOptions="Center"
                                                 Stroke="{StaticResource ColorAcentoSuave4}"
                                                 VerticalOptions="Center"
                                                 WidthRequest="65">
@@ -308,10 +306,10 @@
                                                     <Path
                                                         Data="M12,12A6,6,0,1,0,6,6A6.006,6.006,0,0,0,12,12ZM12,2A4,4,0,1,1,8,6A4,4,0,0,1,12,2Z           M12,14a9.01,9.01,0,0,0-9,9a1,1,0,0,0,2,0a7,7,0,0,1,14,0a1,1,0,0,0,2,0A9.01,9.01,0,0,0,12,14Z"
                                                         Fill="{StaticResource ColorAcento3}"
-                                                        HeightRequest="32"
+                                                        HeightRequest="24"
                                                         HorizontalOptions="Center"
                                                         VerticalOptions="Center"
-                                                        WidthRequest="32" />
+                                                        WidthRequest="24" />
                                                 </StackLayout>
                                             </Border>
 
