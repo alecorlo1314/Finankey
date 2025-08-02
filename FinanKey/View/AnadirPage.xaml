@@ -96,7 +96,7 @@
                             Focused="entradaDescripcionGasto_Focused"
                             Placeholder="Ej: Cuenta de ahorros"
                             Style="{StaticResource entradaFormulario}"
-                            Text="{Binding NombreCuenta, Mode=TwoWay}"
+                            Text="{Binding DescripcionGasto, Mode=TwoWay}"
                             Unfocused="entradaDescripcionGasto_Unfocused" />
                     </HorizontalStackLayout>
                 </Border>

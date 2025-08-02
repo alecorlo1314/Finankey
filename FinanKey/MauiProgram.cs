@@ -6,7 +6,6 @@ using FinanKey.View;
 using FinanKey.Servicios;
 using FinanKey.ViewModels;
 using FinanKey.Datos;
-using Xe.AcrylicView;
 
 namespace FinanKey
 {
