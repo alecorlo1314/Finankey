@@ -67,9 +67,15 @@ namespace FinanKey.ViewModels
             };
         }
 
-        [RelayCommand(CanExecute = nameof(CanGuardarGasto))]
+        [RelayCommand]
         private async Task GuardarGasto()
         {
+            //validacion de campos
+            if (!CanGuardarGasto())
+            {
+                await Shell.Current.DisplayAlert("Error", "Por favor, complete todos los campos requeridos.", "OK");
+                return;
+            }
 
             Gasto gastoTransaccion = new Gasto
             {
@@ -79,12 +85,7 @@ namespace FinanKey.ViewModels
                 CuentaId = TipoCuentaSeleccionada.Id,
                 Fecha = FechaSeleccionada
             };
-            //validacion de campos
-            if (!CanGuardarGasto())
-            {
-                await Shell.Current.DisplayAlert("Error", "Por favor, complete todos los campos requeridos.", "OK");
-                return;
-            }
+
             // Llamada al servicio para guardar la transacción
             bool resultado = await _serviciosTransaccionGasto.CrearTransaccionGastoAsync(gastoTransaccion);
 
