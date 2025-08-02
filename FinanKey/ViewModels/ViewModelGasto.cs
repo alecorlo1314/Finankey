@@ -143,29 +143,5 @@ namespace FinanKey.ViewModels
             }
             return esValido;
         }
-        private bool ValidarCamposs()
-        {
-            if (MontoGasto <= 0)
-            {
-                Shell.Current.DisplayAlert("Error", "El monto del gasto debe ser mayor a cero.", "OK");
-                return false;
-            }
-            if (string.IsNullOrWhiteSpace(DescripcionGasto))
-            {
-                Shell.Current.DisplayAlert("Error", "La descripción del gasto no puede estar vacía.", "OK");
-                return false;
-            }
-            if (CategoriaGastoSeleccionado == null)
-            {
-                Shell.Current.DisplayAlert("Error", "Debe seleccionar una categoría para el gasto.", "OK");
-                return false;
-            }
-            if (TipoCuentaSeleccionada == null)
-            {
-                Shell.Current.DisplayAlert("Error", "Debe seleccionar un tipo de cuenta para el gasto.", "OK");
-                return false;
-            }
-            return true;
-        }
     }
 }
