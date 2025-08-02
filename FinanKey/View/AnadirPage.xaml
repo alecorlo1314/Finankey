@@ -57,7 +57,7 @@
         <Grid
             x:Name="formularioGasto"
             IsVisible="True"
-            RowDefinitions="*,*,*,*,*,*"
+            RowDefinitions="auto,*,*,*,*,*"
             RowSpacing="16">
             <!--  Monto  -->
             <VerticalStackLayout Grid.Row="0" Spacing="8">
@@ -77,11 +77,7 @@
                         Unfocused="entradaMonto_Unfocused" />
                 </Border>
                 <!--  Mensaje de error  -->
-                <Label
-                    FontSize="12"
-                    IsVisible="{Binding MontoGastoError, Converter={StaticResource StringToBoolConverter}}"
-                    Text="{Binding MontoGastoError}"
-                    TextColor="Red" />
+                <Label Text="{Binding MontoGastoError}" TextColor="Red" FontSize="12" />
             </VerticalStackLayout>
             <!--  Descripcion  -->
             <VerticalStackLayout Grid.Row="1" Spacing="8">
