@@ -30,6 +30,20 @@ namespace FinanKey.ViewModels
         private DateTime _fechaSeleccionada = DateTime.Today;
         #endregion
 
+        #region validacion mensajes errores
+        [ObservableProperty]
+        private string _montoGastoError;
+
+        [ObservableProperty]
+        private string _descripcionGastoError;
+
+        [ObservableProperty]
+        private string _categoriaGastoError;
+
+        [ObservableProperty]
+        private string _tipoCuentaError;
+        #endregion
+
         //Prueba para comboBox tipoCuenta y categoria
         public ObservableCollection<TipoCuenta>? TiposDeCuenta { get; set; }
         public ObservableCollection<Categoria>? CategoriaGasto { get; set; }
@@ -99,6 +113,37 @@ namespace FinanKey.ViewModels
             }
         }
         private bool ValidarCampos()
+        {
+            MontoGastoError = string.Empty;
+            DescripcionGastoError = string.Empty;
+            CategoriaGastoError = string.Empty;
+            TipoCuentaError = string.Empty;
+
+            bool esValido = true;
+
+            if (MontoGasto <= 0)
+            {
+                MontoGastoError = "El monto debe ser mayor a cero.";
+                esValido = false;
+            }
+            if (string.IsNullOrWhiteSpace(DescripcionGasto))
+            {
+                DescripcionGastoError = "La descripción no puede estar vacía.";
+                esValido = false;
+            }
+            if (CategoriaGastoSeleccionado == null)
+            {
+                CategoriaGastoError = "Seleccione una categoría.";
+                esValido = false;
+            }
+            if (TipoCuentaSeleccionada == null)
+            {
+                TipoCuentaError = "Seleccione un tipo de cuenta.";
+                esValido = false;
+            }
+            return esValido;
+        }
+        private bool ValidarCamposs()
         {
             if (MontoGasto <= 0)
             {

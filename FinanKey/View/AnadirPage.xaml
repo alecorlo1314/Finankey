@@ -76,6 +76,12 @@
                         Text="{Binding MontoGasto, Mode=TwoWay}"
                         Unfocused="entradaMonto_Unfocused" />
                 </Border>
+                <!--  Mensaje de error  -->
+                <Label
+                    FontSize="12"
+                    IsVisible="{Binding MontoGastoError, Converter={StaticResource StringToBoolConverter}}"
+                    Text="{Binding MontoGastoError}"
+                    TextColor="Red" />
             </VerticalStackLayout>
             <!--  Descripcion  -->
             <VerticalStackLayout Grid.Row="1" Spacing="8">
