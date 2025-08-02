@@ -15,7 +15,7 @@ namespace FinanKey.ViewModels
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(GuardarGastoCommand))]
-        private string _descripcion = string.Empty;
+        private string _descripcionGasto = string.Empty;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(GuardarGastoCommand))]
@@ -71,16 +71,15 @@ namespace FinanKey.ViewModels
         private async Task GuardarGasto()
         {
             //validacion de campos
-            if (!CanGuardarGasto())
+            if (!ValidarCampos())
             {
-                await Shell.Current.DisplayAlert("Error", "Por favor, complete todos los campos requeridos.", "OK");
-                return;
+                return; // Si la validación falla, no continuar con el guardado
             }
 
             Gasto gastoTransaccion = new Gasto
             {
                 Monto = MontoGasto,
-                Descripcion = Descripcion,
+                Descripcion = DescripcionGasto,
                 CategoriaId = CategoriaGastoSeleccionado.Id,
                 CuentaId = TipoCuentaSeleccionada.Id,
                 Fecha = FechaSeleccionada
@@ -93,19 +92,35 @@ namespace FinanKey.ViewModels
             {
                 await Shell.Current.DisplayAlert("Éxito", "Transacción de gasto guardada correctamente.", "OK");
                 MontoGasto = 0;
-                Descripcion = string.Empty;
+                DescripcionGasto = string.Empty;
                 CategoriaGastoSeleccionado = null;
                 TipoCuentaSeleccionada = null;
                 FechaSeleccionada = DateTime.Today;
             }
         }
-        private bool CanGuardarGasto()
+        private bool ValidarCampos()
         {
-            return MontoGasto > 0
-                && !string.IsNullOrWhiteSpace(Descripcion)
-                && CategoriaGastoSeleccionado != null
-                && TipoCuentaSeleccionada != null
-                && FechaSeleccionada != default;
+            if (MontoGasto <= 0)
+            {
+                Shell.Current.DisplayAlert("Error", "El monto del gasto debe ser mayor a cero.", "OK");
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(DescripcionGasto))
+            {
+                Shell.Current.DisplayAlert("Error", "La descripción del gasto no puede estar vacía.", "OK");
+                return false;
+            }
+            if (CategoriaGastoSeleccionado == null)
+            {
+                Shell.Current.DisplayAlert("Error", "Debe seleccionar una categoría para el gasto.", "OK");
+                return false;
+            }
+            if (TipoCuentaSeleccionada == null)
+            {
+                Shell.Current.DisplayAlert("Error", "Debe seleccionar un tipo de cuenta para el gasto.", "OK");
+                return false;
+            }
+            return true;
         }
     }
 }
