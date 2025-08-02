@@ -218,7 +218,6 @@
             <VerticalStackLayout Grid.Row="5">
                 <Button
                     Command="{Binding GuardarGastoCommand}"
-                    IsEnabled="{Binding GuardarGastoCommand.CanExecute}"
                     Style="{StaticResource botonPrimario}"
                     Text="Guardar Gasto"
                     TextColor="White" />
