@@ -88,6 +88,13 @@ namespace FinanKey.ViewModels
         [RelayCommand]
         private async Task GuardarGasto()
         {
+            // Validar si las listas de categorías y cuentas están vacías
+            if (CategoriaGastoSeleccionado == null || TipoCuentaSeleccionada == null)
+            {
+                await Shell.Current.DisplayAlert("Error", "Debe seleccionar una categoría y una cuenta.", "OK");
+                return;
+            }
+
             Gasto gastoTransaccion = new Gasto
             {
                 Monto = (decimal)MontoGasto,
