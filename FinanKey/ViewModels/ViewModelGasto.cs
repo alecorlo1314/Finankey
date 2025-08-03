@@ -3,18 +3,14 @@ using CommunityToolkit.Mvvm.Input;
 using FinanKey.Models;
 using FinanKey.Servicios;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace FinanKey.ViewModels
 {
-    public partial class ViewModelGasto : ObservableValidator
+    public partial class ViewModelGasto : ObservableObject
     {
         #region Propiedades para Gasto
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(GuardarGastoCommand))]
-        [Required(ErrorMessage = "El monto del gasto es obligatorio.")]
-        [NotifyDataErrorInfo]
-        [Range(0.01, float.MaxValue, ErrorMessage = "El monto debe ser mayor a cero.")]
         private float _montoGasto;
 
         [ObservableProperty]
@@ -34,11 +30,6 @@ namespace FinanKey.ViewModels
         private DateTime _fechaSeleccionada = DateTime.Today;
         #endregion
 
-        #region propiedades de validacion
-        [ObservableProperty]
-        private string _montoGastoError;
-        #endregion
-
         //Prueba para comboBox tipoCuenta y categoria
         public ObservableCollection<TipoCuenta>? TiposDeCuenta { get; set; }
         public ObservableCollection<Categoria>? CategoriaGasto { get; set; }
@@ -52,8 +43,6 @@ namespace FinanKey.ViewModels
             _serviciosTransaccionGasto = serviciosTransaccionGasto;
             //inicializar datos estaticos
             InicializarDatosEstáticos();
-            //Validaciones de propiedades
-            ValidateAllProperties();
         }
         //cargar datos estaticos
         private void InicializarDatosEstáticos()
@@ -76,13 +65,6 @@ namespace FinanKey.ViewModels
                 new() { Id = 3, Color = "Blue", tipoCategoria = new TipoCategoria { Id = 3, Descripcion = "Educacion" } },
                 new() { Id = 4, Color = "Purple", tipoCategoria = new TipoCategoria { Id = 4, Descripcion = "Entretenimiento" } }
             };
-        }
-
-        // Propiedades para mostrar errores en la vista
-        partial void OnMontoGastoChanged(float value)
-        {
-            ValidateProperty(value, nameof(MontoGasto));
-            MontoGastoError = GetErrors(nameof(MontoGasto)).Cast<string>().FirstOrDefault();
         }
 
         [RelayCommand]

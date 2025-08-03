@@ -3,7 +3,9 @@
     x:Class="FinanKey.App"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:FinanKey">
+    xmlns:local="clr-namespace:FinanKey"
+    xmlns:vm="clr-namespace:FinanKey.ViewModels">
+
     <Application.Resources>
         <ResourceDictionary>
 
@@ -37,12 +39,6 @@
             <Color x:Key="ColorAcento2">#47B6D4</Color>
             <Color x:Key="ColorAcento3">#EBA90D</Color>
             <Color x:Key="ColorAcentoSuave4">#FEF0D0</Color>
-            <!--Colores de gráficas
-            <Color x:Key="Grafico1">#6b4eff</Color>
-            <Color x:Key="Grafico2">#22c55e</Color>
-            <Color x:Key="Grafico3">#ffae34</Color>
-            <Color x:Key="Grafico4">#3b82f6</Color>
-            <Color x:Key="Grafico5">#ef4444</Color>-->
 
             <!--  Botón primario  -->
             <Style x:Key="botonPrimario" TargetType="Button">
