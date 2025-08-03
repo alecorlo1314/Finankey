@@ -50,10 +50,10 @@ namespace FinanKey.ViewModels
         {
             //INICIALIZACION DE INYECCION DE DEPENDENCIAS
             _serviciosTransaccionGasto = serviciosTransaccionGasto;
-            //Validaciones de propiedades
-            ValidateAllProperties();
             //inicializar datos estaticos
             InicializarDatosEstáticos();
+            //Validaciones de propiedades
+            ValidateAllProperties();
         }
         //cargar datos estaticos
         private void InicializarDatosEstáticos()
@@ -103,12 +103,17 @@ namespace FinanKey.ViewModels
             if (resultado)
             {
                 await Shell.Current.DisplayAlert("Éxito", "Transacción de gasto guardada correctamente.", "OK");
-                MontoGasto = 0;
-                DescripcionGasto = string.Empty;
-                CategoriaGastoSeleccionado = null;
-                TipoCuentaSeleccionada = null;
-                FechaSeleccionada = DateTime.Today;
+                LimpiarCampos();
             }
+        }
+
+        private void LimpiarCampos()
+        {
+            MontoGasto = 0;
+            DescripcionGasto = string.Empty;
+            CategoriaGastoSeleccionado = null;
+            TipoCuentaSeleccionada = null;
+            FechaSeleccionada = DateTime.Today;
         }
     }
 }
