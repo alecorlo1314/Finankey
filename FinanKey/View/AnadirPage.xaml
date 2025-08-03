@@ -59,6 +59,7 @@
             IsVisible="True"
             RowDefinitions="auto,*,*,*,*,*"
             RowSpacing="16">
+            
             <!--  Monto  -->
             <VerticalStackLayout Grid.Row="0" Spacing="8">
                 <Label Style="{StaticResource subtitulosFormularios}" Text="Monto del Gasto" />
@@ -77,7 +78,10 @@
                         Unfocused="entradaMonto_Unfocused" />
                 </Border>
                 <!--  Mensaje de error  -->
-                <Label Text="{Binding MontoGastoError}" TextColor="Red" FontSize="12" />
+                <Label
+                    FontSize="12"
+                    Text="{Binding MontoGastoError, Converter={StaticResource StringNotEmptyConverter}}"
+                    TextColor="Red" />
             </VerticalStackLayout>
             <!--  Descripcion  -->
             <VerticalStackLayout Grid.Row="1" Spacing="8">

@@ -1,17 +1,21 @@
-﻿using FinanKey.Models;
-using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FinanKey.Models;
 using FinanKey.Servicios;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace FinanKey.ViewModels
 {
-    public partial class ViewModelGasto : ObservableObject
+    public partial class ViewModelGasto : ObservableValidator
     {
         #region Propiedades para Gasto
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(GuardarGastoCommand))]
-        private decimal _montoGasto;
+        [Required(ErrorMessage = "El monto del gasto es obligatorio.")]
+        [NotifyDataErrorInfo]
+        [Range(0.01, float.MaxValue, ErrorMessage = "El monto debe ser mayor a cero.")]
+        private float _montoGasto;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(GuardarGastoCommand))]
@@ -30,6 +34,11 @@ namespace FinanKey.ViewModels
         private DateTime _fechaSeleccionada = DateTime.Today;
         #endregion
 
+        #region propiedades de validacion
+        [ObservableProperty]
+        private string _montoGastoError;
+        #endregion
+
         //Prueba para comboBox tipoCuenta y categoria
         public ObservableCollection<TipoCuenta>? TiposDeCuenta { get; set; }
         public ObservableCollection<Categoria>? CategoriaGasto { get; set; }
@@ -41,6 +50,8 @@ namespace FinanKey.ViewModels
         {
             //INICIALIZACION DE INYECCION DE DEPENDENCIAS
             _serviciosTransaccionGasto = serviciosTransaccionGasto;
+            //Validaciones de propiedades
+            ValidateAllProperties();
             //inicializar datos estaticos
             InicializarDatosEstáticos();
         }
@@ -67,12 +78,19 @@ namespace FinanKey.ViewModels
             };
         }
 
+        // Propiedades para mostrar errores en la vista
+        partial void OnMontoGastoChanged(float value)
+        {
+            ValidateProperty(value, nameof(MontoGasto));
+            MontoGastoError = GetErrors(nameof(MontoGasto)).Cast<string>().FirstOrDefault();
+        }
+
         [RelayCommand]
         private async Task GuardarGasto()
         {
             Gasto gastoTransaccion = new Gasto
             {
-                Monto = MontoGasto,
+                Monto = (decimal)MontoGasto,
                 Descripcion = DescripcionGasto,
                 CategoriaId = CategoriaGastoSeleccionado.Id,
                 CuentaId = TipoCuentaSeleccionada.Id,
