@@ -24,12 +24,12 @@ public partial class FinanzasPage : ContentPage
 
     private void Entry_Focused(object sender, FocusEventArgs e)
     {
-        borderBarraBusqueda.Stroke = Color.Parse("#4f46e5");
-        borderBarraBusqueda.StrokeThickness = 2;
+        //borderBarraBusqueda.Stroke = Color.Parse("#4f46e5");
+        //borderBarraBusqueda.StrokeThickness = 2;
     }
 
     private void Entry_Unfocused(object sender, FocusEventArgs e)
     {
-        borderBarraBusqueda.Stroke = Colors.Transparent;
+        //borderBarraBusqueda.Stroke = Colors.Transparent;
     }
 }

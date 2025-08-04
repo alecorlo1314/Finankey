@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Padding="{StaticResource PagePadding}"
     Background="{StaticResource FondoPrincipal}">
 
     <!--  Cambio de color de la barra  -->
@@ -12,13 +13,108 @@
     </ContentPage.Behaviors>
     <!--  DESLIZAR PANATALLA  -->
     <ScrollView>
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="20">
+            <!--  ICONOS NOTIFICACION Y PERFIL  -->
+            <Grid Grid.Row="0" ColumnDefinitions="50*,50*">
+                <StackLayout Grid.Column="0" HorizontalOptions="Start">
+                    <Image
+                        HeightRequest="32"
+                        Source="campana.png"
+                        WidthRequest="32" />
+                </StackLayout>
+                <StackLayout Grid.Column="1" HorizontalOptions="End">
+                    <Image
+                        HeightRequest="32"
+                        Source="usuario.svg"
+                        WidthRequest="32" />
+                </StackLayout>
+            </Grid>
+            <!--  BIENVENIDA Y SALUDOS  -->
+
+            <VerticalStackLayout Grid.Row="1">
+                <Label
+                    FontFamily="PoppinsBold"
+                    FontSize="24"
+                    HorizontalOptions="Start"
+                    Text="¡Hola, Alexander!"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+                <Label
+                    FontFamily="PoppinsRegular"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="!Que tengas buenas noches!"
+                    TextColor="{StaticResource ColorTextoSecundario}"
+                    VerticalOptions="Center" />
+            </VerticalStackLayout>
+            <!--  BORDER DE BALANCE DISPONIBLE  -->
+            <Border
+                Grid.Row="2"
+                Padding="0"
+                BackgroundColor="Transparent"
+                HeightRequest="180"
+                Stroke="Transparent"
+                StrokeShape="RoundRectangle 20"
+                WidthRequest="380">
+                <Grid
+                    Margin="0"
+                    Padding="0"
+                    RowDefinitions="auto,auto">
+                    <!--  Imagen como fondo  -->
+                    <Image
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Aspect="Fill"
+                        HeightRequest="180"
+                        Source="fondo_tarjeta_cuenta.svg" />
+                    <!-- TITULO, SALDO, VER MAS -->
+                    <Grid
+                        Margin="20,20"
+                        RowDefinitions="70*,30*"
+                        RowSpacing="10">
+                        <StackLayout Grid.Row="0">
+                            <Label
+                                FontFamily="PoppinsRegular"
+                                FontSize="16"
+                                Text="Saldo Disponible"
+                                TextColor="{StaticResource ColorTextoSecundario}" />
+                            <Label
+                                FontFamily="PoppinsSemibold"
+                                FontSize="24"
+                                Text="$ 3,578"
+                                TextColor="{StaticResource FondoPrincipal}" />
+                        </StackLayout>
+                        <StackLayout
+                            Grid.Row="1"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Start">
+                            <Button
+                                BackgroundColor="Transparent"
+                                FontFamily="PoppinsSemibold "
+                                FontSize="14"
+                                Text="Ver Detalles"
+                                TextColor="{StaticResource FondoPrincipal}" />
+                        </StackLayout>
+                    </Grid>
+                </Grid>
+
+            </Border>
+        </Grid>
+    </ScrollView>
+
+
+
+    <!--  DESLIZAR PANATALLA  -->
+    <!--<ScrollView>
         <Grid Margin="16,16" RowDefinitions="auto,auto">
             <Grid
                 Grid.Row="0"
                 RowDefinitions="10*,10*,10*,5*,25*,10*,auto"
                 RowSpacing="5">
 
-                <!--  ICONOS NOTIFICACION Y PERFIL  -->
+    -->
+    <!--  ICONOS NOTIFICACION Y PERFIL  -->
+    <!--
                 <Grid
                     Grid.Column="0"
                     Margin="0,0,0,25"
@@ -47,7 +143,9 @@
                             WidthRequest="24" />
                     </HorizontalStackLayout>
                 </Grid>
-                <!--  BIENVENIDA Y SALUDOS  -->
+    -->
+    <!--  BIENVENIDA Y SALUDOS  -->
+    <!--
                 <VerticalStackLayout Grid.Row="1">
                     <Label
                         FontFamily="PoppinsBold"
@@ -64,7 +162,9 @@
                         TextColor="{StaticResource ColorTextoSecundario}"
                         VerticalOptions="Center" />
                 </VerticalStackLayout>
-                <!--  BARRA DE BUSQUEDA  -->
+    -->
+    <!--  BARRA DE BUSQUEDA  -->
+    <!--
                 <Border
                     x:Name="borderBarraBusqueda"
                     Grid.Row="2"
@@ -110,7 +210,9 @@
                             WidthRequest="20" />
                     </Grid>
                 </Border>
-                <!--  TITULO COLECCION CUENTAS  -->
+    -->
+    <!--  TITULO COLECCION CUENTAS  -->
+    <!--
                 <StackLayout Grid.Row="3" VerticalOptions="End">
                     <Label
                         FontFamily="PoppinsSemibold"
@@ -120,12 +222,16 @@
                         TextColor="Black"
                         VerticalOptions="End" />
                 </StackLayout>
-                <!--  COLECCION DE CUENTAS  -->
+    -->
+    <!--  COLECCION DE CUENTAS  -->
+    <!--
                 <CollectionView
                     Grid.Row="4"
                     ItemsSource="{Binding ListaCuentas}"
                     VerticalOptions="Center">
-                    <!--  VISTA DE CUENTAS CUANTO ESTA VACIA  -->
+    -->
+    <!--  VISTA DE CUENTAS CUANTO ESTA VACIA  -->
+    <!--
                     <CollectionView.EmptyView>
                         <Border
                             Grid.Row="0"
@@ -148,7 +254,9 @@
                             </StackLayout>
                         </Border>
                     </CollectionView.EmptyView>
-                    <!--  VISTA DE CUENTAS CUANDO HAY  -->
+    -->
+    <!--  VISTA DE CUENTAS CUANDO HAY  -->
+    <!--
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout ItemSpacing="12" Orientation="Horizontal" />
                     </CollectionView.ItemsLayout>
@@ -162,12 +270,16 @@
                                 Stroke="{StaticResource ColorAcento}"
                                 StrokeShape="RoundRectangle 20"
                                 WidthRequest="160">
-                                <!--  Cuando se toque  -->
+    -->
+    <!--  Cuando se toque  -->
+    <!--
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding BindingContext.NavegarADetalleCuentaCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" CommandParameter="{Binding .}" />
                                 </Border.GestureRecognizers>
                                 <Grid RowDefinitions="*,*,*" RowSpacing="8">
-                                    <!--  Fila 1: Tipo de cuenta  -->
+    -->
+    <!--  Fila 1: Tipo de cuenta  -->
+    <!--
                                     <HorizontalStackLayout Grid.Row="0" Spacing="30">
                                         <Image
                                             Aspect="AspectFit"
@@ -185,7 +297,9 @@
                                             VerticalOptions="Center" />
                                     </HorizontalStackLayout>
 
-                                    <!--  Fila 2: Nombre cuenta  -->
+    -->
+    <!--  Fila 2: Nombre cuenta  -->
+    <!--
                                     <StackLayout Grid.Row="1" VerticalOptions="End">
                                         <Label
                                             FontFamily="PoppinsSemibold"
@@ -196,7 +310,9 @@
                                             TextColor="{StaticResource Suave}" />
                                     </StackLayout>
 
-                                    <!--  Fila 3: Saldo  -->
+    -->
+    <!--  Fila 3: Saldo  -->
+    <!--
                                     <HorizontalStackLayout Grid.Row="2">
                                         <Label
                                             FontFamily="PoppinsRegular"
@@ -213,7 +329,9 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-                <!--  TITULO MOVIMIENTOS RECIENTES Y BOTON VER MAS  -->
+    -->
+    <!--  TITULO MOVIMIENTOS RECIENTES Y BOTON VER MAS  -->
+    <!--
                 <Grid Grid.Row="5" ColumnDefinitions="70*,30*">
                     <Label
                         FontFamily="PoppinsSemibold"
@@ -233,9 +351,13 @@
                         TextColor="{StaticResource ColorAcento}"
                         VerticalOptions="Center" />
                 </Grid>
-                <!--  INFORMACION MOVIMIENTOS  -->
+    -->
+    <!--  INFORMACION MOVIMIENTOS  -->
+    <!--
                 <Grid Grid.Row="6" RowDefinitions="auto,*">
-                    <!--  MENSAJE CUANDO NO HAY MOVIMIENTOS  -->
+    -->
+    <!--  MENSAJE CUANDO NO HAY MOVIMIENTOS  -->
+    <!--
                     <Border
                         Grid.Row="0"
                         Padding="20"
@@ -256,7 +378,9 @@
                                 VerticalOptions="Center" />
                         </StackLayout>
                     </Border>
-                    <!--  LISTA DE MOVIMIENTOS CUANDO HAY MOVIMIENTOS  -->
+    -->
+    <!--  LISTA DE MOVIMIENTOS CUANDO HAY MOVIMIENTOS  -->
+    <!--
                     <CollectionView
                         Grid.Row="1"
                         ItemsSource="{Binding Transacciones}"
@@ -287,7 +411,9 @@
                                             <TapGestureRecognizer Command="{Binding NavegarDetalleCuentaCommand, Mode=TwoWay}" />
                                         </Border.GestureRecognizers>
                                         <Grid ColumnDefinitions="20*,45*,40*" ColumnSpacing="5">
-                                            <!--  Fila Icono  -->
+    -->
+    <!--  Fila Icono  -->
+    <!--
                                             <Border
                                                 Grid.Column="0"
                                                 Background="{StaticResource ColorAcentoSuave4}"
@@ -313,7 +439,9 @@
                                                 </StackLayout>
                                             </Border>
 
-                                            <!--  DESCRIPCION Y CATEGORIA DEL MOVIMIENTOS  -->
+    -->
+    <!--  DESCRIPCION Y CATEGORIA DEL MOVIMIENTOS  -->
+    <!--
                                             <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                                                 <Label
                                                     FontFamily="PoppinsSemibold"
@@ -322,7 +450,9 @@
                                                     MaxLines="1"
                                                     Text="{Binding Descripcion, Mode=TwoWay}"
                                                     TextColor="{StaticResource ColorTextoPrimario}" />
-                                                <!--  CATEGORIA MOVIMIENTO  -->
+    -->
+    <!--  CATEGORIA MOVIMIENTO  -->
+    <!--
                                                 <Label
                                                     FontFamily="PoppinsRegular"
                                                     FontSize="12"
@@ -331,7 +461,9 @@
                                                     Text="{Binding TipoCategoria, Mode=TwoWay}"
                                                     TextColor="{StaticResource ColorTextoSecundario}" />
                                             </VerticalStackLayout>
-                                            <!--  MONTO DEL MOVIMIENTO  -->
+    -->
+    <!--  MONTO DEL MOVIMIENTO  -->
+    <!--
                                             <VerticalStackLayout
                                                 Grid.Column="2"
                                                 HorizontalOptions="Center"
@@ -350,7 +482,9 @@
                     </CollectionView>
                 </Grid>
             </Grid>
-            <!--  Cargador de estados  -->
+    -->
+    <!--  Cargador de estados  -->
+    <!--
             <ActivityIndicator
                 Grid.Row="1"
                 HorizontalOptions="Center"
@@ -359,5 +493,5 @@
                 VerticalOptions="Center"
                 Color="DarkBlue" />
         </Grid>
-    </ScrollView>
+    </ScrollView>-->
 </ContentPage>

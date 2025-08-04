@@ -30,9 +30,10 @@ namespace FinanKey.ViewModels
         private DateTime _fechaSeleccionada = DateTime.Today;
         #endregion
 
-        //Prueba para comboBox tipoCuenta y categoria
+        #region Listas
         public ObservableCollection<TipoCuenta>? TiposDeCuenta { get; set; }
         public ObservableCollection<Categoria>? CategoriaGasto { get; set; }
+        #endregion
 
         //Inicializacion Inyeccion de Dependencias
         private readonly IServiciosTransaccionGasto _serviciosTransaccionGasto;
@@ -44,7 +45,7 @@ namespace FinanKey.ViewModels
             //inicializar datos estaticos
             InicializarDatosEstáticos();
         }
-        //cargar datos estaticos
+        #region cargar datos estaticos
         private void InicializarDatosEstáticos()
         {
             // DATOS TIPO CUENTA
@@ -66,6 +67,7 @@ namespace FinanKey.ViewModels
                 new() { Id = 4, Color = "Purple", tipoCategoria = new TipoCategoria { Id = 4, Descripcion = "Entretenimiento" } }
             };
         }
+        #endregion
 
         [RelayCommand]
         private async Task GuardarGasto()
@@ -96,6 +98,7 @@ namespace FinanKey.ViewModels
             }
         }
 
+        #region Limpiar Campos
         private void LimpiarCampos()
         {
             MontoGasto = 0;
@@ -104,5 +107,6 @@ namespace FinanKey.ViewModels
             TipoCuentaSeleccionada = null;
             FechaSeleccionada = DateTime.Today;
         }
+        #endregion
     }
 }
