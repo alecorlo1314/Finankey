@@ -35,6 +35,7 @@
             <Color x:Key="ColorInconoSelected">#4E61B6</Color>
             <Color x:Key="ColorAcentoTarjetaIncome">#DAF0F6</Color>
             <Color x:Key="ColorAcentoTarjetaExpense">#FCD2DF</Color>
+            <Color x:Key="ColorFondoMoradoSuave">#DCDFF0</Color>
             <Color x:Key="ColorAcento1">#EE1E5F</Color>
             <Color x:Key="ColorAcento2">#47B6D4</Color>
             <Color x:Key="ColorAcento3">#EBA90D</Color>
