@@ -85,7 +85,7 @@
 
 
 
-            <!-- Colores -->
+            <!--  Colores  -->
             <Color x:Key="PrimaryColor">#0ea5e9</Color>
             <Color x:Key="SecondaryColor">#5eead4</Color>
             <Color x:Key="BalanceCardBg">#d1fae5</Color>
@@ -93,22 +93,22 @@
             <Color x:Key="TextPrimary">#0f172a</Color>
             <Color x:Key="TextSecondary">#64748b</Color>
 
-            <!-- Estilos de Label -->
-            <Style TargetType="Label" x:Key="TitleLabel">
+            <!--  Estilos de Label  -->
+            <Style x:Key="TitleLabel" TargetType="Label">
                 <Setter Property="FontFamily" Value="PoppinsBold" />
                 <Setter Property="FontSize" Value="18" />
                 <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
             </Style>
-            <Style TargetType="Label" x:Key="SubtitleLabel">
+            <Style x:Key="SubtitleLabel" TargetType="Label">
                 <Setter Property="FontFamily" Value="PoppinsRegular" />
                 <Setter Property="FontSize" Value="14" />
                 <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
             </Style>
 
-            <!-- Espaciados -->
+            <!--  Espaciados  -->
             <Thickness x:Key="PagePadding">16,20,16,8</Thickness>
             <Thickness x:Key="CardPadding">20,12</Thickness>
-            
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
