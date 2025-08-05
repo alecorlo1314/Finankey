@@ -43,5 +43,10 @@ namespace FinanKey.Datos
             }
             return false;
         }
+        public async Task<List<Ingreso>> ObtenerTransaccionesIngresoPorCuentaAsync(int idCuenta)
+        {
+            await Init();
+            return await _baseDatos.Table<Ingreso>().Where(g => g.CuentaId == idCuenta).ToListAsync();
+        }
     }
 }
