@@ -93,8 +93,7 @@ namespace FinanKey.ViewModels
 
                 if (cuentas != null && cuentas.Count > 0)
                 {
-                    MainThread.BeginInvokeOnMainThread(() =>
-                    {
+
                         ListaCuentas.Clear();
                         foreach (var cuenta in cuentas)
                         {
@@ -102,7 +101,7 @@ namespace FinanKey.ViewModels
                             ListaCuentas.Add(cuenta);
                         }
                         _hayCuentas = ListaCuentas.Count > 0;
-                    });
+            
                 }
                 else
                 {
