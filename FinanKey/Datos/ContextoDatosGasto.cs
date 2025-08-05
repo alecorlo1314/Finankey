@@ -26,5 +26,10 @@ namespace FinanKey.Datos
             await Init();
             return await _baseDatos.Table<Gasto>().ToListAsync();
         }
+        public async Task<List<Gasto>> ObtenerTransaccionGastoPorIdAsync(int idCuenta)
+        {
+            await Init();
+            return await _baseDatos.Table<Gasto>().Where(g => g.CuentaId == idCuenta).ToListAsync();
+        }
     }
 }
