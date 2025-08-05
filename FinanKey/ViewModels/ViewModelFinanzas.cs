@@ -30,14 +30,14 @@ namespace FinanKey.ViewModels
         private Cuenta cuentaSeleccionada;
 
         //inicializar propiedades
-        [ObservableProperty] 
+        [ObservableProperty]
         public bool _hayMovimiento;
         [ObservableProperty]
         private bool isBusy;
         private bool _hayCuentas;
 
-        public ViewModelFinanzas(IServicioTransaccionCuenta servicioCuenta, 
-                                IServiciosTransaccionGasto servicioTransaccionGasto, 
+        public ViewModelFinanzas(IServicioTransaccionCuenta servicioCuenta,
+                                IServiciosTransaccionGasto servicioTransaccionGasto,
                                 IServiciosTransaccionIngreso servicioTransaccionIngreso)
         {
             //Asignar los servicios a las variables privadas
@@ -180,7 +180,7 @@ namespace FinanKey.ViewModels
                 await Shell.Current.DisplayAlert("Error", $"Error al cargar transacciones: {ex.Message}", "OK");
             }
         }
-        //terminar esto
+        // // Comando para navegar a la página de detalle de cuenta con la cuenta seleccionada
         [RelayCommand]
         async Task NavegarADetalleCuenta(Cuenta cuenta)
         {

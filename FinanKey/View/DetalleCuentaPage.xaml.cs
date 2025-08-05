@@ -14,12 +14,13 @@ public partial class DetalleCuentaPage : ContentPage
     {
         base.OnNavigatedTo(args);
     }
+    //Este metodo es para cambiar el color del borde de la barra de busqueda cuando se enfoca y se desenfoca
     private void Entry_Focused(object sender, FocusEventArgs e)
     {
         borderBarraBusqueda.Stroke = Color.Parse("#4E61B6");
         borderBarraBusqueda.StrokeThickness = 2;
     }
-
+    //Este metodo es para cambiar el color del borde de la barra de busqueda cuando se desenfoca
     private void Entry_Unfocused(object sender, FocusEventArgs e)
     {
         borderBarraBusqueda.Stroke = Colors.Transparent;

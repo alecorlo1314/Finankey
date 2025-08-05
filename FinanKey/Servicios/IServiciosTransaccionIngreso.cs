@@ -10,5 +10,6 @@ namespace FinanKey.Servicios
         public Task<List<Ingreso>> ObtenerTransaccionesIngresoAsync();
         public Task<bool> ActualizarTransaccionIngresoAsync(Ingreso transaccionIngreso);
         public Task<bool> EliminarTransaccionIngresoAsync(int id);
+        public Task<List<Ingreso>> ObtenerTransaccionesIngresoPorCuentaAsync(int cuentaId);
     }
 }
