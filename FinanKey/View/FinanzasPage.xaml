@@ -108,7 +108,7 @@
             <!--  COLECCION DE CUENTAS  -->
             <CollectionView
                 Grid.Row="4"
-                HeightRequest="170"
+                HeightRequest="150"
                 ItemsSource="{Binding ListaCuentas}">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout ItemSpacing="0" Orientation="Horizontal" />
@@ -135,7 +135,8 @@
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding BindingContext.NavegarADetalleCuentaCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" CommandParameter="{Binding .}" />
                             </Border.GestureRecognizers>
-                            <Grid RowDefinitions="*,*,*">
+                            <Grid RowDefinitions="*,*,*" RowSpacing="5">
+                                <!--  IMAGEN  -->
                                 <Border
                                     Grid.Column="0"
                                     BackgroundColor="{StaticResource ColorFondoMoradoSuave}"
@@ -157,7 +158,7 @@
                                 <!--  Nombre cuenta  -->
                                 <Label
                                     Grid.Row="1"
-                                    FontFamily="PoppinsSemibold"
+                                    FontFamily="PoppinsBold"
                                     FontSize="20"
                                     LineBreakMode="WordWrap"
                                     MaxLines="2"
@@ -168,7 +169,7 @@
                                 <Label
                                     Grid.Row="2"
                                     FontFamily="PoppinsRegular"
-                                    FontSize="16"
+                                    FontSize="14"
                                     Text="{Binding Saldo, StringFormat='{0:C}', Mode=TwoWay}"
                                     TextColor="{StaticResource ColorTextoPrimario}"
                                     VerticalOptions="Start" />
@@ -177,6 +178,26 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            <!--  TITULO MOVIMIENTOS RECIENTES Y BOTON VER MAS  -->
+            <Grid Grid.Row="5" ColumnDefinitions="70*,30*">
+                <Label
+                    FontFamily="PoppinsSemibold"
+                    FontSize="18"
+                    HorizontalOptions="Start"
+                    Text="Movimientos Recientes"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+                <Button
+                    Grid.Column="1"
+                    BackgroundColor="Transparent"
+                    FontFamily="PoppinsMedium"
+                    FontSize="16"
+                    HeightRequest="50"
+                    HorizontalOptions="Center"
+                    Text="Ver más"
+                    TextColor="{StaticResource ColorAcento}"
+                    VerticalOptions="Center" />
+            </Grid>
 
         </Grid>
     </ScrollView>
