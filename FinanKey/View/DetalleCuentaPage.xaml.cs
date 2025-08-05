@@ -14,4 +14,14 @@ public partial class DetalleCuentaPage : ContentPage
     {
         base.OnNavigatedTo(args);
     }
+    private void Entry_Focused(object sender, FocusEventArgs e)
+    {
+        borderBarraBusqueda.Stroke = Color.Parse("#4E61B6");
+        borderBarraBusqueda.StrokeThickness = 2;
+    }
+
+    private void Entry_Unfocused(object sender, FocusEventArgs e)
+    {
+        borderBarraBusqueda.Stroke = Colors.Transparent;
+    }
 }

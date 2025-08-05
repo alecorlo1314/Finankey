@@ -94,6 +94,8 @@
                     Source="busqueda.svg"
                     WidthRequest="20" />
                 <Entry
+                    Focused="Entry_Focused"
+                    Unfocused="Entry_Unfocused"
                     Grid.Column="1"
                     FontFamily="PoppinsRegular"
                     FontSize="14"
