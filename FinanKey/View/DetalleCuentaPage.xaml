@@ -113,8 +113,7 @@
             </Grid>
         </Border>
         <!--  LISTA DE MOVIMIENTOS  -->
-        <!--  INFORMACION MOVIMIENTOS  -->
-        <Grid Grid.Row="6" RowDefinitions="auto,*">
+        <Grid Grid.Row="2" RowDefinitions="auto,*">
             <Border
                 Grid.Row="0"
                 Padding="20"

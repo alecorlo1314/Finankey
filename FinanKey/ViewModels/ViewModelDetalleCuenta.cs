@@ -7,7 +7,6 @@ namespace FinanKey.ViewModels
 {
     // Recibe los datos de la cuenta seleccionada desde la vista DetalleCuentaPage.xaml.cs
     [QueryProperty(nameof(Cuenta), nameof(Cuenta))]
-    [QueryProperty(nameof(Transacciones), nameof(Transacciones))]
     public partial class ViewModelDetalleCuenta : ObservableObject
     {
         // Inyección de dependencias
@@ -38,9 +37,14 @@ namespace FinanKey.ViewModels
         {
             _servicioTransaccionGasto = servicioTransaccionGasto;
             _servicioTransaccionIngreso = servicioTransaccionIngreso;
-            // Inicializar datos
+            CargaDatosInicialAsyn();
+        }
+        public async void CargaDatosInicialAsyn()
+        {
             InicializarDatosEstáticos();
-            _ = CargarListaMovimientosAsync();
+            IsBusy = true;
+            await CargarListaMovimientosAsync();
+            IsBusy = false;
         }
         private void InicializarDatosEstáticos()
         {
