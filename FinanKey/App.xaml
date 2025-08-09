@@ -8,7 +8,7 @@
 
     <Application.Resources>
         <ResourceDictionary>
-            <!--PALETA DE COLORES-->
+            <!--  PALETA DE COLORES  -->
             <Color x:Key="ColorFondo">#F5F7FA</Color>
             <Color x:Key="ColorTexto">#0F1724</Color>
             <Color x:Key="ColorCardMorado">#37265A</Color>
@@ -23,6 +23,42 @@
             <SolidColorBrush x:Key="BrushAccentRed" Color="{StaticResource ColorAcentoRojo}" />
             <SolidColorBrush x:Key="BrushAccentAmber" Color="{StaticResource ColorAcentoAmber}" />
             <SolidColorBrush x:Key="BrushMuted" Color="{StaticResource ColorMuteado}" />
+
+            <!--  Typography (Poppins)  -->
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource ColorTexto}" />
+                <Setter Property="FontFamily" Value="PoppinsRegular" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+
+            <!--  Titulo 26  -->
+            <Style
+                x:Key="Titulo26"
+                BasedOn="{StaticResource {x:Type Label}}"
+                TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsSemiBold" />
+                <Setter Property="FontSize" Value="26" />
+            </Style>
+            <!--  Subtitle 20sp  -->
+            <Style
+                x:Key="Subtitulo20"
+                BasedOn="{StaticResource {x:Type Label}}"
+                TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsMedium" />
+                <Setter Property="FontSize" Value="20" />
+            </Style>
+
+            <!--  Boton  -->
+            <Style TargetType="Button">
+                <Setter Property="FontFamily" Value="PoppinsMedium" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="HeightRequest" Value="48" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="Padding" Value="16,0" />
+            </Style>
+
+
+
 
 
             <Color x:Key="VentanaEmergente">#ffffff</Color>
