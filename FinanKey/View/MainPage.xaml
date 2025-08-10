@@ -31,10 +31,10 @@
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
+                            <!-- ESTRUCUTRA DE LA TARJETA -->
                             <Grid
                                 Padding="12"
                                 BackgroundColor="{StaticResource ColorCardPurple}"
-                                CornerRadius="12"
                                 HeightRequest="100"
                                 WidthRequest="300">
                                 <Grid.RowDefinitions>
@@ -52,7 +52,7 @@
                                     FontSize="12"
                                     Text="{Binding Last4, StringFormat='•••• {0}'}"
                                     TextColor="#EAEAEA" />
-                                Credit/Debit summary
+                                <!--  Credit/Debit summary -->
                                 <Grid
                                     Grid.Row="2"
                                     ColumnDefinitions="*,Auto"
@@ -125,7 +125,6 @@
                         <Grid
                             Padding="12"
                             BackgroundColor="{StaticResource ColorCardPurple}"
-                            CornerRadius="12"
                             HeightRequest="100"
                             VerticalOptions="Center"
                             WidthRequest="300">
