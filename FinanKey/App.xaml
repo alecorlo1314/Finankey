@@ -8,7 +8,7 @@
 
     <Application.Resources>
         <ResourceDictionary>
-            <!--PALETA DE COLORES-->
+            <!--  PALETA DE COLORES  -->
             <Color x:Key="ColorFondo">#F5F7FA</Color>
             <Color x:Key="ColorTexto">#0F1724</Color>
             <Color x:Key="ColorCardMorado">#37265A</Color>
