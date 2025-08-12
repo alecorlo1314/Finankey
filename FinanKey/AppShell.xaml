@@ -3,17 +3,23 @@
     x:Class="FinanKey.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:paginas="clr-namespace:FinanKey.View"
-    xmlns:simpleShell="clr-namespace:SimpleToolkit.SimpleShell;assembly=SimpleToolkit.SimpleShell"
     xmlns:controls="clr-namespace:FinanKey.View.Controles"
-    Routing.Route="main"
-    Shell.FlyoutBehavior="Disabled"
-    Shell.TabBarBackgroundColor="#ffffff"
-    Shell.TabBarForegroundColor="{StaticResource ColorInconoSelected}"
-    Shell.TabBarTitleColor="{StaticResource ColorInconoSelected}"
-    Shell.TabBarUnselectedColor="{StaticResource ColorInconoNoSelected}">
+    xmlns:simpleShell="clr-namespace:SimpleToolkit.SimpleShell;assembly=SimpleToolkit.SimpleShell">
 
-    <TabBar>
+    <TabBar x:Name="tabBar" />
+
+    <simpleShell:SimpleShell.RootPageContainer>
+        <Grid>
+            <simpleShell:SimpleNavigationHost x:Name="paginaContenedor" />
+            <controls:TabBarView
+                x:Name="tabBarView"
+                CurrentPageSelectionChanged="TabBarViewCurrentPageChanged"
+                HorizontalOptions="Fill"
+                VerticalOptions="End" />
+        </Grid>
+    </simpleShell:SimpleShell.RootPageContainer>
+
+    <!--<TabBar>
         <Tab
             Title="Finanzas"
             Icon="banco.svg"
@@ -38,5 +44,5 @@
             Route="configuracionPage">
             <ShellContent ContentTemplate="{DataTemplate paginas:ConfiguracionesPage}" />
         </Tab>
-    </TabBar>
+    </TabBar>-->
 </simpleShell:SimpleShell>

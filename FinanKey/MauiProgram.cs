@@ -6,6 +6,8 @@ using FinanKey.View;
 using FinanKey.Servicios;
 using FinanKey.ViewModels;
 using FinanKey.Datos;
+using SimpleToolkit.SimpleShell;
+using SimpleToolkit.Core;
 
 namespace FinanKey
 {
@@ -33,6 +35,8 @@ namespace FinanKey
                 .UseMauiCommunityToolkit()
                 .ConfigureSyncfusionToolkit()
                 .ConfigureSyncfusionCore()
+                .UseSimpleShell()
+                .UseSimpleToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -43,7 +47,7 @@ namespace FinanKey
                     fonts.AddFont("Poppins-Regular.ttf", "PoppinsRegular");
                     fonts.AddFont("Poppins-Medium.ttf", "PoppinsMedium");
                 });
-
+            builder.UseSimpleToolkit();
             builder.Services.AddSingleton<AnadirPage>();
             builder.Services.AddSingleton<ConfiguracionesPage>();
             builder.Services.AddSingleton<FinanzasPage>();
@@ -67,6 +71,17 @@ namespace FinanKey
 
 #if DEBUG
             builder.Logging.AddDebug();
+#endif
+
+#if ANDROID || IOS
+
+        builder.DisplayContentBehindBars();
+#endif
+
+#if ANDROID
+
+ builder.SetDefaultNavigationBarAppearance(Color.FromArgb("#6b4eff"));
+
 #endif
 
             return builder.Build();

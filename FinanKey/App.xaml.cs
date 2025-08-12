@@ -20,7 +20,8 @@ namespace FinanKey
             else
             {
                 // Si no hay credenciales guardadas, mostramos la página de inicio de sesión
-                MainPage = new LoginPage();
+                MainPage = new AppShell();
+                //MainPage = new LoginPage();
             }
         }
         //Metodo para cerrar la sesion
