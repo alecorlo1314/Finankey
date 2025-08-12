@@ -80,7 +80,7 @@ namespace FinanKey
 
 #if ANDROID
 
- builder.SetDefaultNavigationBarAppearance(Color.FromArgb("#6b4eff"));
+ builder.SetDefaultNavigationBarAppearance(Color.FromArgb("#37265A"));
 
 #endif
 
