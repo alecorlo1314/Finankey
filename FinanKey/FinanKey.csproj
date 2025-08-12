@@ -91,6 +91,9 @@
 	  <MauiXaml Update="View\ConfiguracionesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\Controles\TabBarView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\FinanzasPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
