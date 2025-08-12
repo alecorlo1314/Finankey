@@ -18,9 +18,9 @@ public partial class TabBarView : ContentView
         CalculateInnerRadius((float)backGraphicsView.Height, TabsPadding) - IconHeight) / 2) +
         CalculateInnerRadius((float)backGraphicsView.Height, TabsPadding);
 
-    TabBarViewDrawable drawable = null;
-    ContentButton currentButton = null;
-    TabBarIconView currentIconView => currentButton.Content as TabBarIconView;
+    TabBarViewDrawable? drawable = null;
+    ContentButton? currentButton = null;
+    TabBarIconView? currentIconView => currentButton.Content as TabBarIconView;
 
     public static readonly BindableProperty TabsPaddingProperty =
         BindableProperty.Create(nameof(TabsPadding), typeof(Thickness), typeof(TabBarView), defaultValue: Thickness.Zero, propertyChanged: OnTabsPaddingChanged);
