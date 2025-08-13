@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FinanKey.View.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="MainPage"
+    BackgroundColor="{StaticResource ColorFondo}">
+    <ContentPage.Content>
+        <Grid Padding="16" RowDefinitions="Auto,*,Auto">
+            <!--  ENCABEZADO  -->
+            <Grid
+                Grid.Row="0"
+                Margin="0,8,0,8"
+                ColumnDefinitions="*,Auto">
+                <Label Style="{StaticResource Titulo26}" Text="Hola, " />
+                <Button
+                    Grid.Column="1"
+                    Clicked="OnAddCardClicked"
+                    Text="Añadir tarjeta" />
+            </Grid>
+
+            <!--  CARD HORIZONTAL  -->
+            <Grid Grid.Row="1">
+                <CollectionView
+                    HorizontalScrollBarVisibility="Never"
+                    ItemsSource="{Binding Tarjetas}"
+                    SelectedItem="{Binding Seleccionada}"
+                    SelectionMode="Single">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="12" Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <!-- ESTRUCUTRA DE LA TARJETA -->
+                            <Grid
+                                Padding="12"
+                                BackgroundColor="{StaticResource ColorCardPurple}"
+                                HeightRequest="100"
+                                WidthRequest="300">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label
+                                    FontFamily="PoppinsMedium"
+                                    FontSize="16"
+                                    Text="{Binding Alias}"
+                                    TextColor="White" />
+                                <Label
+                                    Grid.Row="1"
+                                    FontSize="12"
+                                    Text="{Binding Last4, StringFormat='•••• {0}'}"
+                                    TextColor="#EAEAEA" />
+                                <!--  Credit/Debit summary -->
+                                <Grid
+                                    Grid.Row="2"
+                                    ColumnDefinitions="*,Auto"
+                                    VerticalOptions="End">
+                                    <StackLayout>
+                                        <ContentView>
+                                            <ContentView.Triggers>
+                                                <DataTrigger
+                                                    Binding="{Binding Tipo}"
+                                                    TargetType="ContentView"
+                                                    Value="Debito">
+                                                    <Setter Property="Content">
+                                                        <Setter.Value>
+                                                            <Label
+                                                                FontFamily="PoppinsSemiBold"
+                                                                FontSize="16"
+                                                                Text="{Binding SaldoActual, StringFormat='Saldo: ₡{0:N2}'}"
+                                                                TextColor="White" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                    Binding="{Binding Tipo}"
+                                                    TargetType="ContentView"
+                                                    Value="Corriente">
+                                                    <Setter Property="Content">
+                                                        <Setter.Value>
+                                                            <Label
+                                                                FontFamily="PoppinsSemiBold"
+                                                                FontSize="16"
+                                                                Text="{Binding SaldoActual, StringFormat='Saldo: ₡{0:N2}'}"
+                                                                TextColor="White" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                    Binding="{Binding Tipo}"
+                                                    TargetType="ContentView"
+                                                    Value="Credito">
+                                                    <Setter Property="Content">
+                                                        <Setter.Value>
+                                                            <StackLayout Spacing="0">
+                                                                <Label
+                                                                    FontFamily="PoppinsSemiBold"
+                                                                    FontSize="16"
+                                                                    Text="{Binding SaldoPendiente, StringFormat='Pendiente: ₡{0:N2}'}"
+                                                                    TextColor="{StaticResource ColorAccentRed}" />
+                                                                <Label
+                                                                    FontSize="12"
+                                                                    Text="{Binding LimiteCredito, StringFormat='Disponible: ₡{0:N2}'}"
+                                                                    TextColor="#EAEAEA" />
+                                                            </StackLayout>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </ContentView.Triggers>
+                                        </ContentView>
+                                    </StackLayout>
+                                    <Button
+                                        Grid.Column="1"
+                                        Clicked="OnAddMovementClicked"
+                                        HeightRequest="36"
+                                        Text="Agregar movimiento" />
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                    <CollectionView.EmptyView>
+                        <Grid
+                            Padding="12"
+                            BackgroundColor="{StaticResource ColorCardPurple}"
+                            HeightRequest="100"
+                            VerticalOptions="Center"
+                            WidthRequest="300">
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    FontFamily="PoppinsSemiBold"
+                                    Text="+ Agregar tarjeta"
+                                    TextColor="White" />
+                                <Button Clicked="OnAddCardClicked" Text="Crear" />
+                            </StackLayout>
+                        </Grid>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
