@@ -32,7 +32,6 @@ public partial class AnadirPage : ContentPage
         // Ocultar todos los formularios
         formularioGasto.IsVisible = false;
         formularioIngreso.IsVisible = false;
-        formularioCuenta.IsVisible = false;
 
         // Resetear estilos
         ResetearEstilosBotones();
@@ -125,14 +124,4 @@ public partial class AnadirPage : ContentPage
 
     private void entradaMontoIngreso_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderMontoIngreso);
     private void entradaMontoIngreso_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderMontoIngreso);
-
-    private void entradaNombreCuenta_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderNombreCuenta);
-    private void entradaNombreCuenta_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderNombreCuenta);
-
-    private void entradaBancoCuenta_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderBancoCuenta);
-    private void entradaBancoCuenta_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderBancoCuenta);
-
-    private void entradaSaldoInicialCuenta_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderSaldoInicialCuenta);
-    private void entradaSaldoInicialCuenta_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderSaldoInicialCuenta);
-
 }
