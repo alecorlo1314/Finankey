@@ -52,7 +52,7 @@ namespace FinanKey.Datos
             };
                 foreach (var c in cats)
                     // Insertamos cada categoría en la base de datos
-                    await conexion.InsertAsync(new Categoria { Nombre = c, Icono = "shopping" });
+                    await conexion.InsertAsync(new Categoria { Nombre = c, Icon = "shopping" });
             }
         }
         
