@@ -13,7 +13,7 @@
     </ContentPage.Behaviors>
     <!--  DESLIZAR PANATALLA  -->
     <ScrollView>
-        <Grid RowDefinitions="100*,auto">
+        <Grid RowDefinitions="Auto,Auto">
             <!--  Cargador de estados  -->
             <ActivityIndicator
                 Grid.Row="0"
