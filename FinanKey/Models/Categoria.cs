@@ -9,6 +9,7 @@ namespace FinanKey.Models
         public int Id { get; set; }
         [Indexed,Unique, NotNull]
         public string? Nombre { get; set; }
-        public string Icono { get; set; } = "compras";
+        public string? Color { get; set; }
+        public TipoCategoria TipoCategoria { get; set; }
     }
 }
