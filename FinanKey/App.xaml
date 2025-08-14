@@ -25,12 +25,6 @@
             <SolidColorBrush x:Key="BrushAccentAmber" Color="{StaticResource ColorAcentoAmber}" />
             <SolidColorBrush x:Key="BrushMuted" Color="{StaticResource ColorMuteado}" />
 
-            <!--  Typography (Poppins)  -->
-            <Style TargetType="Label">
-                <Setter Property="TextColor" Value="{StaticResource ColorTexto}" />
-                <Setter Property="FontFamily" Value="PoppinsRegular" />
-                <Setter Property="FontSize" Value="14" />
-            </Style>
             
             <Color x:Key="VentanaEmergente">#ffffff</Color>
             <Color x:Key="TextoVentanaEmergente">#0d0c0f</Color>
