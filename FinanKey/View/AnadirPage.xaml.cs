@@ -57,15 +57,6 @@ public partial class AnadirPage : ContentPage
                 // Establecer el BindingContext para el formulario de Ingreso
                 BindingContext = _viewModelIngreso;
                 break;
-            //Si selecciono formulario Cuenta
-            case FormularioSeleccionado.Cuenta:
-                // Mostrar el formulario de Cuenta
-                formularioCuenta.IsVisible = true;
-                // Estilizar el botón de Cuenta
-                EstilizarBotonSeleccionado(btnCuenta, "banco_blanco.svg");
-                // Establecer el BindingContext para el formulario de Cuenta
-                BindingContext = _viewModelCuenta;
-                break;
         }
     }
     //Cuando el boton se presiona las interfaz del boton cambia de estilo
