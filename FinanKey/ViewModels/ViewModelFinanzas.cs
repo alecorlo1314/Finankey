@@ -63,18 +63,18 @@ namespace FinanKey.ViewModels
 
             CategoriaIngreso = new ObservableCollection<Categoria>
             {
-                new() { Id = 0, Color = "Green", tipoCategoria = new TipoCategoria { Id = 0, Descripcion = "Salario" } },
-                new() { Id = 1, Color = "Yellow", tipoCategoria = new TipoCategoria { Id = 1, Descripcion = "Inversiones" } },
-                new() { Id = 2, Color = "Red", tipoCategoria = new TipoCategoria { Id = 2, Descripcion = "Prestamo" } }
+                new() { Id = 0, Color = "Green", TipoCategoria = new TipoCategoria { Id = 0, Descripcion = "Salario" } },
+                new() { Id = 1, Color = "Yellow", TipoCategoria = new TipoCategoria { Id = 1, Descripcion = "Inversiones" } },
+                new() { Id = 2, Color = "Red", TipoCategoria = new TipoCategoria { Id = 2, Descripcion = "Prestamo" } }
             };
 
             CategoriaGasto = new ObservableCollection<Categoria>
             {
-                new() { Id = 0, Color = "Green", tipoCategoria = new TipoCategoria { Id = 0, Descripcion = "Alimentación" } },
-                new() { Id = 1, Color = "Yellow", tipoCategoria = new TipoCategoria { Id = 1, Descripcion = "Transporte" } },
-                new() { Id = 2, Color = "Red", tipoCategoria = new TipoCategoria { Id = 2, Descripcion = "Salud" } },
-                new() { Id = 3, Color = "Blue", tipoCategoria = new TipoCategoria { Id = 3, Descripcion = "Educación" } },
-                new() { Id = 4, Color = "Purple", tipoCategoria = new TipoCategoria { Id = 4, Descripcion = "Entretenimiento" } }
+                new() { Id = 0, Color = "Green", TipoCategoria = new TipoCategoria { Id = 0, Descripcion = "Alimentación" } },
+                new() { Id = 1, Color = "Yellow", TipoCategoria = new TipoCategoria { Id = 1, Descripcion = "Transporte" } },
+                new() { Id = 2, Color = "Red", TipoCategoria = new TipoCategoria { Id = 2, Descripcion = "Salud" } },
+                new() { Id = 3, Color = "Blue", TipoCategoria = new TipoCategoria { Id = 3, Descripcion = "Educación" } },
+                new() { Id = 4, Color = "Purple", TipoCategoria = new TipoCategoria { Id = 4, Descripcion = "Entretenimiento" } }
             };
         }
 
@@ -138,7 +138,7 @@ namespace FinanKey.ViewModels
                         Cuenta = cuenta,
                         TipoCuenta = cuenta.TipoCuenta?.Descripcion,
                         Categoria = categoria,
-                        TipoCategoria = categoria?.tipoCategoria?.Descripcion,
+                        TipoCategoria = categoria?.TipoCategoria?.Descripcion,
                         ColorTransaccion = ingreso.ColorIngreso
                     });
                 }
@@ -159,7 +159,7 @@ namespace FinanKey.ViewModels
                         Cuenta = cuenta,
                         TipoCuenta = cuenta.TipoCuenta?.Descripcion,
                         Categoria = categoria,
-                        TipoCategoria = categoria?.tipoCategoria?.Descripcion,
+                        TipoCategoria = categoria?.TipoCategoria?.Descripcion,
                         ColorTransaccion = gasto.ColorGasto
                     });
                 }

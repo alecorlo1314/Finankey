@@ -49,9 +49,9 @@ namespace FinanKey.ViewModels
             // DATOS CATEGORIA GASTO
             CategoriaIngreso = new ObservableCollection<Categoria>
                 {
-                 new() { Id = 0, Color = "Green", tipoCategoria = new TipoCategoria { Id = 0, Descripcion = "Salario" } },
-                 new() { Id = 1, Color = "Yellow", tipoCategoria = new TipoCategoria { Id = 1, Descripcion = "Inversiones" } },
-                 new() { Id = 2, Color = "Red", tipoCategoria = new TipoCategoria { Id = 2, Descripcion = "Prestamo" } },
+                 new() { Id = 0, Color = "Green", TipoCategoria = new TipoCategoria { Id = 0, Descripcion = "Salario" } },
+                 new() { Id = 1, Color = "Yellow", TipoCategoria = new TipoCategoria { Id = 1, Descripcion = "Inversiones" } },
+                 new() { Id = 2, Color = "Red", TipoCategoria = new TipoCategoria { Id = 2, Descripcion = "Prestamo" } },
                 };
         }
 
