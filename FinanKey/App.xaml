@@ -31,37 +31,7 @@
                 <Setter Property="FontFamily" Value="PoppinsRegular" />
                 <Setter Property="FontSize" Value="14" />
             </Style>
-
-            <!--  Titulo 26  -->
-            <Style
-                x:Key="Titulo26"
-                BasedOn="{StaticResource {x:Type Label}}"
-                TargetType="Label">
-                <Setter Property="FontFamily" Value="PoppinsSemiBold" />
-                <Setter Property="FontSize" Value="26" />
-            </Style>
-            <!--  Subtitle 20sp  -->
-            <Style
-                x:Key="Subtitulo20"
-                BasedOn="{StaticResource {x:Type Label}}"
-                TargetType="Label">
-                <Setter Property="FontFamily" Value="PoppinsMedium" />
-                <Setter Property="FontSize" Value="20" />
-            </Style>
-
-            <!--  Boton  -->
-            <Style TargetType="Button">
-                <Setter Property="FontFamily" Value="PoppinsMedium" />
-                <Setter Property="FontSize" Value="14" />
-                <Setter Property="HeightRequest" Value="48" />
-                <Setter Property="CornerRadius" Value="10" />
-                <Setter Property="Padding" Value="16,0" />
-            </Style>
-
-
-
-
-
+            
             <Color x:Key="VentanaEmergente">#ffffff</Color>
             <Color x:Key="TextoVentanaEmergente">#0d0c0f</Color>
             <Color x:Key="TextoPrimario">#ffffff</Color>
