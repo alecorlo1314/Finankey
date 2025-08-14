@@ -1,12 +1,96 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FinanKey.View.AgregarTarjetaPage"
-             Title="AgregarTarjetaPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="FinanKey.View.AgregarTarjetaPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    Title="AgregarTarjetaPage">
+    <!--  FORMULARIO INGRESAR CUENTA  -->
+    <Grid
+        x:Name="formularioCuenta"
+        IsVisible="False"
+        RowDefinitions="*,*,*,*,*,*"
+        RowSpacing="16">
+        <!--  Nombre de la Cuenta  -->
+        <VerticalStackLayout Grid.Row="0" Spacing="8">
+            <Label Style="{StaticResource subtitulosFormularios}" Text="Nombre de la Cuenta" />
+            <Border x:Name="borderNombreCuenta" Style="{StaticResource bordeFormulario}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <Entry
+                    x:Name="entradaNombreCuenta"
+                    Focused="entradaNombreCuenta_Focused"
+                    Placeholder="Ej: Cuenta de ahorros"
+                    Style="{StaticResource entradaFormulario}"
+                    Text="{Binding NombreCuenta, Mode=TwoWay}"
+                    Unfocused="entradaNombreCuenta_Unfocused" />
+            </Border>
+        </VerticalStackLayout>
+        <!--  Banco o Entidad  -->
+        <VerticalStackLayout Grid.Row="1" Spacing="8">
+            <Label Style="{StaticResource subtitulosFormularios}" Text="Banco o Entidad" />
+            <Border x:Name="borderBancoCuenta" Style="{StaticResource bordeFormulario}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <Entry
+                    x:Name="entradaBancoCuenta"
+                    Focused="entradaBancoCuenta_Focused"
+                    Placeholder="Ej: Banco Nacional"
+                    Style="{StaticResource entradaFormulario}"
+                    Text="{Binding NombreEntidadFinanciera, Mode=TwoWay}"
+                    Unfocused="entradaBancoCuenta_Unfocused" />
+            </Border>
+        </VerticalStackLayout>
+        <!--  Saldo Inicial  -->
+        <VerticalStackLayout Grid.Row="2" Spacing="8">
+            <Label Style="{StaticResource subtitulosFormularios}" Text="Saldo Inicial" />
+            <Border x:Name="borderSaldoInicialCuenta" Style="{StaticResource bordeFormulario}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <Entry
+                    x:Name="entradaSaldoInicialCuenta"
+                    Focused="entradaSaldoInicialCuenta_Focused"
+                    Keyboard="Numeric"
+                    Placeholder="0"
+                    Style="{StaticResource entradaFormulario}"
+                    Text="{Binding Saldo, Mode=TwoWay}"
+                    Unfocused="entradaSaldoInicialCuenta_Unfocused" />
+            </Border>
+        </VerticalStackLayout>
+        <!--  Tipo de Cuenta (Dropdown)  -->
+        <VerticalStackLayout Grid.Row="3" Spacing="8">
+            <Label Style="{StaticResource subtitulosFormularios}" Text="Tipo de Cuenta" />
+            <Border BackgroundColor="{StaticResource ColorTarjeta}" Stroke="{StaticResource ColorTarjeta}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <editors:SfComboBox
+                    x:Name="cmbTipoCuentaCuenta"
+                    BackgroundColor="Transparent"
+                    DisplayMemberPath="Descripcion"
+                    DropDownBackground="#ffffff"
+                    FontFamily="PoppinsRegular"
+                    FontSize="16"
+                    IsClearButtonVisible="True"
+                    ItemsSource="{Binding TipoCuenta}"
+                    Placeholder="Seleccionar tipo"
+                    PlaceholderColor="#6b7a99"
+                    SelectedItem="{Binding TipoCuentaSeleccionada, Mode=TwoWay}"
+                    Stroke="Transparent"
+                    TextMemberPath="Descripcion" />
+            </Border>
+
+        </VerticalStackLayout>
+        <!--  Botón Agregar Cuenta  -->
+        <VerticalStackLayout Grid.Row="4">
+            <Button
+                Command="{Binding GuardarCuentaCommand}"
+                Style="{StaticResource botonPrimario}"
+                Text="Agregar Cuenta"
+                TextColor="White" />
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>
