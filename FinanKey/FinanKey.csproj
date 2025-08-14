@@ -86,6 +86,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="View\AgregarTarjetaPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\AnadirPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
