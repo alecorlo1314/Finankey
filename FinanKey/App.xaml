@@ -12,7 +12,7 @@
             <!--  PALETA DE COLORES  -->
             <Color x:Key="ColorFondo">#F5F7FA</Color>
             <Color x:Key="ColorTexto">#0F1724</Color>
-            <Color x:Key="ColorCardMorado">#37265A</Color>
+            <Color x:Key="ColorCardMorado">#4034AB</Color>
             <Color x:Key="ColorAcentoCyan">#34C3D6</Color>
             <Color x:Key="ColorAcentoRojo">#FF4D6D</Color>
             <Color x:Key="ColorAcentoAmber">#FFB400</Color>
@@ -49,7 +49,7 @@
             <Color x:Key="ColorTextoPrimario">#000000</Color>
             <Color x:Key="ColorTextoSecundario">#818181</Color>
             <Color x:Key="ColorInconoNoSelected">#B3B3B3</Color>
-            <Color x:Key="ColorInconoSelected">#4E61B6</Color>
+            <Color x:Key="ColorInconoSelected">#7A69EE</Color>
             <Color x:Key="ColorAcentoTarjetaIncome">#DAF0F6</Color>
             <Color x:Key="ColorAcentoTarjetaExpense">#FCD2DF</Color>
             <Color x:Key="ColorFondoMoradoSuave">#DCDFF0</Color>
