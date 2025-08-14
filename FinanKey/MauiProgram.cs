@@ -57,7 +57,6 @@ namespace FinanKey
             builder.Services.AddSingleton<ViewModelGasto>();
             builder.Services.AddSingleton<ViewModelIngreso>();
             builder.Services.AddSingleton<ViewModelCuenta>();
-            builder.Services.AddTransient<ViewModelLogin>();
             builder.Services.AddSingleton<ViewModelFinanzas>();
             builder.Services.AddSingleton<ViewModelDetalleCuenta>();
             //Registrar servicios con inyección de dependencias contexto de datos
