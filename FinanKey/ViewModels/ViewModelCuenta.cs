@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using FinanKey.Models;
 using FinanKey.Servicios;
+using FinanKey.View;
 using System.Collections.ObjectModel;
 
 namespace FinanKey.ViewModels
