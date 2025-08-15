@@ -7,15 +7,13 @@ public partial class AnadirPage : ContentPage
     //Inyección de dependencias para los ViewModels
     private readonly ViewModelGasto _viewModelGasto;
     private readonly ViewModelIngreso _viewModelIngreso;
-    private readonly ViewModelCuenta _viewModelCuenta;
 
-    public AnadirPage(ViewModelGasto viewModelGasto, ViewModelIngreso viewModelIngreso, ViewModelCuenta viewModelCuenta)
+    public AnadirPage(ViewModelGasto viewModelGasto, ViewModelIngreso viewModelIngreso)
     {
         InitializeComponent();
         // Asignar el BindingContext de la página a los ViewModels
         _viewModelGasto = viewModelGasto;
         _viewModelIngreso = viewModelIngreso;
-        _viewModelCuenta = viewModelCuenta;
         // Establecer el BindingContext inicial
         MostrarFormulario(FormularioSeleccionado.Gasto);
     }

@@ -231,7 +231,6 @@
                     TextColor="White" />
             </VerticalStackLayout>
         </Grid>
-
         <!--  FORMULARIO INGRESAR INGRESO  -->
         <Grid
             x:Name="formularioIngreso"
