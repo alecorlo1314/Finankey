@@ -72,13 +72,13 @@
                     <Button
                         Grid.Column="1"
                         BackgroundColor="Transparent"
+                        Command="{Binding NavegarAgregarTarjetaCommand}"
                         FontFamily="PoppinsBold"
                         FontSize="16"
                         HorizontalOptions="End"
                         Text="Agregar Tarjeta"
                         TextColor="{StaticResource ColorCardMorado}"
-                        VerticalOptions="Center" 
-                        Command="{Binding NavegarAgregarTarjetaCommand}"/>
+                        VerticalOptions="Center" />
                 </Grid>
                 <!--  BORDER DE BALANCE DISPONIBLE  -->
                 <Border

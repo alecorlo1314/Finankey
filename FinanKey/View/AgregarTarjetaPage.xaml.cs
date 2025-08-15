@@ -5,11 +5,10 @@ namespace FinanKey.View;
 public partial class AgregarTarjetaPage : ContentPage
 {
     //Inyección de dependencias para los ViewModels
-    private readonly ViewModelCuenta _viewModelCuenta;
-    public AgregarTarjetaPage(ViewModelCuenta viewModelCuenta)
+    public AgregarTarjetaPage(ViewModelTarjeta viewModelTarjeta)
 	{
 		InitializeComponent();
-        _viewModelCuenta = viewModelCuenta;
+        BindingContext = viewModelTarjeta;
     }
 
     private void OnEntryFocused(Border border)
@@ -23,13 +22,13 @@ public partial class AgregarTarjetaPage : ContentPage
         border.Stroke = Colors.Transparent;
     }
 
-    private void entradaNombreCuenta_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderNombreCuenta);
-    private void entradaNombreCuenta_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderNombreCuenta);
-
     private void entradaBancoCuenta_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderBancoCuenta);
     private void entradaBancoCuenta_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderBancoCuenta);
 
     private void entradaSaldoInicialCuenta_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderSaldoInicialCuenta);
     private void entradaSaldoInicialCuenta_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderSaldoInicialCuenta);
 
+    private void entradaNombreTarjeta_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderNombreCuenta);
+
+    private void entradaNombreTarjeta_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderNombreCuenta);
 }
