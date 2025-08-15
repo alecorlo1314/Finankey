@@ -59,9 +59,29 @@
                         TextColor="{StaticResource ColorTextoSecundario}"
                         VerticalOptions="Center" />
                 </VerticalStackLayout>
+                <!--  TITULO MIS TARJETAS Y BOTON AGREGAR TARJETA  -->
+                <Grid Grid.Row="2" ColumnDefinitions="*,*">
+                    <Label
+                        Grid.Column="0"
+                        FontFamily="PoppinsSemibold"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="Mis Tarjetas"
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+                    <Button
+                        Grid.Column="1"
+                        BackgroundColor="Transparent"
+                        FontFamily="PoppinsBold"
+                        FontSize="16"
+                        HorizontalOptions="End"
+                        Text="Agregar Tarjeta"
+                        TextColor="{StaticResource ColorCardMorado}"
+                        VerticalOptions="Center" />
+                </Grid>
                 <!--  BORDER DE BALANCE DISPONIBLE  -->
                 <Border
-                    Grid.Row="2"
+                    Grid.Row="3"
                     Padding="0"
                     BackgroundColor="{StaticResource ColorAcento}"
                     HeightRequest="200"
@@ -111,7 +131,7 @@
                 </Border>
                 <!--  TITULO COLECCION CUENTAS  -->
                 <Label
-                    Grid.Row="3"
+                    Grid.Row="4"
                     FontFamily="PoppinsSemibold"
                     FontSize="18"
                     HorizontalOptions="Start"
@@ -120,7 +140,7 @@
                     VerticalOptions="End" />
                 <!--  COLECCION DE CUENTAS  -->
                 <CollectionView
-                    Grid.Row="4"
+                    Grid.Row="5"
                     HeightRequest="150"
                     ItemsSource="{Binding ListaCuentas}">
                     <CollectionView.ItemsLayout>
@@ -192,7 +212,7 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
                 <!--  TITULO MOVIMIENTOS RECIENTES Y BOTON VER MAS  -->
-                <Grid Grid.Row="5" ColumnDefinitions="70*,30*">
+                <Grid Grid.Row="6" ColumnDefinitions="70*,30*">
                     <Label
                         FontFamily="PoppinsSemibold"
                         FontSize="18"
@@ -212,7 +232,7 @@
                         VerticalOptions="Center" />
                 </Grid>
                 <!--  INFORMACION MOVIMIENTOS  -->
-                <Grid Grid.Row="6" RowDefinitions="auto,*">
+                <Grid Grid.Row="7" RowDefinitions="auto,*">
                     <Border
                         Grid.Row="0"
                         Padding="20"
