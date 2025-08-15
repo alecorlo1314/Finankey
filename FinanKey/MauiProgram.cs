@@ -53,6 +53,7 @@ namespace FinanKey
             builder.Services.AddSingleton<FinanzasPage>();
             builder.Services.AddSingleton<DetalleCuentaPage>();
             builder.Services.AddTransient<LoginPage>();
+            builder.Services.AddSingleton<AgregarTarjetaPage>();
             //Registrar ViewModels con inyección de dependencias
             builder.Services.AddSingleton<ViewModelGasto>();
             builder.Services.AddSingleton<ViewModelIngreso>();
