@@ -9,6 +9,8 @@ namespace FinanKey
         public AppShell()
         {
             InitializeComponent();
+            ///Registro de Rutas
+            Routing.RegisterRoute(nameof(AgregarTarjetaPage), typeof(AgregarTarjetaPage));
 
             AddTab(typeof(FinanzasPage), PageType.FinanzasPage);
             AddTab(typeof(AnadirPage), PageType.AnadirPage);
