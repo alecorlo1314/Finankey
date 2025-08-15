@@ -77,7 +77,8 @@
                         HorizontalOptions="End"
                         Text="Agregar Tarjeta"
                         TextColor="{StaticResource ColorCardMorado}"
-                        VerticalOptions="Center" />
+                        VerticalOptions="Center" 
+                        Command="{Binding NavegarAgregarTarjetaCommand}"/>
                 </Grid>
                 <!--  BORDER DE BALANCE DISPONIBLE  -->
                 <Border

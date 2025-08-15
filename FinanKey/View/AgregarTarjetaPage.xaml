@@ -4,14 +4,21 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
-    Title="AgregarTarjetaPage">
-    <!--  FORMULARIO INGRESAR CUENTA  -->
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Title="AgregarTarjetaPage"
+    Padding="{StaticResource PagePadding}"
+    BackgroundColor="{StaticResource FondoPrincipal}">
+    <!--  Cambio de color de la barra  -->
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource FondoPrincipal}" StatusBarStyle="DarkContent" />
+    </ContentPage.Behaviors>
+
+    <!--  FORMULARIO INGRESAR TARJETA  -->
     <Grid
         x:Name="formularioCuenta"
-        IsVisible="False"
         RowDefinitions="*,*,*,*,*,*"
         RowSpacing="16">
-        <!--  Nombre de la Cuenta  -->
+        <!--    -->
         <VerticalStackLayout Grid.Row="0" Spacing="8">
             <Label Style="{StaticResource subtitulosFormularios}" Text="Nombre de la Cuenta" />
             <Border x:Name="borderNombreCuenta" Style="{StaticResource bordeFormulario}">
