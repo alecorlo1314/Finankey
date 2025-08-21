@@ -11,7 +11,7 @@ namespace FinanKey.Models
         public string Alias { get; set; } = string.Empty;
 
         [NotNull]
-        public string Tipo { get; set; } = "Credito"; // "Credito" | "Debito" | "Corriente"
+        public string Tipo { get; set; } = "Credito"; // "Credito" | "Debito"
 
         [MaxLength(4)]
         public string UltimosCuatroDigitos { get; set; } = string.Empty;
