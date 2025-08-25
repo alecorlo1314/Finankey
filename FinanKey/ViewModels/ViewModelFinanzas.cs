@@ -195,5 +195,10 @@ namespace FinanKey.ViewModels
                     ["Cuenta"] = cuentaSeleccionada
                 });
         }
+        [RelayCommand]
+        public async Task NavegarAgregarTarjeta()
+        {
+            await Shell.Current.GoToAsync(nameof(AgregarTarjetaPage));
+        }
     }
 }

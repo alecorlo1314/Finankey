@@ -7,15 +7,13 @@ public partial class AnadirPage : ContentPage
     //Inyección de dependencias para los ViewModels
     private readonly ViewModelGasto _viewModelGasto;
     private readonly ViewModelIngreso _viewModelIngreso;
-    private readonly ViewModelCuenta _viewModelCuenta;
 
-    public AnadirPage(ViewModelGasto viewModelGasto, ViewModelIngreso viewModelIngreso, ViewModelCuenta viewModelCuenta)
+    public AnadirPage(ViewModelGasto viewModelGasto, ViewModelIngreso viewModelIngreso)
     {
         InitializeComponent();
         // Asignar el BindingContext de la página a los ViewModels
         _viewModelGasto = viewModelGasto;
         _viewModelIngreso = viewModelIngreso;
-        _viewModelCuenta = viewModelCuenta;
         // Establecer el BindingContext inicial
         MostrarFormulario(FormularioSeleccionado.Gasto);
     }
@@ -32,7 +30,6 @@ public partial class AnadirPage : ContentPage
         // Ocultar todos los formularios
         formularioGasto.IsVisible = false;
         formularioIngreso.IsVisible = false;
-        formularioCuenta.IsVisible = false;
 
         // Resetear estilos
         ResetearEstilosBotones();
@@ -56,15 +53,6 @@ public partial class AnadirPage : ContentPage
                 EstilizarBotonSeleccionado(btnIngreso, "billete_blanco.svg");
                 // Establecer el BindingContext para el formulario de Ingreso
                 BindingContext = _viewModelIngreso;
-                break;
-            //Si selecciono formulario Cuenta
-            case FormularioSeleccionado.Cuenta:
-                // Mostrar el formulario de Cuenta
-                formularioCuenta.IsVisible = true;
-                // Estilizar el botón de Cuenta
-                EstilizarBotonSeleccionado(btnCuenta, "banco_blanco.svg");
-                // Establecer el BindingContext para el formulario de Cuenta
-                BindingContext = _viewModelCuenta;
                 break;
         }
     }
@@ -134,14 +122,4 @@ public partial class AnadirPage : ContentPage
 
     private void entradaMontoIngreso_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderMontoIngreso);
     private void entradaMontoIngreso_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderMontoIngreso);
-
-    private void entradaNombreCuenta_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderNombreCuenta);
-    private void entradaNombreCuenta_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderNombreCuenta);
-
-    private void entradaBancoCuenta_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderBancoCuenta);
-    private void entradaBancoCuenta_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderBancoCuenta);
-
-    private void entradaSaldoInicialCuenta_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderSaldoInicialCuenta);
-    private void entradaSaldoInicialCuenta_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderSaldoInicialCuenta);
-
 }
