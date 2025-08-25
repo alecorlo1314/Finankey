@@ -12,7 +12,7 @@ namespace FinanKey
             ///Registro de Rutas
             Routing.RegisterRoute(nameof(AgregarTarjetaPage), typeof(AgregarTarjetaPage));
 
-            AddTab(typeof(FinanzasPage), PageType.FinanzasPage);
+            AddTab(typeof(InicioPage), PageType.InicioPage);
             AddTab(typeof(AnadirPage), PageType.AnadirPage);
             AddTab(typeof(ReportesPage), PageType.ReportesPage);
             AddTab(typeof(ConfiguracionesPage), PageType.ConfiguracionPage);
@@ -47,7 +47,7 @@ namespace FinanKey
 
         public enum PageType
         {
-            FinanzasPage, AnadirPage, ReportesPage, ConfiguracionPage
+            InicioPage, AnadirPage, ReportesPage, ConfiguracionPage
         }
     }
 }
