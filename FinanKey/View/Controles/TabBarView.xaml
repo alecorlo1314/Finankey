@@ -40,7 +40,7 @@
                 Grid.Column="0"
                 Clicked="ButtonTapped"
                 SemanticProperties.Description="Pagina Finanzas">
-                <c:TabBarIconView Page="FinanzasPage" Source="icon_house.png" />
+                <c:TabBarIconView Page="InicioPage" Source="icon_house.png" />
             </simpleCore:ContentButton>
             <simpleCore:ContentButton
                 Grid.Column="1"
