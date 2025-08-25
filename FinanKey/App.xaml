@@ -10,14 +10,28 @@
     <Application.Resources>
         <ResourceDictionary>
             <!--  PALETA DE COLORES  -->
-            <Color x:Key="ColorFondo">#F5F7FA</Color>
+            <Color x:Key="ColorFondoPrincipal">#F8FAFC</Color>
+            <Color x:Key="ColorFondoComponentes">#FFFFFF</Color>
+            <Color x:Key="ColorAzulPricipal">#2A218A</Color>
+            <Color x:Key="ColorAzulPrincipalSuave">#E4E7FC</Color>
+            <Color x:Key="ColorMorado">#693596</Color>
+            <Color x:Key="ColorMoradoSuave">#EADFF4</Color>
+            <Color x:Key="ColorCascaraNaranja">#FAA538</Color>
+            <Color x:Key="ColorCascaraNaranjaSuave">#FFECD4</Color>
+            <Color x:Key="ColorMagenta">#FA288A</Color>
+            <Color x:Key="ColorMagentaSuave">#FED1E6</Color>
+            <Color x:Key="ColorAzulMarino">#253FE4</Color>
+            <Color x:Key="ColorAzulMarinoSuave">#E4E7FC</Color>
+            
+            
             <Color x:Key="ColorTexto">#0F1724</Color>
             <Color x:Key="ColorCardMorado">#4034AB</Color>
             <Color x:Key="ColorAcentoCyan">#34C3D6</Color>
             <Color x:Key="ColorAcentoRojo">#FF4D6D</Color>
             <Color x:Key="ColorAcentoAmber">#FFB400</Color>
             <Color x:Key="ColorMuteado">#9AA4B2</Color>
-            <SolidColorBrush x:Key="BrushBackground" Color="{StaticResource ColorFondo}" />
+            
+            <SolidColorBrush x:Key="PincelFondoPrincipal" Color="{StaticResource ColorFondoPrincipal}" />
             <SolidColorBrush x:Key="BrushText" Color="{StaticResource ColorTexto}" />
             <SolidColorBrush x:Key="BrushCardPurple" Color="{StaticResource ColorCardMorado}" />
             <SolidColorBrush x:Key="BrushAccentCyan" Color="{StaticResource ColorAcentoCyan}" />
