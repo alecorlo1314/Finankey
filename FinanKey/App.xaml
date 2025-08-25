@@ -24,6 +24,8 @@
             <Color x:Key="ColorAzulMarinoSuave">#E4E7FC</Color>
             
             
+            
+            
             <Color x:Key="ColorTexto">#0F1724</Color>
             <Color x:Key="ColorCardMorado">#4034AB</Color>
             <Color x:Key="ColorAcentoCyan">#34C3D6</Color>
