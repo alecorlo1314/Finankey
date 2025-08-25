@@ -1,5 +1,4 @@
-﻿
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using FinanKey.Models;
 
 namespace FinanKey.ViewModels
@@ -7,7 +6,7 @@ namespace FinanKey.ViewModels
     public partial class ViewModelTarjeta : ObservableObject
     {
         public List<Enums.TipoTarjeta> ListaTipoTarjeta { get; set; }
-        public Enums.TipoTarjeta TipoTarjetaSeleccionada { get; set; }
+        private Enums.TipoTarjeta TipoTarjetaSeleccionada;
         
         public ViewModelTarjeta()
         {
