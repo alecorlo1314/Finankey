@@ -50,7 +50,7 @@ namespace FinanKey
             builder.UseSimpleToolkit();
             builder.Services.AddSingleton<AnadirPage>();
             builder.Services.AddSingleton<ConfiguracionesPage>();
-            builder.Services.AddSingleton<FinanzasPage>();
+            builder.Services.AddSingleton<InicioPage>();
             builder.Services.AddSingleton<DetalleCuentaPage>();
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddSingleton<AgregarTarjetaPage>();
