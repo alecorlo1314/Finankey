@@ -25,7 +25,7 @@
             <SolidColorBrush x:Key="BrushAccentAmber" Color="{StaticResource ColorAcentoAmber}" />
             <SolidColorBrush x:Key="BrushMuted" Color="{StaticResource ColorMuteado}" />
 
-            
+
             <Color x:Key="VentanaEmergente">#ffffff</Color>
             <Color x:Key="TextoVentanaEmergente">#0d0c0f</Color>
             <Color x:Key="TextoPrimario">#ffffff</Color>

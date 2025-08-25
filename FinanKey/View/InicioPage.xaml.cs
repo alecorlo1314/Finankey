@@ -3,9 +3,9 @@ using FinanKey.ViewModels;
 
 namespace FinanKey.View;
 
-public partial class FinanzasPage : ContentPage
+public partial class InicioPage : ContentPage
 {
-    public FinanzasPage(ViewModelFinanzas viewModelFinanzas)
+    public InicioPage(ViewModelFinanzas viewModelFinanzas)
 	{
 		InitializeComponent();
         BindingContext = viewModelFinanzas;
