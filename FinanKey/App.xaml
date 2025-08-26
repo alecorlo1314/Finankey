@@ -22,17 +22,50 @@
             <Color x:Key="ColorMagentaSuave">#FED1E6</Color>
             <Color x:Key="ColorAzulMarino">#253FE4</Color>
             <Color x:Key="ColorAzulMarinoSuave">#E4E7FC</Color>
-            
-            
-            
-            
+
+            <!--  ESTILOS DE TIPOGRAFIA  -->
+            <Style x:Name="TextoTituloPrincipal" TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsBold" />
+                <Setter Property="FontSize" Value="24" />
+            </Style>
+            <Style x:Name="TextoSubtítulo" TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsSemibold" />
+                <Setter Property="FontSize" Value="20" />
+            </Style>
+            <Style x:Name="TextoEncabezadoSecundario" TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsSemibold" />
+                <Setter Property="FontSize" Value="18" />
+            </Style>
+            <Style x:Name="TextoParrafoPrincipal" TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsRegular" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="LineHeight" Value="22" />
+            </Style>
+            <Style x:Name="TextoSecundario" TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsRegular" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+            <Style x:Name="TextoLabelInputMenusPequeños" TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsLight" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+            <Style x:Name="TextoBotonGrande" TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsBold" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+            <Style x:Name="TextoBotonPequeno" TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsBold" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+
+
             <Color x:Key="ColorTexto">#0F1724</Color>
             <Color x:Key="ColorCardMorado">#4034AB</Color>
             <Color x:Key="ColorAcentoCyan">#34C3D6</Color>
             <Color x:Key="ColorAcentoRojo">#FF4D6D</Color>
             <Color x:Key="ColorAcentoAmber">#FFB400</Color>
             <Color x:Key="ColorMuteado">#9AA4B2</Color>
-            
+
             <SolidColorBrush x:Key="PincelFondoPrincipal" Color="{StaticResource ColorFondoPrincipal}" />
             <SolidColorBrush x:Key="BrushText" Color="{StaticResource ColorTexto}" />
             <SolidColorBrush x:Key="BrushCardPurple" Color="{StaticResource ColorCardMorado}" />
