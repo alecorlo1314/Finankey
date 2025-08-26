@@ -46,6 +46,7 @@ namespace FinanKey
                     fonts.AddFont("Poppins-SemiBold.ttf", "PoppinsSemibold");
                     fonts.AddFont("Poppins-Regular.ttf", "PoppinsRegular");
                     fonts.AddFont("Poppins-Medium.ttf", "PoppinsMedium");
+                    fonts.AddFont("Poppins-Light.ttf", "PoppinsLight");
                 });
             builder.UseSimpleToolkit();
             builder.Services.AddSingleton<AnadirPage>();
