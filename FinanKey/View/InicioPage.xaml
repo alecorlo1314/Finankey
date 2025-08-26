@@ -9,7 +9,7 @@
 
     <!--  Cambio de color de la barra  -->
     <ContentPage.Behaviors>
-        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource FondoPrincipal}" StatusBarStyle="DarkContent" />
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource ColorAzulMarino}" StatusBarStyle="Default" />
     </ContentPage.Behaviors>
     <!--  DESLIZAR PANATALLA  -->
     <ScrollView>
