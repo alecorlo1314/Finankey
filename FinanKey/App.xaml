@@ -59,6 +59,10 @@
                 <Setter Property="FontSize" Value="14" />
             </Style>
 
+            <!--  ESPACIADOS  -->
+            <Thickness x:Key="PaddingPaginas">16,32,16,32</Thickness>
+            <Thickness x:Key="CardPadding">20,12</Thickness>
+
             <Color x:Key="ColorTexto">#0F1724</Color>
             <Color x:Key="ColorCardMorado">#4034AB</Color>
             <Color x:Key="ColorAcentoCyan">#34C3D6</Color>
@@ -167,10 +171,6 @@
                 <Setter Property="FontSize" Value="14" />
                 <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
             </Style>
-
-            <!--  Espaciados  -->
-            <Thickness x:Key="PagePadding">16,16,16,8</Thickness>
-            <Thickness x:Key="CardPadding">20,12</Thickness>
 
             <x:String x:Key="RutaFinanzas">m 66.027715,6.7386067 v 1.5532459 c 0,0.1380531 0.101992,0.2155646 0.215564,0.2155646 h 0.593542 V 7.8792806 c 0,-0.4981924 0.87407,-0.5051784 0.87407,0 v 0.6133717 h 0.668839 c 0.128617,0 0.219994,-0.1068711 0.219994,-0.236235 V 6.8094772 L 67.273555,6.0438135 Z</x:String>
             <x:String x:Key="RutaAnadir">m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm5-10a1 1 0 0 1 -1 1h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1z</x:String>
