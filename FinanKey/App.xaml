@@ -22,41 +22,43 @@
             <Color x:Key="ColorMagentaSuave">#FED1E6</Color>
             <Color x:Key="ColorAzulMarino">#253FE4</Color>
             <Color x:Key="ColorAzulMarinoSuave">#E4E7FC</Color>
-
             <!--  ESTILOS DE TIPOGRAFIA  -->
-            <Style x:Name="TextoTituloPrincipal" TargetType="Label">
+            <Style x:Key="TextoTituloPrincipal" TargetType="Label">
                 <Setter Property="FontFamily" Value="PoppinsBold" />
                 <Setter Property="FontSize" Value="24" />
             </Style>
-            <Style x:Name="TextoSubtítulo" TargetType="Label">
+            <Style x:Key="TextoSubtítulo" TargetType="Label">
                 <Setter Property="FontFamily" Value="PoppinsSemibold" />
                 <Setter Property="FontSize" Value="20" />
             </Style>
-            <Style x:Name="TextoEncabezadoSecundario" TargetType="Label">
+            <Style x:Key="TextoEncabezadoSecundario" TargetType="Label">
                 <Setter Property="FontFamily" Value="PoppinsSemibold" />
                 <Setter Property="FontSize" Value="18" />
             </Style>
-            <Style x:Name="TextoParrafoPrincipal" TargetType="Label">
+            <Style x:Key="TextoParrafoPrincipal" TargetType="Label">
                 <Setter Property="FontFamily" Value="PoppinsRegular" />
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="LineHeight" Value="22" />
             </Style>
-            <Style x:Name="TextoSecundario" TargetType="Label">
+            <Style x:Key="TextoSecundario" TargetType="Label">
                 <Setter Property="FontFamily" Value="PoppinsRegular" />
                 <Setter Property="FontSize" Value="14" />
             </Style>
-            <Style x:Name="TextoLabelInputMenusPequeños" TargetType="Label">
+            <Style x:Key="TextoLabelInputMenusPequeños" TargetType="Label">
                 <Setter Property="FontFamily" Value="PoppinsLight" />
                 <Setter Property="FontSize" Value="12" />
             </Style>
-            <Style x:Name="TextoBotonGrande" TargetType="Label">
+            <Style x:Key="TextoBotonGrande" TargetType="Label">
                 <Setter Property="FontFamily" Value="PoppinsBold" />
                 <Setter Property="FontSize" Value="16" />
             </Style>
-            <Style x:Name="TextoBotonPequeno" TargetType="Label">
+            <Style x:Key="TextoBotonPequeno" TargetType="Label">
                 <Setter Property="FontFamily" Value="PoppinsBold" />
                 <Setter Property="FontSize" Value="14" />
             </Style>
+            <!--  ESPACIADOS  -->
+            <Thickness x:Key="PaddingPaginas">16,32</Thickness>
+            <Thickness x:Key="CardPadding">20,12</Thickness>
 
             <Color x:Key="ColorTexto">#0F1724</Color>
             <Color x:Key="ColorCardMorado">#4034AB</Color>
@@ -73,12 +75,10 @@
             <SolidColorBrush x:Key="BrushAccentAmber" Color="{StaticResource ColorAcentoAmber}" />
             <SolidColorBrush x:Key="BrushMuted" Color="{StaticResource ColorMuteado}" />
 
-
             <Color x:Key="VentanaEmergente">#ffffff</Color>
             <Color x:Key="TextoVentanaEmergente">#0d0c0f</Color>
             <Color x:Key="TextoPrimario">#ffffff</Color>
             <Color x:Key="Secundario">#f1f3f8</Color>
-            <Color x:Key="TextoSecundario">#6b7a99</Color>
             <Color x:Key="Suave">#f1f3f8</Color>
             <Color x:Key="TextoSuave">#6b7a99</Color>
             <Color x:Key="Acento">#ff4576</Color>
@@ -88,7 +88,6 @@
             <Color x:Key="Borde">#e5e7eb</Color>
             <Color x:Key="Entrada">#e5e7eb</Color>
             <Color x:Key="Anillo">#6b4eff</Color>
-            <x:Double x:Key="RadioEsquinas">12</x:Double>
 
             <!--  Nueva paleta de colores  -->
             <Color x:Key="FondoPrincipal">#F7FAFC</Color>
@@ -166,10 +165,6 @@
                 <Setter Property="FontSize" Value="14" />
                 <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
             </Style>
-
-            <!--  Espaciados  -->
-            <Thickness x:Key="PagePadding">16,16,16,8</Thickness>
-            <Thickness x:Key="CardPadding">20,12</Thickness>
 
             <x:String x:Key="RutaFinanzas">m 66.027715,6.7386067 v 1.5532459 c 0,0.1380531 0.101992,0.2155646 0.215564,0.2155646 h 0.593542 V 7.8792806 c 0,-0.4981924 0.87407,-0.5051784 0.87407,0 v 0.6133717 h 0.668839 c 0.128617,0 0.219994,-0.1068711 0.219994,-0.236235 V 6.8094772 L 67.273555,6.0438135 Z</x:String>
             <x:String x:Key="RutaAnadir">m12 0a12 12 0 1 0 12 12 12.013 12.013 0 0 0 -12-12zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1 -10 10zm5-10a1 1 0 0 1 -1 1h-3v3a1 1 0 0 1 -2 0v-3h-3a1 1 0 0 1 0-2h3v-3a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1z</x:String>
