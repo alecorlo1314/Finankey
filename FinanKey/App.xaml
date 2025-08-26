@@ -23,39 +23,39 @@
             <Color x:Key="ColorAzulMarino">#253FE4</Color>
             <Color x:Key="ColorAzulMarinoSuave">#E4E7FC</Color>
 
-            <!-- ESTILON DE TIPOGRAFIA -->
-            <Style TargetType="Label" x:Name="TextoTituloPrincipal">
-                <Setter Property="FontFamily" Value="PoppinsBold"/>
-                <Setter Property="FontSize" Value="24"/>
+            <!--  ESTILOS DE TIPOGRAFIA  -->
+            <Style x:Name="TextoTituloPrincipal" TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsBold" />
+                <Setter Property="FontSize" Value="24" />
             </Style>
-            <Style TargetType="Label" x:Name="TextoSubtítulo">
-                <Setter Property="FontFamily" Value="PoppinsSemibold"/>
-                <Setter Property="FontSize" Value="20"/>
+            <Style x:Name="TextoSubtítulo" TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsSemibold" />
+                <Setter Property="FontSize" Value="20" />
             </Style>
-            <Style TargetType="Label" x:Name="TextoEncabezadoSecundario">
-                <Setter Property="FontFamily" Value="PoppinsSemibold"/>
-                <Setter Property="FontSize" Value="18"/>
+            <Style x:Name="TextoEncabezadoSecundario" TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsSemibold" />
+                <Setter Property="FontSize" Value="18" />
             </Style>
-            <Style TargetType="Label" x:Name="TextoParrafoPrincipal">
-                <Setter Property="FontFamily" Value="PoppinsRegular"/>
-                <Setter Property="FontSize" Value="16"/>
-                <Setter Property="LineHeight" Value="22"/>
+            <Style x:Name="TextoParrafoPrincipal" TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsRegular" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="LineHeight" Value="22" />
             </Style>
-            <Style TargetType="Label" x:Name="TextoSecundario">
-                <Setter Property="FontFamily" Value="PoppinsRegular"/>
-                <Setter Property="FontSize" Value="14"/>
+            <Style x:Name="TextoSecundario" TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsRegular" />
+                <Setter Property="FontSize" Value="14" />
             </Style>
-            <Style TargetType="Label" x:Name="TextoLabelInputMenusPequeños">
-                <Setter Property="FontFamily" Value="PoppinsLight"/>
-                <Setter Property="FontSize" Value="12"/>
+            <Style x:Name="TextoLabelInputMenusPequeños" TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsLight" />
+                <Setter Property="FontSize" Value="12" />
             </Style>
-            <Style TargetType="Label" x:Name="TextoBotonGrande">
-                <Setter Property="FontFamily" Value="PoppinsBold"/>
-                <Setter Property="FontSize" Value="16"/>
+            <Style x:Name="TextoBotonGrande" TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsBold" />
+                <Setter Property="FontSize" Value="16" />
             </Style>
-            <Style TargetType="Label" x:Name="TextoBotonPequeno">
-                <Setter Property="FontFamily" Value="PoppinsBold"/>
-                <Setter Property="FontSize" Value="14"/>
+            <Style x:Name="TextoBotonPequeno" TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsBold" />
+                <Setter Property="FontSize" Value="14" />
             </Style>
 
             <Color x:Key="ColorTexto">#0F1724</Color>
