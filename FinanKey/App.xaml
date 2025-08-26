@@ -59,7 +59,7 @@
             <!--  ESPACIADOS  -->
             <Thickness x:Key="PaddingPaginas">16,32</Thickness>
             <Thickness x:Key="CardPadding">20,12</Thickness>
-            
+
             <Color x:Key="ColorTexto">#0F1724</Color>
             <Color x:Key="ColorCardMorado">#4034AB</Color>
             <Color x:Key="ColorAcentoCyan">#34C3D6</Color>
