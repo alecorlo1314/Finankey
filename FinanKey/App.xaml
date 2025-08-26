@@ -23,6 +23,7 @@
             <Color x:Key="ColorAzulMarino">#253FE4</Color>
             <Color x:Key="ColorAzulMarinoSuave">#E4E7FC</Color>
 
+
             <!--  ESTILOS DE TIPOGRAFIA  -->
             <Style x:Name="TextoTituloPrincipal" TargetType="Label">
                 <Setter Property="FontFamily" Value="PoppinsBold" />
@@ -57,7 +58,6 @@
                 <Setter Property="FontFamily" Value="PoppinsBold" />
                 <Setter Property="FontSize" Value="14" />
             </Style>
-
 
             <Color x:Key="ColorTexto">#0F1724</Color>
             <Color x:Key="ColorCardMorado">#4034AB</Color>
