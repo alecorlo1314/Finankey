@@ -88,6 +88,7 @@
                     WidthRequest="280" />
                 <Button
                     BackgroundColor="{StaticResource ColorCascaraNaranja}"
+                    Command="{Binding NavegarAgregarTarjetaCommand}"
                     CornerRadius="20"
                     FontFamily="PoppinsBold"
                     FontSize="16"
