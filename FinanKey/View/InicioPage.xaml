@@ -12,79 +12,105 @@
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource ColorAzulPricipal}" StatusBarStyle="Default" />
     </ContentPage.Behaviors>
 
-    <Grid RowDefinitions="Auto,Auto">
-        <!--  IMAGEN DE FONDO  -->
-        <Image
-            Grid.Row="0"
-            Aspect="AspectFit"
-            Source="fondo_superior.png"
-            VerticalOptions="Start" />
-
-        <!--  CONTENIDO POR ENCIMA DE IMAGEN FONDO  -->
-        <Grid
-            Grid.Row="0"
-            Margin="16,32,16,16"
-            ColumnDefinitions="60*,40*"
-            RowDefinitions="34,64,*"
-            RowSpacing="24">
-            <!--  ICONO NOTIFICACIONES  -->
-            <Border
+    <ScrollView>
+        <Grid RowDefinitions="Auto,*">
+            <!--  IMAGEN DE FONDO  -->
+            <Image
                 Grid.Row="0"
-                Grid.Column="0"
-                BackgroundColor="#4A3DD0"
-                HeightRequest="34"
-                HorizontalOptions="Start"
-                Stroke="#4A3DD0"
-                StrokeShape="RoundRectangle 50"
-                VerticalOptions="Start"
-                WidthRequest="34">
+                Aspect="AspectFill"
+                HeightRequest="298"
+                Source="fondo_superior.png"
+                VerticalOptions="Start" />
+            <!--  CONTENIDO POR ENCIMA DE IMAGEN FONDO  -->
+            <Grid
+                Grid.Row="0"
+                Margin="{StaticResource PaddingPaginas}"
+                ColumnDefinitions="60*,40*"
+                RowDefinitions="34,64,*"
+                RowSpacing="24">
+                <!--  ICONO NOTIFICACIONES  -->
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    BackgroundColor="#4A3DD0"
+                    HeightRequest="34"
+                    HorizontalOptions="Start"
+                    Stroke="#4A3DD0"
+                    StrokeShape="RoundRectangle 50"
+                    VerticalOptions="Start"
+                    WidthRequest="34">
+                    <Image
+                        Aspect="AspectFit"
+                        HeightRequest="24"
+                        Source="campana.png"
+                        VerticalOptions="Center"
+                        WidthRequest="24" />
+                </Border>
+                <!--  FOTO DE USUARIO  -->
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    BackgroundColor="#4A3DD0"
+                    HeightRequest="34"
+                    HorizontalOptions="End"
+                    Stroke="#4A3DD0"
+                    StrokeShape="RoundRectangle 50"
+                    VerticalOptions="Start"
+                    WidthRequest="34">
+                    <Image
+                        Aspect="AspectFit"
+                        HeightRequest="24"
+                        Source="usuario.svg"
+                        VerticalOptions="Center"
+                        WidthRequest="24" />
+                </Border>
+                <!--  SALUDOS ALEXANDER Y BUENOS DIAS, TARDES O NOCHES  -->
+                <VerticalStackLayout Grid.Row="1" Grid.Column="0">
+                    <Label
+                        Style="{StaticResource TextoTituloPrincipal}"
+                        Text="Hola, Alexander"
+                        VerticalOptions="Start" />
+                    <Label
+                        Style="{StaticResource TextoParrafoPrincipal}"
+                        Text="Que tengas un buen dia!"
+                        VerticalOptions="Start" />
+                </VerticalStackLayout>
+            </Grid>
+            <!--  IMAGEN CARTERA CUANDO NO HAY TARJETAS  -->
+            <VerticalStackLayout
+                Grid.Row="1"
+                Margin="16,0"
+                Spacing="18">
                 <Image
                     Aspect="AspectFit"
-                    HeightRequest="24"
-                    Source="campana.png"
-                    VerticalOptions="Center"
-                    WidthRequest="24" />
-            </Border>
-            <!--  FOTO DE USUARIO  -->
-            <Border
-                Grid.Row="0"
-                Grid.Column="1"
-                BackgroundColor="#4A3DD0"
-                HeightRequest="34"
-                HorizontalOptions="End"
-                Stroke="#4A3DD0"
-                StrokeShape="RoundRectangle 50"
-                VerticalOptions="Start"
-                WidthRequest="34">
-                <Image
-                    Aspect="AspectFit"
-                    HeightRequest="24"
-                    Source="usuario.svg"
-                    VerticalOptions="Center"
-                    WidthRequest="24" />
-            </Border>
-            <!--  SALUDOS ALEXANDER Y BUENOS DIAS, TARDES O NOCHES  -->
-            <VerticalStackLayout Grid.Row="1" Grid.Column="0">
+                    HeightRequest="280"
+                    Source="wallet_empty.svg"
+                    WidthRequest="280" />
+                <Button
+                    BackgroundColor="{StaticResource ColorCascaraNaranja}"
+                    CornerRadius="20"
+                    FontFamily="PoppinsBold"
+                    FontSize="16"
+                    HeightRequest="48"
+                    ImageSource="icono_suma.svg"
+                    Text="Agregar Tarjeta"
+                    TextColor="{StaticResource ColorFondoPrincipal}"
+                    WidthRequest="221">
+                    <Button.Shadow>
+                        <Shadow Brush="{StaticResource ColorCascaraNaranja}" />
+                    </Button.Shadow>
+                </Button>
                 <Label
-                    Style="{StaticResource TextoTituloPrincipal}"
-                    Text="Hola, Alexander"
-                    VerticalOptions="Start" />
-                <Label
+                    HorizontalOptions="Fill"
+                    HorizontalTextAlignment="Center"
+                    LineBreakMode="WordWrap"
                     Style="{StaticResource TextoParrafoPrincipal}"
-                    Text="Que tengas un buen dia!"
-                    VerticalOptions="Start" />
+                    Text="Agrega tu primera tarjeta para empezar a llevar el control de tus finanzas."
+                    TextColor="{StaticResource ColorTextosDescriptivos}"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
             </VerticalStackLayout>
         </Grid>
-        <!--  IMAGEN CARTERA CUANDO NO HAY TARJETAS  -->
-        <VerticalStackLayout Grid.Row="1" Spacing="24">
-            <Image
-                Aspect="AspectFit"
-                HeightRequest="280"
-                Source="wallet_empty.svg"
-                WidthRequest="280" />
-            <Button Text="">
-                
-            </Button>
-        </VerticalStackLayout>
-    </Grid>
+    </ScrollView>
+
 </ContentPage>

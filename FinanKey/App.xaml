@@ -22,6 +22,7 @@
             <Color x:Key="ColorMagentaSuave">#FED1E6</Color>
             <Color x:Key="ColorAzulMarino">#253FE4</Color>
             <Color x:Key="ColorAzulMarinoSuave">#E4E7FC</Color>
+            <Color x:Key="ColorTextosDescriptivos">#475569</Color>
             <!--  ESTILOS DE TIPOGRAFIA  -->
             <Style x:Key="TextoTituloPrincipal" TargetType="Label">
                 <Setter Property="FontFamily" Value="PoppinsBold" />
@@ -38,7 +39,6 @@
             <Style x:Key="TextoParrafoPrincipal" TargetType="Label">
                 <Setter Property="FontFamily" Value="PoppinsRegular" />
                 <Setter Property="FontSize" Value="16" />
-                <Setter Property="LineHeight" Value="22" />
             </Style>
             <Style x:Key="TextoSecundario" TargetType="Label">
                 <Setter Property="FontFamily" Value="PoppinsRegular" />
