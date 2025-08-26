@@ -12,7 +12,7 @@
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource ColorAzulPricipal}" StatusBarStyle="Default" />
     </ContentPage.Behaviors>
 
-    <Grid RowDefinitions="298,258">
+    <Grid RowDefinitions="Auto,Auto">
         <!--  IMAGEN DE FONDO  -->
         <Image
             Grid.Row="0"
@@ -76,9 +76,15 @@
             </VerticalStackLayout>
         </Grid>
         <!--  IMAGEN CARTERA CUANDO NO HAY TARJETAS  -->
-        <Image
-            Grid.Row="1"
-            Aspect="AspectFit"
-            Source="wallet_empty.svg" HeightRequest="280" WidthRequest="280"/>
+        <VerticalStackLayout Grid.Row="1" Spacing="24">
+            <Image
+                Aspect="AspectFit"
+                HeightRequest="280"
+                Source="wallet_empty.svg"
+                WidthRequest="280" />
+            <Button Text="">
+                
+            </Button>
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>
