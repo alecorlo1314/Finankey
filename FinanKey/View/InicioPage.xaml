@@ -12,7 +12,7 @@
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource ColorAzulPricipal}" StatusBarStyle="Default" />
     </ContentPage.Behaviors>
 
-    <Grid RowDefinitions="298,Auto">
+    <Grid RowDefinitions="298,258">
         <!--  IMAGEN DE FONDO  -->
         <Image
             Grid.Row="0"
@@ -20,8 +20,9 @@
             Source="fondo_superior.png"
             VerticalOptions="Start" />
 
-        <!--  CONTENIDO POR ENCIMA  -->
+        <!--  CONTENIDO POR ENCIMA DE IMAGEN FONDO  -->
         <Grid
+            Grid.Row="0"
             Margin="16,32,16,16"
             ColumnDefinitions="60*,40*"
             RowDefinitions="34,64,*"
@@ -67,12 +68,17 @@
                 <Label
                     Style="{StaticResource TextoTituloPrincipal}"
                     Text="Hola, Alexander"
-                    VerticalOptions="Start"/>
+                    VerticalOptions="Start" />
                 <Label
                     Style="{StaticResource TextoParrafoPrincipal}"
                     Text="Que tengas un buen dia!"
                     VerticalOptions="Start" />
             </VerticalStackLayout>
         </Grid>
+        <!--  IMAGEN CARTERA CUANDO NO HAY TARJETAS  -->
+        <Image
+            Grid.Row="1"
+            Aspect="AspectFit"
+            Source="wallet_empty.svg" HeightRequest="280" WidthRequest="280"/>
     </Grid>
 </ContentPage>
