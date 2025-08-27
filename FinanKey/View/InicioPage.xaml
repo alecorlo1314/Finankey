@@ -96,11 +96,7 @@
                     ImageSource="icono_suma.svg"
                     Text="Agregar Tarjeta"
                     TextColor="{StaticResource ColorFondoPrincipal}"
-                    WidthRequest="221">
-                    <Button.Shadow>
-                        <Shadow Brush="{StaticResource ColorCascaraNaranja}" />
-                    </Button.Shadow>
-                </Button>
+                    WidthRequest="221"/>
                 <Label
                     HorizontalOptions="Fill"
                     HorizontalTextAlignment="Center"

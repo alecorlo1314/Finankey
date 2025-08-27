@@ -36,4 +36,9 @@ public partial class AgregarTarjetaPage : ContentPage
 
     private void entradaVencimiento_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderVencimiento);
     private void entradaVencimiento_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderVencimiento);
+
+    private void entradaLimiteCredito_Focused(object sender, FocusEventArgs e)
+    {
+
+    }
 }

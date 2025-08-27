@@ -212,14 +212,6 @@
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="20" />
                             </Border.StrokeShape>
-                            <!--<Entry
-                                x:Name="entradaVencimiento"
-                                Focused="entradaVencimiento_Focused"
-                                MaxLength="30"
-                                Placeholder="Ej: Banco Nacional"
-                                Style="{StaticResource entradaFormulario}"
-                                Text="{Binding vencimientoTarjeta, Mode=TwoWay}"
-                                Unfocused="entradaVencimiento_Unfocused" />-->
                             <HorizontalStackLayout>
                                 <editors:SfMaskedEntry
                                     x:Name="entradaVencimiento"
@@ -245,6 +237,24 @@
                                     Source="icono_calendario.svg"
                                     VerticalOptions="Center"
                                     WidthRequest="24" />
+                            </HorizontalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                    <!--  LIMITE DE CREDITO O MONTO POR DEFAULT SE VERA LIMITE DE CREDITO -->
+                    <VerticalStackLayout Grid.Column="1" Spacing="8">
+                        <Label
+                            Style="{StaticResource TextoSubtítulo}"
+                            Text="Limite de Credito"
+                            TextColor="{StaticResource ColorAzulPricipal}" />
+                        <Border
+                            x:Name="borderLimiteCredito"
+                            Style="{StaticResource bordeFormulario}"
+                            WidthRequest="182">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20" />
+                            </Border.StrokeShape>
+                            <HorizontalStackLayout>
+                                
                             </HorizontalStackLayout>
                         </Border>
                     </VerticalStackLayout>
