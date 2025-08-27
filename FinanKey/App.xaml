@@ -24,7 +24,7 @@
             <Color x:Key="ColorAzulMarinoSuave">#E4E7FC</Color>
             <Color x:Key="ColorTextosDescriptivos">#475569</Color>
             <Color x:Key="ColorTexoEntrada">#0f172a</Color>
-            
+
             <!--  ESTILOS DE TIPOGRAFIA  -->
             <Style x:Key="TextoTituloPrincipal" TargetType="Label">
                 <Setter Property="FontFamily" Value="PoppinsBold" />
@@ -65,7 +65,7 @@
             <!--  ESPACIADOS  -->
             <Thickness x:Key="PaddingPaginas">16,48</Thickness>
             <Thickness x:Key="CardPadding">20,12</Thickness>
-            <!--ESTILO DE FORMULARIOS-->
+            <!--  ESTILO DE FORMULARIOS  -->
             <Style x:Key="entradaFormulario" TargetType="Entry">
                 <Setter Property="BackgroundColor" Value="Transparent" />
                 <Setter Property="FontFamily" Value="PoppinsRegular" />
