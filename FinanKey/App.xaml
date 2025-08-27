@@ -75,9 +75,11 @@
             </Style>
             <!--  BORDE DE FORMULARIOS  -->
             <Style x:Key="bordeFormulario" TargetType="Border">
-                <Setter Property="Padding" Value="5,0" />
+                <Setter Property="Padding" Value="10,0" />
+                <Setter Property="VerticalOptions" Value="Center"/>
                 <Setter Property="BackgroundColor" Value="{StaticResource ColorFondoComponentes}" />
                 <Setter Property="Stroke" Value="Transparent" />
+                <Setter Property="HeightRequest" Value="52" />
             </Style>
 
             <Color x:Key="ColorTexto">#0F1724</Color>

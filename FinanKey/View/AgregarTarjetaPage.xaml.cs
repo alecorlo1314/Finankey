@@ -13,7 +13,7 @@ public partial class AgregarTarjetaPage : ContentPage
 
     private void OnEntryFocused(Border border)
     {
-        border.Stroke = Color.Parse("#4f46e5");
+        border.Stroke = App.Current?.Resources["ColorAzulMarino"] as Color;
         border.StrokeThickness = 2;
     }
 
@@ -29,10 +29,11 @@ public partial class AgregarTarjetaPage : ContentPage
     private void entradaSaldoInicialCuenta_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderSaldoInicialCuenta);
 
     private void entradaNombreTarjeta_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderNombreCuenta);
-
     private void entradaNombreTarjeta_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderNombreCuenta);
 
     private void entradaUltimosDigitos_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderUltimosDigitos);
-
     private void entradaUltimosDigitos_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderUltimosDigitos);
+
+    private void entradaVencimiento_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderVencimiento);
+    private void entradaVencimiento_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderVencimiento);
 }

@@ -108,11 +108,13 @@
                         TextColor="{StaticResource ColorAzulPricipal}" />
                     <Border x:Name="borderNombreCuenta" Style="{StaticResource bordeFormulario}">
                         <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
+                            <RoundRectangle CornerRadius="20" />
                         </Border.StrokeShape>
                         <Entry
                             x:Name="entradaNombreTarjeta"
+                            ClearButtonVisibility="WhileEditing"
                             Focused="entradaNombreTarjeta_Focused"
+                            MaxLength="30"
                             Placeholder="Ej: Mi Tarjeta Personal"
                             Style="{StaticResource entradaFormulario}"
                             Text="{Binding NombreCuenta, Mode=TwoWay}"
@@ -127,11 +129,14 @@
                         TextColor="{StaticResource ColorAzulPricipal}" />
                     <Border x:Name="borderUltimosDigitos" Style="{StaticResource bordeFormulario}">
                         <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
+                            <RoundRectangle CornerRadius="20" />
                         </Border.StrokeShape>
                         <Entry
                             x:Name="entradaUltimosDigitos"
+                            ClearButtonVisibility="WhileEditing"
                             Focused="entradaUltimosDigitos_Focused"
+                            Keyboard="Numeric"
+                            MaxLength="4"
                             Placeholder="Ej: 1234"
                             Style="{StaticResource entradaFormulario}"
                             Text="{Binding UltimosCuatroDigitos, Mode=TwoWay}"
@@ -139,7 +144,10 @@
                     </Border>
                 </VerticalStackLayout>
                 <!--  SELECCION DE TIPO DE TARJETA  -->
-                <Grid Grid.Row="2" RowDefinitions="*,*" RowSpacing="8">
+                <Grid
+                    Grid.Row="2"
+                    RowDefinitions="*,*"
+                    RowSpacing="8">
                     <Label
                         Grid.Row="0"
                         Style="{StaticResource TextoSubtítulo}"
@@ -169,8 +177,80 @@
                         </buttons:SfRadioGroup>
                     </HorizontalStackLayout>
                 </Grid>
-                <!--  TIPO DE TARJETA  -->
+                <!--  ENTIDAD EMISORA  -->
                 <VerticalStackLayout Grid.Row="3" Spacing="8">
+                    <Label
+                        Style="{StaticResource TextoSubtítulo}"
+                        Text="Banco /Entidad emisora"
+                        TextColor="{StaticResource ColorAzulPricipal}" />
+                    <Border x:Name="borderBancoCuenta" Style="{StaticResource bordeFormulario}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20" />
+                        </Border.StrokeShape>
+                        <Entry
+                            x:Name="entradaBancoCuenta"
+                            Focused="entradaBancoCuenta_Focused"
+                            MaxLength="30"
+                            Placeholder="Ej: Banco Nacional"
+                            Style="{StaticResource entradaFormulario}"
+                            Text="{Binding NombreEntidadFinanciera, Mode=TwoWay}"
+                            Unfocused="entradaBancoCuenta_Unfocused" />
+                    </Border>
+                </VerticalStackLayout>
+                <!--  VECIMIENTO Y (LIMITE DE CREDO O MONTO)  -->
+                <Grid Grid.Row="4" ColumnDefinitions="*,*">
+                    <!--  FECHA DE VENCIMIENTO  -->
+                    <VerticalStackLayout Grid.Column="0" Spacing="8">
+                        <Label
+                            Style="{StaticResource TextoSubtítulo}"
+                            Text="Vencimiento"
+                            TextColor="{StaticResource ColorAzulPricipal}" />
+                        <Border
+                            x:Name="borderVencimiento"
+                            Style="{StaticResource bordeFormulario}"
+                            WidthRequest="182">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20" />
+                            </Border.StrokeShape>
+                            <!--<Entry
+                                x:Name="entradaVencimiento"
+                                Focused="entradaVencimiento_Focused"
+                                MaxLength="30"
+                                Placeholder="Ej: Banco Nacional"
+                                Style="{StaticResource entradaFormulario}"
+                                Text="{Binding vencimientoTarjeta, Mode=TwoWay}"
+                                Unfocused="entradaVencimiento_Unfocused" />-->
+                            <HorizontalStackLayout>
+                                <editors:SfMaskedEntry
+                                    x:Name="entradaVencimiento"
+                                    Focused="entradaVencimiento_Focused"
+                                    FontFamily="PoppinsRegular"
+                                    FontSize="16"
+                                    HidePromptOnLeave="True"
+                                    HorizontalOptions="Start"
+                                    Mask="00/00"
+                                    MaskType="Simple"
+                                    Placeholder="mm/aa"
+                                    PlaceholderColor="{StaticResource ColorTextosDescriptivos}"
+                                    ReturnType="Next"
+                                    Stroke="Transparent"
+                                    TextColor="{StaticResource ColorTexoEntrada}"
+                                    Unfocused="entradaVencimiento_Unfocused"
+                                    VerticalOptions="Center"
+                                    WidthRequest="120" />
+                                <Image
+                                    Aspect="AspectFill"
+                                    HeightRequest="24"
+                                    HorizontalOptions="Center"
+                                    Source="icono_calendario.svg"
+                                    VerticalOptions="Center"
+                                    WidthRequest="24" />
+                            </HorizontalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+                <!--  TIPO DE TARJETA  -->
+                <VerticalStackLayout Grid.Row="5" Spacing="8">
                     <Label Style="{StaticResource subtitulosFormularios}" Text="Tipo de Tarjeta" />
                     <Border BackgroundColor="{StaticResource ColorTarjeta}" Stroke="{StaticResource ColorTarjeta}">
                         <Border.StrokeShape>
@@ -190,22 +270,6 @@
                             Stroke="Transparent" />
                     </Border>
 
-                </VerticalStackLayout>
-
-                <VerticalStackLayout Grid.Row="4" Spacing="8">
-                    <Label Style="{StaticResource subtitulosFormularios}" Text="Banco o Entidad" />
-                    <Border x:Name="borderBancoCuenta" Style="{StaticResource bordeFormulario}">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
-                        </Border.StrokeShape>
-                        <Entry
-                            x:Name="entradaBancoCuenta"
-                            Focused="entradaBancoCuenta_Focused"
-                            Placeholder="Ej: Banco Nacional"
-                            Style="{StaticResource entradaFormulario}"
-                            Text="{Binding NombreEntidadFinanciera, Mode=TwoWay}"
-                            Unfocused="entradaBancoCuenta_Unfocused" />
-                    </Border>
                 </VerticalStackLayout>
                 <!--  Saldo Inicial  -->
                 <VerticalStackLayout Grid.Row="5" Spacing="8">
