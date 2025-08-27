@@ -3,121 +3,335 @@
     x:Class="FinanKey.View.AgregarTarjetaPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     Title="AgregarTarjetaPage"
-    Padding="{StaticResource PagePadding}"
+    Padding="{StaticResource PaddingPaginas}"
     BackgroundColor="{StaticResource ColorFondoPrincipal}">
     <!--  Cambio de color de la barra  -->
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource FondoPrincipal}" StatusBarStyle="DarkContent" />
     </ContentPage.Behaviors>
 
-    <!--  FORMULARIO INGRESAR TARJETA  -->
-    <Grid RowDefinitions="*,*,*,*,*,*">
-        <!--  NOMRE DE LA TARJETA  -->
-        <VerticalStackLayout Grid.Row="0" Spacing="8">
-            <Label Style="{StaticResource subtitulosFormularios}" Text="Nombre de la Tarjeta" />
-            <Border x:Name="borderNombreCuenta" Style="{StaticResource bordeFormulario}">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="10" />
-                </Border.StrokeShape>
-                <Entry
-                    x:Name="entradaNombreTarjeta"
-                    Focused="entradaNombreTarjeta_Focused"
-                    Placeholder="Ej: Mi Tarjeta Personal"
-                    Style="{StaticResource entradaFormulario}"
-                    Text="{Binding NombreCuenta, Mode=TwoWay}"
-                    Unfocused="entradaNombreTarjeta_Unfocused" />
-            </Border>
-        </VerticalStackLayout>
-        <!--  TIPO DE TARJETA  -->
-        <VerticalStackLayout Grid.Row="1" Spacing="8">
-            <Label Style="{StaticResource subtitulosFormularios}" Text="Tipo de Tarjeta" />
-            <Border BackgroundColor="{StaticResource ColorTarjeta}" Stroke="{StaticResource ColorTarjeta}">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="10" />
-                </Border.StrokeShape>
-                <editors:SfComboBox
-                    x:Name="cmbTipoTarjeta"
-                    BackgroundColor="Transparent"
-                    DropDownBackground="#ffffff"
-                    FontFamily="PoppinsRegular"
-                    FontSize="16"
-                    IsClearButtonVisible="True"
-                    ItemsSource="{Binding ListaTipoTarjeta}"
-                    Placeholder="Seleccionar tipo"
-                    PlaceholderColor="#6b7a99"
-                    SelectedItem="{Binding TipoTarjetaSeleccionada, Mode=TwoWay}"
-                    Stroke="Transparent" />
-            </Border>
+    <Grid RowDefinitions="Auto,Auto" RowSpacing="16">
+        <!--  FONDO DE LA TARJETA  -->
+        <Border
+            Grid.Row="0"
+            HeightRequest="220"
+            Stroke="Transparent"
+            StrokeShape="RoundRectangle 20"
+            WidthRequest="380">
+            <Border.Background>
+                <LinearGradientBrush>
+                    <GradientStop Offset="0.1" Color="#3E298F" />
+                    <GradientStop Offset="1.0" Color="#836EDB" />
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+        <!--  SEPARACION DE LA TARJETA EN 2 FILAS Y 2 COLUMNAS  -->
+        <Grid
+            Padding="32,32"
+            ColumnDefinitions="70*,30*"
+            HeightRequest="220"
+            RowDefinitions="70*,30*"
+            WidthRequest="380">
+            <!--  COLUMNA 0 Y FILA 0  -->
+            <Grid
+                Grid.Row="0"
+                Grid.Column="0"
+                HorizontalOptions="Start"
+                RowDefinitions="*,*"
+                VerticalOptions="Start">
+                <Label
+                    Grid.Row="0"
+                    Style="{StaticResource TextoParrafoPrincipal}"
+                    Text="Walmart"
+                    TextColor="{StaticResource ColorFondoPrincipal}" />
+                <Label
+                    Grid.Row="1"
+                    Style="{StaticResource TextoMontoTarjeta}"
+                    Text="$4,570,80"
+                    TextColor="{StaticResource ColorFondoPrincipal}" />
+            </Grid>
+            <!--  COLUMNA 1 Y FILA 0  -->
+            <Grid
+                Grid.Row="0"
+                Grid.Column="1"
+                HorizontalOptions="End"
+                VerticalOptions="Start">
+                <Image
+                    HeightRequest="45"
+                    Source="icono_master_card.svg"
+                    WidthRequest="64" />
+            </Grid>
+            <!--  COLUMNA 0 Y FILA 1  -->
+            <Grid
+                Grid.Row="1"
+                Grid.Column="0"
+                HorizontalOptions="Start"
+                RowDefinitions="*,*"
+                VerticalOptions="End">
+                <Label
+                    Grid.Row="0"
+                    Style="{StaticResource TextoParrafoPrincipal}"
+                    Text="Tarjeta de Credito"
+                    TextColor="{StaticResource ColorFondoPrincipal}" />
+                <Label
+                    Grid.Row="1"
+                    Style="{StaticResource TextoMontoTarjeta}"
+                    Text="**** **** **** 1234"
+                    TextColor="{StaticResource ColorFondoPrincipal}" />
+            </Grid>
+            <!--  COLUMNA 1 Y FILA 1  -->
+            <Grid
+                Grid.Row="1"
+                Grid.Column="1"
+                HorizontalOptions="End"
+                VerticalOptions="End">
+                <Label
+                    Style="{StaticResource TextoParrafoPrincipal}"
+                    Text="09/25"
+                    TextColor="{StaticResource ColorFondoPrincipal}" />
+            </Grid>
+        </Grid>
 
-        </VerticalStackLayout>
+        <!--  ZONA DE SCROLL Y FORMULARIO  -->
+        <ScrollView Grid.Row="1">
+            <!--  FORMULARIO INGRESAR TARJETA  -->
+            <Grid RowDefinitions="*,*,*,*,*,*,*,*" RowSpacing="16">
+                <!--  NOMRE DE LA TARJETA  -->
+                <VerticalStackLayout Grid.Row="0" Spacing="8">
+                    <Label
+                        Style="{StaticResource TextoSubtítulo}"
+                        Text="Nombre de la Tarjeta"
+                        TextColor="{StaticResource ColorAzulPricipal}" />
+                    <Border x:Name="borderNombreCuenta" Style="{StaticResource bordeFormulario}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20" />
+                        </Border.StrokeShape>
+                        <Entry
+                            x:Name="entradaNombreTarjeta"
+                            ClearButtonVisibility="WhileEditing"
+                            Focused="entradaNombreTarjeta_Focused"
+                            MaxLength="30"
+                            Placeholder="Ej: Mi Tarjeta Personal"
+                            Style="{StaticResource entradaFormulario}"
+                            Text="{Binding NombreCuenta, Mode=TwoWay}"
+                            Unfocused="entradaNombreTarjeta_Unfocused" />
+                    </Border>
+                </VerticalStackLayout>
+                <!--  ULTIMOS CUATRO DIGITOS  -->
+                <VerticalStackLayout Grid.Row="1" Spacing="8">
+                    <Label
+                        Style="{StaticResource TextoSubtítulo}"
+                        Text="Ultimos 4 digitos"
+                        TextColor="{StaticResource ColorAzulPricipal}" />
+                    <Border x:Name="borderUltimosDigitos" Style="{StaticResource bordeFormulario}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20" />
+                        </Border.StrokeShape>
+                        <Entry
+                            x:Name="entradaUltimosDigitos"
+                            ClearButtonVisibility="WhileEditing"
+                            Focused="entradaUltimosDigitos_Focused"
+                            Keyboard="Numeric"
+                            MaxLength="4"
+                            Placeholder="Ej: 1234"
+                            Style="{StaticResource entradaFormulario}"
+                            Text="{Binding UltimosCuatroDigitos, Mode=TwoWay}"
+                            Unfocused="entradaUltimosDigitos_Unfocused" />
+                    </Border>
+                </VerticalStackLayout>
+                <!--  SELECCION DE TIPO DE TARJETA  -->
+                <Grid
+                    Grid.Row="2"
+                    RowDefinitions="*,*"
+                    RowSpacing="8">
+                    <Label
+                        Grid.Row="0"
+                        Style="{StaticResource TextoSubtítulo}"
+                        Text="Tipo de tarjeta"
+                        TextColor="{StaticResource ColorAzulPricipal}" />
+                    <HorizontalStackLayout Grid.Row="1">
+                        <buttons:SfRadioGroup x:Name="grupoTipoTarjetas" Orientation="Horizontal">
+                            <buttons:SfRadioButton
+                                x:Name="rdCredito"
+                                CheckedColor="{StaticResource ColorCascaraNaranja}"
+                                FontFamily="PoppinsRegular"
+                                FontSize="16"
+                                IsChecked="True"
+                                Text="Credito"
+                                TextColor="{StaticResource ColorAzulPricipal}"
+                                UncheckedColor="{StaticResource ColorAzulPrincipalSuave}"
+                                Value="Credito" />
+                            <buttons:SfRadioButton
+                                x:Name="rdDebito"
+                                CheckedColor="{StaticResource ColorCascaraNaranja}"
+                                FontFamily="PoppinsRegular"
+                                FontSize="16"
+                                Text="Debito"
+                                TextColor="{StaticResource ColorAzulPricipal}"
+                                UncheckedColor="{StaticResource ColorAzulPrincipalSuave}"
+                                Value="Debito" />
+                        </buttons:SfRadioGroup>
+                    </HorizontalStackLayout>
+                </Grid>
+                <!--  ENTIDAD EMISORA  -->
+                <VerticalStackLayout Grid.Row="3" Spacing="8">
+                    <Label
+                        Style="{StaticResource TextoSubtítulo}"
+                        Text="Banco /Entidad emisora"
+                        TextColor="{StaticResource ColorAzulPricipal}" />
+                    <Border x:Name="borderBancoCuenta" Style="{StaticResource bordeFormulario}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20" />
+                        </Border.StrokeShape>
+                        <Entry
+                            x:Name="entradaBancoCuenta"
+                            Focused="entradaBancoCuenta_Focused"
+                            MaxLength="30"
+                            Placeholder="Ej: Banco Nacional"
+                            Style="{StaticResource entradaFormulario}"
+                            Text="{Binding NombreEntidadFinanciera, Mode=TwoWay}"
+                            Unfocused="entradaBancoCuenta_Unfocused" />
+                    </Border>
+                </VerticalStackLayout>
+                <!--  VECIMIENTO Y (LIMITE DE CREDO O MONTO)  -->
+                <Grid Grid.Row="4" ColumnDefinitions="*,*">
+                    <!--  FECHA DE VENCIMIENTO  -->
+                    <VerticalStackLayout Grid.Column="0" Spacing="8">
+                        <Label
+                            Style="{StaticResource TextoSubtítulo}"
+                            Text="Vencimiento"
+                            TextColor="{StaticResource ColorAzulPricipal}" />
+                        <Border
+                            x:Name="borderVencimiento"
+                            Style="{StaticResource bordeFormulario}"
+                            WidthRequest="182">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20" />
+                            </Border.StrokeShape>
+                            <HorizontalStackLayout>
+                                <editors:SfMaskedEntry
+                                    x:Name="entradaVencimiento"
+                                    Focused="entradaVencimiento_Focused"
+                                    FontFamily="PoppinsRegular"
+                                    FontSize="16"
+                                    HidePromptOnLeave="True"
+                                    HorizontalOptions="Start"
+                                    Mask="00/00"
+                                    MaskType="Simple"
+                                    Placeholder="mm/aa"
+                                    PlaceholderColor="{StaticResource ColorTextosDescriptivos}"
+                                    ReturnType="Next"
+                                    Stroke="Transparent"
+                                    TextColor="{StaticResource ColorTexoEntrada}"
+                                    Unfocused="entradaVencimiento_Unfocused"
+                                    VerticalOptions="Center"
+                                    WidthRequest="120" />
+                                <Image
+                                    Aspect="AspectFill"
+                                    HeightRequest="24"
+                                    HorizontalOptions="Center"
+                                    Source="icono_calendario.svg"
+                                    VerticalOptions="Center"
+                                    WidthRequest="24" />
+                            </HorizontalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                    <!--  LIMITE DE CREDITO O MONTO POR DEFAULT SE VERA LIMITE DE CREDITO -->
+                    <VerticalStackLayout Grid.Column="1" Spacing="8">
+                        <Label
+                            Style="{StaticResource TextoSubtítulo}"
+                            Text="Limite de Credito"
+                            TextColor="{StaticResource ColorAzulPricipal}" />
+                        <Border
+                            x:Name="borderLimiteCredito"
+                            Style="{StaticResource bordeFormulario}"
+                            WidthRequest="182">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20" />
+                            </Border.StrokeShape>
+                            <HorizontalStackLayout>
+                                
+                            </HorizontalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+                <!--  TIPO DE TARJETA  -->
+                <VerticalStackLayout Grid.Row="5" Spacing="8">
+                    <Label Style="{StaticResource subtitulosFormularios}" Text="Tipo de Tarjeta" />
+                    <Border BackgroundColor="{StaticResource ColorTarjeta}" Stroke="{StaticResource ColorTarjeta}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <editors:SfComboBox
+                            x:Name="cmbTipoTarjeta"
+                            BackgroundColor="Transparent"
+                            DropDownBackground="#ffffff"
+                            FontFamily="PoppinsRegular"
+                            FontSize="16"
+                            IsClearButtonVisible="True"
+                            ItemsSource="{Binding ListaTipoTarjeta}"
+                            Placeholder="Seleccionar tipo"
+                            PlaceholderColor="#6b7a99"
+                            SelectedItem="{Binding TipoTarjetaSeleccionada, Mode=TwoWay}"
+                            Stroke="Transparent" />
+                    </Border>
 
+                </VerticalStackLayout>
+                <!--  Saldo Inicial  -->
+                <VerticalStackLayout Grid.Row="5" Spacing="8">
+                    <Label Style="{StaticResource subtitulosFormularios}" Text="Saldo Inicial" />
+                    <Border x:Name="borderSaldoInicialCuenta" Style="{StaticResource bordeFormulario}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Entry
+                            x:Name="entradaSaldoInicialCuenta"
+                            Focused="entradaSaldoInicialCuenta_Focused"
+                            Keyboard="Numeric"
+                            Placeholder="0"
+                            Style="{StaticResource entradaFormulario}"
+                            Text="{Binding Saldo, Mode=TwoWay}"
+                            Unfocused="entradaSaldoInicialCuenta_Unfocused" />
+                    </Border>
+                </VerticalStackLayout>
+                <!--  Tipo de Cuenta (Dropdown)  -->
+                <VerticalStackLayout Grid.Row="6" Spacing="8">
+                    <Label Style="{StaticResource subtitulosFormularios}" Text="Tipo de Cuenta" />
+                    <Border BackgroundColor="{StaticResource ColorTarjeta}" Stroke="{StaticResource ColorTarjeta}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <editors:SfComboBox
+                            x:Name="cmbTipoCuentaCuenta"
+                            BackgroundColor="Transparent"
+                            DisplayMemberPath="Descripcion"
+                            DropDownBackground="#ffffff"
+                            FontFamily="PoppinsRegular"
+                            FontSize="16"
+                            IsClearButtonVisible="True"
+                            ItemsSource="{Binding TipoCuenta}"
+                            Placeholder="Seleccionar tipo"
+                            PlaceholderColor="#6b7a99"
+                            SelectedItem="{Binding TipoCuentaSeleccionada, Mode=TwoWay}"
+                            Stroke="Transparent"
+                            TextMemberPath="Descripcion" />
+                    </Border>
 
-        <VerticalStackLayout Grid.Row="2" Spacing="8">
-            <Label Style="{StaticResource subtitulosFormularios}" Text="Banco o Entidad" />
-            <Border x:Name="borderBancoCuenta" Style="{StaticResource bordeFormulario}">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="10" />
-                </Border.StrokeShape>
-                <Entry
-                    x:Name="entradaBancoCuenta"
-                    Focused="entradaBancoCuenta_Focused"
-                    Placeholder="Ej: Banco Nacional"
-                    Style="{StaticResource entradaFormulario}"
-                    Text="{Binding NombreEntidadFinanciera, Mode=TwoWay}"
-                    Unfocused="entradaBancoCuenta_Unfocused" />
-            </Border>
-        </VerticalStackLayout>
-        <!--  Saldo Inicial  -->
-        <VerticalStackLayout Grid.Row="3" Spacing="8">
-            <Label Style="{StaticResource subtitulosFormularios}" Text="Saldo Inicial" />
-            <Border x:Name="borderSaldoInicialCuenta" Style="{StaticResource bordeFormulario}">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="10" />
-                </Border.StrokeShape>
-                <Entry
-                    x:Name="entradaSaldoInicialCuenta"
-                    Focused="entradaSaldoInicialCuenta_Focused"
-                    Keyboard="Numeric"
-                    Placeholder="0"
-                    Style="{StaticResource entradaFormulario}"
-                    Text="{Binding Saldo, Mode=TwoWay}"
-                    Unfocused="entradaSaldoInicialCuenta_Unfocused" />
-            </Border>
-        </VerticalStackLayout>
-        <!--  Tipo de Cuenta (Dropdown)  -->
-        <VerticalStackLayout Grid.Row="4" Spacing="8">
-            <Label Style="{StaticResource subtitulosFormularios}" Text="Tipo de Cuenta" />
-            <Border BackgroundColor="{StaticResource ColorTarjeta}" Stroke="{StaticResource ColorTarjeta}">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="10" />
-                </Border.StrokeShape>
-                <editors:SfComboBox
-                    x:Name="cmbTipoCuentaCuenta"
-                    BackgroundColor="Transparent"
-                    DisplayMemberPath="Descripcion"
-                    DropDownBackground="#ffffff"
-                    FontFamily="PoppinsRegular"
-                    FontSize="16"
-                    IsClearButtonVisible="True"
-                    ItemsSource="{Binding TipoCuenta}"
-                    Placeholder="Seleccionar tipo"
-                    PlaceholderColor="#6b7a99"
-                    SelectedItem="{Binding TipoCuentaSeleccionada, Mode=TwoWay}"
-                    Stroke="Transparent"
-                    TextMemberPath="Descripcion" />
-            </Border>
-
-        </VerticalStackLayout>
-        <!--  Botón Agregar Cuenta  -->
-        <VerticalStackLayout Grid.Row="5">
-            <Button
-                Command="{Binding GuardarCuentaCommand}"
-                Style="{StaticResource botonPrimario}"
-                Text="Agregar Cuenta"
-                TextColor="White" />
-        </VerticalStackLayout>
+                </VerticalStackLayout>
+                <!--  Botón Agregar Cuenta  -->
+                <VerticalStackLayout Grid.Row="7">
+                    <Button
+                        Command="{Binding GuardarCuentaCommand}"
+                        Style="{StaticResource botonPrimario}"
+                        Text="Agregar Cuenta"
+                        TextColor="White" />
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
     </Grid>
+
 </ContentPage>
