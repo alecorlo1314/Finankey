@@ -240,7 +240,7 @@
                             </HorizontalStackLayout>
                         </Border>
                     </VerticalStackLayout>
-                    <!--  LIMITE DE CREDITO O MONTO POR DEFAULT SE VERA LIMITE DE CREDITO -->
+                    <!--  LIMITE DE CREDITO O MONTO POR DEFAULT SE VERA LIMITE DE CREDITO  -->
                     <VerticalStackLayout Grid.Column="1" Spacing="8">
                         <Label
                             Style="{StaticResource TextoSubtítulo}"
@@ -253,9 +253,17 @@
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="20" />
                             </Border.StrokeShape>
-                            <HorizontalStackLayout>
-                                
-                            </HorizontalStackLayout>
+                            <VerticalStackLayout>
+                                <editors:SfNumericEntry
+                                    FontFamily="PoppinsRegular"
+                                    FontSize="16"
+                                    HeightRequest="45"
+                                    HorizontalOptions="Center"
+                                    TextColor="{StaticResource ColorTexoEntrada}"
+                                    UpDownPlacementMode="InlineVertical"
+                                    VerticalOptions="Center"
+                                    WidthRequest="150" />
+                            </VerticalStackLayout>
                         </Border>
                     </VerticalStackLayout>
                 </Grid>
