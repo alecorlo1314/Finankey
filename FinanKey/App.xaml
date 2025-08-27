@@ -28,6 +28,10 @@
                 <Setter Property="FontFamily" Value="PoppinsBold" />
                 <Setter Property="FontSize" Value="24" />
             </Style>
+            <Style x:Key="TextoMontoTarjeta" TargetType="Label">
+                <Setter Property="FontFamily" Value="PoppinsRegular" />
+                <Setter Property="FontSize" Value="28" />
+            </Style>
             <Style x:Key="TextoSubtítulo" TargetType="Label">
                 <Setter Property="FontFamily" Value="PoppinsSemibold" />
                 <Setter Property="FontSize" Value="20" />
