@@ -6,14 +6,14 @@
     xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     Title="AgregarTarjetaPage"
-    Padding="{StaticResource PagePadding}"
+    Padding="{StaticResource PaddingPaginas}"
     BackgroundColor="{StaticResource ColorFondoPrincipal}">
     <!--  Cambio de color de la barra  -->
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource FondoPrincipal}" StatusBarStyle="DarkContent" />
     </ContentPage.Behaviors>
 
-    <Grid RowDefinitions="*,Auto">
+    <Grid RowDefinitions="Auto,Auto" RowSpacing="0,16">
         <!--  FONDO DE LA TARJETA  -->
         <Border
             Grid.Row="0"
@@ -94,13 +94,17 @@
                     TextColor="{StaticResource ColorFondoPrincipal}" />
             </Grid>
         </Grid>
-        
+
+        <!--  ZONA DE SCROLL Y FORMULARIO  -->
         <ScrollView Grid.Row="1">
             <!--  FORMULARIO INGRESAR TARJETA  -->
-            <Grid RowDefinitions="*,*,*,*,*,*,*,*,*">
+            <Grid RowDefinitions="*,*,*,*,*,*,*" RowSpacing="16">
                 <!--  NOMRE DE LA TARJETA  -->
                 <VerticalStackLayout Grid.Row="0" Spacing="8">
-                    <Label Style="{StaticResource subtitulosFormularios}" Text="Nombre de la Tarjeta" />
+                    <Label
+                        Style="{StaticResource TextoSubtítulo}"
+                        Text="Nombre de la Tarjeta"
+                        TextColor="{StaticResource ColorAzulPricipal}" />
                     <Border x:Name="borderNombreCuenta" Style="{StaticResource bordeFormulario}">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10" />
@@ -114,8 +118,27 @@
                             Unfocused="entradaNombreTarjeta_Unfocused" />
                     </Border>
                 </VerticalStackLayout>
-                <!--  TIPO DE TARJETA  -->
+                <!--  ULTIMOS CUATRO DIGITOS  -->
                 <VerticalStackLayout Grid.Row="1" Spacing="8">
+                    <Label
+                        Style="{StaticResource TextoSubtítulo}"
+                        Text="Ultimos 4 digitos"
+                        TextColor="{StaticResource ColorAzulPricipal}" />
+                    <Border x:Name="borderUltimosDigitos" Style="{StaticResource bordeFormulario}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Entry
+                            x:Name="entradaUltimosDigitos"
+                            Focused="entradaUltimosDigitos_Focused"
+                            Placeholder="Ej: 1234"
+                            Style="{StaticResource entradaFormulario}"
+                            Text="{Binding UltimosCuatroDigitos, Mode=TwoWay}"
+                            Unfocused="entradaUltimosDigitos_Unfocused" />
+                    </Border>
+                </VerticalStackLayout>
+                <!--  TIPO DE TARJETA  -->
+                <VerticalStackLayout Grid.Row="2" Spacing="8">
                     <Label Style="{StaticResource subtitulosFormularios}" Text="Tipo de Tarjeta" />
                     <Border BackgroundColor="{StaticResource ColorTarjeta}" Stroke="{StaticResource ColorTarjeta}">
                         <Border.StrokeShape>
@@ -137,8 +160,7 @@
 
                 </VerticalStackLayout>
 
-
-                <VerticalStackLayout Grid.Row="2" Spacing="8">
+                <VerticalStackLayout Grid.Row="3" Spacing="8">
                     <Label Style="{StaticResource subtitulosFormularios}" Text="Banco o Entidad" />
                     <Border x:Name="borderBancoCuenta" Style="{StaticResource bordeFormulario}">
                         <Border.StrokeShape>
@@ -154,7 +176,7 @@
                     </Border>
                 </VerticalStackLayout>
                 <!--  Saldo Inicial  -->
-                <VerticalStackLayout Grid.Row="3" Spacing="8">
+                <VerticalStackLayout Grid.Row="4" Spacing="8">
                     <Label Style="{StaticResource subtitulosFormularios}" Text="Saldo Inicial" />
                     <Border x:Name="borderSaldoInicialCuenta" Style="{StaticResource bordeFormulario}">
                         <Border.StrokeShape>
@@ -171,7 +193,7 @@
                     </Border>
                 </VerticalStackLayout>
                 <!--  Tipo de Cuenta (Dropdown)  -->
-                <VerticalStackLayout Grid.Row="4" Spacing="8">
+                <VerticalStackLayout Grid.Row="5" Spacing="8">
                     <Label Style="{StaticResource subtitulosFormularios}" Text="Tipo de Cuenta" />
                     <Border BackgroundColor="{StaticResource ColorTarjeta}" Stroke="{StaticResource ColorTarjeta}">
                         <Border.StrokeShape>
@@ -195,7 +217,7 @@
 
                 </VerticalStackLayout>
                 <!--  Botón Agregar Cuenta  -->
-                <VerticalStackLayout Grid.Row="5">
+                <VerticalStackLayout Grid.Row="6">
                     <Button
                         Command="{Binding GuardarCuentaCommand}"
                         Style="{StaticResource botonPrimario}"
