@@ -24,10 +24,6 @@ public partial class AgregarTarjetaPage : ContentPage
 
     private void entradaBancoCuenta_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderBancoCuenta);
     private void entradaBancoCuenta_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderBancoCuenta);
-
-    private void entradaSaldoInicialCuenta_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderSaldoInicialCuenta);
-    private void entradaSaldoInicialCuenta_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderSaldoInicialCuenta);
-
     private void entradaNombreTarjeta_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderNombreCuenta);
     private void entradaNombreTarjeta_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderNombreCuenta);
 
@@ -41,4 +37,8 @@ public partial class AgregarTarjetaPage : ContentPage
     {
 
     }
+
+    private void entradaDescripcion_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderDescripcion);
+
+    private void entradaDescripcion_Unfocused(object sender, FocusEventArgs e) =>OnEntryUnfocused(borderDescripcion);
 }

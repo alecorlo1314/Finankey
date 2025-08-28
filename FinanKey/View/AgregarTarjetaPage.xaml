@@ -99,7 +99,7 @@
         <!--  ZONA DE SCROLL Y FORMULARIO  -->
         <ScrollView Grid.Row="1">
             <!--  FORMULARIO INGRESAR TARJETA  -->
-            <Grid RowDefinitions="*,*,*,*,*,*,*,*,*" RowSpacing="16">
+            <Grid RowDefinitions="*,*,*,*,*,*,*,*" RowSpacing="16">
                 <!--  NOMRE DE LA TARJETA  -->
                 <VerticalStackLayout Grid.Row="0" Spacing="8">
                     <Label
@@ -284,44 +284,23 @@
                 </VerticalStackLayout>
                 <!--  Saldo Inicial  -->
                 <VerticalStackLayout Grid.Row="6" Spacing="8">
-                    <Label Style="{StaticResource subtitulosFormularios}" Text="Saldo Inicial" />
-                    <Border x:Name="borderSaldoInicialCuenta" Style="{StaticResource bordeFormulario}">
+                    <Label
+                        Style="{StaticResource TextoSubtítulo}"
+                        Text="Descripcion"
+                        TextColor="{StaticResource ColorAzulPricipal}" />
+                    <Border x:Name="borderDescripcion" Style="{StaticResource bordeFormulario}">
                         <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
+                            <RoundRectangle CornerRadius="20" />
                         </Border.StrokeShape>
                         <Entry
-                            x:Name="entradaSaldoInicialCuenta"
-                            Focused="entradaSaldoInicialCuenta_Focused"
-                            Keyboard="Numeric"
-                            Placeholder="0"
+                            x:Name="entradaDescripcion"
+                            Focused="entradaDescripcion_Focused"
+                            MaxLength="30"
+                            Placeholder="Escribe una descripcion..."
                             Style="{StaticResource entradaFormulario}"
-                            Text="{Binding Saldo, Mode=TwoWay}"
-                            Unfocused="entradaSaldoInicialCuenta_Unfocused" />
+                            Text="{Binding NombreEntidadFinanciera, Mode=TwoWay}"
+                            Unfocused="entradaDescripcion_Unfocused" />
                     </Border>
-                </VerticalStackLayout>
-                <!--  Tipo de Cuenta (Dropdown)  -->
-                <VerticalStackLayout Grid.Row="7" Spacing="8">
-                    <Label Style="{StaticResource subtitulosFormularios}" Text="Tipo de Cuenta" />
-                    <Border BackgroundColor="{StaticResource ColorTarjeta}" Stroke="{StaticResource ColorTarjeta}">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
-                        </Border.StrokeShape>
-                        <editors:SfComboBox
-                            x:Name="cmbTipoCuentaCuenta"
-                            BackgroundColor="Transparent"
-                            DisplayMemberPath="Descripcion"
-                            DropDownBackground="#ffffff"
-                            FontFamily="PoppinsRegular"
-                            FontSize="16"
-                            IsClearButtonVisible="True"
-                            ItemsSource="{Binding TipoCuenta}"
-                            Placeholder="Seleccionar tipo"
-                            PlaceholderColor="#6b7a99"
-                            SelectedItem="{Binding TipoCuentaSeleccionada, Mode=TwoWay}"
-                            Stroke="Transparent"
-                            TextMemberPath="Descripcion" />
-                    </Border>
-
                 </VerticalStackLayout>
                 <!--  Botón Agregar Cuenta  -->
                 <VerticalStackLayout Grid.Row="8">
