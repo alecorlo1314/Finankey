@@ -14,7 +14,7 @@
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource FondoPrincipal}" StatusBarStyle="DarkContent" />
     </ContentPage.Behaviors>
 
-    <Grid RowDefinitions="Auto,Auto" RowSpacing="16">
+    <Grid RowDefinitions="Auto,*" RowSpacing="16">
         <!--  FONDO DE LA TARJETA  -->
         <Border
             Grid.Row="0"
@@ -99,7 +99,7 @@
         <!--  ZONA DE SCROLL Y FORMULARIO  -->
         <ScrollView Grid.Row="1">
             <!--  FORMULARIO INGRESAR TARJETA  -->
-            <Grid RowDefinitions="*,*,*,*,*,*,*,*" RowSpacing="16">
+            <Grid RowDefinitions="*,*,*,*,*,*,*,*,*" RowSpacing="16">
                 <!--  NOMRE DE LA TARJETA  -->
                 <VerticalStackLayout Grid.Row="0" Spacing="8">
                     <Label
@@ -267,30 +267,23 @@
                         </Border>
                     </VerticalStackLayout>
                 </Grid>
-                <!--  TIPO DE TARJETA  -->
+                <!--  CATEGORIA DE TARJETA (VISA, MASTERCARD O AMEX)  -->
                 <VerticalStackLayout Grid.Row="5" Spacing="8">
-                    <Label Style="{StaticResource subtitulosFormularios}" Text="Tipo de Tarjeta" />
-                    <Border BackgroundColor="{StaticResource ColorTarjeta}" Stroke="{StaticResource ColorTarjeta}">
+                    <Label
+                        Style="{StaticResource TextoSubtítulo}"
+                        Text="Categoria de Tarjeta"
+                        TextColor="{StaticResource ColorAzulPricipal}" />
+                    <Border x:Name="borderCategoriaTarjeta" Style="{StaticResource bordeFormulario}">
                         <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
+                            <RoundRectangle CornerRadius="20" />
                         </Border.StrokeShape>
-                        <editors:SfComboBox
-                            x:Name="cmbTipoTarjeta"
-                            BackgroundColor="Transparent"
-                            DropDownBackground="#ffffff"
-                            FontFamily="PoppinsRegular"
-                            FontSize="16"
-                            IsClearButtonVisible="True"
-                            ItemsSource="{Binding ListaTipoTarjeta}"
-                            Placeholder="Seleccionar tipo"
-                            PlaceholderColor="#6b7a99"
-                            SelectedItem="{Binding TipoTarjetaSeleccionada, Mode=TwoWay}"
-                            Stroke="Transparent" />
-                    </Border>
 
+                        <editors:SfComboBox x:Name="comboBoxCategoriaTarjeta" />
+
+                    </Border>
                 </VerticalStackLayout>
                 <!--  Saldo Inicial  -->
-                <VerticalStackLayout Grid.Row="5" Spacing="8">
+                <VerticalStackLayout Grid.Row="6" Spacing="8">
                     <Label Style="{StaticResource subtitulosFormularios}" Text="Saldo Inicial" />
                     <Border x:Name="borderSaldoInicialCuenta" Style="{StaticResource bordeFormulario}">
                         <Border.StrokeShape>
@@ -307,7 +300,7 @@
                     </Border>
                 </VerticalStackLayout>
                 <!--  Tipo de Cuenta (Dropdown)  -->
-                <VerticalStackLayout Grid.Row="6" Spacing="8">
+                <VerticalStackLayout Grid.Row="7" Spacing="8">
                     <Label Style="{StaticResource subtitulosFormularios}" Text="Tipo de Cuenta" />
                     <Border BackgroundColor="{StaticResource ColorTarjeta}" Stroke="{StaticResource ColorTarjeta}">
                         <Border.StrokeShape>
@@ -331,7 +324,7 @@
 
                 </VerticalStackLayout>
                 <!--  Botón Agregar Cuenta  -->
-                <VerticalStackLayout Grid.Row="7">
+                <VerticalStackLayout Grid.Row="8">
                     <Button
                         Command="{Binding GuardarCuentaCommand}"
                         Style="{StaticResource botonPrimario}"
