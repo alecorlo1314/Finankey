@@ -129,11 +129,12 @@
 
             <!--  Botón primario  -->
             <Style x:Key="botonPrimario" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="{StaticResource ColorAcento}" />
-                <Setter Property="CornerRadius" Value="12" />
-                <Setter Property="Margin" Value="30,10" />
+                <Setter Property="BackgroundColor" Value="{StaticResource ColorCascaraNaranja}" />
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="WidthRequest" Value="380"/>
+                <Setter Property="HeightRequest" Value="48"/>
                 <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="FontFamily" Value="PoppinsSemibold" />
+                <Setter Property="FontFamily" Value="PoppinsBold" />
                 <Setter Property="FontSize" Value="16" />
             </Style>
             <!--  Grupo botones  -->
