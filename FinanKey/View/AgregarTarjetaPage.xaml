@@ -24,8 +24,8 @@
             WidthRequest="380">
             <Border.Background>
                 <LinearGradientBrush>
-                    <GradientStop Offset="0.1" Color="#3E298F" />
-                    <GradientStop Offset="1.0" Color="#836EDB" />
+                    <GradientStop Offset="0.1" Color="{Binding LinearColor1}" />
+                    <GradientStop Offset="1.0" Color="{Binding LinearColor2}" />
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
@@ -46,12 +46,12 @@
                 <Label
                     Grid.Row="0"
                     Style="{StaticResource TextoParrafoPrincipal}"
-                    Text="Walmart"
+                    Text="{Binding Path=Text, Source={x:Reference entradaNombreTarjeta}}"
                     TextColor="{StaticResource ColorFondoPrincipal}" />
                 <Label
                     Grid.Row="1"
                     Style="{StaticResource TextoMontoTarjeta}"
-                    Text="$4,570,80"
+                    Text="{Binding Path=Value, Source={x:Reference entraLimiteCredito}, StringFormat='₡{0:F2}'}"
                     TextColor="{StaticResource ColorFondoPrincipal}" />
             </Grid>
             <!--  COLUMNA 1 Y FILA 0  -->
@@ -77,11 +77,16 @@
                     Style="{StaticResource TextoParrafoPrincipal}"
                     Text="Tarjeta de Credito"
                     TextColor="{StaticResource ColorFondoPrincipal}" />
-                <Label
-                    Grid.Row="1"
-                    Style="{StaticResource TextoMontoTarjeta}"
-                    Text="**** **** **** 1234"
-                    TextColor="{StaticResource ColorFondoPrincipal}" />
+                <HorizontalStackLayout Grid.Row="1">
+                    <Label
+                        Style="{StaticResource TextoParrafoPrincipal}"
+                        Text="**** **** **** "
+                        TextColor="{StaticResource ColorFondoPrincipal}" />
+                    <Label
+                        Style="{StaticResource TextoParrafoPrincipal}"
+                        Text="{Binding Path=Text, Source={x:Reference entradaUltimosDigitos}}"
+                        TextColor="{StaticResource ColorFondoPrincipal}" />
+                </HorizontalStackLayout>
             </Grid>
             <!--  COLUMNA 1 Y FILA 1  -->
             <Grid
@@ -91,7 +96,7 @@
                 VerticalOptions="End">
                 <Label
                     Style="{StaticResource TextoParrafoPrincipal}"
-                    Text="09/25"
+                    Text="{Binding Path=Value, Source={x:Reference entradaVencimiento}}"
                     TextColor="{StaticResource ColorFondoPrincipal}" />
             </Grid>
         </Grid>
@@ -99,7 +104,7 @@
         <!--  ZONA DE SCROLL Y FORMULARIO  -->
         <ScrollView Grid.Row="1">
             <!--  FORMULARIO INGRESAR TARJETA  -->
-            <Grid RowDefinitions="*,*,*,*,*,*,*,*" RowSpacing="16">
+            <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*" RowSpacing="16">
                 <!--  NOMRE DE LA TARJETA  -->
                 <VerticalStackLayout Grid.Row="0" Spacing="8">
                     <Label
@@ -117,7 +122,7 @@
                             MaxLength="30"
                             Placeholder="Ej: Mi Tarjeta Personal"
                             Style="{StaticResource entradaFormulario}"
-                            Text="{Binding NombreCuenta, Mode=TwoWay}"
+                            Text="{Binding NombreTarjeta, Mode=TwoWay}"
                             Unfocused="entradaNombreTarjeta_Unfocused" />
                     </Border>
                 </VerticalStackLayout>
@@ -229,7 +234,8 @@
                                     TextColor="{StaticResource ColorTexoEntrada}"
                                     Unfocused="entradaVencimiento_Unfocused"
                                     VerticalOptions="Center"
-                                    WidthRequest="120" />
+                                    WidthRequest="120"
+                                    Value="{Binding FechaVencimiento}" />
                                 <Image
                                     Aspect="AspectFill"
                                     HeightRequest="24"
@@ -255,14 +261,19 @@
                             </Border.StrokeShape>
                             <VerticalStackLayout>
                                 <editors:SfNumericEntry
+                                    x:Name="entraLimiteCredito"
                                     FontFamily="PoppinsRegular"
                                     FontSize="16"
                                     HeightRequest="45"
                                     HorizontalOptions="Center"
+                                    MaximumNumberDecimalDigits="2"
+                                    ShowBorder="False"
                                     TextColor="{StaticResource ColorTexoEntrada}"
                                     UpDownPlacementMode="InlineVertical"
+                                    ValueChangeMode="OnKeyFocus"
                                     VerticalOptions="Center"
-                                    WidthRequest="150" />
+                                    WidthRequest="150"
+                                    Value="{Binding LimiteCredito}" />
                             </VerticalStackLayout>
                         </Border>
                     </VerticalStackLayout>
@@ -282,7 +293,7 @@
 
                     </Border>
                 </VerticalStackLayout>
-                <!--  Saldo Inicial  -->
+                <!--  DESCRIPCION  -->
                 <VerticalStackLayout Grid.Row="6" Spacing="8">
                     <Label
                         Style="{StaticResource TextoSubtítulo}"
@@ -295,6 +306,7 @@
                         <Entry
                             x:Name="entradaDescripcion"
                             Focused="entradaDescripcion_Focused"
+                            HeightRequest="145"
                             MaxLength="30"
                             Placeholder="Escribe una descripcion..."
                             Style="{StaticResource entradaFormulario}"
@@ -302,6 +314,163 @@
                             Unfocused="entradaDescripcion_Unfocused" />
                     </Border>
                 </VerticalStackLayout>
+                <!--  ELECCION DEL COLOR DE LA TARJETA  -->
+                <Grid
+                    Grid.Row="7"
+                    HorizontalOptions="Start"
+                    RowDefinitions="Auto,Auto"
+                    RowSpacing="8">
+                    <Label
+                        Grid.Row="0"
+                        Style="{StaticResource TextoSubtítulo}"
+                        Text="Elige un color para tu tarjeta"
+                        TextColor="{StaticResource ColorAzulPricipal}" />
+                    <Grid
+                        Grid.Row="1"
+                        ColumnDefinitions="*,*,*,*"
+                        ColumnSpacing="16"
+                        RowDefinitions="*,*,*,*"
+                        RowSpacing="16">
+                        <!--  FILA SUPERIOR  -->
+                        <Border
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HeightRequest="48"
+                            Stroke="Transparent"
+                            StrokeShape="RoundRectangle 20"
+                            WidthRequest="83">
+                            <Border.Background>
+                                <LinearGradientBrush>
+                                    <GradientStop Offset="0.1" Color="#BF0839" />
+                                    <GradientStop Offset="1.0" Color="#F85480" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ColorTarjetaSeleccionadaCommand}" CommandParameter="#BF0839|#F85480" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                        <Border
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HeightRequest="48"
+                            Stroke="Transparent"
+                            StrokeShape="RoundRectangle 20"
+                            WidthRequest="83">
+                            <Border.Background>
+                                <LinearGradientBrush>
+                                    <GradientStop Offset="0.1" Color="#F54254" />
+                                    <GradientStop Offset="1.0" Color="#F98691" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ColorTarjetaSeleccionadaCommand}" CommandParameter="#F54254|#F98691" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                        <Border
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            HeightRequest="48"
+                            Stroke="Transparent"
+                            StrokeShape="RoundRectangle 20"
+                            WidthRequest="83">
+                            <Border.Background>
+                                <LinearGradientBrush>
+                                    <GradientStop Offset="0.1" Color="#3E298F" />
+                                    <GradientStop Offset="1.0" Color="#836EDB" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ColorTarjetaSeleccionadaCommand}" CommandParameter="#3E298F|#836EDB" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                        <Border
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            HeightRequest="48"
+                            Stroke="Transparent"
+                            StrokeShape="RoundRectangle 20"
+                            WidthRequest="83">
+                            <Border.Background>
+                                <LinearGradientBrush>
+                                    <GradientStop Offset="0.1" Color="#693596" />
+                                    <GradientStop Offset="1.0" Color="#B58ED7" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ColorTarjetaSeleccionadaCommand}" CommandParameter="#693596|#B58ED7" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                        <!--  FILA INFERIOR  -->
+                        <Border
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HeightRequest="48"
+                            Stroke="Transparent"
+                            StrokeShape="RoundRectangle 20"
+                            WidthRequest="83">
+                            <Border.Background>
+                                <LinearGradientBrush>
+                                    <GradientStop Offset="0.1" Color="#FA288A" />
+                                    <GradientStop Offset="1.0" Color="#FC85BC" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ColorTarjetaSeleccionadaCommand}" CommandParameter="#FA288A|#FC85BC" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                        <Border
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HeightRequest="48"
+                            Stroke="Transparent"
+                            StrokeShape="RoundRectangle 20"
+                            WidthRequest="83">
+                            <Border.Background>
+                                <LinearGradientBrush>
+                                    <GradientStop Offset="0.1" Color="#09124A" />
+                                    <GradientStop Offset="1.0" Color="#4057E7" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ColorTarjetaSeleccionadaCommand}" CommandParameter="#09124A|#4057E7" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                        <Border
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            HeightRequest="48"
+                            Stroke="Transparent"
+                            StrokeShape="RoundRectangle 20"
+                            WidthRequest="83">
+                            <Border.Background>
+                                <LinearGradientBrush>
+                                    <GradientStop Offset="0.1" Color="#2A218A" />
+                                    <GradientStop Offset="1.0" Color="#4A3DD0" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ColorTarjetaSeleccionadaCommand}" CommandParameter="#4A3DD0|#2A218A" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                        <Border
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            HeightRequest="48"
+                            Stroke="Transparent"
+                            StrokeShape="RoundRectangle 20"
+                            WidthRequest="83">
+                            <Border.Background>
+                                <LinearGradientBrush>
+                                    <GradientStop Offset="0.1" Color="#AD1F70" />
+                                    <GradientStop Offset="1.0" Color="#DE459C" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ColorTarjetaSeleccionadaCommand}" CommandParameter="#AD1F70|#DE459C" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </Grid>
+                </Grid>
                 <!--  Botón Agregar Cuenta  -->
                 <VerticalStackLayout Grid.Row="8">
                     <Button
