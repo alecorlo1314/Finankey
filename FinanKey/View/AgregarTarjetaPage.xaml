@@ -3,6 +3,7 @@
     x:Class="FinanKey.View.AgregarTarjetaPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:FinanKey.View.Behaviors"
     xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -169,7 +170,11 @@
                                 Text="Credito"
                                 TextColor="{StaticResource ColorAzulPricipal}"
                                 UncheckedColor="{StaticResource ColorAzulPrincipalSuave}"
-                                Value="Credito" />
+                                Value="Credito">
+                                <buttons:SfRadioButton.Behaviors>
+                                    <behaviors:SfRadioButtonStateChangedBehavior Command="{Binding MostrarLimiteTarjetaCommand}" />
+                                </buttons:SfRadioButton.Behaviors>
+                            </buttons:SfRadioButton>
                             <buttons:SfRadioButton
                                 x:Name="rdDebito"
                                 CheckedColor="{StaticResource ColorCascaraNaranja}"
@@ -178,7 +183,11 @@
                                 Text="Debito"
                                 TextColor="{StaticResource ColorAzulPricipal}"
                                 UncheckedColor="{StaticResource ColorAzulPrincipalSuave}"
-                                Value="Debito" />
+                                Value="Debito">
+                                <buttons:SfRadioButton.Behaviors>
+                                    <behaviors:SfRadioButtonStateChangedBehavior Command="{Binding MostrarMontoInicialCommand}" />
+                                </buttons:SfRadioButton.Behaviors>
+                            </buttons:SfRadioButton>
                         </buttons:SfRadioGroup>
                     </HorizontalStackLayout>
                 </Grid>

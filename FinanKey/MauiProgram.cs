@@ -8,6 +8,7 @@ using FinanKey.ViewModels;
 using FinanKey.Datos;
 using SimpleToolkit.SimpleShell;
 using SimpleToolkit.Core;
+using FinanKey.View.Behaviors;
 
 namespace FinanKey
 {
@@ -70,6 +71,8 @@ namespace FinanKey
             builder.Services.AddSingleton<IServiciosTransaccionIngreso, ContextoDatosIngreso>();
             builder.Services.AddSingleton<IServiciosTransaccionGasto, ContextoDatosGasto>();
             builder.Services.AddSingleton<IServicioTransaccionCuenta, ContextoDatosCuenta>();
+
+            builder.Services.AddSingleton<SfRadioButtonStateChangedBehavior>();
 
 #if DEBUG
             builder.Logging.AddDebug();

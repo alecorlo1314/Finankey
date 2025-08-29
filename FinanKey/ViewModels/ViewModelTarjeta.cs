@@ -1,7 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinanKey.Models;
+using Syncfusion.Maui.Buttons;
+using Syncfusion.Maui.Toolkit.BottomSheet;
 using System.Collections.ObjectModel;
+using Syncfusion.Maui.Buttons;
 
 namespace FinanKey.ViewModels
 {
@@ -56,10 +59,22 @@ namespace FinanKey.ViewModels
             LogoTarjeta = icono;
         }
         [RelayCommand]
-        public void MostrarMontoInicial()
+        public void MostrarMontoInicial(bool isChecked)
         {
-            EsVisibleLimiteCredito = !EsVisibleLimiteCredito;
-            EsVisibleMonto = !EsVisibleMonto;
+            if(isChecked)
+            {
+                EsVisibleLimiteCredito = false;
+                EsVisibleMonto = true;
+            }
+        }
+        [RelayCommand]
+        public void MostrarLimiteTarjeta(bool isChecked)
+        {
+            if (isChecked)
+            {
+                EsVisibleLimiteCredito = true;
+                EsVisibleMonto = false;
+            }
         }
     }
 }
