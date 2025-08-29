@@ -81,6 +81,16 @@
                 <Setter Property="Stroke" Value="Transparent" />
                 <Setter Property="HeightRequest" Value="52" />
             </Style>
+            <!--ESTILOS BOTONES-->
+            <Style x:Key="botonPrimario" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource ColorCascaraNaranja}" />
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="WidthRequest" Value="380"/>
+                <Setter Property="HeightRequest" Value="48"/>
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontFamily" Value="PoppinsBold" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
 
             <Color x:Key="ColorTexto">#0F1724</Color>
             <Color x:Key="ColorCardMorado">#4034AB</Color>
@@ -127,16 +137,6 @@
             <Color x:Key="ColorAcento3">#EBA90D</Color>
             <Color x:Key="ColorAcentoSuave4">#FEF0D0</Color>
 
-            <!--  Botón primario  -->
-            <Style x:Key="botonPrimario" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="{StaticResource ColorCascaraNaranja}" />
-                <Setter Property="CornerRadius" Value="20" />
-                <Setter Property="WidthRequest" Value="380"/>
-                <Setter Property="HeightRequest" Value="48"/>
-                <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="FontFamily" Value="PoppinsBold" />
-                <Setter Property="FontSize" Value="16" />
-            </Style>
             <!--  Grupo botones  -->
             <Style x:Key="grupoBotones" TargetType="Button">
                 <Setter Property="Padding" Value="12" />
