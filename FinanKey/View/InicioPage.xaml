@@ -96,7 +96,7 @@
                     ImageSource="icono_suma.svg"
                     Text="Agregar Tarjeta"
                     TextColor="{StaticResource ColorFondoPrincipal}"
-                    WidthRequest="221"/>
+                    WidthRequest="221" />
                 <Label
                     HorizontalOptions="Fill"
                     HorizontalTextAlignment="Center"

@@ -1,26 +1,40 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FinanKey.Models;
 
 namespace FinanKey.ViewModels
 {
     public partial class ViewModelTarjeta : ObservableObject
     {
-        public List<Enums.TipoTarjeta> ListaTipoTarjeta { get; set; }
-        private Enums.TipoTarjeta TipoTarjetaSeleccionada;
-        
+        //Propiedades utilizadas en el viewmodel
+        [ObservableProperty]
+        private string? nombreTarjeta;
+        [ObservableProperty]
+        private string? limiteCredito;
+        [ObservableProperty]
+        private string? ultimosCuatroDigitos;
+        [ObservableProperty]
+        private string? linearColor1;
+        [ObservableProperty]
+        private string? linearColor2;
         public ViewModelTarjeta()
         {
-            _= AgregarTarjetaViewModel();
+            _ = inicializarGradiente();
         }
-
-        public async Task AgregarTarjetaViewModel()
+        private async Task inicializarGradiente()
         {
-            ListaTipoTarjeta = Enum.GetValues(typeof(Enums.TipoTarjeta))
-                                   .Cast<Enums.TipoTarjeta>()
-                                   .ToList();
-
-            // Seleccionar Debito por defecto
-            TipoTarjetaSeleccionada = Enums.TipoTarjeta.Debito;
+            linearColor1 = "#3E298F";
+            linearColor2 = "#836EDB";
+        }
+        [RelayCommand]
+        public void ColorTarjetaSeleccionada(string colores)
+        {
+            var split = colores.Split('|');
+            if (split.Length == 2)
+            {
+                LinearColor1 = split[0];
+                LinearColor2 = split[1];
+            }
         }
     }
 }
