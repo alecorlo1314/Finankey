@@ -55,5 +55,11 @@ namespace FinanKey.ViewModels
         {
             LogoTarjeta = icono;
         }
+        [RelayCommand]
+        public void MostrarMontoInicial()
+        {
+            EsVisibleLimiteCredito = !EsVisibleLimiteCredito;
+            EsVisibleMonto = !EsVisibleMonto;
+        }
     }
 }
