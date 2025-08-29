@@ -62,7 +62,7 @@
                 VerticalOptions="Start">
                 <Image
                     HeightRequest="45"
-                    Source="icono_master_card.svg"
+                    Source="{Binding LogoTarjeta}"
                     WidthRequest="64" />
             </Grid>
             <!--  COLUMNA 0 Y FILA 1  -->
@@ -284,14 +284,89 @@
                         Style="{StaticResource TextoSubtítulo}"
                         Text="Categoria de Tarjeta"
                         TextColor="{StaticResource ColorAzulPricipal}" />
-                    <Border x:Name="borderCategoriaTarjeta" Style="{StaticResource bordeFormulario}">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="20" />
-                        </Border.StrokeShape>
-
-                        <editors:SfComboBox x:Name="comboBoxCategoriaTarjeta" />
-
-                    </Border>
+                    <Grid ColumnDefinitions="*,*,*">
+                        <Border
+                            x:Name="borderSeleccionVisa"
+                            Grid.Column="0"
+                            Padding="8"
+                            HeightRequest="95"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource bordeFormulario}"
+                            WidthRequest="121">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20" />
+                            </Border.StrokeShape>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding IconoSeleccionadoCommand}" CommandParameter="icono_visa.svg" />
+                            </Border.GestureRecognizers>
+                            <StackLayout HorizontalOptions="Center">
+                                <Image
+                                    Aspect="AspectFit"
+                                    HeightRequest="48"
+                                    Source="icono_visa_oscuro.svg"
+                                    WidthRequest="70" />
+                                <Label
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource TextoSecundario}"
+                                    Text="Visa"
+                                    TextColor="{StaticResource ColorTextosDescriptivos}" />
+                            </StackLayout>
+                        </Border>
+                        <Border
+                            x:Name="borderSeleccionMasterCard"
+                            Grid.Column="1"
+                            Padding="8"
+                            HeightRequest="95"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource bordeFormulario}"
+                            WidthRequest="121">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20" />
+                            </Border.StrokeShape>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding IconoSeleccionadoCommand}" CommandParameter="icono_master_card.svg" />
+                            </Border.GestureRecognizers>
+                            <StackLayout HorizontalOptions="Center">
+                                <Image
+                                    Aspect="AspectFit"
+                                    HeightRequest="48"
+                                    Source="icono_master_card.svg"
+                                    WidthRequest="70" />
+                                <Label
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource TextoSecundario}"
+                                    Text="MasterCard"
+                                    TextColor="{StaticResource ColorTextosDescriptivos}" />
+                            </StackLayout>
+                        </Border>
+                        <Border
+                            x:Name="borderSeleccionAmex"
+                            Grid.Column="2"
+                            Padding="8"
+                            HeightRequest="95"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource bordeFormulario}"
+                            WidthRequest="121">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20" />
+                            </Border.StrokeShape>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding IconoSeleccionadoCommand}" CommandParameter="icono_amex.svg" />
+                            </Border.GestureRecognizers>
+                            <StackLayout HorizontalOptions="Center">
+                                <Image
+                                    Aspect="AspectFit"
+                                    HeightRequest="48"
+                                    Source="icono_amex.svg"
+                                    WidthRequest="70" />
+                                <Label
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource TextoSecundario}"
+                                    Text="Amex"
+                                    TextColor="{StaticResource ColorTextosDescriptivos}" />
+                            </StackLayout>
+                        </Border>
+                    </Grid>
                 </VerticalStackLayout>
                 <!--  DESCRIPCION  -->
                 <VerticalStackLayout Grid.Row="6" Spacing="8">
