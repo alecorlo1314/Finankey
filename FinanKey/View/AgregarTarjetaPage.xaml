@@ -247,7 +247,10 @@
                         </Border>
                     </VerticalStackLayout>
                     <!--  LIMITE DE CREDITO O MONTO POR DEFAULT SE VERA LIMITE DE CREDITO  -->
-                    <VerticalStackLayout Grid.Column="1" Spacing="8">
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        IsVisible="{Binding EsVisibleLimiteCredito}"
+                        Spacing="8">
                         <Label
                             Style="{StaticResource TextoSubtítulo}"
                             Text="Limite de Credito"
@@ -274,6 +277,40 @@
                                     VerticalOptions="Center"
                                     WidthRequest="150"
                                     Value="{Binding LimiteCredito}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                    <!--  MONTO INICIAL (SE MOSTRARA CUANDO SE SELECCIONE DEBITO)  -->
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        IsVisible="{Binding EsVisibleMonto}"
+                        Spacing="8">
+                        <Label
+                            Style="{StaticResource TextoSubtítulo}"
+                            Text="Monto Inicial"
+                            TextColor="{StaticResource ColorAzulPricipal}" />
+                        <Border
+                            x:Name="borderMontoInicial"
+                            Style="{StaticResource bordeFormulario}"
+                            WidthRequest="182">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20" />
+                            </Border.StrokeShape>
+                            <VerticalStackLayout>
+                                <editors:SfNumericEntry
+                                    x:Name="entradaMontoInicial"
+                                    FontFamily="PoppinsRegular"
+                                    FontSize="16"
+                                    HeightRequest="45"
+                                    HorizontalOptions="Center"
+                                    MaximumNumberDecimalDigits="2"
+                                    ShowBorder="False"
+                                    TextColor="{StaticResource ColorTexoEntrada}"
+                                    UpDownPlacementMode="InlineVertical"
+                                    ValueChangeMode="OnKeyFocus"
+                                    VerticalOptions="Center"
+                                    WidthRequest="150"
+                                    Value="{Binding MontoInicial}" />
                             </VerticalStackLayout>
                         </Border>
                     </VerticalStackLayout>
