@@ -9,7 +9,7 @@
     Title="AgregarTarjetaPage"
     Padding="{StaticResource PaddingPaginas}"
     BackgroundColor="{StaticResource ColorFondoPrincipal}">
-    <!--  Cambio de color de la barra  -->
+    <!--  CAMBIO COLOR DE BARRA  -->
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource FondoPrincipal}" StatusBarStyle="DarkContent" />
     </ContentPage.Behaviors>
