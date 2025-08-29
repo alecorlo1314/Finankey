@@ -20,6 +20,10 @@ namespace FinanKey.ViewModels
         private string? linearColor2;
         [ObservableProperty]
         private string? logoTarjeta;
+        [ObservableProperty]
+        private bool esVisibleMonto = false;
+        [ObservableProperty]
+        private bool esVisibleLimiteCredito = true;
         //Lista de logos de tarjeta
         public ObservableCollection<OpcionTarjeta> ListaLogoTarjeta { get; set; }
         public ViewModelTarjeta()
