@@ -31,6 +31,7 @@ namespace FinanKey.Models
 
         [MaxLength(20)]
         public string? Categoria { get; set; } // Visa, Mastercard, Amex
+        public string? Logo { get; set; } // Ej: "icono_visa.svg"
 
         public string? Nota { get; set; }
 
@@ -38,7 +39,6 @@ namespace FinanKey.Models
         public string? ColorHex1 { get; set; } // Ej: "#FF5733"
         [MaxLength(10)]
         public string? ColorHex2 { get; set; } // Ej: "#FF5733"
-
         public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
     }
 }

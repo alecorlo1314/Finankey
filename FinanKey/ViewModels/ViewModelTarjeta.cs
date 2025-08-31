@@ -14,7 +14,17 @@ namespace FinanKey.ViewModels
         [ObservableProperty]
         private string? limiteCredito;
         [ObservableProperty]
+        private string? montoInicial;
+        [ObservableProperty]
+        private string? categoria;
+        [ObservableProperty]
         private string? ultimosCuatroDigitos;
+        [ObservableProperty]
+        private string? banco;
+        [ObservableProperty]
+        private string? nota;
+        [ObservableProperty]
+        private string? vencimiento;
         [ObservableProperty]
         private string? linearColor1;
         [ObservableProperty]
@@ -62,7 +72,7 @@ namespace FinanKey.ViewModels
         [RelayCommand]
         public void MostrarMontoInicial(bool isChecked)
         {
-            if(isChecked)
+            if (isChecked)
             {
                 EsVisibleLimiteCredito = false;
                 EsVisibleMonto = true;
@@ -76,6 +86,50 @@ namespace FinanKey.ViewModels
                 EsVisibleLimiteCredito = true;
                 EsVisibleMonto = false;
             }
+        }
+        [RelayCommand]
+        public void AgregarTarjeta()
+        {
+            var nuevaTarjeta = new Tarjeta
+            {
+                Nombre = NombreTarjeta,
+                Ultimos4Digitos = UltimosCuatroDigitos,
+                Tipo = EsVisibleMonto ? "Debito" : "Credito",
+                Banco = banco,
+                Vencimiento = Vencimiento,
+                LimiteCredito = string.IsNullOrEmpty(LimiteCredito) ? null : double.Parse(LimiteCredito),
+                MontoInicial = string.IsNullOrEmpty(MontoInicial) ? null : double.Parse(MontoInicial),
+                Categoria = Categoria,
+                ColorHex1 = LinearColor1,
+                ColorHex2 = LinearColor2,
+                Logo = LogoTarjeta,
+                Nota = Nota
+            };
+            var resultado = _servicioTarjeta.AgregarAsync(nuevaTarjeta);
+
+            if (resultado.Result > 0)
+            {
+                App.Current.MainPage.DisplayAlert("Éxito", "Tarjeta agregada correctamente", "OK");
+                LimpiarCampos();
+            }
+            else
+            {
+                App.Current.MainPage.DisplayAlert("Error", "No se pudo agregar la tarjeta", "OK");
+            }
+        }
+        private void LimpiarCampos()
+        {
+            NombreTarjeta = string.Empty;
+            UltimosCuatroDigitos = string.Empty;
+            Banco = string.Empty;
+            Vencimiento = string.Empty;
+            LimiteCredito = string.Empty;
+            MontoInicial = string.Empty;
+            Categoria = string.Empty;
+            Nota = string.Empty;
+            LinearColor1 = "#3E298F";
+            LinearColor2 = "#836EDB";
+            LogoTarjeta = "icono_visa.svg";
         }
     }
 }
