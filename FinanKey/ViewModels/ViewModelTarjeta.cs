@@ -1,10 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinanKey.Models;
-using Syncfusion.Maui.Buttons;
-using Syncfusion.Maui.Toolkit.BottomSheet;
+using FinanKey.Servicios;
 using System.Collections.ObjectModel;
-using Syncfusion.Maui.Buttons;
+using System.Threading.Tasks;
 
 namespace FinanKey.ViewModels
 {
@@ -16,7 +15,17 @@ namespace FinanKey.ViewModels
         [ObservableProperty]
         private string? limiteCredito;
         [ObservableProperty]
+        private string? montoInicial;
+        [ObservableProperty]
+        private string? categoria;
+        [ObservableProperty]
         private string? ultimosCuatroDigitos;
+        [ObservableProperty]
+        private string? banco;
+        [ObservableProperty]
+        private string? descripcion;
+        [ObservableProperty]
+        private string? vencimiento;
         [ObservableProperty]
         private string? linearColor1;
         [ObservableProperty]
@@ -29,8 +38,11 @@ namespace FinanKey.ViewModels
         private bool esVisibleLimiteCredito = true;
         //Lista de logos de tarjeta
         public ObservableCollection<OpcionTarjeta> ListaLogoTarjeta { get; set; }
-        public ViewModelTarjeta()
+        //Inyeccion de dependencias para el servicio de base de datos
+        private readonly IServicioTarjeta _servicioTarjeta;
+        public ViewModelTarjeta(IServicioTarjeta servicioTarjeta)
         {
+            _servicioTarjeta = servicioTarjeta;
             _ = inicializarGradiente();
             _ = inicializarLogo();
         }
@@ -57,11 +69,22 @@ namespace FinanKey.ViewModels
         public void IconoSeleccionado(string icono)
         {
             LogoTarjeta = icono;
+            if(icono == "icono_visa.svg")
+            {
+                Categoria = Enums.MarcaTarjeta.Visa.ToString();
+            }else if (icono == "icono_master_card.svg")
+            {
+                Categoria = Enums.MarcaTarjeta.Mastercard.ToString();
+            }
+            else
+            {
+                Categoria = Enums.MarcaTarjeta.American_Express.ToString();
+            }
         }
         [RelayCommand]
         public void MostrarMontoInicial(bool isChecked)
         {
-            if(isChecked)
+            if (isChecked)
             {
                 EsVisibleLimiteCredito = false;
                 EsVisibleMonto = true;
@@ -75,6 +98,50 @@ namespace FinanKey.ViewModels
                 EsVisibleLimiteCredito = true;
                 EsVisibleMonto = false;
             }
+        }
+        [RelayCommand]
+        public async Task AgregarTarjeta()
+        {
+            var nuevaTarjeta = new Tarjeta
+            {
+                Nombre = NombreTarjeta,
+                Ultimos4Digitos = UltimosCuatroDigitos,
+                Tipo = EsVisibleMonto ? "Debito" : "Credito",
+                Banco = Banco,
+                Vencimiento = Vencimiento,
+                LimiteCredito = string.IsNullOrEmpty(LimiteCredito) ? null : double.Parse(LimiteCredito),
+                MontoInicial = string.IsNullOrEmpty(MontoInicial) ? null : double.Parse(MontoInicial),
+                Categoria = Categoria,
+                ColorHex1 = LinearColor1,
+                ColorHex2 = LinearColor2,
+                Logo = LogoTarjeta,
+                Descripcion = Descripcion
+            };
+            var resultado = await _servicioTarjeta.AgregarAsync(nuevaTarjeta);
+
+            if (resultado > 0)
+            {
+                App.Current.MainPage.DisplayAlert("Éxito", "Tarjeta agregada correctamente", "OK");
+                LimpiarCampos();
+            }
+            else
+            {
+                App.Current.MainPage.DisplayAlert("Error", "No se pudo agregar la tarjeta", "OK");
+            }
+        }
+        private void LimpiarCampos()
+        {
+            NombreTarjeta = string.Empty;
+            UltimosCuatroDigitos = string.Empty;
+            Banco = string.Empty;
+            Vencimiento = string.Empty;
+            LimiteCredito = string.Empty;
+            MontoInicial = string.Empty;
+            Categoria = string.Empty;
+            Descripcion = string.Empty;
+            LinearColor1 = "#3E298F";
+            LinearColor2 = "#836EDB";
+            LogoTarjeta = "icono_visa.svg";
         }
     }
 }

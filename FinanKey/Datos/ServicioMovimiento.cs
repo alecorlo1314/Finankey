@@ -33,7 +33,7 @@ namespace FinanKey.Datos
                         if (card.Tipo == "Debito" || card.Tipo == "Corriente")
                         {
                             //si es debito o corriente, restamos el monto del gasto al saldo actual
-                            card.SaldoActual -= Math.Abs(NuevoMovimiento.Monto);
+                            //card.SaldoActual -= Math.Abs(NuevoMovimiento.Monto);
                             // si es un gasto con tarjeta de credito, actualizamos el saldo pendiente
                             await c.UpdateAsync(card);
                             // si es un gasto con tarjeta de credito, actualizamos el estado de pago
@@ -44,7 +44,7 @@ namespace FinanKey.Datos
                         else if (card.Tipo == "Credito")
                         {
                             // si es credito, restamos el monto del gasto al saldo pendiente
-                            card.SaldoPendiente += Math.Abs(NuevoMovimiento.Monto);
+                            //card.SaldoPendiente += Math.Abs(NuevoMovimiento.Monto);
                             // si es un gasto con tarjeta de credito, actualizamos el estado de pago
                             await c.UpdateAsync(card);
                             // si es un gasto con tarjeta de credito, actualizamos el estado de pago
@@ -63,7 +63,7 @@ namespace FinanKey.Datos
                     if (card != null && (card.Tipo == "Debito" || card.Tipo == "Corriente"))
                     {
                         // si es debito o corriente, sumamos el monto del ingreso al saldo actual
-                        card.SaldoActual += Math.Abs(NuevoMovimiento.Monto);
+                        //card.SaldoActual += Math.Abs(NuevoMovimiento.Monto);
                         // guardamos el movimiento
                         await c.UpdateAsync(card);
                     }
@@ -91,15 +91,15 @@ namespace FinanKey.Datos
                     {
                         if (EliminarMovimiento.Tipo == "Gasto")
                         {
-                            if (card.Tipo == "Debito" || card.Tipo == "Corriente")
-                                card.SaldoActual += Math.Abs(EliminarMovimiento.Monto);
+                            if (card.Tipo == "Debito" || card.Tipo == "Corriente") { }
+                            //card.SaldoActual += Math.Abs(EliminarMovimiento.Monto);
                             else if (card.Tipo == "Credito")
-                                card.SaldoPendiente -= Math.Abs(EliminarMovimiento.Monto);
-                            await c.UpdateAsync(card);
+                                //card.SaldoPendiente -= Math.Abs(EliminarMovimiento.Monto);
+                                await c.UpdateAsync(card);
                         }
                         else if (EliminarMovimiento.Tipo == "Ingreso" && (card.Tipo == "Debito" || card.Tipo == "Corriente"))
                         {
-                            card.SaldoActual -= Math.Abs(EliminarMovimiento.Monto);
+                            //card.SaldoActual -= Math.Abs(EliminarMovimiento.Monto);
                             await c.UpdateAsync(card);
                         }
                     }
