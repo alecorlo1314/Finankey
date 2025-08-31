@@ -1,10 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinanKey.Models;
-using Syncfusion.Maui.Buttons;
-using Syncfusion.Maui.Toolkit.BottomSheet;
+using FinanKey.Servicios;
 using System.Collections.ObjectModel;
-using Syncfusion.Maui.Buttons;
 
 namespace FinanKey.ViewModels
 {
@@ -29,8 +27,11 @@ namespace FinanKey.ViewModels
         private bool esVisibleLimiteCredito = true;
         //Lista de logos de tarjeta
         public ObservableCollection<OpcionTarjeta> ListaLogoTarjeta { get; set; }
-        public ViewModelTarjeta()
+        //Inyeccion de dependencias para el servicio de base de datos
+        private readonly IServicioTarjeta _servicioTarjeta;
+        public ViewModelTarjeta(IServicioTarjeta servicioTarjeta)
         {
+            _servicioTarjeta = servicioTarjeta;
             _ = inicializarGradiente();
             _ = inicializarLogo();
         }
