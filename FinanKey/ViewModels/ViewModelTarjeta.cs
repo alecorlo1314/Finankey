@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using FinanKey.Models;
 using FinanKey.Servicios;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 
 namespace FinanKey.ViewModels
 {
@@ -44,7 +43,7 @@ namespace FinanKey.ViewModels
         {
             _servicioTarjeta = servicioTarjeta;
             inicializarGradiente();
-            _ = inicializarLogo();
+            inicializarLogo();
         }
         private void inicializarGradiente()
         {
