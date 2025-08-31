@@ -22,7 +22,7 @@ namespace FinanKey.ViewModels
         [ObservableProperty]
         private string? banco;
         [ObservableProperty]
-        private string? nota;
+        private string? descripcion;
         [ObservableProperty]
         private string? vencimiento;
         [ObservableProperty]
@@ -95,7 +95,7 @@ namespace FinanKey.ViewModels
                 Nombre = NombreTarjeta,
                 Ultimos4Digitos = UltimosCuatroDigitos,
                 Tipo = EsVisibleMonto ? "Debito" : "Credito",
-                Banco = banco,
+                Banco = Banco,
                 Vencimiento = Vencimiento,
                 LimiteCredito = string.IsNullOrEmpty(LimiteCredito) ? null : double.Parse(LimiteCredito),
                 MontoInicial = string.IsNullOrEmpty(MontoInicial) ? null : double.Parse(MontoInicial),
@@ -103,7 +103,7 @@ namespace FinanKey.ViewModels
                 ColorHex1 = LinearColor1,
                 ColorHex2 = LinearColor2,
                 Logo = LogoTarjeta,
-                Nota = Nota
+                Descripcion = Descripcion
             };
             var resultado = _servicioTarjeta.AgregarAsync(nuevaTarjeta);
 
@@ -126,7 +126,7 @@ namespace FinanKey.ViewModels
             LimiteCredito = string.Empty;
             MontoInicial = string.Empty;
             Categoria = string.Empty;
-            Nota = string.Empty;
+            Descripcion = string.Empty;
             LinearColor1 = "#3E298F";
             LinearColor2 = "#836EDB";
             LogoTarjeta = "icono_visa.svg";

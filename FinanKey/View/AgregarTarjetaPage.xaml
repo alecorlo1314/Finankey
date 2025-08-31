@@ -207,7 +207,7 @@
                             MaxLength="30"
                             Placeholder="Ej: Banco Nacional"
                             Style="{StaticResource entradaFormulario}"
-                            Text="{Binding NombreEntidadFinanciera, Mode=TwoWay}"
+                            Text="{Binding Banco, Mode=TwoWay}"
                             Unfocused="entradaBancoCuenta_Unfocused" />
                     </Border>
                 </VerticalStackLayout>
@@ -244,7 +244,7 @@
                                     Unfocused="entradaVencimiento_Unfocused"
                                     VerticalOptions="Center"
                                     WidthRequest="120"
-                                    Value="{Binding FechaVencimiento}" />
+                                    Value="{Binding Vencimiento}" />
                                 <Image
                                     Aspect="AspectFill"
                                     HeightRequest="24"
@@ -285,7 +285,7 @@
                                     ValueChangeMode="OnKeyFocus"
                                     VerticalOptions="Center"
                                     WidthRequest="150"
-                                    Value="{Binding LimiteCredito}" />
+                                    Value="{Binding LimiteCredito, Mode=TwoWay}" />
                             </VerticalStackLayout>
                         </Border>
                     </VerticalStackLayout>
@@ -319,7 +319,7 @@
                                     ValueChangeMode="OnKeyFocus"
                                     VerticalOptions="Center"
                                     WidthRequest="150"
-                                    Value="{Binding MontoInicial}" />
+                                    Value="{Binding MontoInicial, Mode=TwoWay}" />
                             </VerticalStackLayout>
                         </Border>
                     </VerticalStackLayout>
@@ -431,7 +431,7 @@
                             MaxLength="30"
                             Placeholder="Escribe una descripcion..."
                             Style="{StaticResource entradaFormulario}"
-                            Text="{Binding NombreEntidadFinanciera, Mode=TwoWay}"
+                            Text="{Binding Descripcion, Mode=TwoWay}"
                             Unfocused="entradaDescripcion_Unfocused" />
                     </Border>
                 </VerticalStackLayout>
@@ -595,7 +595,7 @@
                 <!--  Botón Agregar Cuenta  -->
                 <VerticalStackLayout Grid.Row="8">
                     <Button
-                        Command="{Binding GuardarCuentaCommand}"
+                        Command="{Binding AgregarTarjetaCommand}"
                         Style="{StaticResource botonPrimario}"
                         Text="Agregar Cuenta"
                         TextColor="White" />
