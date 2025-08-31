@@ -7,27 +7,37 @@ namespace FinanKey.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        [Indexed, NotNull]
-        public string Alias { get; set; } = string.Empty;
 
-        [NotNull]
-        public string Tipo { get; set; } = "Credito"; // "Credito" | "Debito"
+        [MaxLength(100), NotNull]
+        public string Nombre { get; set; } = string.Empty;   // Ej: Walmart
 
-        [MaxLength(4)]
-        public string UltimosCuatroDigitos { get; set; } = string.Empty;
+        [MaxLength(4), NotNull]
+        public string Ultimos4Digitos { get; set; } = string.Empty; // Ej: 1234
 
-        public string Color { get; set; } = "#37265A"; // default color hex
+        [MaxLength(10), NotNull]
+        public string Tipo { get; set; } = "Credito"; // "Credito" o "Debito"
 
-        public decimal? LimiteCredito { get; set; }
+        [MaxLength(30)]
+        public string? Banco { get; set; }  // Ej: BCR
 
-        public decimal SaldoPendiente { get; set; } = 0m; // Solo para tarjetas de crédito
+        [MaxLength(7)]
+        public string? Vencimiento { get; set; } // Ej: "09/25"
 
-        public decimal SaldoActual { get; set; } = 0m; // Para tarjetas de débito y corrientes
+        // Solo aplica si es crédito
+        public double? LimiteCredito { get; set; }
 
-        public int? DiaCorte { get; set; }
-        public int? DiaPago { get; set; }
+        // Solo aplica si es débito
+        public double? MontoInicial { get; set; }
 
-        public bool EsPredeterminada { get; set; } = false;
+        [MaxLength(20)]
+        public string? Categoria { get; set; } // Visa, Mastercard, Amex
+
+        public string? Nota { get; set; }
+
+        [MaxLength(10)]
+        public string? ColorHex1 { get; set; } // Ej: "#FF5733"
+        [MaxLength(10)]
+        public string? ColorHex2 { get; set; } // Ej: "#FF5733"
 
         public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
     }

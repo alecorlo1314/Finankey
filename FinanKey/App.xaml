@@ -81,12 +81,12 @@
                 <Setter Property="Stroke" Value="Transparent" />
                 <Setter Property="HeightRequest" Value="52" />
             </Style>
-            <!--ESTILOS BOTONES-->
+            <!--  ESTILOS BOTONES  -->
             <Style x:Key="botonPrimario" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{StaticResource ColorCascaraNaranja}" />
                 <Setter Property="CornerRadius" Value="20" />
-                <Setter Property="WidthRequest" Value="380"/>
-                <Setter Property="HeightRequest" Value="48"/>
+                <Setter Property="WidthRequest" Value="380" />
+                <Setter Property="HeightRequest" Value="48" />
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="FontFamily" Value="PoppinsBold" />
                 <Setter Property="FontSize" Value="16" />
