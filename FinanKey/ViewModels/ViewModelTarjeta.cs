@@ -68,6 +68,17 @@ namespace FinanKey.ViewModels
         public void IconoSeleccionado(string icono)
         {
             LogoTarjeta = icono;
+            if(icono == "icono_visa.svg")
+            {
+                Categoria = Enums.MarcaTarjeta.Visa.ToString();
+            }else if (icono == "icono_master_card.svg")
+            {
+                Categoria = Enums.MarcaTarjeta.Mastercard.ToString();
+            }
+            else
+            {
+                Categoria = Enums.MarcaTarjeta.American_Express.ToString();
+            }
         }
         [RelayCommand]
         public void MostrarMontoInicial(bool isChecked)

@@ -15,9 +15,9 @@ namespace FinanKey.Models
         }
         public enum MarcaTarjeta
         {
-            Visa = 0,
-            Mastercard = 1,
-            American_Express = 2,
+            Visa,
+            Mastercard,
+            American_Express,
         }
     }
 }

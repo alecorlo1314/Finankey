@@ -428,7 +428,7 @@
                             x:Name="entradaDescripcion"
                             Focused="entradaDescripcion_Focused"
                             HeightRequest="145"
-                            MaxLength="30"
+                            MaxLength="100"
                             Placeholder="Escribe una descripcion..."
                             Style="{StaticResource entradaFormulario}"
                             Text="{Binding Descripcion, Mode=TwoWay}"

@@ -67,10 +67,12 @@ namespace FinanKey
             builder.Services.AddSingleton<ContextoDatosCuenta>();
             builder.Services.AddSingleton<ContextoDatosGasto>();
             builder.Services.AddSingleton<ContextoDatosIngreso>();
+            builder.Services.AddSingleton<ServicioBaseDatos>();
             //Registrar servicios con contexto de datos
             builder.Services.AddSingleton<IServiciosTransaccionIngreso, ContextoDatosIngreso>();
             builder.Services.AddSingleton<IServiciosTransaccionGasto, ContextoDatosGasto>();
             builder.Services.AddSingleton<IServicioTransaccionCuenta, ContextoDatosCuenta>();
+            builder.Services.AddSingleton<IServicioTarjeta, ServicioTarjeta>();
 
             builder.Services.AddSingleton<SfRadioButtonStateChangedBehavior>();
 
