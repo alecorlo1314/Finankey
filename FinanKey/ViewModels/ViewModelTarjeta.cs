@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using FinanKey.Models;
 using FinanKey.Servicios;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace FinanKey.ViewModels
 {
@@ -99,7 +100,7 @@ namespace FinanKey.ViewModels
             }
         }
         [RelayCommand]
-        public void AgregarTarjeta()
+        public async Task AgregarTarjeta()
         {
             var nuevaTarjeta = new Tarjeta
             {
@@ -116,9 +117,9 @@ namespace FinanKey.ViewModels
                 Logo = LogoTarjeta,
                 Descripcion = Descripcion
             };
-            var resultado = _servicioTarjeta.AgregarAsync(nuevaTarjeta);
+            var resultado = await _servicioTarjeta.AgregarAsync(nuevaTarjeta);
 
-            if (resultado.Result > 0)
+            if (resultado > 0)
             {
                 App.Current.MainPage.DisplayAlert("Éxito", "Tarjeta agregada correctamente", "OK");
                 LimpiarCampos();

@@ -1,5 +1,4 @@
-﻿
-using FinanKey.Models;  
+﻿using FinanKey.Models;  
 using SQLite;
 
 namespace FinanKey.Datos
@@ -11,21 +10,19 @@ namespace FinanKey.Datos
 
         public async Task<SQLiteAsyncConnection> ObtenerConexion()
         {
-            //Si ya hay una conexión activa, la retornamos directamente
             if (_conexion != null) return _conexion;
-            //Si no, esperamos a que se libere el bloqueo para iniciar la conexión
+
             await _iniciarBloqueo.WaitAsync();
             try
             {
-                //Si ya hay una conexión activa, la retornamos directamente
                 if (_conexion != null) return _conexion;
-                //Iniciamos un nueva conexión a la base de datos con la ruta y las flags definidas en Constantes
+
                 _conexion = new SQLiteAsyncConnection(Constantes.RutaBaseDatos, Constantes.Flags);
-                //Activamos las claves foráneas para mantener la integridad referencial
-                //await _conexion.ExecuteAsync("PRAGMA foreign_keys = ON;");
-                ////Realizamos la migración de tablas y datos si es necesario
+
+                await _conexion.ExecuteAsync("PRAGMA foreign_keys = ON;");
+
                 await MigrarAsync(_conexion);
-                //Retornamos la conexión activa
+
                 return _conexion;
             }
             finally
@@ -35,25 +32,16 @@ namespace FinanKey.Datos
         }
         private static async Task MigrarAsync(SQLiteAsyncConnection conexion)
         {
-            // Verificar si la base de datos ya tiene las tablas necesarias
-            await conexion.CreateTableAsync<Tarjeta>();
-            await conexion.CreateTableAsync<Movimiento>();
-            //await conexion.CreateTableAsync<Categoria>();
-
-            //// Verificar si hay categorías predefinidas
-            //var count = await conexion.Table<Categoria>().CountAsync();
-            ////si no hay categorías, insertamos las categorías predefinidas
-            //if (count == 0)
-            //{
-            //    // Definimos las categorías predefinidas
-            //    var cats = new[]
-            //    {
-            //    "Compras","Comida","Transporte","Telefono","Ocio","Salud","Suscripciones","Educacion","Hogar","Otros","Salario","Freelance","Intereses","Reembolso"
-            //};
-            //    foreach (var c in cats)
-            //        // Insertamos cada categoría en la base de datos
-            //        await conexion.InsertAsync(new Categoria { Nombre = c, Icon = "shopping" });
-            //}
+                try
+            {
+                await conexion.CreateTableAsync<Tarjeta>();
+                await conexion.CreateTableAsync<Movimiento>();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error creando tablas: {ex.Message}\n{ex.StackTrace}");
+                throw;
+            }
         }
         
         public async Task CorrerEnTransicionAsync(Func<SQLiteAsyncConnection, Task> trabajo)
