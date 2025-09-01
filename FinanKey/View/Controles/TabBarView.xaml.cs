@@ -5,7 +5,7 @@ namespace FinanKey.View.Controles;
 public partial class TabBarView : ContentView
 {
     public const double TabsHeight = 80;
-    public const double IconHeight = 20;
+    public const double IconHeight = 0;
 
     readonly Color barColor;
     readonly Color circleColor;
