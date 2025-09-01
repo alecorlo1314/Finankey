@@ -12,29 +12,29 @@ namespace FinanKey.ViewModels
         [ObservableProperty]
         private string? nombreTarjeta;
         [ObservableProperty]
-        private string? limiteCredito;
-        [ObservableProperty]
-        private string? montoInicial;
-        [ObservableProperty]
-        private string? categoria;
-        [ObservableProperty]
         private string? ultimosCuatroDigitos;
-        [ObservableProperty]
-        private string? banco;
-        [ObservableProperty]
-        private string? descripcion;
-        [ObservableProperty]
-        private string? vencimiento;
-        [ObservableProperty]
-        private string? linearColor1;
-        [ObservableProperty]
-        private string? linearColor2;
-        [ObservableProperty]
-        private string? logoTarjeta;
         [ObservableProperty]
         private bool esVisibleMonto = false;
         [ObservableProperty]
         private bool esVisibleLimiteCredito = true;
+        [ObservableProperty]
+        private string? limiteCredito;
+        [ObservableProperty]
+        private string? montoInicial;
+        [ObservableProperty]
+        private string? vencimiento;
+        [ObservableProperty]
+        private string? banco;
+        [ObservableProperty]
+        private string? categoria;
+        [ObservableProperty]
+        private string? logoTarjeta;
+        [ObservableProperty]
+        private string? descripcion;
+        [ObservableProperty]
+        private string? linearColor1;
+        [ObservableProperty]
+        private string? linearColor2;
         //Lista de logos de tarjeta
         public ObservableCollection<OpcionTarjeta> ListaLogoTarjeta { get; set; }
         //Inyeccion de dependencias para el servicio de base de datos
