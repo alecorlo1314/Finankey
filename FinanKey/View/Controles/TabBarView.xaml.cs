@@ -164,5 +164,5 @@ public partial class TabBarView : ContentView
         CalculateTabsHeight(viewHeight, padding) / (11f / 4f);
 
     public static float CalculateOuterRadius(float viewHeight, Thickness padding) =>
-        CalculateInnerRadius(viewHeight, padding) + (CalculateTabsHeight(viewHeight, padding) / 12f);
+        CalculateInnerRadius(viewHeight, padding) + (CalculateTabsHeight(viewHeight, padding) / 10f);
 }
