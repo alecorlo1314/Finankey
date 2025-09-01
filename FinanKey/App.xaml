@@ -63,7 +63,7 @@
                 <Setter Property="FontSize" Value="14" />
             </Style>
             <!--  ESPACIADOS  -->
-            <Thickness x:Key="PaddingPaginas">16,48</Thickness>
+            <Thickness x:Key="PaddingPaginas">16,40</Thickness>
             <Thickness x:Key="CardPadding">20,12</Thickness>
             <!--  ESTILO DE FORMULARIOS  -->
             <Style x:Key="entradaFormulario" TargetType="Entry">
