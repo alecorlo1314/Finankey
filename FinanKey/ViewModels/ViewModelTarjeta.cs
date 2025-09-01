@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using FinanKey.Models;
 using FinanKey.Servicios;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 
 namespace FinanKey.ViewModels
 {
@@ -43,15 +42,15 @@ namespace FinanKey.ViewModels
         public ViewModelTarjeta(IServicioTarjeta servicioTarjeta)
         {
             _servicioTarjeta = servicioTarjeta;
-            _ = inicializarGradiente();
-            _ = inicializarLogo();
+            inicializarGradiente();
+            inicializarLogo();
         }
-        private async Task inicializarGradiente()
+        private void inicializarGradiente()
         {
             linearColor1 = "#3E298F";
             linearColor2 = "#836EDB";
         }
-        private async Task inicializarLogo()
+        private void inicializarLogo()
         {
             LogoTarjeta = "icono_visa.svg";
         }
@@ -109,8 +108,8 @@ namespace FinanKey.ViewModels
                 Tipo = EsVisibleMonto ? "Debito" : "Credito",
                 Banco = Banco,
                 Vencimiento = Vencimiento,
-                LimiteCredito = string.IsNullOrEmpty(LimiteCredito) ? null : double.Parse(LimiteCredito),
-                MontoInicial = string.IsNullOrEmpty(MontoInicial) ? null : double.Parse(MontoInicial),
+                LimiteCredito = double.TryParse(LimiteCredito, out var limite) ? limite : (double?)null,
+                MontoInicial = double.TryParse(MontoInicial, out var monto) ? monto : (double?)null,
                 Categoria = Categoria,
                 ColorHex1 = LinearColor1,
                 ColorHex2 = LinearColor2,
