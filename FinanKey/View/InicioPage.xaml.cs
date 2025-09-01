@@ -5,19 +5,24 @@ namespace FinanKey.View;
 
 public partial class InicioPage : ContentPage
 {
-    public InicioPage(ViewModelFinanzas viewModelFinanzas)
+    //Inyeccion de dependencias
+    private readonly ViewModelTarjeta _viewModelTarjeta;
+    public InicioPage(ViewModelTarjeta _viewModelTarjeta)
 	{
 		InitializeComponent();
-        BindingContext = viewModelFinanzas;
+        //Vinculacion del contexto del viewModelTarjeta
+        BindingContext = _viewModelTarjeta;
 	}
 
+    //Se cargan datos iniciales para la vista
     protected override void OnAppearing()
     {
         base.OnAppearing();
 
-        if (BindingContext is ViewModelFinanzas viewModel)
+        if (BindingContext is ViewModelTarjeta vmTarjeta)
         {
-            _ = viewModel.InicializarAsync();
+            //Se cargan datos iniciales sobre las tarjetas que hay
+            _ = vmTarjeta.ObtenerTarjetas();
         }
     }
 
