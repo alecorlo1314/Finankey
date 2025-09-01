@@ -79,12 +79,13 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     BackgroundColor="{StaticResource ColorAzulPricipal}"
+                    Command="{Binding NavegarAgregarTarjetaCommand}"
                     CornerRadius="20"
                     FontFamily="PoppinsSemibold"
                     HeightRequest="40"
                     Text="Agregar Tarjeta"
                     TextColor="{StaticResource ColorFondoPrincipal}"
-                    WidthRequest="148" Command="{Binding NavegarAgregarTarjetaCommand}" />
+                    WidthRequest="148" />
             </Grid>
             <!--  LISTA DE TARJETAS  -->
             <CollectionView
@@ -100,35 +101,107 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Border
-                            Padding="16"
-                            BackgroundColor="{Binding ColorTarjeta}"
-                            HeightRequest="184"
-                            Stroke="Transparent"
-                            StrokeShape="RoundRectangle 20"
-                            WidthRequest="301">
-                            <Border.Background>
-                                <LinearGradientBrush>
-                                    <GradientStop Offset="0.1" Color="{Binding ColorHex1, Mode=TwoWay}" />
-                                    <GradientStop Offset="1.0" Color="{Binding ColorHex2, Mode=TwoWay}" />
-                                </LinearGradientBrush>
-                            </Border.Background>
-                            <VerticalStackLayout>
-                                <Label
-                                    FontSize="16"
-                                    Text="{Binding Nombre}"
-                                    TextColor="White" />
-                                <Label
-                                    FontFamily="PoppinsBold"
-                                    FontSize="20"
-                                    Text="{Binding Categoria}"
-                                    TextColor="White" />
-                                <Label
-                                    FontSize="14"
-                                    Text="{Binding Banco}"
-                                    TextColor="White" />
-                            </VerticalStackLayout>
-                        </Border>
+                        <Grid>
+                            <Border
+                                Padding="16"
+                                BackgroundColor="{Binding ColorTarjeta}"
+                                HeightRequest="184"
+                                Stroke="Transparent"
+                                StrokeShape="RoundRectangle 20"
+                                WidthRequest="301">
+                                <Border.Background>
+                                    <LinearGradientBrush>
+                                        <GradientStop Offset="0.1" Color="{Binding ColorHex1, Mode=TwoWay}" />
+                                        <GradientStop Offset="1.0" Color="{Binding ColorHex2, Mode=TwoWay}" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Grid
+                                    Padding="24,24"
+                                    ColumnDefinitions="70*,30*"
+                                    HeightRequest="184"
+                                    RowDefinitions="70*,30*"
+                                    WidthRequest="301">
+                                    <!--  COLUMNA 0 Y FILA 0  -->
+                                    <Grid
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        HorizontalOptions="Start"
+                                        RowDefinitions="*,*"
+                                        VerticalOptions="Start">
+                                        <HorizontalStackLayout Grid.Row="0">
+                                            <Label
+                                                Style="{StaticResource TextoSecundario}"
+                                                Text="{Binding Nombre}"
+                                                TextColor="{StaticResource ColorFondoPrincipal}" />
+                                            <Label
+                                                Style="{StaticResource TextoSecundario}"
+                                                Text=" - "
+                                                TextColor="{StaticResource ColorFondoPrincipal}" />
+                                            <Label
+                                                Style="{StaticResource TextoSecundario}"
+                                                Text="{Binding Tipo}"
+                                                TextColor="{StaticResource ColorFondoPrincipal}" />
+                                        </HorizontalStackLayout>
+                                        <Label
+                                            Grid.Row="1"
+                                            Style="{StaticResource TextoMontoTarjeta}"
+                                            Text="{Binding LimiteCredito, StringFormat='₡{0:F2}'}"
+                                            TextColor="{StaticResource ColorFondoPrincipal}" />
+                                        <Label
+                                            Grid.Row="1"
+                                            Style="{StaticResource TextoMontoTarjeta}"
+                                            Text="{Binding MontoInicial, StringFormat='₡{0:F2}'}"
+                                            TextColor="{StaticResource ColorFondoPrincipal}" />
+                                    </Grid>
+                                    <!--  COLUMNA 1 Y FILA 0  -->
+                                    <Grid
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Start">
+                                        <Image
+                                            HeightRequest="45"
+                                            Source="{Binding Logo}"
+                                            WidthRequest="64" />
+                                    </Grid>
+                                    <!--  COLUMNA 0 Y FILA 1  -->
+                                    <Grid
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        HorizontalOptions="Start"
+                                        RowDefinitions="*,*"
+                                        VerticalOptions="End">
+                                        <Label
+                                            Grid.Row="0"
+                                            Style="{StaticResource TextoParrafoPrincipal}"
+                                            Text="Numero de tarjeta"
+                                            TextColor="{StaticResource ColorFondoPrincipal}" />
+                                        <HorizontalStackLayout Grid.Row="1">
+                                            <Label
+                                                Style="{StaticResource TextoSecundario}"
+                                                Text="**** **** **** "
+                                                TextColor="{StaticResource ColorFondoPrincipal}" />
+                                            <Label
+                                                Style="{StaticResource TextoSecundario}"
+                                                Text="{Binding Ultimos4Digitos}"
+                                                TextColor="{StaticResource ColorFondoPrincipal}" />
+                                        </HorizontalStackLayout>
+                                    </Grid>
+                                    <!--  COLUMNA 1 Y FILA 1  -->
+                                    <Grid
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="End">
+                                        <Label
+                                            Style="{StaticResource TextoSecundario}"
+                                            Text="{Binding Vencimiento}"
+                                            TextColor="{StaticResource ColorFondoPrincipal}" />
+                                    </Grid>
+                                </Grid>
+                            </Border>
+
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
