@@ -35,8 +35,11 @@ namespace FinanKey.ViewModels
         private string? linearColor1;
         [ObservableProperty]
         private string? linearColor2;
+
+        private bool _hayTarjetas = false;
         //Lista de logos de tarjeta
         public ObservableCollection<OpcionTarjeta> ListaLogoTarjeta { get; set; }
+        public ObservableCollection<Tarjeta> ListaTarjetas { get; set; }
         //Inyeccion de dependencias para el servicio de base de datos
         private readonly IServicioTarjeta _servicioTarjeta;
         public ViewModelTarjeta(IServicioTarjeta servicioTarjeta)
@@ -45,6 +48,7 @@ namespace FinanKey.ViewModels
             inicializarGradiente();
             inicializarLogo();
         }
+        //Zona de metodos
         private void inicializarGradiente()
         {
             linearColor1 = "#3E298F";
@@ -54,6 +58,48 @@ namespace FinanKey.ViewModels
         {
             LogoTarjeta = "icono_visa.svg";
         }
+        private void LimpiarCampos()
+        {
+            NombreTarjeta = string.Empty;
+            UltimosCuatroDigitos = string.Empty;
+            Banco = string.Empty;
+            Vencimiento = string.Empty;
+            LimiteCredito = string.Empty;
+            MontoInicial = string.Empty;
+            Categoria = string.Empty;
+            Descripcion = string.Empty;
+            LinearColor1 = "#3E298F";
+            LinearColor2 = "#836EDB";
+            LogoTarjeta = "icono_visa.svg";
+        }
+        public async Task ObtenerTarjetas()
+        {
+            try
+            {
+                var tarjetas = await _servicioTarjeta.ObtenerTarjetasAsync();
+
+                if (tarjetas != null && tarjetas.Count > 0)
+                {
+
+                    ListaTarjetas.Clear();
+                    foreach (var tarjeta in tarjetas)
+                    {
+                        ListaTarjetas.Add(tarjeta);
+                    }
+                    _hayTarjetas = ListaTarjetas.Count > 0 ? true : false;
+
+                }
+                else
+                {
+                    _hayTarjetas = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", $"Error al cargar tarjetas: {ex.Message}", "OK");
+            }
+        }
+        //Zona de comandos RelayCommand
         [RelayCommand]
         public void ColorTarjetaSeleccionada(string colores)
         {
@@ -127,20 +173,6 @@ namespace FinanKey.ViewModels
             {
                 App.Current.MainPage.DisplayAlert("Error", "No se pudo agregar la tarjeta", "OK");
             }
-        }
-        private void LimpiarCampos()
-        {
-            NombreTarjeta = string.Empty;
-            UltimosCuatroDigitos = string.Empty;
-            Banco = string.Empty;
-            Vencimiento = string.Empty;
-            LimiteCredito = string.Empty;
-            MontoInicial = string.Empty;
-            Categoria = string.Empty;
-            Descripcion = string.Empty;
-            LinearColor1 = "#3E298F";
-            LinearColor2 = "#836EDB";
-            LogoTarjeta = "icono_visa.svg";
         }
     }
 }
