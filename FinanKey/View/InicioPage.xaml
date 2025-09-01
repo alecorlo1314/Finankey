@@ -14,14 +14,13 @@
 
     <ScrollView>
         <Grid RowDefinitions="Auto,*">
-            <!--  IMAGEN DE FONDO  -->
+            <!--  IMAGEN DE FONDO Y CONTENIDO  -->
             <Image
                 Grid.Row="0"
                 Aspect="AspectFill"
                 HeightRequest="298"
                 Source="fondo_superior.png"
                 VerticalOptions="Start" />
-            <!--  CONTENIDO POR ENCIMA DE IMAGEN FONDO  -->
             <Grid
                 Grid.Row="0"
                 Margin="{StaticResource PaddingPaginas}"
@@ -75,11 +74,69 @@
                         Text="Que tengas un buen dia!"
                         VerticalOptions="Start" />
                 </VerticalStackLayout>
+                <!--  BOTON AGREGAR TARJETA  -->
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    BackgroundColor="{StaticResource ColorAzulPricipal}"
+                    CornerRadius="20"
+                    FontFamily="PoppinsSemibold"
+                    HeightRequest="40"
+                    Text="Agregar Tarjeta"
+                    TextColor="{StaticResource ColorFondoPrincipal}"
+                    WidthRequest="148" Command="{Binding NavegarAgregarTarjetaCommand}" />
             </Grid>
+            <!--  LISTA DE TARJETAS  -->
+            <CollectionView
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Margin="16,180"
+                HeightRequest="184"
+                HorizontalOptions="Start"
+                ItemsSource="{Binding ListaTarjetas, Mode=TwoWay}"
+                VerticalOptions="Start">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="16" Orientation="Horizontal" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Padding="16"
+                            BackgroundColor="{Binding ColorTarjeta}"
+                            HeightRequest="184"
+                            Stroke="Transparent"
+                            StrokeShape="RoundRectangle 20"
+                            WidthRequest="301">
+                            <Border.Background>
+                                <LinearGradientBrush>
+                                    <GradientStop Offset="0.1" Color="{Binding ColorHex1, Mode=TwoWay}" />
+                                    <GradientStop Offset="1.0" Color="{Binding ColorHex2, Mode=TwoWay}" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <VerticalStackLayout>
+                                <Label
+                                    FontSize="16"
+                                    Text="{Binding Nombre}"
+                                    TextColor="White" />
+                                <Label
+                                    FontFamily="PoppinsBold"
+                                    FontSize="20"
+                                    Text="{Binding Categoria}"
+                                    TextColor="White" />
+                                <Label
+                                    FontSize="14"
+                                    Text="{Binding Banco}"
+                                    TextColor="White" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
             <!--  IMAGEN CARTERA CUANDO NO HAY TARJETAS  -->
             <VerticalStackLayout
                 Grid.Row="1"
                 Margin="16,0"
+                IsVisible="{Binding HayTarjetas}"
                 Spacing="18">
                 <Image
                     Aspect="AspectFit"

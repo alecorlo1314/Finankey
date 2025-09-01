@@ -35,11 +35,10 @@ namespace FinanKey.ViewModels
         private string? linearColor1;
         [ObservableProperty]
         private string? linearColor2;
-
-        private bool _hayTarjetas = false;
         //Lista de logos de tarjeta
         public ObservableCollection<OpcionTarjeta> ListaLogoTarjeta { get; set; }
-        public ObservableCollection<Tarjeta> ListaTarjetas { get; set; }
+        [ObservableProperty]
+        public ObservableCollection<Tarjeta> _listaTarjetas;
         //Inyeccion de dependencias para el servicio de base de datos
         private readonly IServicioTarjeta _servicioTarjeta;
         public ViewModelTarjeta(IServicioTarjeta servicioTarjeta)
@@ -80,18 +79,11 @@ namespace FinanKey.ViewModels
 
                 if (tarjetas != null && tarjetas.Count > 0)
                 {
-
-                    ListaTarjetas.Clear();
-                    foreach (var tarjeta in tarjetas)
-                    {
-                        ListaTarjetas.Add(tarjeta);
-                    }
-                    _hayTarjetas = ListaTarjetas.Count > 0 ? true : false;
-
+                    ListaTarjetas = new ObservableCollection<Tarjeta>(tarjetas);
                 }
                 else
                 {
-                    _hayTarjetas = false;
+                    ListaTarjetas = new ObservableCollection<Tarjeta>();
                 }
             }
             catch (Exception ex)
@@ -99,6 +91,7 @@ namespace FinanKey.ViewModels
                 await Shell.Current.DisplayAlert("Error", $"Error al cargar tarjetas: {ex.Message}", "OK");
             }
         }
+
         //Zona de comandos RelayCommand
         [RelayCommand]
         public void ColorTarjetaSeleccionada(string colores)
