@@ -8,7 +8,7 @@
         <Style x:Key="IconStyle" TargetType="{x:Type simpleCore:Icon}">
             <Setter Property="HorizontalOptions" Value="Center" />
             <Setter Property="VerticalOptions" Value="Fill" />
-            <Setter Property="TintColor" Value="White" />
+            <Setter Property="TintColor" Value="{StaticResource ColorIconoNavBar}" />
         </Style>
     </ContentView.Resources>
 
