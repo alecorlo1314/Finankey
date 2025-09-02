@@ -33,12 +33,11 @@ public partial class TabBarView : ContentView
 
     public event Action<object, TabBarEventArgs> CurrentPageSelectionChanged;
 
-
     public TabBarView()
     {
         //Aqui se pueda cambiar el color de la barra de navegacion, (key recursos estaticos App.xmls.cs,valorObjetoSalida)
-        App.Current.Resources.TryGetValue("ColorInconoSelected", out object primaryColor);
-        App.Current.Resources.TryGetValue("ColorCardMorado", out object secondaryColor);
+        App.Current.Resources.TryGetValue("ColorAzulPrincipalSuave", out object primaryColor);
+        App.Current.Resources.TryGetValue("ColorAzulPrincipalSuave", out object secondaryColor);
 
         barColor = primaryColor as Color;
         circleColor = secondaryColor as Color;
@@ -50,7 +49,6 @@ public partial class TabBarView : ContentView
 
         backGraphicsView.SizeChanged += TabBarViewSizeChanged;
     }
-
 
     private void TabBarViewSizeChanged(object sender, EventArgs e)
     {
