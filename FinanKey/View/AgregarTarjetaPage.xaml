@@ -239,9 +239,11 @@
                                     Placeholder="mm/aa"
                                     PlaceholderColor="{StaticResource ColorTextosDescriptivos}"
                                     ReturnType="Next"
+                                    ShowBorder="False"
                                     Stroke="Transparent"
                                     TextColor="{StaticResource ColorTexoEntrada}"
                                     Unfocused="entradaVencimiento_Unfocused"
+                                    ValueMaskFormat="IncludePromptAndLiterals"
                                     VerticalOptions="Center"
                                     WidthRequest="120"
                                     Value="{Binding Vencimiento}" />
