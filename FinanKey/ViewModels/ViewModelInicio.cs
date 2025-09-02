@@ -72,8 +72,6 @@ namespace FinanKey.ViewModels
         [RelayCommand]
         public async Task NavegarAgregarTarjeta()
         {
-            _tabBarView.IsVisible = false;
-            _tabBarView.SetVisible(false);
             await Shell.Current.GoToAsync(nameof(AgregarTarjetaPage));
         }
     }

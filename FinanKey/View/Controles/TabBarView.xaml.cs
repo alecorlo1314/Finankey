@@ -5,7 +5,7 @@ namespace FinanKey.View.Controles;
 public partial class TabBarView : ContentView
 {
     public const double TabsHeight = 80;
-    public const double IconHeight = 0;
+    public const double IconHeight = 27;
 
     readonly Color barColor;
     readonly Color circleColor;
@@ -162,7 +162,7 @@ public partial class TabBarView : ContentView
         CalculateTabsHeight(viewHeight, padding) / (11f / 4f);
 
     public static float CalculateOuterRadius(float viewHeight, Thickness padding) =>
-        CalculateInnerRadius(viewHeight, padding) + (CalculateTabsHeight(viewHeight, padding) / 10f);
+        CalculateInnerRadius(viewHeight, padding) + (CalculateTabsHeight(viewHeight, padding) / 12f);
 
     public void SetVisible(bool visible)
     {

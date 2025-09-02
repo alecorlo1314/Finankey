@@ -17,7 +17,7 @@ public class TabBarViewDrawable(Color barFillColor, Color circleFillColor) : IDr
         var innerRadius = TabBarView.CalculateInnerRadius(dirtyRect.Height, TabsPadding);
         var outerRadius = TabBarView.CalculateOuterRadius(dirtyRect.Height, TabsPadding);
         var circleX = CircleCenterX;
-        var circleY = innerRadius + (float)TabsPadding.Top + 13f;
+        var circleY = innerRadius + (float)TabsPadding.Top - 1f;
         var path = CreatePath(dirtyRect, innerRadius, outerRadius, circleX, circleY);
 
         canvas.FillColor = barFillColor;
