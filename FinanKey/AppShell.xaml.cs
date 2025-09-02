@@ -18,8 +18,19 @@ namespace FinanKey
             AddTab(typeof(ConfiguracionesPage), PageType.ConfiguracionPage);
 
             Loaded += AppShellLoaded;
+            //Sucribir el evento OnShellNavigated
+            this.Navigated += OnShellNavigated;
         }
 
+        private void OnShellNavigated(object? sender, ShellNavigatedEventArgs e)
+        {
+            var rutaActual = e.Current.Location.OriginalString;
+            if (rutaActual.Contains(nameof(AgregarTarjetaPage)))
+            {
+                tabBar.IsVisible = false;
+                tabBarView.SetVisible(false);
+            }
+        }
 
         private static void AppShellLoaded(object sender, EventArgs e)
         {
@@ -39,7 +50,6 @@ namespace FinanKey
 
             tabBar.Items.Add(tab);
         }
-
         private void TabBarViewCurrentPageChanged(object sender, TabBarEventArgs e)
         {
             Shell.Current.GoToAsync("///" + e.CurrentPage.ToString());

@@ -9,7 +9,7 @@ using FinanKey.Datos;
 using SimpleToolkit.SimpleShell;
 using SimpleToolkit.Core;
 using FinanKey.View.Behaviors;
-
+using FinanKey.View.Controles;
 namespace FinanKey
 {
     public static class MauiProgram
@@ -73,8 +73,10 @@ namespace FinanKey
             builder.Services.AddSingleton<IServiciosTransaccionGasto, ContextoDatosGasto>();
             builder.Services.AddSingleton<IServicioTransaccionCuenta, ContextoDatosCuenta>();
             builder.Services.AddSingleton<IServicioTarjeta, ServicioTarjeta>();
-
+            //Registrar comportamiento personalizado
             builder.Services.AddSingleton<SfRadioButtonStateChangedBehavior>();
+            //Registrar el Shell de la aplicación
+            builder.Services.AddSingleton<TabBarView>();
 
 #if DEBUG
             builder.Logging.AddDebug();

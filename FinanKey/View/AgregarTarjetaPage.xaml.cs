@@ -1,16 +1,32 @@
 using FinanKey.ViewModels;
+using FinanKey.View.Controles;
 
 namespace FinanKey.View;
 
 public partial class AgregarTarjetaPage : ContentPage
 {
-    //Inyección de dependencias para los ViewModels
-    public AgregarTarjetaPage(ViewModelTarjeta viewModelTarjeta)
+    //Inyección de dependencias
+    private readonly TabBarView _tabBarView;
+    public AgregarTarjetaPage(ViewModelTarjeta viewModelTarjeta, TabBarView tabBarView)
 	{
 		InitializeComponent();
+        _tabBarView = tabBarView;
         BindingContext = viewModelTarjeta;
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        _tabBarView.IsVisible = false;
+        _tabBarView.SetVisible(false);
+
+    }
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        _tabBarView.IsVisible = true;
+        _tabBarView.SetVisible(true);
+    }
     private void OnEntryFocused(Border border)
     {
         border.Stroke = App.Current?.Resources["ColorAzulMarino"] as Color;
@@ -37,7 +53,6 @@ public partial class AgregarTarjetaPage : ContentPage
     {
 
     }
-
     private void entradaDescripcion_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderDescripcion);
 
     private void entradaDescripcion_Unfocused(object sender, FocusEventArgs e) =>OnEntryUnfocused(borderDescripcion);
