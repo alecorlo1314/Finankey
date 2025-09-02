@@ -237,6 +237,32 @@
                     VerticalOptions="Center"
                     VerticalTextAlignment="Center" />
             </VerticalStackLayout>
+            <!--  IMAGEN LUPA NO HAY MOVIMIENTOS CON MENSAJE  -->
+            <VerticalStackLayout
+                Grid.Row="1"
+                Margin="16,40"
+                IsVisible="{Binding HayMovimientos}"
+                Spacing="8">
+                <Image
+                    Aspect="AspectFit"
+                    HeightRequest="285"
+                    HorizontalOptions="Center"
+                    Source="lupa_movimientos.svg"
+                    WidthRequest="377" />
+                <Label
+                    HorizontalOptions="Center"
+                    Style="{StaticResource TextoSubtítulo}"
+                    Text="No hay Movimientos"
+                    TextColor="{StaticResource ColorAzulPricipal}" />
+                <Label
+                    HorizontalOptions="Fill"
+                    HorizontalTextAlignment="Center"
+                    LineBreakMode="WordWrap"
+                    Style="{StaticResource TextoParrafoPrincipal}"
+                    Text="Aun no se han registrado movimientos"
+                    TextColor="{StaticResource ColorTextosDescriptivos}"
+                    VerticalTextAlignment="Center" />
+            </VerticalStackLayout>
         </Grid>
     </ScrollView>
 

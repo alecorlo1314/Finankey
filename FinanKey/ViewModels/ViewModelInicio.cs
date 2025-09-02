@@ -20,7 +20,7 @@ namespace FinanKey.ViewModels
         [ObservableProperty]
         private bool _hayTarjetas = false;
         [ObservableProperty]
-        private bool _hayMovimientos = false;
+        private bool _hayMovimientos = true;
 
         public ViewModelInicio(IServicioTarjeta servicioTarjeta)
         {
