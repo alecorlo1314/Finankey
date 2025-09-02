@@ -4,6 +4,7 @@ using FinanKey.Models;
 using FinanKey.Servicios;
 using FinanKey.View;
 using System.Collections.ObjectModel;
+using FinanKey.View.Controles;
 
 namespace FinanKey.ViewModels
 {
@@ -11,6 +12,7 @@ namespace FinanKey.ViewModels
     {
         //Inyección de dependencias 
         public readonly IServicioTarjeta _servicioTarjeta;
+        private readonly TabBarView _tabBarView;
         //Inicializar la lista de cuentas como una colección observable
         [ObservableProperty]
         private ObservableCollection<Tarjeta> _listaTarjetas = new();
@@ -22,10 +24,11 @@ namespace FinanKey.ViewModels
         [ObservableProperty]
         private bool _hayMovimientos = true;
 
-        public ViewModelInicio(IServicioTarjeta servicioTarjeta)
+        public ViewModelInicio(IServicioTarjeta servicioTarjeta, TabBarView tabBarView)
         {
             //Asignar los servicios a las variables privadas
             _servicioTarjeta = servicioTarjeta;
+            _tabBarView = tabBarView;
         }
         //Metodo para cargar las cuentas desde la base de datos
         public async Task CargarTarjetasAsync()
@@ -69,6 +72,8 @@ namespace FinanKey.ViewModels
         [RelayCommand]
         public async Task NavegarAgregarTarjeta()
         {
+            _tabBarView.IsVisible = false;
+            _tabBarView.SetVisible(false);
             await Shell.Current.GoToAsync(nameof(AgregarTarjetaPage));
         }
     }
