@@ -14,17 +14,20 @@ namespace FinanKey.ViewModels
         //Inicializar la lista de cuentas como una colección observable
         [ObservableProperty]
         private ObservableCollection<Tarjeta> _listaTarjetas = new();
+        //Inicializacion de las propiedades usadas para la vista
         [ObservableProperty]
         private bool isBusy;
         [ObservableProperty]
         private bool _hayTarjetas = false;
+        [ObservableProperty]
+        private bool _hayMovimientos = false;
 
         public ViewModelInicio(IServicioTarjeta servicioTarjeta)
         {
             //Asignar los servicios a las variables privadas
             _servicioTarjeta = servicioTarjeta;
         }
-
+        //Metodo para cargar las cuentas desde la base de datos
         public async Task CargarTarjetasAsync()
         {
             try
