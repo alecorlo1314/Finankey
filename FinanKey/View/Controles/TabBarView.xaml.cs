@@ -36,8 +36,8 @@ public partial class TabBarView : ContentView
     public TabBarView()
     {
         //Aqui se pueda cambiar el color de la barra de navegacion, (key recursos estaticos App.xmls.cs,valorObjetoSalida)
-        App.Current.Resources.TryGetValue("ColorAzulPrincipalSuave", out object primaryColor);
-        App.Current.Resources.TryGetValue("ColorAzulPrincipalSuave", out object secondaryColor);
+        App.Current.Resources.TryGetValue("ColorFondoComponentes", out object primaryColor);
+        App.Current.Resources.TryGetValue("ColorFondoComponentes", out object secondaryColor);
 
         barColor = primaryColor as Color;
         circleColor = secondaryColor as Color;
