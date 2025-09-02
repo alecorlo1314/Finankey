@@ -163,4 +163,9 @@ public partial class TabBarView : ContentView
 
     public static float CalculateOuterRadius(float viewHeight, Thickness padding) =>
         CalculateInnerRadius(viewHeight, padding) + (CalculateTabsHeight(viewHeight, padding) / 10f);
+
+    public void SetVisible(bool visible)
+    {
+        this.IsVisible = visible;
+    }
 }
