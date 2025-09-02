@@ -13,20 +13,6 @@ public partial class AgregarTarjetaPage : ContentPage
         _tabBarView = tabBarView;
         BindingContext = viewModelTarjeta;
     }
-
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        _tabBarView.IsVisible = false;
-        _tabBarView.SetVisible(false);
-
-    }
-    protected override void OnDisappearing()
-    {
-        base.OnDisappearing();
-        _tabBarView.IsVisible = true;
-        _tabBarView.SetVisible(true);
-    }
     private void OnEntryFocused(Border border)
     {
         border.Stroke = App.Current?.Resources["ColorAzulMarino"] as Color;

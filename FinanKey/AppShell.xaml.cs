@@ -24,12 +24,22 @@ namespace FinanKey
 
         private void OnShellNavigated(object? sender, ShellNavigatedEventArgs e)
         {
-            var rutaActual = e.Current.Location.OriginalString;
-            if (rutaActual.Contains(nameof(AgregarTarjetaPage)))
+            // Obtén la ruta de la página actual
+            var currentLocation = e.Current.Location.OriginalString;
+
+            // Lista de páginas donde SÍ quieres mostrar el TabBar
+            var mostrarTabBarEn = new[]
             {
-                tabBar.IsVisible = false;
-                tabBarView.SetVisible(false);
-            }
+            nameof(PageType.InicioPage),
+            nameof(PageType.AnadirPage),
+            nameof(PageType.ReportesPage),
+            nameof(PageType.ConfiguracionPage)
+        };
+
+            // Si la ruta contiene alguna de las páginas principales, muestra el TabBar
+            bool mostrar = mostrarTabBarEn.Any(p => currentLocation.Contains(p));
+
+            tabBarView.IsVisible = mostrar;
         }
 
         private static void AppShellLoaded(object sender, EventArgs e)
