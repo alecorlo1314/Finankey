@@ -114,31 +114,41 @@
                     </Border>
                 </VerticalStackLayout>
             </Grid>
-            <!--  Descripcion  -->
+            <!--  DESCRIPCION  -->
             <VerticalStackLayout Grid.Row="1" Spacing="8">
-                <Label Style="{StaticResource subtitulosFormularios}" Text="Descripcion" />
-
-                <Border x:Name="borderTitulo" Style="{StaticResource bordeFormulario}">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="10" />
-                    </Border.StrokeShape>
-                    <HorizontalStackLayout>
-                        <Image
-                            Margin="10,0,5,0"
-                            HeightRequest="16"
-                            Source="lapiz.svg"
-                            VerticalOptions="Center" />
+                <Label
+                    Style="{StaticResource TextoSubtítulo}"
+                    Text="Descripcion"
+                    TextColor="{StaticResource ColorAzulPricipal}" />
+                <Border
+                    x:Name="borderTitulo"
+                    StrokeShape="RoundRectangle 20"
+                    Style="{StaticResource bordeFormulario}">
+                    <HorizontalStackLayout
+                        Padding="8,0"
+                        HorizontalOptions="Start"
+                        Spacing="16"
+                        VerticalOptions="Center">
                         <Entry
                             x:Name="entradaDescripcionGasto"
                             Focused="entradaDescripcionGasto_Focused"
-                            Placeholder="Ej: Cuenta de ahorros"
+                            Placeholder="Ej: Compras comida"
+                            PlaceholderColor="{StaticResource ColorPlaceholde}"
                             Style="{StaticResource entradaFormulario}"
                             Text="{Binding DescripcionGasto, Mode=TwoWay}"
-                            Unfocused="entradaDescripcionGasto_Unfocused" />
+                            TextColor="{StaticResource ColorTexoEntrada}"
+                            Unfocused="entradaDescripcionGasto_Unfocused"
+                            WidthRequest="290" />
+                        <Image
+                            Aspect="AspectFill"
+                            HeightRequest="24"
+                            Source="icono_lapiz.svg"
+                            VerticalOptions="Center"
+                            WidthRequest="24" />
                     </HorizontalStackLayout>
                 </Border>
             </VerticalStackLayout>
-            <!--  Categoria de gasto  -->
+            <!--  CATEGORIA  -->
             <VerticalStackLayout Grid.Row="2" Spacing="8">
                 <Label Style="{StaticResource subtitulosFormularios}" Text="Categoria" />
                 <!--  Dropdown seleccion categoria  -->
@@ -227,7 +237,6 @@
                         TextMemberPath="Descripcion" />
                 </Border>
             </VerticalStackLayout>
-
             <!--  Boton Gasto  -->
             <VerticalStackLayout Grid.Row="5">
                 <Button
