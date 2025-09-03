@@ -148,7 +148,7 @@
                     </HorizontalStackLayout>
                 </Border>
             </VerticalStackLayout>
-            <!--  CATEGORIA de  -->
+            <!--  CATEGORIA  -->
             <VerticalStackLayout Grid.Row="2" Spacing="8">
                 <Label Style="{StaticResource subtitulosFormularios}" Text="Categoria" />
                 <!--  Dropdown seleccion categoria  -->
