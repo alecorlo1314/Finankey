@@ -7,28 +7,28 @@
     xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:local="clr-namespace:FinanKey.ViewModels"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    Background="#ffffff">
+    Padding="{StaticResource PaddingPaginas}"
+    Background="{StaticResource ColorFondoPrincipal}">
     <!--  Cambio de color de la barra  -->
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource FondoPrincipal}" StatusBarStyle="DarkContent" />
     </ContentPage.Behaviors>
 
-    <VerticalStackLayout Padding="24" BackgroundColor="{StaticResource FondoPrincipal}">
+    <VerticalStackLayout Spacing="16">
         <!--  TITULO DE PAGINA  -->
         <Label
-            Margin="24"
-            FontFamily="PoppinsBold"
-            FontSize="20"
+            HeightRequest="48"
             HorizontalOptions="Center"
-            Text="Añadir Nuevo"
-            TextColor="{StaticResource ColorTextoPrimario}"
+            Style="{StaticResource TextoSubtítulo}"
+            Text="Añadir Transaccion"
+            TextColor="{StaticResource ColorAzulPricipal}"
             VerticalOptions="Center" />
         <!--  BOTONES  -->
-        <HorizontalStackLayout Margin="0,0,0,24" Spacing="8">
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="16">
 
             <Button
                 x:Name="btnGasto"
-                BackgroundColor="{StaticResource Primario}"
+                BackgroundColor="{StaticResource ColorAzulPricipal}"
                 ImageSource="cartera_blanca.svg"
                 Pressed="btnGasto_Pressed"
                 Style="{StaticResource grupoBotones}"
@@ -37,54 +37,83 @@
 
             <Button
                 x:Name="btnIngreso"
-                BackgroundColor="{StaticResource FondoPrincipal}"
+                BackgroundColor="{StaticResource ColorFondoComponentes}"
                 ImageSource="billete.svg"
                 Pressed="btnIngreso_Pressed"
                 Style="{StaticResource grupoBotones}"
                 Text="Ingreso"
-                TextColor="Black" />
-
-            <Button
-                x:Name="btnCuenta"
-                BackgroundColor="{StaticResource FondoPrincipal}"
-                ImageSource="banco.svg"
-                Pressed="btnCuenta_Pressed"
-                Style="{StaticResource grupoBotones}"
-                Text="Cuentas"
                 TextColor="Black" />
         </HorizontalStackLayout>
         <!--  FORMULARIO INGRESAR GASTO  -->
         <Grid
             x:Name="formularioGasto"
             IsVisible="True"
-            RowDefinitions="auto,*,*,*,*,*"
+            RowDefinitions="auto,auto,auto,auto,auto,auto"
             RowSpacing="16">
 
-            <!--  Monto  -->
-            <VerticalStackLayout Grid.Row="0" Spacing="8">
-                <Label Style="{StaticResource subtitulosFormularios}" Text="Monto del Gasto" />
-
-                <Border x:Name="borderMonto" Style="{StaticResource bordeFormulario}">
-
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="10" />
-                    </Border.StrokeShape>
-                    <Entry
-                        Focused="entradaMonto_Focused"
-                        Keyboard="Numeric"
-                        Placeholder="0"
-                        Style="{StaticResource entradaFormulario}"
-                        Text="{Binding MontoGasto, Mode=TwoWay}"
-                        Unfocused="entradaMonto_Unfocused" />
-                </Border>
-                <!--  Mensaje de error  -->
-                <Label
-                    FontSize="12"
-                    IsVisible="{Binding MontoGastoError, Converter={StaticResource StringNotEmptyConverter}}"
-                    Text="{Binding MontoGastoError}"
-                    TextColor="Red" />
-
-            </VerticalStackLayout>
+            <Grid
+                Grid.Row="0"
+                ColumnDefinitions="auto,auto"
+                ColumnSpacing="16">
+                <!--  MONTO  -->
+                <VerticalStackLayout
+                    Grid.Row="0"
+                    Spacing="8"
+                    WidthRequest="182">
+                    <Label
+                        Style="{StaticResource TextoSubtítulo}"
+                        Text="Monto"
+                        TextColor="{StaticResource ColorAzulPricipal}" />
+                    <Border
+                        x:Name="borderMonto"
+                        StrokeShape="RoundRectangle 20"
+                        Style="{StaticResource bordeFormulario}">
+                        <Entry
+                            Focused="entradaMonto_Focused"
+                            Keyboard="Numeric"
+                            Placeholder="0"
+                            PlaceholderColor="{StaticResource ColorPlaceholde}"
+                            Style="{StaticResource entradaFormulario}"
+                            Text="{Binding MontoGasto, Mode=TwoWay}"
+                            Unfocused="entradaMonto_Unfocused"
+                            VerticalOptions="Center" />
+                    </Border>
+                </VerticalStackLayout>
+                <!--  FECHA TRANSACCION  -->
+                <VerticalStackLayout
+                    Grid.Column="1"
+                    HorizontalOptions="Start"
+                    Spacing="8"
+                    VerticalOptions="Center"
+                    WidthRequest="182">
+                    <Label
+                        Style="{StaticResource TextoSubtítulo}"
+                        Text="Fecha"
+                        TextColor="{StaticResource ColorAzulPricipal}" />
+                    <Border StrokeShape="RoundRectangle 20" Style="{StaticResource bordeFormulario}">
+                        <HorizontalStackLayout
+                            HorizontalOptions="Start"
+                            Spacing="16"
+                            VerticalOptions="Center">
+                            <DatePicker
+                                x:Name="fechaTransaccionGasto"
+                                Background="Transparent"
+                                Date="{Binding FechaSeleccionada, Mode=TwoWay}"
+                                FontFamily="PoppinsRegular"
+                                FontSize="16"
+                                Format="dd/MM/yyyy"
+                                TextColor="{StaticResource ColorPlaceholde}"
+                                WidthRequest="110" />
+                            <Image
+                                Aspect="AspectFill"
+                                HeightRequest="24"
+                                Source="icono_calderario.svg"
+                                VerticalOptions="Center"
+                                WidthRequest="24" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </Grid>
             <!--  Descripcion  -->
             <VerticalStackLayout Grid.Row="1" Spacing="8">
                 <Label Style="{StaticResource subtitulosFormularios}" Text="Descripcion" />
@@ -198,30 +227,7 @@
                         TextMemberPath="Descripcion" />
                 </Border>
             </VerticalStackLayout>
-            <!--  Fecha de Transaccion  -->
-            <VerticalStackLayout Grid.Row="4" Spacing="8">
-                <Label Style="{StaticResource subtitulosFormularios}" Text="Fecha" />
-                <Border Style="{StaticResource bordeFormulario}">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="10" />
-                    </Border.StrokeShape>
-                    <HorizontalStackLayout>
-                        <Image
-                            Margin="10,0,5,0"
-                            HeightRequest="16"
-                            Source="calendario.svg"
-                            VerticalOptions="Center" />
-                        <DatePicker
-                            x:Name="fechaTransaccionGasto"
-                            Background="Transparent"
-                            Date="{Binding FechaSeleccionada, Mode=TwoWay}"
-                            FontFamily="PoppinsRegular"
-                            FontSize="16"
-                            Format="dddd, dd MMMM yyyy"
-                            TextColor="Black" />
-                    </HorizontalStackLayout>
-                </Border>
-            </VerticalStackLayout>
+
             <!--  Boton Gasto  -->
             <VerticalStackLayout Grid.Row="5">
                 <Button
@@ -396,4 +402,5 @@
         </Grid>
 
     </VerticalStackLayout>
+
 </ContentPage>
