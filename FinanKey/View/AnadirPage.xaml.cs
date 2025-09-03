@@ -41,7 +41,7 @@ public partial class AnadirPage : ContentPage
                 // Mostrar el formulario de Gasto
                 formularioGasto.IsVisible = true;
                 // Estilizar el botón de Gasto
-                EstilizarBotonSeleccionado(btnGasto, "cartera_blanca.svg");
+                EstilizarBotonSeleccionado(btnGasto, "icono_billetera_blanco.svg");
                 // Establecer el BindingContext para el formulario de Gasto
                 BindingContext = _viewModelGasto;
                 break;
@@ -50,7 +50,7 @@ public partial class AnadirPage : ContentPage
                 // Mostrar el formulario de Ingreso
                 formularioIngreso.IsVisible = true;
                 // Estilizar el botón de Ingreso
-                EstilizarBotonSeleccionado(btnIngreso, "billete_blanco.svg");
+                EstilizarBotonSeleccionado(btnIngreso, "icono_billete_blanco");
                 // Establecer el BindingContext para el formulario de Ingreso
                 BindingContext = _viewModelIngreso;
                 break;
@@ -59,22 +59,21 @@ public partial class AnadirPage : ContentPage
     //Cuando el boton se presiona las interfaz del boton cambia de estilo
     private void EstilizarBotonSeleccionado(Button boton, string icono)
     {
-        boton.BackgroundColor = Color.Parse("#4f46e5");
+        boton.BackgroundColor = App.Current?.Resources["ColorAzulPricipal"] as Color;
         boton.TextColor = Colors.White;
         boton.ImageSource = ImageSource.FromFile(icono);
     }
 
     private void ResetearEstilosBotones()
     {
-        EstilizarBotonDesactivado(btnGasto, "cartera.svg");
-        EstilizarBotonDesactivado(btnIngreso, "billete.svg");
-        EstilizarBotonDesactivado(btnCuenta, "banco.svg");
+        EstilizarBotonDesactivado(btnGasto, "icono_billetera_azul.svg");
+        EstilizarBotonDesactivado(btnIngreso, "icono_billete_azul.svg");
     }
     //Cuando el boton no esta seleccionado se cambia el estilo
     private void EstilizarBotonDesactivado(Button boton, string icono)
     {
-        boton.BackgroundColor = Color.Parse("#f3f4f6");
-        boton.TextColor = Colors.Black;
+        boton.BackgroundColor = App.Current?.Resources["ColorFondoComponentes"] as Color;
+        boton.TextColor = App.Current?.Resources["ColorAzulPricipal"] as Color;
         boton.ImageSource = ImageSource.FromFile(icono);
     }
 
@@ -99,7 +98,7 @@ public partial class AnadirPage : ContentPage
 
     private void OnEntryFocused(Border border)
     {
-        border.Stroke = Color.Parse("#4f46e5");
+        border.Stroke = App.Current?.Resources["ColorAzulPricipal"] as Color;
         border.StrokeThickness = 2;
     }
 

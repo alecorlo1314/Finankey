@@ -25,6 +25,7 @@
             <Color x:Key="ColorTextosDescriptivos">#475569</Color>
             <Color x:Key="ColorTexoEntrada">#0f172a</Color>
             <Color x:Key="ColorIconoNavBar">#757575</Color>
+            <Color x:Key="ColorPlaceholde">#8C8C8C</Color>
 
             <!--  ESTILOS DE TIPOGRAFIA  -->
             <Style x:Key="TextoTituloPrincipal" TargetType="Label">
@@ -104,6 +105,18 @@
             <simpleCore:PathGeometryExtension x:Key="RutaReportesGeometry" Path="{StaticResource RutaReportes}" />
             <simpleCore:PathGeometryExtension x:Key="RutaConfiguracionGeometry" Path="{StaticResource RutaConfiguracion}" />
 
+            <!--  GRUPO BOTONES ANADIR GASTO E INGRESO  -->
+            <Style x:Key="grupoBotones" TargetType="Button">
+                <Setter Property="Padding" Value="16,4" />
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontFamily" Value="PoppinsBold" />
+                <Setter Property="TextColor" Value="{StaticResource ColorFondoComponentes}" />
+                <Setter Property="WidthRequest" Value="182" />
+                <Setter Property="HeightRequest" Value="44" />
+            </Style>
+
+
             <Color x:Key="ColorTexto">#0F1724</Color>
             <Color x:Key="ColorCardMorado">#4034AB</Color>
             <Color x:Key="ColorAcentoCyan">#34C3D6</Color>
@@ -148,17 +161,6 @@
             <Color x:Key="ColorAcento2">#47B6D4</Color>
             <Color x:Key="ColorAcento3">#EBA90D</Color>
             <Color x:Key="ColorAcentoSuave4">#FEF0D0</Color>
-
-            <!--  Grupo botones  -->
-            <Style x:Key="grupoBotones" TargetType="Button">
-                <Setter Property="Padding" Value="12" />
-                <Setter Property="CornerRadius" Value="15" />
-                <Setter Property="FontSize" Value="14" />
-                <Setter Property="FontFamily" Value="PoppinsMedium" />
-                <Setter Property="TextColor" Value="{StaticResource ColorTextoPrimario}" />
-                <Setter Property="WidthRequest" Value="115" />
-                <Setter Property="HeightRequest" Value="50" />
-            </Style>
 
             <!--  subtitulos de formularios  -->
             <Style x:Key="subtitulosFormularios" TargetType="Label">
