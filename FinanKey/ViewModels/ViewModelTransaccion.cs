@@ -10,6 +10,10 @@ namespace FinanKey.ViewModels
         [ObservableProperty]
         public ObservableCollection<TipoCategoria>? _listaTipoCategoriasGastos;
         [ObservableProperty]
+        public ObservableCollection<TipoCategoria>? _listaTipoCategoriasIngresos;
+        [ObservableProperty]
+        public ObservableCollection<TipoCategoria>? _listaCategoriasActual;
+        [ObservableProperty]
         public TipoCategoria? _tipoCategoriaGastoSeleccionada;
         [ObservableProperty]
         public bool _isBusy;
@@ -42,12 +46,12 @@ namespace FinanKey.ViewModels
             };
         }
         [RelayCommand]
-        private async Task SeleccionarCategoriaGasto(TipoCategoria categoria)
+        private async Task SeleccionarCategoriaGasto(TipoCategoria categoriaGasto)
         {
-            if (categoria is null) return;
+            if (categoriaGasto is null) return;
 
-            // Actualizas la categoría seleccionada
-            TipoCategoriaGastoSeleccionada = categoria;
+            // Actualizas la categoría gasto seleccionada
+            TipoCategoriaGastoSeleccionada = categoriaGasto;
 
             // Cierras el bottom sheet
             IsBottomSheetOpen = false;
@@ -56,7 +60,24 @@ namespace FinanKey.ViewModels
         [RelayCommand]
         public async Task MostrarBottomSheetCategoriaGasto()
         {
+            ListaCategoriasActual = ListaTipoCategoriasGastos;
             IsBottomSheetOpen = true;
+        }
+        [RelayCommand]
+        public async Task MostrarBottomSheetCategoriaIngreso()
+        {
+            ListaCategoriasActual = ListaTipoCategoriasGastos;
+            IsBottomSheetOpen = true;
+        }
+        private async Task SeleccionarCategoriaIngreso(TipoCategoria categoriaIngreso)
+        {
+            if (categoriaIngreso is null) return;
+
+            // Actualizas la categoría gasto seleccionada
+            TipoCategoriaGastoSeleccionada = categoriaIngreso;
+
+            // Cierras el bottom sheet
+            IsBottomSheetOpen = false;
         }
     }
 }

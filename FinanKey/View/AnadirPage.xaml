@@ -30,7 +30,7 @@
             </Setter>
         </Style>
     </ContentPage.Resources>
-    <!--  ButtonSheet ContieneTodaLaPagina  -->
+    <!--  BUTTON SHEET QUE ENVUELVE EL FORMULARIO  -->
     <bottomSheet:SfBottomSheet
         x:Name="bottomSheetCategoria"
         AllowedState="All"
@@ -397,6 +397,7 @@
                 </Grid>
             </VerticalStackLayout>
         </bottomSheet:SfBottomSheet.Content>
+        
         <!--  FONDO INFERIOR DEL BUTTONSHEET  -->
         <bottomSheet:SfBottomSheet.BottomSheetContent>
             <CollectionView
