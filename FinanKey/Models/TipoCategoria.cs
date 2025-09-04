@@ -8,6 +8,6 @@ namespace FinanKey.Models
         public int Id { get; set; }
         [MaxLength(50)]
         public string? Descripcion { get; set; }
-        public string Icono { get; set; }
+        public string? Icono { get; set; } //Icono que se tomara de repositorio 
     }
 }

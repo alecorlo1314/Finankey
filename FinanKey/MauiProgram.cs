@@ -50,30 +50,34 @@ namespace FinanKey
                     fonts.AddFont("Poppins-Light.ttf", "PoppinsLight");
                 });
             builder.UseSimpleToolkit();
+            //Registrar vistas con inyección de dependencias
+            builder.Services.AddSingleton<AgregarTarjetaPage>();
             builder.Services.AddSingleton<AnadirPage>();
             builder.Services.AddSingleton<ConfiguracionesPage>();
-            builder.Services.AddSingleton<InicioPage>();
             builder.Services.AddSingleton<DetalleCuentaPage>();
+            builder.Services.AddSingleton<InicioPage>();
             builder.Services.AddTransient<LoginPage>();
-            builder.Services.AddSingleton<AgregarTarjetaPage>();
+            builder.Services.AddSingleton<ReportesPage>();
             //Registrar ViewModels con inyección de dependencias
-            builder.Services.AddSingleton<ViewModelGasto>();
-            builder.Services.AddSingleton<ViewModelIngreso>();
             builder.Services.AddSingleton<ViewModelCuenta>();
-            builder.Services.AddSingleton<ViewModelInicio>();
             builder.Services.AddSingleton<ViewModelDetalleCuenta>();
+            builder.Services.AddSingleton<ViewModelInicio>();
             builder.Services.AddSingleton<ViewModelTarjeta>();
+            builder.Services.AddSingleton<ViewModelTransaccion>();
             //Registrar servicios con inyección de dependencias contexto de datos
             builder.Services.AddSingleton<ContextoDatosCuenta>();
             builder.Services.AddSingleton<ContextoDatosGasto>();
             builder.Services.AddSingleton<ContextoDatosIngreso>();
             builder.Services.AddSingleton<ServicioBaseDatos>();
-            //Registrar servicios con contexto de datos
-            builder.Services.AddSingleton<IServiciosTransaccionIngreso, ContextoDatosIngreso>();
+            builder.Services.AddSingleton<ServicioMovimiento>();
+            builder.Services.AddSingleton<ServicioTarjeta>();
+            //Registrar servicios de Interfaz con inyección de dependencias
+            builder.Services.AddSingleton<IServicioMovimiento, ServicioMovimiento>();
             builder.Services.AddSingleton<IServiciosTransaccionGasto, ContextoDatosGasto>();
-            builder.Services.AddSingleton<IServicioTransaccionCuenta, ContextoDatosCuenta>();
+            builder.Services.AddSingleton<IServiciosTransaccionIngreso, ContextoDatosIngreso>();
             builder.Services.AddSingleton<IServicioTarjeta, ServicioTarjeta>();
-            //Registrar comportamiento personalizado
+            builder.Services.AddSingleton<IServicioTransaccionCuenta, ContextoDatosCuenta>();
+            //Registrar comportamiento personalizado Behavior
             builder.Services.AddSingleton<SfRadioButtonStateChangedBehavior>();
             //Registrar el Shell de la aplicación
             builder.Services.AddSingleton<TabBarView>();

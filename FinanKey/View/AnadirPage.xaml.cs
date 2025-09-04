@@ -4,18 +4,11 @@ namespace FinanKey.View;
 
 public partial class AnadirPage : ContentPage
 {
-    //Inyección de dependencias para los ViewModels
-    private readonly ViewModelGasto _viewModelGasto;
-    private readonly ViewModelIngreso _viewModelIngreso;
-
-    public AnadirPage(ViewModelGasto viewModelGasto, ViewModelIngreso viewModelIngreso)
+    public AnadirPage(ViewModelTransaccion viewModelTransaccion)
     {
         InitializeComponent();
-        // Asignar el BindingContext de la página a los ViewModels
-        _viewModelGasto = viewModelGasto;
-        _viewModelIngreso = viewModelIngreso;
-        // Establecer el BindingContext inicial
-        MostrarFormulario(FormularioSeleccionado.Gasto);
+        //inyeccion de dependencias
+        BindingContext = viewModelTransaccion;
     }
 
     private enum FormularioSeleccionado
@@ -42,8 +35,6 @@ public partial class AnadirPage : ContentPage
                 formularioGasto.IsVisible = true;
                 // Estilizar el botón de Gasto
                 EstilizarBotonSeleccionado(btnGasto, "icono_billetera_blanco.svg");
-                // Establecer el BindingContext para el formulario de Gasto
-                BindingContext = _viewModelGasto;
                 break;
             //Si selecciono formulario Ingreso
             case FormularioSeleccionado.Ingreso:
@@ -51,8 +42,6 @@ public partial class AnadirPage : ContentPage
                 formularioIngreso.IsVisible = true;
                 // Estilizar el botón de Ingreso
                 EstilizarBotonSeleccionado(btnIngreso, "icono_billete_blanco");
-                // Establecer el BindingContext para el formulario de Ingreso
-                BindingContext = _viewModelIngreso;
                 break;
         }
     }
@@ -94,8 +83,6 @@ public partial class AnadirPage : ContentPage
         MostrarFormulario(FormularioSeleccionado.Cuenta);
     }
 
-    // Zona eventos de enfoque/desenfoque para entradas
-
     private void OnEntryFocused(Border border)
     {
         border.Stroke = App.Current?.Resources["ColorAzulPricipal"] as Color;
@@ -121,4 +108,9 @@ public partial class AnadirPage : ContentPage
 
     private void entradaMontoIngreso_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderMontoIngreso);
     private void entradaMontoIngreso_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderMontoIngreso);
+
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+        bottomSheetCategoria.Show();
+    }
 }
