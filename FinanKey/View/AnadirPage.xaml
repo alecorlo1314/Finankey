@@ -41,11 +41,11 @@
         CornerRadius="20,20,0,0"
         GrabberAreaHeight="20"
         GrabberBackground="{StaticResource ColorIconoNavBar}"
-        GrabberHeight="1"
+        GrabberHeight="5"
         GrabberWidth="90"
         IsModal="True"
         IsOpen="{Binding IsBottomSheetOpen}"
-        State="HalfExpanded">
+        State="Hidden">
         <bottomSheet:SfBottomSheet.Content>
             <!--  CONTENIDO DE PAGINA  -->
             <VerticalStackLayout Padding="{StaticResource PaddingPaginas}" Spacing="8">
@@ -405,7 +405,7 @@
                 ItemsSource="{Binding ListaCategoriasActual}"
                 SelectedItem="{Binding CategoriaSeleccionada, Mode=TwoWay}"
                 SelectionChangedCommand="{Binding SeleccionarCategoriaGastoCommand}"
-                SelectionChangedCommandParameter="{Binding TipoCategoriaGastoSeleccionada}"
+                SelectionChangedCommandParameter="{Binding CategoriaSeleccionada}"
                 SelectionMode="Single">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
