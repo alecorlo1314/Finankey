@@ -37,14 +37,14 @@
         Background="{StaticResource FondoPrincipal}"
         BackgroundColor="{StaticResource ColorFondoPrincipal}"
         CollapseOnOverlayTap="True"
+        CollapsedHeight="0"
         ContentWidthMode="Full"
         CornerRadius="20,20,0,0"
-        GrabberAreaHeight="20"
         GrabberBackground="{StaticResource ColorIconoNavBar}"
         GrabberHeight="5"
         GrabberWidth="90"
         IsModal="True"
-        IsOpen="{Binding IsBottomSheetOpen}"
+        IsOpen="{Binding IsBottomSheetOpen, Mode=TwoWay}"
         State="Hidden">
         <bottomSheet:SfBottomSheet.Content>
             <!--  CONTENIDO DE PAGINA  -->
@@ -206,12 +206,12 @@
                                     Grid.Column="0"
                                     Aspect="AspectFill"
                                     HeightRequest="32"
-                                    Source="{Binding TipoCategoriaGastoSeleccionada.Icono, Mode=TwoWay}"
+                                    Source="{Binding CategoriaSeleccionada.Icono, Mode=TwoWay}"
                                     WidthRequest="32" />
                                 <Label
                                     Grid.Column="1"
                                     Style="{StaticResource TextoParrafoPrincipal}"
-                                    Text="{Binding TipoCategoriaGastoSeleccionada.Descripcion, Mode=TwoWay}"
+                                    Text="{Binding CategoriaSeleccionada.Descripcion, Mode=TwoWay}"
                                     TextColor="{StaticResource ColorTexoEntrada}"
                                     VerticalOptions="Center" />
                                 <Image
@@ -397,7 +397,7 @@
                 </Grid>
             </VerticalStackLayout>
         </bottomSheet:SfBottomSheet.Content>
-        
+
         <!--  FONDO INFERIOR DEL BUTTONSHEET  -->
         <bottomSheet:SfBottomSheet.BottomSheetContent>
             <CollectionView

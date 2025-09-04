@@ -18,7 +18,7 @@ namespace FinanKey.ViewModels
         [ObservableProperty]
         public bool _isBusy;
         [ObservableProperty]
-        public bool _isBottomSheetOpen = false;
+        public bool _isBottomSheetOpen;
         public ViewModelTransaccion()
         {
             inicializarDatos();
