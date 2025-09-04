@@ -61,8 +61,6 @@ namespace FinanKey
             //Registrar ViewModels con inyección de dependencias
             builder.Services.AddSingleton<ViewModelCuenta>();
             builder.Services.AddSingleton<ViewModelDetalleCuenta>();
-            builder.Services.AddSingleton<ViewModelGasto>();
-            builder.Services.AddSingleton<ViewModelIngreso>();
             builder.Services.AddSingleton<ViewModelInicio>();
             builder.Services.AddSingleton<ViewModelTarjeta>();
             builder.Services.AddSingleton<ViewModelTransaccion>();

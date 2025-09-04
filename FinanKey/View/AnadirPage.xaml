@@ -12,18 +12,40 @@
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource FondoPrincipal}" StatusBarStyle="DarkContent" />
     </ContentPage.Behaviors>
+    <!--  CREACION DE ESTILOS PARA LA PAGINA AGREGAR  -->
+    <ContentPage.Resources>
+        <!--  CAMBIO COLOR DE LA SELECCION DE CATEGORIA EN BOTTOM SHEET  -->
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
     <!--  ButtonSheet ContieneTodaLaPagina  -->
     <bottomSheet:SfBottomSheet
         x:Name="bottomSheetCategoria"
         AllowedState="All"
-        BackgroundColor="{StaticResource FondoPrincipal}"
+        Background="{StaticResource FondoPrincipal}"
+        BackgroundColor="{StaticResource ColorFondoPrincipal}"
         CollapseOnOverlayTap="True"
         ContentWidthMode="Full"
         CornerRadius="20,20,0,0"
+        GrabberAreaHeight="20"
         GrabberBackground="{StaticResource ColorIconoNavBar}"
+        GrabberHeight="1"
+        GrabberWidth="90"
         IsModal="True"
         IsOpen="{Binding IsBottomSheetOpen}"
-        State="Hidden">
+        State="HalfExpanded">
         <bottomSheet:SfBottomSheet.Content>
             <!--  CONTENIDO DE PAGINA  -->
             <VerticalStackLayout Padding="{StaticResource PaddingPaginas}" Spacing="8">
@@ -40,7 +62,7 @@
                     <Button
                         x:Name="btnGasto"
                         BackgroundColor="{StaticResource ColorAzulPricipal}"
-                        ImageSource="cartera_blanca.svg"
+                        ImageSource="icono_billetera_blanco.svg"
                         Pressed="btnGasto_Pressed"
                         Style="{StaticResource grupoBotones}"
                         Text="Gasto"
@@ -49,7 +71,7 @@
                     <Button
                         x:Name="btnIngreso"
                         BackgroundColor="{StaticResource ColorFondoComponentes}"
-                        ImageSource="billete.svg"
+                        ImageSource="icono_billete_azul.svg"
                         Pressed="btnIngreso_Pressed"
                         Style="{StaticResource grupoBotones}"
                         Text="Ingreso"
@@ -390,8 +412,10 @@
                             Margin="16,8"
                             ColumnDefinitions="auto,*"
                             ColumnSpacing="16"
+                            HeightRequest="56"
                             HorizontalOptions="Start"
-                            VerticalOptions="Center">
+                            VerticalOptions="Center"
+                            WidthRequest="380">
                             <Image
                                 Grid.Column="0"
                                 Aspect="AspectFill"
