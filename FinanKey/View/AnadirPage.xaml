@@ -30,22 +30,22 @@
             </Setter>
         </Style>
     </ContentPage.Resources>
-    <!--  ButtonSheet ContieneTodaLaPagina  -->
+    <!--  BUTTON SHEET QUE ENVUELVE EL FORMULARIO  -->
     <bottomSheet:SfBottomSheet
         x:Name="bottomSheetCategoria"
         AllowedState="All"
         Background="{StaticResource FondoPrincipal}"
         BackgroundColor="{StaticResource ColorFondoPrincipal}"
         CollapseOnOverlayTap="True"
+        CollapsedHeight="0"
         ContentWidthMode="Full"
         CornerRadius="20,20,0,0"
-        GrabberAreaHeight="20"
         GrabberBackground="{StaticResource ColorIconoNavBar}"
-        GrabberHeight="1"
+        GrabberHeight="5"
         GrabberWidth="90"
         IsModal="True"
-        IsOpen="{Binding IsBottomSheetOpen}"
-        State="HalfExpanded">
+        IsOpen="{Binding IsBottomSheetOpen, Mode=TwoWay}"
+        State="Hidden">
         <bottomSheet:SfBottomSheet.Content>
             <!--  CONTENIDO DE PAGINA  -->
             <VerticalStackLayout Padding="{StaticResource PaddingPaginas}" Spacing="8">
@@ -206,12 +206,12 @@
                                     Grid.Column="0"
                                     Aspect="AspectFill"
                                     HeightRequest="32"
-                                    Source="{Binding TipoCategoriaGastoSeleccionada.Icono, Mode=TwoWay}"
+                                    Source="{Binding CategoriaSeleccionada.Icono, Mode=TwoWay}"
                                     WidthRequest="32" />
                                 <Label
                                     Grid.Column="1"
                                     Style="{StaticResource TextoParrafoPrincipal}"
-                                    Text="{Binding TipoCategoriaGastoSeleccionada.Descripcion, Mode=TwoWay}"
+                                    Text="{Binding CategoriaSeleccionada.Descripcion, Mode=TwoWay}"
                                     TextColor="{StaticResource ColorTexoEntrada}"
                                     VerticalOptions="Center" />
                                 <Image
@@ -397,14 +397,15 @@
                 </Grid>
             </VerticalStackLayout>
         </bottomSheet:SfBottomSheet.Content>
+
         <!--  FONDO INFERIOR DEL BUTTONSHEET  -->
         <bottomSheet:SfBottomSheet.BottomSheetContent>
             <CollectionView
                 BackgroundColor="{StaticResource FondoPrincipal}"
-                ItemsSource="{Binding ListaTipoCategoriasGastos}"
-                SelectedItem="{Binding TipoCategoriaGastoSeleccionada, Mode=TwoWay}"
+                ItemsSource="{Binding ListaCategoriasActual}"
+                SelectedItem="{Binding CategoriaSeleccionada, Mode=TwoWay}"
                 SelectionChangedCommand="{Binding SeleccionarCategoriaGastoCommand}"
-                SelectionChangedCommandParameter="{Binding TipoCategoriaGastoSeleccionada}"
+                SelectionChangedCommandParameter="{Binding CategoriaSeleccionada}"
                 SelectionMode="Single">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>

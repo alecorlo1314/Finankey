@@ -10,11 +10,15 @@ namespace FinanKey.ViewModels
         [ObservableProperty]
         public ObservableCollection<TipoCategoria>? _listaTipoCategoriasGastos;
         [ObservableProperty]
-        public TipoCategoria? _tipoCategoriaGastoSeleccionada;
+        public ObservableCollection<TipoCategoria>? _listaTipoCategoriasIngresos;
+        [ObservableProperty]
+        public ObservableCollection<TipoCategoria>? _listaCategoriasActual;
+        [ObservableProperty]
+        public TipoCategoria? _categoriaSeleccionada;
         [ObservableProperty]
         public bool _isBusy;
         [ObservableProperty]
-        public bool _isBottomSheetOpen = false;
+        public bool _isBottomSheetOpen;
         public ViewModelTransaccion()
         {
             inicializarDatos();
@@ -29,33 +33,51 @@ namespace FinanKey.ViewModels
         {
             ListaTipoCategoriasGastos = new ObservableCollection<TipoCategoria>
             {
-                new() { Descripcion = "Cosas del Hogar", Icono = "bticono_casa.svg" },
-                new() { Descripcion = "Servicios publicos", Icono = "bticono_servicios.svg" },
-                new() { Descripcion = "Internet y Telefonia", Icono = "btincono_internet.svg" },
-                new() { Descripcion = "Mantenimiento", Icono = "bticono_mantenimiento.svg" },
-                new() { Descripcion = "Streaming", Icono = "bticono_streaming.svg" },
-                new() { Descripcion = "Cine", Icono = "bticono_cine.svg" },
-                new() { Descripcion = "Medicinas", Icono = "btincono_medicinas.svg" },
-                new() { Descripcion = "Medico", Icono = "bticono_medico.svg" },
-                new() { Descripcion = "Libros", Icono = "bticono_libros.svg" },
-                new() { Descripcion = "Cursos", Icono = "bticono_cursos.svg" }
+                new() {Id = 0, Descripcion = "Cosas del Hogar", Icono = "bticono_casa.svg" },
+                new() {Id = 1, Descripcion = "Servicios publicos", Icono = "bticono_servicios.svg" },
+                new() {Id = 2, Descripcion = "Internet y Telefonia", Icono = "btincono_internet.svg" },
+                new() {Id = 3, Descripcion = "Mantenimiento", Icono = "bticono_mantenimiento.svg" },
+                new() {Id = 4, Descripcion = "Streaming", Icono = "bticono_streaming.svg" },
+                new() {Id = 5, Descripcion = "Cine", Icono = "bticono_cine.svg" },
+                new() {Id = 6, Descripcion = "Medicinas", Icono = "btincono_medicinas.svg" },
+                new() {Id = 7, Descripcion = "Medico", Icono = "bticono_medico.svg" },
+                new() {Id = 8, Descripcion = "Libros", Icono = "bticono_libros.svg" },
+                new() {Id = 9, Descripcion = "Cursos", Icono = "bticono_cursos.svg" }
             };
         }
-        [RelayCommand]
-        private async Task SeleccionarCategoriaGasto(TipoCategoria categoria)
-        {
-            if (categoria is null) return;
 
-            // Actualizas la categoría seleccionada
-            TipoCategoriaGastoSeleccionada = categoria;
+        [RelayCommand]
+        private async Task SeleccionarCategoriaGasto(TipoCategoria categoriaGasto)
+        {
+            if (categoriaGasto is null) return;
+
+            // Actualizas la categoría gasto seleccionada
+            CategoriaSeleccionada = categoriaGasto;
 
             // Cierras el bottom sheet
             IsBottomSheetOpen = false;
         }
-
         [RelayCommand]
         public async Task MostrarBottomSheetCategoriaGasto()
         {
+            ListaCategoriasActual = ListaTipoCategoriasGastos;
+            IsBottomSheetOpen = true;
+        }
+        [RelayCommand]
+        private async Task SeleccionarCategoriaIngreso(TipoCategoria categoriaIngreso)
+        {
+            if (categoriaIngreso is null) return;
+
+            // Actualizas la categoría gasto seleccionada
+            CategoriaSeleccionada = categoriaIngreso;
+
+            // Cierras el bottom sheet
+            IsBottomSheetOpen = false;
+        }
+        [RelayCommand]
+        public async Task MostrarBottomSheetCategoriaIngreso()
+        {
+            ListaCategoriasActual = ListaTipoCategoriasGastos;
             IsBottomSheetOpen = true;
         }
     }
