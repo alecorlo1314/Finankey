@@ -14,7 +14,7 @@ namespace FinanKey.ViewModels
         [ObservableProperty]
         public ObservableCollection<TipoCategoria>? _listaCategoriasActual;
         [ObservableProperty]
-        public TipoCategoria? _tipoCategoriaGastoSeleccionada;
+        public TipoCategoria? _categoriaSeleccionada;
         [ObservableProperty]
         public bool _isBusy;
         [ObservableProperty]
@@ -45,18 +45,18 @@ namespace FinanKey.ViewModels
                 new() { Descripcion = "Cursos", Icono = "bticono_cursos.svg" }
             };
         }
+
         [RelayCommand]
         private async Task SeleccionarCategoriaGasto(TipoCategoria categoriaGasto)
         {
             if (categoriaGasto is null) return;
 
             // Actualizas la categoría gasto seleccionada
-            TipoCategoriaGastoSeleccionada = categoriaGasto;
+            CategoriaSeleccionada = categoriaGasto;
 
             // Cierras el bottom sheet
             IsBottomSheetOpen = false;
         }
-
         [RelayCommand]
         public async Task MostrarBottomSheetCategoriaGasto()
         {
@@ -69,12 +69,13 @@ namespace FinanKey.ViewModels
             ListaCategoriasActual = ListaTipoCategoriasGastos;
             IsBottomSheetOpen = true;
         }
+        [RelayCommand]
         private async Task SeleccionarCategoriaIngreso(TipoCategoria categoriaIngreso)
         {
             if (categoriaIngreso is null) return;
 
             // Actualizas la categoría gasto seleccionada
-            TipoCategoriaGastoSeleccionada = categoriaIngreso;
+            CategoriaSeleccionada = categoriaIngreso;
 
             // Cierras el bottom sheet
             IsBottomSheetOpen = false;

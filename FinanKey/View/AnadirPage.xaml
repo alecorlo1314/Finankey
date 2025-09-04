@@ -402,8 +402,8 @@
         <bottomSheet:SfBottomSheet.BottomSheetContent>
             <CollectionView
                 BackgroundColor="{StaticResource FondoPrincipal}"
-                ItemsSource="{Binding ListaTipoCategoriasGastos}"
-                SelectedItem="{Binding TipoCategoriaGastoSeleccionada, Mode=TwoWay}"
+                ItemsSource="{Binding ListaCategoriasActual}"
+                SelectedItem="{Binding CategoriaSeleccionada, Mode=TwoWay}"
                 SelectionChangedCommand="{Binding SeleccionarCategoriaGastoCommand}"
                 SelectionChangedCommandParameter="{Binding TipoCategoriaGastoSeleccionada}"
                 SelectionMode="Single">
