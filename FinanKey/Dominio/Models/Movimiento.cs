@@ -14,7 +14,7 @@ namespace FinanKey.Dominio.Models
         public decimal Monto { get; set; }
 
         [NotNull]
-        public DateTime Fecha { get; set; } = DateTime.UtcNow;
+        public DateTime Fecha { get; set; }
 
         public int? CategoriaId { get; set; }
 

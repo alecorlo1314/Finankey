@@ -12,7 +12,10 @@ namespace FinanKey.Presentacion.ViewModels
         private readonly ServicioMovimiento servicioMovimiento;
         //Propiedades de Movimiento
         [ObservableProperty]
+        public decimal _monto = 0;
+        [ObservableProperty]
         public TipoCategoria? _categoriaSeleccionada;
+
 
         [ObservableProperty]
         public ObservableCollection<TipoCategoria>? _listaTipoCategoriasGastos;
