@@ -2,13 +2,13 @@
 using Microsoft.Extensions.Logging;
 using Syncfusion.Maui.Toolkit.Hosting;
 using Syncfusion.Maui.Core.Hosting;
-using FinanKey.View;
+using FinanKey.Presentacion.View;
 using FinanKey.Dominio.Interfaces;
-using FinanKey.ViewModels;
-using FinanKey.Datos;
+using FinanKey.Presentacion.ViewModels;
+using FinanKey.Infraestructura.Repositorios;
 using SimpleToolkit.SimpleShell;
 using SimpleToolkit.Core;
-using FinanKey.View.Behaviors;
+using FinanKey.Presentacion.View.Behaviors;
 using FinanKey.View.Controles;
 
 namespace FinanKey

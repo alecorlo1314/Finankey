@@ -1,13 +1,19 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinanKey.Dominio.Models;
-using FinanKey.Dominio.Interfaces;
+using FinanKey.Aplicacion.UseCases;
 using System.Collections.ObjectModel;
 
 namespace FinanKey.Presentacion.ViewModels
 {
-    public partial class ViewModelTransaccion : ObservableObject
+    public partial class ViewModelMovimiento : ObservableObject
     {
+        //Inyeccion de Dependencias
+        private readonly ServicioMovimiento servicioMovimiento;
+        //Propiedades de Movimiento
+        [ObservableProperty]
+        public TipoCategoria? _categoriaSeleccionada;
+
         [ObservableProperty]
         public ObservableCollection<TipoCategoria>? _listaTipoCategoriasGastos;
         [ObservableProperty]
@@ -15,14 +21,13 @@ namespace FinanKey.Presentacion.ViewModels
         [ObservableProperty]
         public ObservableCollection<TipoCategoria>? _listaCategoriasActual;
         [ObservableProperty]
-        public TipoCategoria? _categoriaSeleccionada;
-        [ObservableProperty]
         public bool _isBusy;
         [ObservableProperty]
         public bool _isBottomSheetOpen;
-        public ViewModelTransaccion()
+        public ViewModelMovimiento(ServicioMovimiento servicioMovimiento)
         {
             inicializarDatos();
+            this.servicioMovimiento = servicioMovimiento;
         }
         private void inicializarDatos()
         {
@@ -80,6 +85,15 @@ namespace FinanKey.Presentacion.ViewModels
         {
             ListaCategoriasActual = ListaTipoCategoriasGastos;
             IsBottomSheetOpen = true;
+        }
+        [RelayCommand]
+        public async Task GuardarMovimientoGasto()
+        {
+            //Toda la logica de negocios
+            //Implementamos if else y demas
+            //supongamos que lo pasamos todo
+            //Llamamos al caso de uso ServicioMovimiento para guardar gasto
+            var resultado = await servicioMovimiento.guardarMovimientoGasto();
         }
     }
 }
