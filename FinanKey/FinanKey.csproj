@@ -58,6 +58,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Include="Aplicacion\UseCases\ServicioMovimiento.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.1" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
@@ -71,46 +75,46 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="View\AnadirPage.xaml.cs">
+	  <Compile Update="Presentacion\View\AnadirPage.xaml.cs">
 	    <DependentUpon>AnadirPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="View\InicioPage.xaml.cs">
+	  <Compile Update="Presentacion\View\InicioPage.xaml.cs">
 	    <DependentUpon>InicioPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="View\DetalleCuentaPage.xaml.cs">
+	  <Compile Update="Presentacion\View\DetalleCuentaPage.xaml.cs">
 	    <DependentUpon>DetalleCuentaPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="View\ReportesPage.xaml.cs">
+	  <Compile Update="Presentacion\View\ReportesPage.xaml.cs">
 	    <DependentUpon>ReportesPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="View\AgregarTarjetaPage.xaml">
+	  <MauiXaml Update="Presentacion\View\AgregarTarjetaPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\AnadirPage.xaml">
+	  <MauiXaml Update="Presentacion\View\AnadirPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\ConfiguracionesPage.xaml">
+	  <MauiXaml Update="Presentacion\View\ConfiguracionesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\Controles\TabBarIconView.xaml">
+	  <MauiXaml Update="Presentacion\View\Controles\TabBarIconView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\Controles\TabBarView.xaml">
+	  <MauiXaml Update="Presentacion\View\Controles\TabBarView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\InicioPage.xaml">
+	  <MauiXaml Update="Presentacion\View\InicioPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\LoginPage.xaml">
+	  <MauiXaml Update="Presentacion\View\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\DetalleCuentaPage.xaml">
+	  <MauiXaml Update="Presentacion\View\DetalleCuentaPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\ReportesPage.xaml">
+	  <MauiXaml Update="Presentacion\View\ReportesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
