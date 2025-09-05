@@ -15,8 +15,17 @@ namespace FinanKey.Presentacion.ViewModels
         public decimal _monto = 0;
         [ObservableProperty]
         public TipoCategoria? _categoriaSeleccionada;
-
-
+        [ObservableProperty]
+        public DateTime _fecha = DateTime.Now;
+        [ObservableProperty]
+        public string? _comercio;
+        [ObservableProperty]
+        public Tarjeta _tarjetaSeleccionada;
+        [ObservableProperty]
+        public bool? _estaPagado;
+        [ObservableProperty]
+        public string? _descripcion;
+        //Colecciones o listas
         [ObservableProperty]
         public ObservableCollection<TipoCategoria>? _listaTipoCategoriasGastos;
         [ObservableProperty]
@@ -24,21 +33,30 @@ namespace FinanKey.Presentacion.ViewModels
         [ObservableProperty]
         public ObservableCollection<TipoCategoria>? _listaCategoriasActual;
         [ObservableProperty]
+        public ObservableCollection<Tarjeta>? _listaTarjetas;
+
+        //Para visar al inicializador de categorias cuando este listo
+        [ObservableProperty]
         public bool _isBusy;
+        //Para abrir y cerrar el bottom sheet
         [ObservableProperty]
         public bool _isBottomSheetOpen;
         public ViewModelMovimiento(ServicioMovimiento servicioMovimiento)
         {
             inicializarDatos();
+            //Inyeccion de Dependencias
             this.servicioMovimiento = servicioMovimiento;
         }
+        //Metodo para inicializar las categorias
         private void inicializarDatos()
         {
             _isBusy = true;
-                cargarCategorias();
+            cargarCategoriasGastos();
             _isBusy = false;
         }
-        private void cargarCategorias()
+
+        #region Metodo para cargar las categorias de gastos
+        private void cargarCategoriasGastos()
         {
             ListaTipoCategoriasGastos = new ObservableCollection<TipoCategoria>
             {
@@ -54,7 +72,9 @@ namespace FinanKey.Presentacion.ViewModels
                 new() {Id = 9, Descripcion = "Cursos", Icono = "bticono_cursos.svg" }
             };
         }
+        #endregion
 
+        #region Metodo se encarga de seleccionar una categoría de gasto
         [RelayCommand]
         private async Task SeleccionarCategoriaGasto(TipoCategoria categoriaGasto)
         {
@@ -66,12 +86,18 @@ namespace FinanKey.Presentacion.ViewModels
             // Cierras el bottom sheet
             IsBottomSheetOpen = false;
         }
+        #endregion
+
+        #region Metodo para mostrar bottonsheet y actualizar la lista de categorias
         [RelayCommand]
         public async Task MostrarBottomSheetCategoriaGasto()
         {
             ListaCategoriasActual = ListaTipoCategoriasGastos;
             IsBottomSheetOpen = true;
         }
+        #endregion
+
+        #region Metodo se encarga de seleccionar una categoría de ingreso
         [RelayCommand]
         private async Task SeleccionarCategoriaIngreso(TipoCategoria categoriaIngreso)
         {
@@ -83,20 +109,68 @@ namespace FinanKey.Presentacion.ViewModels
             // Cierras el bottom sheet
             IsBottomSheetOpen = false;
         }
+        #endregion
+
+        #region Metodo para mostrar bottonsheet y actualizar la lista de categorias de ingreso
         [RelayCommand]
         public async Task MostrarBottomSheetCategoriaIngreso()
         {
             ListaCategoriasActual = ListaTipoCategoriasGastos;
             IsBottomSheetOpen = true;
         }
+        #endregion
+
+        #region Metodo para guardar el movimiento
         [RelayCommand]
         public async Task GuardarMovimientoGasto()
         {
-            //Toda la logica de negocios
-            //Implementamos if else y demas
-            //supongamos que lo pasamos todo
-            //Llamamos al caso de uso ServicioMovimiento para guardar gasto
-            var resultado = await servicioMovimiento.guardarMovimientoGasto();
+            //Validaciones antes de guardar el movimiento de gasto
+            if (CategoriaSeleccionada is null) return;//Categoria seleccionada no puede estar vacia
+            if (Monto <= 0 || Monto >= decimal.MaxValue) return; //El monto debe ser mayor a 0 o mayor a decimal.MaxValue
+            if(string.IsNullOrWhiteSpace(Descripcion) || Descripcion.Length > 100) return; //La descripcion no puede estar vacia
+            if (ListaTipoCategoriasGastos is null) return; //La lista de categorias no puede estar vacia
+            if(Fecha > DateTime.Now || Fecha < DateTime.MinValue) return; //La fecha no puede ser mayor a la fecha actual o menor a DateTime.MinValue
+            if (string.IsNullOrWhiteSpace(Comercio)) return; //El comercio no puede estar vacio
+            if(ListaTarjetas is null) return; //La lista de tarjetas no puede estar vacia
+            if(TarjetaSeleccionada is null) return; //La tarjeta no puede estar vacia
+
+            Movimiento movimientoGasto = new Movimiento
+            {
+                Tipo = "Gasto",
+                Monto = this.Monto,
+                Descripcion = this.Descripcion,
+                Fecha = Fecha,
+                CategoriaId = CategoriaSeleccionada.Id,
+                Comercio = this.Comercio,
+                TarjetaId = TarjetaSeleccionada.Id,
+                EsPagado = this.EstaPagado,
+            };
+            //Esperamos el resultado de la operacion
+            var resultado = await servicioMovimiento.guardarMovimientoGasto(movimientoGasto);
+
+            if(resultado > 0)
+            {
+                await Shell.Current.DisplayAlert("Éxito", "Movimiento guardado correctamente", "OK");
+                LimpiarCampos();
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("Error", "No se pudo guardar el movimiento", "OK");
+            }
         }
+        #endregion
+
+        #region Metodo para limpiar los campos despues de guardar
+        private void LimpiarCampos()
+        {
+            Monto = 0;
+            Descripcion = string.Empty;
+            Fecha = DateTime.Now;
+            CategoriaSeleccionada = null;
+            Comercio = string.Empty;
+            TarjetaSeleccionada = null;
+            EstaPagado = false;
+        }
+        #endregion  
     }
 }
