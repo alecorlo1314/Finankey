@@ -4,11 +4,11 @@ namespace FinanKey.Presentacion.View;
 
 public partial class AnadirPage : ContentPage
 {
-    public AnadirPage(ViewModelTransaccion viewModelTransaccion)
+    public AnadirPage(ViewModelMovimiento viewModelMovimiento)
     {
         InitializeComponent();
         //inyeccion de dependencias
-        BindingContext = viewModelTransaccion;
+        BindingContext = viewModelMovimiento;
     }
 
     private enum FormularioSeleccionado

@@ -5,19 +5,32 @@ namespace FinanKey.Dominio.Models
     {
         public enum TipoTarjeta
         {
-            Debito = 0,
-            Credito = 1,
+            Debito,
+            Credito,
         }
         public enum TipoMovimiento
         {
-            Ingreso = 0,
-            Gasto = 1,
+            Ingreso,
+            Gasto,
         }
         public enum MarcaTarjeta
         {
             Visa,
             Mastercard,
             American_Express,
+        }
+        public enum MedioPago
+        {
+            Efectivo,
+            Tarjeta,
+        }
+        public enum Frecuencia
+        {
+            Diario,
+            Semanal,
+            Quincenal,
+            Mensual,
+            Anual,
         }
     }
 }

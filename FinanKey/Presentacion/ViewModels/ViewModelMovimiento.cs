@@ -12,7 +12,7 @@ namespace FinanKey.Presentacion.ViewModels
         private readonly ServicioMovimiento servicioMovimiento;
         //Propiedades de Movimiento
         [ObservableProperty]
-        public decimal _monto = 0;
+        public double _monto = 0;
         [ObservableProperty]
         public TipoCategoria? _categoriaSeleccionada;
         [ObservableProperty]
@@ -120,13 +120,13 @@ namespace FinanKey.Presentacion.ViewModels
         }
         #endregion
 
-        #region Metodo para guardar el movimiento
+        #region Metodo para guardar el movimiento de Gasto
         [RelayCommand]
         public async Task GuardarMovimientoGasto()
         {
             //Validaciones antes de guardar el movimiento de gasto
             if (CategoriaSeleccionada is null) return;//Categoria seleccionada no puede estar vacia
-            if (Monto <= 0 || Monto >= decimal.MaxValue) return; //El monto debe ser mayor a 0 o mayor a decimal.MaxValue
+            if (Monto <= 0 || Monto >= double.MaxValue) return; //El monto debe ser mayor a 0 o mayor a decimal.MaxValue
             if(string.IsNullOrWhiteSpace(Descripcion) || Descripcion.Length > 100) return; //La descripcion no puede estar vacia
             if (ListaTipoCategoriasGastos is null) return; //La lista de categorias no puede estar vacia
             if(Fecha > DateTime.Now || Fecha < DateTime.MinValue) return; //La fecha no puede ser mayor a la fecha actual o menor a DateTime.MinValue
@@ -136,8 +136,8 @@ namespace FinanKey.Presentacion.ViewModels
 
             Movimiento movimientoGasto = new Movimiento
             {
-                Tipo = "Gasto",
-                Monto = this.Monto,
+                TipoMovimiento = Enums.TipoMovimiento.Gasto.ToString(),
+                Monto = Monto,
                 Descripcion = this.Descripcion,
                 Fecha = Fecha,
                 CategoriaId = CategoriaSeleccionada.Id,
@@ -165,7 +165,6 @@ namespace FinanKey.Presentacion.ViewModels
         {
             Monto = 0;
             Descripcion = string.Empty;
-            Fecha = DateTime.Now;
             CategoriaSeleccionada = null;
             Comercio = string.Empty;
             TarjetaSeleccionada = null;

@@ -4,7 +4,7 @@ namespace FinanKey.Dominio.Interfaces
 {
     public interface IServicioMovimiento
     {
-        public Task<int> CrearMovimientoAsync(Movimiento NuevoMovimiento);
+        public Task<int> AgregarMovimientoAsync(Movimiento NuevoMovimiento);
         public Task ActualizarMovimientoAsync(Movimiento MovimientoActualizado);
         public Task EliminarMovimientoAsync(Movimiento EliminarMovimiento);
         public Task<List<Movimiento>> ObtenerMovimientosAsync();

@@ -2,9 +2,9 @@
 using CommunityToolkit.Mvvm.Input;
 using FinanKey.Dominio.Models;
 using FinanKey.Dominio.Interfaces;
-using FinanKey.View;
+using FinanKey.Presentacion.View;
 using System.Collections.ObjectModel;
-using FinanKey.View.Controles;
+using FinanKey.Presentacion.View.Controles;
 
 namespace FinanKey.Presentacion.ViewModels
 {

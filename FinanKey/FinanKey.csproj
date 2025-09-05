@@ -81,9 +81,6 @@
 	  <Compile Update="Presentacion\View\InicioPage.xaml.cs">
 	    <DependentUpon>InicioPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Presentacion\View\DetalleCuentaPage.xaml.cs">
-	    <DependentUpon>DetalleCuentaPage.xaml</DependentUpon>
-	  </Compile>
 	  <Compile Update="Presentacion\View\ReportesPage.xaml.cs">
 	    <DependentUpon>ReportesPage.xaml</DependentUpon>
 	  </Compile>
@@ -109,9 +106,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Presentacion\View\LoginPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\View\DetalleCuentaPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Presentacion\View\ReportesPage.xaml">

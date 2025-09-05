@@ -9,7 +9,7 @@ using FinanKey.Infraestructura.Repositorios;
 using SimpleToolkit.SimpleShell;
 using SimpleToolkit.Core;
 using FinanKey.Presentacion.View.Behaviors;
-using FinanKey.View.Controles;
+using FinanKey.Presentacion.View.Controles;
 
 namespace FinanKey
 {
@@ -55,14 +55,12 @@ namespace FinanKey
             builder.Services.AddSingleton<AgregarTarjetaPage>();
             builder.Services.AddSingleton<AnadirPage>();
             builder.Services.AddSingleton<ConfiguracionesPage>();
-            builder.Services.AddSingleton<DetalleCuentaPage>();
             builder.Services.AddSingleton<InicioPage>();
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddSingleton<ReportesPage>();
             //Registrar ViewModels con inyección de dependencias
-            builder.Services.AddSingleton<ViewModelCuenta>();
-            builder.Services.AddSingleton<ViewModelDetalleCuenta>();
             builder.Services.AddSingleton<ViewModelInicio>();
+            builder.Services.AddSingleton<ViewModelMovimiento>();
             builder.Services.AddSingleton<ViewModelTarjeta>();
             //Registrar servicios con inyección de dependencias contexto de datos
             builder.Services.AddSingleton<ServicioBaseDatos>();
