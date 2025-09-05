@@ -1,12 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FinanKey.Models;
-using FinanKey.Servicios;
+using FinanKey.Dominio.Models;
+using FinanKey.Dominio.Interfaces;
 using FinanKey.View;
 using System.Collections.ObjectModel;
 using FinanKey.View.Controles;
 
-namespace FinanKey.ViewModels
+namespace FinanKey.Presentacion.ViewModels
 {
     public partial class ViewModelInicio : ObservableObject
     {

@@ -1,7 +1,7 @@
-﻿using FinanKey.Models;
+﻿using FinanKey.Dominio.Models;
 using System.Collections.ObjectModel;
 
-namespace FinanKey.Servicios
+namespace FinanKey.Dominio.Interfaces
 {
     public interface IServicioTransaccionCuenta
     {

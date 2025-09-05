@@ -1,6 +1,6 @@
 ﻿using SQLite;
 
-namespace FinanKey.Models
+namespace FinanKey.Dominio.Models
 {
     [Table("Categoria")]
     public class Categoria

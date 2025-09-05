@@ -1,6 +1,6 @@
-﻿using FinanKey.Models;
+﻿using FinanKey.Dominio.Models;
 
-namespace FinanKey.Servicios
+namespace FinanKey.Dominio.Interfaces
 {
     public interface IServicioMovimiento
     {

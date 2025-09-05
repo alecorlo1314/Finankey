@@ -115,8 +115,4 @@
 	  </MauiXaml>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Aplicacion\" />
-	</ItemGroup>
-
 </Project>

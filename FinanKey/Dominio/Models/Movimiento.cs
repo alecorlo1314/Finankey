@@ -1,6 +1,5 @@
 ﻿using SQLite;
-
-namespace FinanKey.Models
+namespace FinanKey.Dominio.Models
 {
     [Table("Movimiento")]
     public class Movimiento

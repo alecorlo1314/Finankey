@@ -1,7 +1,8 @@
-﻿using FinanKey.Models;  
+﻿using FinanKey.Dominio.Models;
+using FinanKey.Dominio.Interfaces;
 using SQLite;
 
-namespace FinanKey.Datos
+namespace FinanKey.Infraestructura.Repositorios
 {
     public class ServicioBaseDatos
     {

@@ -1,9 +1,9 @@
-﻿using FinanKey.Models;
-using FinanKey.Servicios;
+﻿using FinanKey.Dominio.Models;
+using FinanKey.Dominio.Interfaces;
 using SQLite;
 using System.Collections.ObjectModel;
 
-namespace FinanKey.Datos
+namespace FinanKey.Infraestructura.Repositorios
 {
     class ContextoDatosCuenta : IServicioTransaccionCuenta
     {

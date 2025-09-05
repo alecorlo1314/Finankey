@@ -1,4 +1,4 @@
-﻿namespace FinanKey.Datos
+﻿namespace FinanKey.Infraestructura.Repositorios
 {
     public static class Constantes
     {

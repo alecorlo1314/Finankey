@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FinanKey.Models;
-using FinanKey.Servicios;
+using FinanKey.Dominio.Models;
+using FinanKey.Dominio.Interfaces;
 using System.Collections.ObjectModel;
 
-namespace FinanKey.ViewModels
+namespace FinanKey.Presentacion.ViewModels
 {
     public partial class ViewModelTarjeta : ObservableObject
     {

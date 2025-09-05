@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using FinanKey.Models;
-using FinanKey.Servicios;
+using FinanKey.Dominio.Models;
+using FinanKey.Dominio.Interfaces;
 using System.Collections.ObjectModel;
 
-namespace FinanKey.ViewModels
+namespace FinanKey.Presentacion.ViewModels
 {
     // Recibe los datos de la cuenta seleccionada desde la vista DetalleCuentaPage.xaml.cs
     [QueryProperty(nameof(Cuenta), nameof(Cuenta))]

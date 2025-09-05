@@ -3,13 +3,14 @@ using Microsoft.Extensions.Logging;
 using Syncfusion.Maui.Toolkit.Hosting;
 using Syncfusion.Maui.Core.Hosting;
 using FinanKey.View;
-using FinanKey.Servicios;
+using FinanKey.Dominio.Interfaces;
 using FinanKey.ViewModels;
 using FinanKey.Datos;
 using SimpleToolkit.SimpleShell;
 using SimpleToolkit.Core;
 using FinanKey.View.Behaviors;
 using FinanKey.View.Controles;
+
 namespace FinanKey
 {
     public static class MauiProgram
@@ -69,10 +70,10 @@ namespace FinanKey
             builder.Services.AddSingleton<ContextoDatosGasto>();
             builder.Services.AddSingleton<ContextoDatosIngreso>();
             builder.Services.AddSingleton<ServicioBaseDatos>();
-            builder.Services.AddSingleton<ServicioMovimiento>();
+            builder.Services.AddSingleton<RespositorioMovimiento>();
             builder.Services.AddSingleton<ServicioTarjeta>();
             //Registrar servicios de Interfaz con inyección de dependencias
-            builder.Services.AddSingleton<IServicioMovimiento, ServicioMovimiento>();
+            builder.Services.AddSingleton<IServicioMovimiento, RespositorioMovimiento>();
             builder.Services.AddSingleton<IServiciosTransaccionGasto, ContextoDatosGasto>();
             builder.Services.AddSingleton<IServiciosTransaccionIngreso, ContextoDatosIngreso>();
             builder.Services.AddSingleton<IServicioTarjeta, ServicioTarjeta>();

@@ -1,7 +1,7 @@
-﻿using FinanKey.Models;
-using FinanKey.Servicios;
+﻿using FinanKey.Dominio.Models;
+using FinanKey.Dominio.Interfaces;
 
-namespace FinanKey.Datos
+namespace FinanKey.Infraestructura.Repositorios
 {
     //internal class ServicioPago : IServicioPago
     //{

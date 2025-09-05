@@ -1,5 +1,6 @@
-﻿using FinanKey.Models;
-namespace FinanKey.Servicios
+﻿using FinanKey.Dominio.Models;
+
+namespace FinanKey.Dominio.Interfaces
 {
     public interface IServicioTarjeta
     {

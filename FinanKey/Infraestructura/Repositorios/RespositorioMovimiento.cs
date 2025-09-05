@@ -1,13 +1,13 @@
-﻿using FinanKey.Servicios;
-using FinanKey.Models;
+﻿using FinanKey.Dominio.Interfaces;
+using FinanKey.Dominio.Models;
 
-namespace FinanKey.Datos
+namespace FinanKey.Infraestructura.Repositorios
 {
-    public class ServicioMovimiento : IServicioMovimiento
+    public class RespositorioMovimiento : IServicioMovimiento
     {
         private readonly ServicioBaseDatos _servicioBaseDatos;
         //Inyeccion de dependencias para el servicio de base de datos
-        public ServicioMovimiento(ServicioBaseDatos servicioBaseDatos) => _servicioBaseDatos = servicioBaseDatos;
+        public RespositorioMovimiento(ServicioBaseDatos servicioBaseDatos) => _servicioBaseDatos = servicioBaseDatos;
 
         // Business rule: registering an expense/income updates balances per card type.
         public async Task<int> CrearMovimientoAsync(Movimiento NuevoMovimiento)
