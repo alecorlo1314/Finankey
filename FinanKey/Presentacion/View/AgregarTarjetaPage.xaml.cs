@@ -1,16 +1,12 @@
 using FinanKey.Presentacion.ViewModels;
-using FinanKey.View.Controles;
 
-namespace FinanKey.View;
+namespace FinanKey.Presentacion.View;
 
 public partial class AgregarTarjetaPage : ContentPage
 {
-    //Inyección de dependencias
-    private readonly TabBarView _tabBarView;
-    public AgregarTarjetaPage(ViewModelTarjeta viewModelTarjeta, TabBarView tabBarView)
+    public AgregarTarjetaPage(ViewModelTarjeta viewModelTarjeta)
 	{
 		InitializeComponent();
-        _tabBarView = tabBarView;
         BindingContext = viewModelTarjeta;
     }
     private void OnEntryFocused(Border border)

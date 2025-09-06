@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="FinanKey.View.AgregarTarjetaPage"
+    x:Class="FinanKey.Presentacion.View.AgregarTarjetaPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:behaviors="clr-namespace:FinanKey.View.Behaviors"
+    xmlns:behaviors="clr-namespace:FinanKey.Presentacion.View.Behaviors"
     xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"

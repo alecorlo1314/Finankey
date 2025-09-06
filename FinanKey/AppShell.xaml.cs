@@ -1,54 +1,14 @@
-﻿using FinanKey.View;
-using SimpleToolkit.Core;
-using SimpleToolkit.SimpleShell;
+﻿using FinanKey.Presentacion.View;
 
-namespace FinanKey
+namespace FinanKey;
+
+public partial class AppShell : Shell
 {
-    public partial class AppShell : SimpleShell
+    public AppShell()
     {
-        public AppShell()
-        {
-            InitializeComponent();
-            ///Registro de Rutas
-            Routing.RegisterRoute(nameof(AgregarTarjetaPage), typeof(AgregarTarjetaPage));
-            //Registro de Páginas en el TabBar
-            AddTab(typeof(InicioPage), PageType.InicioPage);
-            AddTab(typeof(AnadirPage), PageType.AnadirPage);
-            AddTab(typeof(ReportesPage), PageType.ReportesPage);
-            AddTab(typeof(ConfiguracionesPage), PageType.ConfiguracionPage);
+        InitializeComponent();
 
-            Loaded += AppShellLoaded;
-            ////Sucribir el evento OnShellNavigated
-            //this.Navigated += OnShellNavigated;
-        }
-
-        private static void AppShellLoaded(object sender, EventArgs e)
-        {
-            var shell = sender as AppShell;
-
-            shell.Window.SubscribeToSafeAreaChanges(safeArea =>
-            {
-                shell.paginaContenedor.Margin = safeArea;
-                shell.tabBarView.TabsPadding = new Thickness(safeArea.Left, 0, safeArea.Right, safeArea.Bottom);
-            });
-        }
-        private void AddTab(Type page, PageType pageEnum)
-        {
-            var tab = new Tab { Route = pageEnum.ToString(), Title = pageEnum.ToString() };
-            tab.Items.Add(new ShellContent { ContentTemplate = new DataTemplate(page) });
-
-            tabBar.Items.Add(tab);
-        }
-        private void TabBarViewCurrentPageChanged(object sender, TabBarEventArgs e)
-        {
-            Shell.Current.GoToAsync("///" + e.CurrentPage.ToString());
-        }
-        public enum PageType
-        {
-            InicioPage,
-            AnadirPage,
-            ReportesPage,
-            ConfiguracionPage
-        }
+        // Registrar rutas para navegación programática
+        Routing.RegisterRoute("AgregarTarjetaPage", typeof(AgregarTarjetaPage));
     }
 }
