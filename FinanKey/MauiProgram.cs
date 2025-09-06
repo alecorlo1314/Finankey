@@ -62,15 +62,16 @@ namespace FinanKey
             builder.Services.AddSingleton<ViewModelInicio>();
             builder.Services.AddSingleton<ViewModelMovimiento>();
             builder.Services.AddSingleton<ViewModelTarjeta>();
-            //Registrar servicios con inyección de dependencias contexto de datos
-            builder.Services.AddSingleton<ServicioBaseDatos>();
+            //Registrar servicios con inyección de dependencias en Respositorios
+            builder.Services.AddSingleton<RepositorioBaseDatos>();
             builder.Services.AddSingleton<RespositorioMovimiento>();
-            builder.Services.AddSingleton<ServicioTarjeta>();
+            builder.Services.AddSingleton<RepositorioTarjeta>();
             //Registrar Interfaz de servicios de Interfaz con inyección de dependencias
             builder.Services.AddSingleton<IServicioMovimiento, RespositorioMovimiento>();
-            builder.Services.AddSingleton<IServicioTarjeta, ServicioTarjeta>();
+            builder.Services.AddSingleton<IServicioTarjeta, RepositorioTarjeta>();
             //Registrar Interfaz de servicios de Interfaz con inyección de dependencias
             builder.Services.AddSingleton<ServicioMovimiento>();
+            builder.Services.AddSingleton<ServicioTarjeta>();
             //Registrar comportamiento personalizado Behavior
             builder.Services.AddSingleton<SfRadioButtonStateChangedBehavior>();
 

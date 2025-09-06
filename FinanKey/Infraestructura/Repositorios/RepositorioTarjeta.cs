@@ -3,11 +3,11 @@ using FinanKey.Dominio.Interfaces;
 
 namespace FinanKey.Infraestructura.Repositorios
 {
-    public class ServicioTarjeta : IServicioTarjeta
+    public class RepositorioTarjeta : IServicioTarjeta
     {
-        private readonly ServicioBaseDatos _servicioBaseDatos;
+        private readonly RepositorioBaseDatos _servicioBaseDatos;
         //Inyeccion de dependencias para el servicio de base de datos
-        public ServicioTarjeta(ServicioBaseDatos servicioBaseDatos) => _servicioBaseDatos = servicioBaseDatos;
+        public RepositorioTarjeta(RepositorioBaseDatos servicioBaseDatos) => _servicioBaseDatos = servicioBaseDatos;
 
         #region Metodo Agregar Tarjeta
         public async Task<int> AgregarAsync(Tarjeta Nuevatarjeta)

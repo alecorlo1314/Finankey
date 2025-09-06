@@ -1,22 +1,25 @@
-﻿using FinanKey.Dominio.Interfaces;
+﻿using FinanKey.Aplicacion.UseCases;
+using FinanKey.Dominio.Interfaces;
 using FinanKey.Dominio.Models;
 
 namespace FinanKey.Infraestructura.Repositorios
 {
     public class RespositorioMovimiento : IServicioMovimiento
     {
-        private readonly ServicioBaseDatos _servicioBaseDatos;
+        private readonly RepositorioBaseDatos repositorioBaseDatos;
         //Inyeccion de dependencias para el servicio de base de datos
-        public RespositorioMovimiento(ServicioBaseDatos servicioBaseDatos) => _servicioBaseDatos = servicioBaseDatos;
-
+        public RespositorioMovimiento(RepositorioBaseDatos repositorioBaseDatos)
+        {
+            this.repositorioBaseDatos = repositorioBaseDatos;
+        }
         // Business rule: registering an expense/income updates balances per card type.
         public async Task<int> AgregarMovimientoAsync(Movimiento NuevoMovimiento)
         {
             //Obtenemos la conexion a la base de datos
-            var conexion = await _servicioBaseDatos.ObtenerConexion();
+            var conexion = await repositorioBaseDatos.ObtenerConexion();
             //Inicializamos el id del movimiento
             int nuevoID = 0;
-            await _servicioBaseDatos.CorrerEnTransicionAsync(async c =>
+            await repositorioBaseDatos.CorrerEnTransicionAsync(async c =>
             {
                 //Guardamos el movimiento en la base de datos
                 nuevoID = await c.InsertAsync(NuevoMovimiento);
@@ -74,13 +77,13 @@ namespace FinanKey.Infraestructura.Repositorios
 
         public async Task ActualizarMovimientoAsync(Movimiento MovimientoActualizado)
         {
-            var conexion = await _servicioBaseDatos.ObtenerConexion();
+            var conexion = await repositorioBaseDatos.ObtenerConexion();
             await conexion.UpdateAsync(MovimientoActualizado);
         }
 
         public async Task EliminarMovimientoAsync(Movimiento EliminarMovimiento)
         {
-            await _servicioBaseDatos.CorrerEnTransicionAsync(async c =>
+            await repositorioBaseDatos.CorrerEnTransicionAsync(async c =>
             {
                 // roll back balances when deleting if needed
                 if (EliminarMovimiento.TarjetaId.HasValue)
@@ -110,19 +113,19 @@ namespace FinanKey.Infraestructura.Repositorios
 
         public async Task<List<Movimiento>> ObtenerMovimientosAsync()
         {
-            var conexion = await _servicioBaseDatos.ObtenerConexion();
+            var conexion = await repositorioBaseDatos.ObtenerConexion();
             return await conexion.Table<Movimiento>().OrderByDescending(m => m.Fecha).ToListAsync();
         }
 
         public async Task<Movimiento?> ObtenerMovimientoPorIdAsync(int IdMovimiento)
         {
-            var conexion = await _servicioBaseDatos.ObtenerConexion();
+            var conexion = await repositorioBaseDatos.ObtenerConexion();
             return await conexion.FindAsync<Movimiento>(IdMovimiento);
         }
 
         public async Task<List<Movimiento>> ListaCreditosPendientesAsync()
         {
-            var conexion = await _servicioBaseDatos.ObtenerConexion();
+            var conexion = await repositorioBaseDatos.ObtenerConexion();
             return await conexion.Table<Movimiento>()
                 .Where(m => m.TipoMovimiento == "Gasto" && m.EsPagado == false && m.TarjetaId.HasValue)
                 .OrderByDescending(m => m.Fecha)
@@ -131,7 +134,7 @@ namespace FinanKey.Infraestructura.Repositorios
 
         public async Task<List<Movimiento>> ListaGastosPorTarjetaAsync(int TarjetaId)
         {
-            var conexion = await _servicioBaseDatos.ObtenerConexion();
+            var conexion = await repositorioBaseDatos.ObtenerConexion();
             return await conexion.Table<Movimiento>().Where(m => m.TarjetaId == TarjetaId).OrderByDescending(m => m.Fecha).ToListAsync();
         }
     }

@@ -6,15 +6,21 @@ namespace FinanKey.Aplicacion.UseCases
     public class ServicioMovimiento
     {
         //Inyeccion de Dependencias a la interfaz
-        private readonly IServicioMovimiento servicioMovimiento;
-        public ServicioMovimiento(IServicioMovimiento servicioMovimiento)
+        private readonly IServicioMovimiento _servicioMovimiento;
+        private readonly IServicioTarjeta _servicioTarjeta;
+        public ServicioMovimiento(IServicioMovimiento servicioMovimiento, IServicioTarjeta servicioTarjeta)
         {
-            this.servicioMovimiento = servicioMovimiento;
+            _servicioMovimiento = servicioMovimiento;
+            _servicioTarjeta = servicioTarjeta;
         }
         public Task<int> guardarMovimientoGasto(Movimiento movimientoGasto)
         {
             //retornara 1 si se guardo correctamente sino un 0
-            return servicioMovimiento.AgregarMovimientoAsync(movimientoGasto);
+            return _servicioMovimiento.AgregarMovimientoAsync(movimientoGasto);
+        }
+        public async Task<List<Tarjeta>> obtenerTarjetas()
+        {
+           return await _servicioTarjeta.ObtenerTarjetasAsync();
         }
     }
 }
