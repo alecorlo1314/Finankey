@@ -1,12 +1,10 @@
-﻿using static FinanKey.AppShell;
-
-namespace FinanKey
+﻿namespace FinanKey
 {
     public class TabBarEventArgs : EventArgs
     {
-        public PageType CurrentPage { get; private set; }
+        public AppShell.PageType CurrentPage { get; private set; }
 
-        public TabBarEventArgs(PageType currentPage)
+        public TabBarEventArgs(AppShell.PageType currentPage)
         {
             CurrentPage = currentPage;
         }

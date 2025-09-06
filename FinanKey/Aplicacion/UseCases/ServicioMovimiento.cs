@@ -14,7 +14,7 @@ namespace FinanKey.Aplicacion.UseCases
         public Task<int> guardarMovimientoGasto(Movimiento movimientoGasto)
         {
             //retornara 1 si se guardo correctamente sino un 0
-            return servicioMovimiento.CrearMovimientoAsync(movimientoGasto);
+            return servicioMovimiento.AgregarMovimientoAsync(movimientoGasto);
         }
     }
 }

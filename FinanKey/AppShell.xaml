@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:FinanKey.View.Controles"
+    xmlns:local="clr-namespace:FinanKey"
     xmlns:simpleShell="clr-namespace:SimpleToolkit.SimpleShell;assembly=SimpleToolkit.SimpleShell">
 
     <TabBar x:Name="tabBar" />
@@ -18,31 +19,4 @@
                 VerticalOptions="End" />
         </Grid>
     </simpleShell:SimpleShell.RootPageContainer>
-
-    <!--<TabBar>
-        <Tab
-            Title="Finanzas"
-            Icon="banco.svg"
-            Route="finanzasPage">
-            <ShellContent ContentTemplate="{DataTemplate paginas:FinanzasPage}" />
-        </Tab>
-        <Tab
-            Title="Anadir"
-            Icon="agregar.svg"
-            Route="AnadirPage">
-            <ShellContent ContentTemplate="{DataTemplate paginas:AnadirPage}" />
-        </Tab>
-        <Tab
-            Title="Reportes"
-            Icon="grafico_histograma.svg"
-            Route="reportesPage">
-            <ShellContent ContentTemplate="{DataTemplate paginas:ReportesPage}" />
-        </Tab>
-        <Tab
-            Title="Configuracion"
-            Icon="ajustes.svg"
-            Route="configuracionPage">
-            <ShellContent ContentTemplate="{DataTemplate paginas:ConfiguracionesPage}" />
-        </Tab>
-    </TabBar>-->
 </simpleShell:SimpleShell>

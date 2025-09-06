@@ -1,7 +1,7 @@
 using FinanKey.Presentacion.ViewModels;
-using FinanKey.Presentacion.View.Controles;
+using FinanKey.View.Controles;
 
-namespace FinanKey.Presentacion.View;
+namespace FinanKey.View;
 
 public partial class AgregarTarjetaPage : ContentPage
 {

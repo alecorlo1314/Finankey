@@ -1,6 +1,4 @@
-﻿using FinanKey.View;
-using System.Threading.Tasks;
-
+﻿
 namespace FinanKey
 {
     public partial class App : Application

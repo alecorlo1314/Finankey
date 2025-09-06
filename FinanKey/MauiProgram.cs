@@ -2,14 +2,13 @@
 using Microsoft.Extensions.Logging;
 using Syncfusion.Maui.Toolkit.Hosting;
 using Syncfusion.Maui.Core.Hosting;
-using FinanKey.Presentacion.View;
-using FinanKey.Dominio.Interfaces;
-using FinanKey.Presentacion.ViewModels;
-using FinanKey.Infraestructura.Repositorios;
 using SimpleToolkit.SimpleShell;
 using SimpleToolkit.Core;
-using FinanKey.Presentacion.View.Behaviors;
-using FinanKey.View.Controles;
+using FinanKey.Presentacion.ViewModels;
+using FinanKey.Infraestructura.Repositorios;
+using FinanKey.View;
+using FinanKey.Dominio.Interfaces;
+using FinanKey.View.Behaviors;
 
 namespace FinanKey
 {
@@ -55,33 +54,22 @@ namespace FinanKey
             builder.Services.AddSingleton<AgregarTarjetaPage>();
             builder.Services.AddSingleton<AnadirPage>();
             builder.Services.AddSingleton<ConfiguracionesPage>();
-            builder.Services.AddSingleton<DetalleCuentaPage>();
             builder.Services.AddSingleton<InicioPage>();
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddSingleton<ReportesPage>();
             //Registrar ViewModels con inyección de dependencias
-            builder.Services.AddSingleton<ViewModelCuenta>();
-            builder.Services.AddSingleton<ViewModelDetalleCuenta>();
             builder.Services.AddSingleton<ViewModelInicio>();
+            builder.Services.AddSingleton<ViewModelMovimiento>();
             builder.Services.AddSingleton<ViewModelTarjeta>();
-            builder.Services.AddSingleton<ViewModelTransaccion>();
             //Registrar servicios con inyección de dependencias contexto de datos
-            builder.Services.AddSingleton<ContextoDatosCuenta>();
-            builder.Services.AddSingleton<ContextoDatosGasto>();
-            builder.Services.AddSingleton<ContextoDatosIngreso>();
             builder.Services.AddSingleton<ServicioBaseDatos>();
             builder.Services.AddSingleton<RespositorioMovimiento>();
             builder.Services.AddSingleton<ServicioTarjeta>();
             //Registrar servicios de Interfaz con inyección de dependencias
             builder.Services.AddSingleton<IServicioMovimiento, RespositorioMovimiento>();
-            builder.Services.AddSingleton<IServiciosTransaccionGasto, ContextoDatosGasto>();
-            builder.Services.AddSingleton<IServiciosTransaccionIngreso, ContextoDatosIngreso>();
             builder.Services.AddSingleton<IServicioTarjeta, ServicioTarjeta>();
-            builder.Services.AddSingleton<IServicioTransaccionCuenta, ContextoDatosCuenta>();
             //Registrar comportamiento personalizado Behavior
             builder.Services.AddSingleton<SfRadioButtonStateChangedBehavior>();
-            //Registrar el Shell de la aplicación
-            builder.Services.AddSingleton<TabBarView>();
 
 #if DEBUG
             builder.Logging.AddDebug();

@@ -1,5 +1,5 @@
 ﻿
-namespace FinanKey.Presentacion.View;
+namespace FinanKey;
 
 public partial class MainPage : ContentPage
 {

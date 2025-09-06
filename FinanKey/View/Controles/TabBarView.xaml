@@ -36,30 +36,35 @@
             CompressedLayout.IsHeadless="True"
             HorizontalOptions="Fill"
             VerticalOptions="Fill">
+
             <simpleCore:ContentButton
                 Grid.Column="0"
                 Clicked="ButtonTapped"
                 SemanticProperties.Description="Pagina Finanzas">
                 <c:TabBarIconView Page="InicioPage" Source="icono_home.svg" />
             </simpleCore:ContentButton>
+
             <simpleCore:ContentButton
                 Grid.Column="1"
                 Clicked="ButtonTapped"
                 SemanticProperties.Description="Pagina Anadir">
                 <c:TabBarIconView Page="AnadirPage" Source="icono_agregar.svg" />
             </simpleCore:ContentButton>
+
             <simpleCore:ContentButton
                 Grid.Column="2"
                 Clicked="ButtonTapped"
                 SemanticProperties.Description="Pagina Reportes">
                 <c:TabBarIconView Page="ReportesPage" Source="icono_reporte.svg" />
             </simpleCore:ContentButton>
+
             <simpleCore:ContentButton
                 Grid.Column="3"
                 Clicked="ButtonTapped"
                 SemanticProperties.Description="Pagina Configuracion">
                 <c:TabBarIconView Page="ConfiguracionPage" Source="icono_configuracion.svg" />
             </simpleCore:ContentButton>
+
         </Grid>
     </Grid>
 </ContentView>

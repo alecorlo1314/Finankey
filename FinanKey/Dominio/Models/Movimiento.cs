@@ -5,28 +5,29 @@ namespace FinanKey.Dominio.Models
     public class Movimiento
     {
         [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
+        public int Id { get; set; } 
 
         [NotNull]
-        public string Tipo { get; set; } = "Gasto"; // "Ingreso" | "Gasto"
+        public string TipoMovimiento { get; set; }
 
         [NotNull]
-        public decimal Monto { get; set; }
-
+        public double Monto { get; set; }
+        public string? Descripcion { get; set; }
+        public string? MedioPago { get; set; } = Enums.MedioPago.Efectivo.ToString();
+        public bool? EsRecurrente { get; set; }
+        public string? Frecuencia { get; set; } = Enums.Frecuencia.Mensual.ToString();
         [NotNull]
         public DateTime Fecha { get; set; }
-
+        [NotNull]
         public int? CategoriaId { get; set; }
-
+        [NotNull]
         public string? Comercio { get; set; }
+        [NotNull]
 
-        public int? TarjetaId { get; set; } // FK -> Card
+        public int? TarjetaId { get; set; } // Seria como la FK para la tarjeta de crédito o debito
 
-        // Solo aplica a gastos con tarjeta de crédito
-        public bool? EsPagado { get; set; }
+        public bool? EsPagado { get; set; } // Solo aplica a gastos con tarjeta de crédito
 
-        public int? MovimientoPagoId { get; set; } // FK to payment movement (gasto) from debit/corriente
-
-        public string? Notas { get; set; }
+        public DateTime FechaCreacion { get; set; } = DateTime.Now;
     }
 }

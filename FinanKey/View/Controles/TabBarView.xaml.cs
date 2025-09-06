@@ -1,6 +1,6 @@
 using SimpleToolkit.Core;
 
-namespace FinanKey.Presentacion.View.Controles;
+namespace FinanKey.View.Controles;
 
 public partial class TabBarView : ContentView
 {
@@ -163,9 +163,4 @@ public partial class TabBarView : ContentView
 
     public static float CalculateOuterRadius(float viewHeight, Thickness padding) =>
         CalculateInnerRadius(viewHeight, padding) + (CalculateTabsHeight(viewHeight, padding) / 12f);
-
-    public void SetVisible(bool visible)
-    {
-        this.IsVisible = visible;
-    }
 }
