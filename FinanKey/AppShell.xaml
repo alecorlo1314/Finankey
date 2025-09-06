@@ -19,9 +19,9 @@
         <!--  2. TABBAR - Barra de pestañas inferior  -->
         <Style TargetType="TabBar">
             <!--  Colores generales del TabBar  -->
-            <Setter Property="Shell.BackgroundColor" Value="{StaticResource ColorFondoPrincipal}" />
-            <Setter Property="Shell.ForegroundColor" Value="{StaticResource ColorAzulPricipal}" />
-            <Setter Property="Shell.UnselectedColor" Value="{StaticResource ColorAzulPricipal}" />
+            <Setter Property="Shell.BackgroundColor" Value="{StaticResource ColorAcento2}" />
+            <Setter Property="Shell.ForegroundColor" Value="{StaticResource ColorAcento2}" />
+            <Setter Property="Shell.UnselectedColor" Value="{StaticResource ColorAcento2}" />
             <Setter Property="Shell.DisabledColor" Value="{StaticResource ColorAzulPricipal}" />
 
             <!--  Colores específicos del TabBar  -->
@@ -48,15 +48,15 @@
 
         <!--  TabBar con estados visuales  -->
         <Style x:Key="AnimatedTabBar" TargetType="TabBar">
-            <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource ColorAzulPricipal}" />
-            <Setter Property="Shell.TabBarForegroundColor" Value="White" />
-            <Setter Property="Shell.TabBarUnselectedColor" Value="#80FFFFFF" />
+            <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource ColorAcento2}" />
+            <Setter Property="Shell.TabBarForegroundColor" Value="Red" />
+            <Setter Property="Shell.TabBarUnselectedColor" Value="Red" />
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
-                                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource ColorAzulPricipal}" />
+                                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource ColorAcento1}" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="Selected">
@@ -77,7 +77,7 @@
             Title="Inicio"
             ContentTemplate="{DataTemplate views:InicioPage}"
             Icon="icono_home.png"
-            Route="inicio" />
+            Route="inicio"/>
 
         <!--  Tab 2: Añadir  -->
         <ShellContent
