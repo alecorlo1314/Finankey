@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using Syncfusion.Maui.Buttons;
 
-namespace FinanKey.View.Behaviors
+namespace FinanKey.Presentacion.View.Behaviors
 {
     public class SfRadioButtonStateChangedBehavior : Behavior<SfRadioButton>
     {

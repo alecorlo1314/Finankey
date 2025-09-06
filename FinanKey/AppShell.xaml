@@ -1,22 +1,103 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<simpleShell:SimpleShell
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
     x:Class="FinanKey.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:controls="clr-namespace:FinanKey.View.Controles"
-    xmlns:local="clr-namespace:FinanKey"
-    xmlns:simpleShell="clr-namespace:SimpleToolkit.SimpleShell;assembly=SimpleToolkit.SimpleShell">
+    xmlns:views="clr-namespace:FinanKey.Presentacion.View"
+    Title="Finankey">
+    <!--  Estilos para el Shell  -->
+    <Shell.Resources>
+        <!--  1. SHELL - Configuración general del Shell  -->
+        <Style TargetType="Shell">
+            <Setter Property="BackgroundColor" Value="{StaticResource FondoPrincipal}" />
+            <Setter Property="ForegroundColor" Value="{StaticResource ColorTexoEntrada}" />
+            <Setter Property="TitleColor" Value="{StaticResource ColorTextoPrimario}" />
+            <Setter Property="DisabledColor" Value="{StaticResource ColorAzulPricipal}" />
+            <Setter Property="UnselectedColor" Value="{StaticResource ColorAzulPricipal}" />
+        </Style>
 
-    <TabBar x:Name="tabBar" />
+        <!--  2. TABBAR - Barra de pestañas inferior  -->
+        <Style TargetType="TabBar">
+            <!--  Colores generales del TabBar  -->
+            <Setter Property="Shell.BackgroundColor" Value="{StaticResource ColorFondoPrincipal}" />
+            <Setter Property="Shell.ForegroundColor" Value="{StaticResource ColorAzulPricipal}" />
+            <Setter Property="Shell.UnselectedColor" Value="{StaticResource ColorAzulPricipal}" />
+            <Setter Property="Shell.DisabledColor" Value="{StaticResource ColorAzulPricipal}" />
 
-    <simpleShell:SimpleShell.RootPageContainer>
-        <Grid>
-            <simpleShell:SimpleNavigationHost x:Name="paginaContenedor" />
-            <controls:TabBarView
-                x:Name="tabBarView"
-                CurrentPageSelectionChanged="TabBarViewCurrentPageChanged"
-                HorizontalOptions="Fill"
-                VerticalOptions="End" />
-        </Grid>
-    </simpleShell:SimpleShell.RootPageContainer>
-</simpleShell:SimpleShell>
+            <!--  Colores específicos del TabBar  -->
+            <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource ColorFondoComponentes}" />
+            <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource ColorAzulPricipal}" />
+            <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource ColorInconoNoSelected}" />
+            <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource ColorAzulPricipal}" />
+        </Style>
+
+        <!--  3. TAB - Pestañas individuales del TabBar  -->
+        <Style TargetType="Tab">
+            <Setter Property="Shell.BackgroundColor" Value="Black" />
+            <Setter Property="Shell.ForegroundColor" Value="Red" />
+            <Setter Property="Shell.UnselectedColor" Value="#80FFFFFF" />
+            <Setter Property="Shell.TitleColor" Value="White" />
+        </Style>
+
+        <!--  7. SHELLCONTENT - Contenido individual de cada página  -->
+        <Style TargetType="ShellContent">
+            <Setter Property="Shell.BackgroundColor" Value="{StaticResource FondoPrincipal}" />
+            <Setter Property="Shell.ForegroundColor" Value="{StaticResource ColorAzulPricipal}" />
+            <Setter Property="Shell.TitleColor" Value="{StaticResource ColorAzulPricipal}" />
+        </Style>
+
+        <!--  TabBar con estados visuales  -->
+        <Style x:Key="AnimatedTabBar" TargetType="TabBar">
+            <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource ColorAzulPricipal}" />
+            <Setter Property="Shell.TabBarForegroundColor" Value="White" />
+            <Setter Property="Shell.TabBarUnselectedColor" Value="#80FFFFFF" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource ColorAzulPricipal}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource ColorAzulPricipal}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </Shell.Resources>
+
+    <!--  Tab Bar Navigation  -->
+    <TabBar>
+        <!--  Tab 1: Inicio  -->
+        <ShellContent
+            Title="Inicio"
+            ContentTemplate="{DataTemplate views:InicioPage}"
+            Icon="icono_home.png"
+            Route="inicio" />
+
+        <!--  Tab 2: Añadir  -->
+        <ShellContent
+            Title="Añadir"
+            ContentTemplate="{DataTemplate views:AnadirPage}"
+            Icon="icono_agregar.png"
+            Route="anadir" />
+
+        <!--  Tab 3: Reportes  -->
+        <ShellContent
+            Title="Reportes"
+            ContentTemplate="{DataTemplate views:ReportesPage}"
+            Icon="icono_reporte.png"
+            Route="reportes" />
+
+        <!--  Tab 4: Configuración  -->
+        <ShellContent
+            Title="Config"
+            ContentTemplate="{DataTemplate views:ConfiguracionesPage}"
+            Icon="icono_configuracion.png"
+            Route="configuracion" />
+    </TabBar>
+</Shell>

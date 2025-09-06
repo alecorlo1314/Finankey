@@ -6,9 +6,10 @@ using SimpleToolkit.SimpleShell;
 using SimpleToolkit.Core;
 using FinanKey.Presentacion.ViewModels;
 using FinanKey.Infraestructura.Repositorios;
-using FinanKey.View;
+using FinanKey.Presentacion.View;
 using FinanKey.Dominio.Interfaces;
-using FinanKey.View.Behaviors;
+using FinanKey.Presentacion.View.Behaviors;
+using FinanKey.Aplicacion.UseCases;
 
 namespace FinanKey
 {
@@ -65,9 +66,11 @@ namespace FinanKey
             builder.Services.AddSingleton<ServicioBaseDatos>();
             builder.Services.AddSingleton<RespositorioMovimiento>();
             builder.Services.AddSingleton<ServicioTarjeta>();
-            //Registrar servicios de Interfaz con inyección de dependencias
+            //Registrar Interfaz de servicios de Interfaz con inyección de dependencias
             builder.Services.AddSingleton<IServicioMovimiento, RespositorioMovimiento>();
             builder.Services.AddSingleton<IServicioTarjeta, ServicioTarjeta>();
+            //Registrar Interfaz de servicios de Interfaz con inyección de dependencias
+            builder.Services.AddSingleton<ServicioMovimiento>();
             //Registrar comportamiento personalizado Behavior
             builder.Services.AddSingleton<SfRadioButtonStateChangedBehavior>();
 

@@ -1,6 +1,6 @@
 using FinanKey.Presentacion.ViewModels;
 
-namespace FinanKey.View;
+namespace FinanKey.Presentacion.View;
 
 public partial class InicioPage : ContentPage
 {
