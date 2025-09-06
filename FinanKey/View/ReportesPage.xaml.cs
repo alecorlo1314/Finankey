@@ -1,4 +1,4 @@
-namespace FinanKey.Presentacion.View;
+namespace FinanKey.View;
 
 public partial class ReportesPage : ContentPage
 {

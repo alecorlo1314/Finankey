@@ -1,4 +1,4 @@
-﻿using FinanKey.Presentacion.View;
+﻿using FinanKey.View;
 using SimpleToolkit.Core;
 using SimpleToolkit.SimpleShell;
 
@@ -11,35 +11,15 @@ namespace FinanKey
             InitializeComponent();
             ///Registro de Rutas
             Routing.RegisterRoute(nameof(AgregarTarjetaPage), typeof(AgregarTarjetaPage));
-
+            //Registro de Páginas en el TabBar
             AddTab(typeof(InicioPage), PageType.InicioPage);
             AddTab(typeof(AnadirPage), PageType.AnadirPage);
             AddTab(typeof(ReportesPage), PageType.ReportesPage);
             AddTab(typeof(ConfiguracionesPage), PageType.ConfiguracionPage);
 
             Loaded += AppShellLoaded;
-            //Sucribir el evento OnShellNavigated
-            this.Navigated += OnShellNavigated;
-        }
-
-        private void OnShellNavigated(object? sender, ShellNavigatedEventArgs e)
-        {
-            // Obtén la ruta de la página actual
-            var currentLocation = e.Current.Location.OriginalString;
-
-            // Lista de páginas donde SÍ quieres mostrar el TabBar
-            var mostrarTabBarEn = new[]
-            {
-            nameof(PageType.InicioPage),
-            nameof(PageType.AnadirPage),
-            nameof(PageType.ReportesPage),
-            nameof(PageType.ConfiguracionPage)
-        };
-
-            // Si la ruta contiene alguna de las páginas principales, muestra el TabBar
-            bool mostrar = mostrarTabBarEn.Any(p => currentLocation.Contains(p));
-
-            tabBarView.IsVisible = mostrar;
+            ////Sucribir el evento OnShellNavigated
+            //this.Navigated += OnShellNavigated;
         }
 
         private static void AppShellLoaded(object sender, EventArgs e)
@@ -52,7 +32,6 @@ namespace FinanKey
                 shell.tabBarView.TabsPadding = new Thickness(safeArea.Left, 0, safeArea.Right, safeArea.Bottom);
             });
         }
-
         private void AddTab(Type page, PageType pageEnum)
         {
             var tab = new Tab { Route = pageEnum.ToString(), Title = pageEnum.ToString() };
@@ -64,10 +43,12 @@ namespace FinanKey
         {
             Shell.Current.GoToAsync("///" + e.CurrentPage.ToString());
         }
-
         public enum PageType
         {
-            InicioPage, AnadirPage, ReportesPage, ConfiguracionPage
+            InicioPage,
+            AnadirPage,
+            ReportesPage,
+            ConfiguracionPage
         }
     }
 }

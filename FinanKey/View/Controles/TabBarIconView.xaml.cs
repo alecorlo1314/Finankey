@@ -1,4 +1,6 @@
-namespace FinanKey.Presentacion.View.Controles;
+using Microsoft.Maui.Controls.Shapes;
+
+namespace FinanKey.View.Controles;
 
     public partial class TabBarIconView : ContentView
     {

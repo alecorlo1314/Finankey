@@ -2,9 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using FinanKey.Dominio.Models;
 using FinanKey.Dominio.Interfaces;
-using FinanKey.Presentacion.View;
+using FinanKey.View;
 using System.Collections.ObjectModel;
-using FinanKey.Presentacion.View.Controles;
 
 namespace FinanKey.Presentacion.ViewModels
 {
@@ -12,7 +11,6 @@ namespace FinanKey.Presentacion.ViewModels
     {
         //Inyección de dependencias 
         public readonly IServicioTarjeta _servicioTarjeta;
-        private readonly TabBarView _tabBarView;
         //Inicializar la lista de cuentas como una colección observable
         [ObservableProperty]
         private ObservableCollection<Tarjeta> _listaTarjetas = new();
@@ -24,11 +22,10 @@ namespace FinanKey.Presentacion.ViewModels
         [ObservableProperty]
         private bool _hayMovimientos = true;
 
-        public ViewModelInicio(IServicioTarjeta servicioTarjeta, TabBarView tabBarView)
+        public ViewModelInicio(IServicioTarjeta servicioTarjeta)
         {
             //Asignar los servicios a las variables privadas
             _servicioTarjeta = servicioTarjeta;
-            _tabBarView = tabBarView;
         }
         //Metodo para cargar las cuentas desde la base de datos
         public async Task CargarTarjetasAsync()

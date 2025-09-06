@@ -2,14 +2,13 @@
 using Microsoft.Extensions.Logging;
 using Syncfusion.Maui.Toolkit.Hosting;
 using Syncfusion.Maui.Core.Hosting;
-using FinanKey.Presentacion.View;
-using FinanKey.Dominio.Interfaces;
-using FinanKey.Presentacion.ViewModels;
-using FinanKey.Infraestructura.Repositorios;
 using SimpleToolkit.SimpleShell;
 using SimpleToolkit.Core;
-using FinanKey.Presentacion.View.Behaviors;
-using FinanKey.Presentacion.View.Controles;
+using FinanKey.Presentacion.ViewModels;
+using FinanKey.Infraestructura.Repositorios;
+using FinanKey.View;
+using FinanKey.Dominio.Interfaces;
+using FinanKey.View.Behaviors;
 
 namespace FinanKey
 {
@@ -71,8 +70,6 @@ namespace FinanKey
             builder.Services.AddSingleton<IServicioTarjeta, ServicioTarjeta>();
             //Registrar comportamiento personalizado Behavior
             builder.Services.AddSingleton<SfRadioButtonStateChangedBehavior>();
-            //Registrar el Shell de la aplicación
-            builder.Services.AddSingleton<TabBarView>();
 
 #if DEBUG
             builder.Logging.AddDebug();
