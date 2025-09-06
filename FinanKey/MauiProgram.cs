@@ -78,11 +78,6 @@ namespace FinanKey
             builder.Logging.AddDebug();
 #endif
 
-#if ANDROID || IOS
-
-        builder.DisplayContentBehindBars();
-#endif
-
 #if ANDROID
 
         builder.SetDefaultNavigationBarAppearance(Color.FromArgb("#FFFFFF"));
