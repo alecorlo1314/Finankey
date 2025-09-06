@@ -77,7 +77,7 @@
             Title="Inicio"
             ContentTemplate="{DataTemplate views:InicioPage}"
             Icon="icono_home.png"
-            Route="inicio"/>
+            Route="inicio" />
 
         <!--  Tab 2: Añadir  -->
         <ShellContent
