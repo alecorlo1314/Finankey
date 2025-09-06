@@ -49,15 +49,17 @@
         State="Hidden">
         <bottomSheet:SfBottomSheet.Content>
             <!--  CONTENIDO DE PAGINA  -->
-            <VerticalStackLayout Padding="{StaticResource PaddingPaginas}" Spacing="8">
+            <VerticalStackLayout Padding="{StaticResource PaddingPaginas}" Spacing="16">
                 <!--  TITULO DE PAGINA  -->
                 <Label
-                    HeightRequest="48"
+                    HeightRequest="32"
                     HorizontalOptions="Center"
                     Style="{StaticResource TextoSubtítulo}"
-                    Text="Añadir Transaccion"
+                    Text="Añadir Movimiento"
                     TextColor="{StaticResource ColorAzulPricipal}"
                     VerticalOptions="Center" />
+                <!--  LINEA DIVOSORIA  -->
+                <Border Stroke="#D9D9D9" WidthRequest="380" />
                 <!--  BOTONES AGREGAR GASTO Y INGRESO  -->
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="16">
                     <Button
@@ -78,11 +80,13 @@
                         Text="Ingreso"
                         TextColor="Black" />
                 </HorizontalStackLayout>
+                <!--  LINEA DIVOSORIA  -->
+                <Border Stroke="#D9D9D9" WidthRequest="380" />
                 <!--  FORMULARIO INGRESAR GASTO  -->
                 <Grid
                     x:Name="formularioGasto"
                     IsVisible="True"
-                    RowDefinitions="auto,auto,auto,auto"
+                    RowDefinitions="auto,auto,auto,auto, auto"
                     RowSpacing="16">
                     <!--  MONTO Y FECHA TRANSACCION  -->
                     <Grid
@@ -224,8 +228,35 @@
                             </Grid>
                         </Border>
                     </VerticalStackLayout>
+                    <!--  ELECCION DE TARJETA  -->
+                    <VerticalStackLayout Grid.Row="3" Spacing="8">
+                        <Label
+                            Style="{StaticResource TextoSubtítulo}"
+                            Text="Tarjeta"
+                            TextColor="{StaticResource ColorAzulPricipal}" />
+                        <Border
+                            BackgroundColor="{StaticResource ColorTarjeta}"
+                            HeightRequest="52"
+                            Stroke="{StaticResource ColorTarjeta}"
+                            StrokeShape="RoundRectangle 20"
+                            WidthRequest="380">
+                            <editors:SfComboBox
+                                x:Name="cmbTarjeta"
+                                DisplayMemberPath="Nombre"
+                                FontFamily="PoppinsRegular"
+                                FontSize="16"
+                                ItemsSource="{Binding ListaTarjetas, Mode=TwoWay}"
+                                Placeholder="Seleccionar Tarjeta"
+                                PlaceholderColor="#8C8C8C"
+                                SelectedItem="{Binding TarjetaSeleccionada, Mode=TwoWay}"
+                                TextMemberPath="Nombre"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="End"
+                                WidthRequest="348" />
+                        </Border>
+                    </VerticalStackLayout>
                     <!--  BOTON GASTO  -->
-                    <VerticalStackLayout Grid.Row="3">
+                    <VerticalStackLayout Grid.Row="4">
                         <Button
                             Command="{Binding GuardarGastoCommand}"
                             Style="{StaticResource botonPrimario}"
