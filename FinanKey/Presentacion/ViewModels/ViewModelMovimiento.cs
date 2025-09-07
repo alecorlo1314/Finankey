@@ -22,7 +22,7 @@ namespace FinanKey.Presentacion.ViewModels
         [ObservableProperty]
         public Tarjeta? _tarjetaSeleccionada;
         [ObservableProperty]
-        public bool? _estaPagado;
+        public bool? _estaPagado = false;
         [ObservableProperty]
         public string? _descripcion;
         //Colecciones o listas
