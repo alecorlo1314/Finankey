@@ -18,16 +18,16 @@ namespace FinanKey.Infraestructura.Repositorios
             //Obtenemos la conexion a la base de datos
             var conexion = await repositorioBaseDatos.ObtenerConexion();
             //Inicializamos el id del movimiento
-            int nuevoID = 0;
-            await repositorioBaseDatos.CorrerEnTransicionAsync(async c =>
-            {
-                //Guardamos el movimiento en la base de datos
-                nuevoID = await c.InsertAsync(NuevoMovimiento);
+            int resultadoFinal = 0;
+
+            //Guardamos el movimiento en la base de datos
+            await conexion.InsertAsync(NuevoMovimiento);
+
                 //validamos si el movimiento es un gasto o ingreso y si tiene tarjeta asociada
-                if (NuevoMovimiento.TipoMovimiento == Enums.TipoMovimiento.Gasto.ToString() && NuevoMovimiento.TarjetaId.HasValue)
+                if (NuevoMovimiento.TipoMovimiento == "Gasto")
                 {
                     // buscamos la tarjeta asociada al movimiento para deducir el monto de esa tarjeta
-                    var tarjetaAsociada = await c.FindAsync<Tarjeta>(NuevoMovimiento.TarjetaId.Value);
+                    var tarjetaAsociada = await conexion.FindAsync<Tarjeta>(NuevoMovimiento.TarjetaId);
                     // si la tarjeta existe, actualizamos su saldo
                     if (tarjetaAsociada != null)
                     {
@@ -37,42 +37,40 @@ namespace FinanKey.Infraestructura.Repositorios
                             //si es debito o corriente, restamos el monto del gasto al saldo actual
                              tarjetaAsociada.MontoInicial -= Math.Abs(NuevoMovimiento.Monto);
                             // si es un gasto con tarjeta de debito o corriente, actualizamos el estado de pago
-                            await c.UpdateAsync(tarjetaAsociada);
+                            await conexion.UpdateAsync(tarjetaAsociada);
                             // si es un gasto con tarjeta de credito, actualizamos el estado de pago
-                            NuevoMovimiento.EsPagado = null; // not applicable
+                            NuevoMovimiento.EsPagado = null; // no aplica para debito
                             // guardamos el movimiento
-                            await c.UpdateAsync(NuevoMovimiento);
+                       return resultadoFinal = await conexion.UpdateAsync(NuevoMovimiento);
                         }
                         else if (tarjetaAsociada.Tipo.Contains(Enums.TipoTarjeta.Credito.ToString()))
                         {
                             // si es credito, restamos el monto del gasto al saldo pendiente
                             //card.SaldoPendiente += Math.Abs(NuevoMovimiento.Monto);
                             // si es un gasto con tarjeta de credito, actualizamos el estado de pago
-                            await c.UpdateAsync(tarjetaAsociada);
+                            await conexion.UpdateAsync(tarjetaAsociada);
                             // si es un gasto con tarjeta de credito, actualizamos el estado de pago
                             NuevoMovimiento.EsPagado ??= false;
                             //Actualizamos el estado del movimiento
-                            await c.UpdateAsync(NuevoMovimiento);
+                            await conexion.UpdateAsync(NuevoMovimiento);
                         }
                     }
                 }
                 // si es un ingreso y tiene tarjeta asociada, actualizamos el saldo de la tarjeta
-                else if (NuevoMovimiento.TipoMovimiento.Contains(Enums.TipoMovimiento.Ingreso.ToString()) && NuevoMovimiento.TarjetaId.HasValue)
+                else if (NuevoMovimiento.TipoMovimiento.Contains(Enums.TipoMovimiento.Ingreso.ToString()))
                 {
                     // buscamos la tarjeta asociada al movimiento
-                    var card = await c.FindAsync<Tarjeta>(NuevoMovimiento.TarjetaId.Value);
+                    var card = await conexion.FindAsync<Tarjeta>(NuevoMovimiento.TarjetaId);
                     // si la tarjeta existe, actualizamos su saldo
                     if (card != null && (card.Tipo == "Debito" || card.Tipo == "Corriente"))
                     {
                         // si es debito o corriente, sumamos el monto del ingreso al saldo actual
                         //card.SaldoActual += Math.Abs(NuevoMovimiento.Monto);
                         // guardamos el movimiento
-                        await c.UpdateAsync(card);
+                        await conexion.UpdateAsync(card);
                     }
                 }
-            });
-
-            return nuevoID;
+            return resultadoFinal;
         }
 
         public async Task ActualizarMovimientoAsync(Movimiento MovimientoActualizado)
@@ -85,27 +83,27 @@ namespace FinanKey.Infraestructura.Repositorios
         {
             await repositorioBaseDatos.CorrerEnTransicionAsync(async c =>
             {
-                // roll back balances when deleting if needed
-                if (EliminarMovimiento.TarjetaId.HasValue)
-                {
-                    var card = await c.FindAsync<Tarjeta>(EliminarMovimiento.TarjetaId.Value);
-                    if (card != null)
-                    {
-                        if (EliminarMovimiento.TipoMovimiento == "Gasto")
-                        {
-                            if (card.Tipo == "Debito" || card.Tipo == "Corriente") { }
-                            //card.SaldoActual += Math.Abs(EliminarMovimiento.Monto);
-                            else if (card.Tipo == "Credito")
-                                //card.SaldoPendiente -= Math.Abs(EliminarMovimiento.Monto);
-                                await c.UpdateAsync(card);
-                        }
-                        else if (EliminarMovimiento.TipoMovimiento == "Ingreso" && (card.Tipo == "Debito" || card.Tipo == "Corriente"))
-                        {
-                            //card.SaldoActual -= Math.Abs(EliminarMovimiento.Monto);
-                            await c.UpdateAsync(card);
-                        }
-                    }
-                }
+                //// roll back balances when deleting if needed
+                //if (EliminarMovimiento.TarjetaId)
+                //{
+                //    var card = await c.FindAsync<Tarjeta>(EliminarMovimiento.TarjetaId);
+                //    if (card != null)
+                //    {
+                //        if (EliminarMovimiento.TipoMovimiento == "Gasto")
+                //        {
+                //            if (card.Tipo == "Debito" || card.Tipo == "Corriente") { }
+                //            //card.SaldoActual += Math.Abs(EliminarMovimiento.Monto);
+                //            else if (card.Tipo == "Credito")
+                //                //card.SaldoPendiente -= Math.Abs(EliminarMovimiento.Monto);
+                //                await c.UpdateAsync(card);
+                //        }
+                //        else if (EliminarMovimiento.TipoMovimiento == "Ingreso" && (card.Tipo == "Debito" || card.Tipo == "Corriente"))
+                //        {
+                //            //card.SaldoActual -= Math.Abs(EliminarMovimiento.Monto);
+                //            await c.UpdateAsync(card);
+                //        }
+                //    }
+                //}
 
                 await c.DeleteAsync(EliminarMovimiento);
             });
@@ -123,14 +121,14 @@ namespace FinanKey.Infraestructura.Repositorios
             return await conexion.FindAsync<Movimiento>(IdMovimiento);
         }
 
-        public async Task<List<Movimiento>> ListaCreditosPendientesAsync()
-        {
-            var conexion = await repositorioBaseDatos.ObtenerConexion();
-            return await conexion.Table<Movimiento>()
-                .Where(m => m.TipoMovimiento == "Gasto" && m.EsPagado == false && m.TarjetaId.HasValue)
-                .OrderByDescending(m => m.Fecha)
-                .ToListAsync();
-        }
+        //public async Task<List<Movimiento>> ListaCreditosPendientesAsync()
+        //{
+        //    var conexion = await repositorioBaseDatos.ObtenerConexion();
+        //    return await conexion.Table<Movimiento>()
+        //        .Where(m => m.TipoMovimiento == "Gasto" && m.EsPagado == false && m.Tarjeta)
+        //        .OrderByDescending(m => m.Fecha)
+        //        .ToListAsync();
+        //}
 
         public async Task<List<Movimiento>> ListaGastosPorTarjetaAsync(int TarjetaId)
         {

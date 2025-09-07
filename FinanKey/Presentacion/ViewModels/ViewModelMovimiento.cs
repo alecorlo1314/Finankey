@@ -137,7 +137,7 @@ namespace FinanKey.Presentacion.ViewModels
             if(string.IsNullOrWhiteSpace(Descripcion) || Descripcion.Length > 100) return; //La descripcion no puede estar vacia
             if (ListaTipoCategoriasGastos is null) return; //La lista de categorias no puede estar vacia
             if(Fecha > DateTime.Now || Fecha < DateTime.MinValue) return; //La fecha no puede ser mayor a la fecha actual o menor a DateTime.MinValue
-            if (string.IsNullOrWhiteSpace(Comercio)) return; //El comercio no puede estar vacio
+            //if (string.IsNullOrWhiteSpace(Comercio)) return; //El comercio no puede estar vacio
             if(ListaTarjetas is null) return; //La lista de tarjetas no puede estar vacia
             if(TarjetaSeleccionada is null) return; //La tarjeta no puede estar vacia
 
@@ -148,7 +148,6 @@ namespace FinanKey.Presentacion.ViewModels
                 Descripcion = this.Descripcion,
                 Fecha = Fecha,
                 CategoriaId = CategoriaSeleccionada.Id,
-                Comercio = this.Comercio,
                 TarjetaId = TarjetaSeleccionada.Id,
                 EsPagado = this.EstaPagado,
             };
@@ -173,8 +172,8 @@ namespace FinanKey.Presentacion.ViewModels
             Monto = 0;
             Descripcion = string.Empty;
             CategoriaSeleccionada = null;
-            Comercio = string.Empty;
             TarjetaSeleccionada = null;
+            Descripcion = string.Empty;
             EstaPagado = false;
         }
         #endregion  

@@ -150,7 +150,7 @@
                                     Placeholder="0"
                                     PlaceholderColor="{StaticResource ColorPlaceholde}"
                                     Style="{StaticResource entradaFormulario}"
-                                    Text="{Binding MontoGasto, Mode=TwoWay}"
+                                    Text="{Binding Monto, Mode=TwoWay}"
                                     Unfocused="entradaMonto_Unfocused"
                                     VerticalOptions="Center" />
                             </Border>
@@ -211,7 +211,7 @@
                                     Placeholder="Ej: Compras comida"
                                     PlaceholderColor="{StaticResource ColorPlaceholde}"
                                     Style="{StaticResource entradaFormulario}"
-                                    Text="{Binding DescripcionGasto, Mode=TwoWay}"
+                                    Text="{Binding Descripcion, Mode=TwoWay}"
                                     TextColor="{StaticResource ColorTexoEntrada}"
                                     Unfocused="entradaDescripcionGasto_Unfocused"
                                     WidthRequest="290" />
@@ -359,7 +359,7 @@
                     <!--  BOTON GASTO  -->
                     <VerticalStackLayout Grid.Row="5">
                         <Button
-                            Command="{Binding GuardarGastoCommand}"
+                            Command="{Binding GuardarMovimientoGastoCommand}"
                             Style="{StaticResource botonPrimario}"
                             Text="Guardar Gasto"
                             TextColor="White" />
