@@ -31,9 +31,43 @@
                 </VisualStateGroupList>
             </Setter>
         </Style>
-        <buttons:SfSwitch IsOn="False">
-            
-        </buttons:SfSwitch>
+        <!--  ESTADOS VISUALES DEL SWITCH  -->
+        <ResourceDictionary>
+            <Style TargetType="buttons:SfSwitch">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="On">
+                                <VisualState.Setters>
+                                    <Setter Property="SwitchSettings">
+                                        <Setter.Value>
+                                            <buttons:SwitchSettings
+                                                ThumbBackground="{StaticResource ColorAzulMarino}"
+                                                ThumbStroke="{StaticResource ColorAzulMarino}"
+                                                TrackBackground="{StaticResource ColorAzulMarinoSuave}"
+                                                TrackStroke="{StaticResource ColorAzulMarino}" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Off">
+                                <VisualState.Setters>
+                                    <Setter Property="SwitchSettings">
+                                        <Setter.Value>
+                                            <buttons:SwitchSettings
+                                                ThumbBackground="{StaticResource ColorMagenta}"
+                                                ThumbStroke="{StaticResource ColorMagenta}"
+                                                TrackBackground="{StaticResource ColorMagentaSuave}"
+                                                TrackStroke="{StaticResource ColorMagenta}" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </ContentPage.Resources>
     <!--  BUTTON SHEET QUE ENVUELVE EL FORMULARIO  -->
     <bottomSheet:SfBottomSheet
@@ -317,7 +351,7 @@
                             Style="{StaticResource TextoSecundario}"
                             Text="Ya lo pagaste de la tarjeta?"
                             TextColor="{StaticResource ColorTextosDescriptivos}" />
-                        <buttons:SfSwitch x:Name="sfSwitch" HorizontalOptions="Start"/>
+                        <buttons:SfSwitch x:Name="sfSwitch" HorizontalOptions="Start" />
                     </VerticalStackLayout>
                     <!--  BOTON GASTO  -->
                     <VerticalStackLayout Grid.Row="5">
