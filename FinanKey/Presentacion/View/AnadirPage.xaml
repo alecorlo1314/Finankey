@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:bottomSheet="clr-namespace:Syncfusion.Maui.Toolkit.BottomSheet;assembly=Syncfusion.Maui.Toolkit"
+    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -30,6 +31,9 @@
                 </VisualStateGroupList>
             </Setter>
         </Style>
+        <buttons:SfSwitch IsOn="False">
+            
+        </buttons:SfSwitch>
     </ContentPage.Resources>
     <!--  BUTTON SHEET QUE ENVUELVE EL FORMULARIO  -->
     <bottomSheet:SfBottomSheet
@@ -86,7 +90,7 @@
                 <Grid
                     x:Name="formularioGasto"
                     IsVisible="True"
-                    RowDefinitions="auto,auto,auto,auto, auto"
+                    RowDefinitions="auto,auto,auto,auto,auto, auto"
                     RowSpacing="16">
                     <!--  MONTO Y FECHA TRANSACCION  -->
                     <Grid
@@ -243,20 +247,80 @@
                             <editors:SfComboBox
                                 x:Name="cmbTarjeta"
                                 DisplayMemberPath="Nombre"
+                                DropDownBackground="{StaticResource ColorFondoComponentes}"
+                                DropDownIconColor="{StaticResource ColorAzulPricipal}"
+                                DropDownPlacement="Top"
+                                DropDownStroke="{StaticResource ColorPlaceholde}"
                                 FontFamily="PoppinsRegular"
                                 FontSize="16"
+                                IsClearButtonVisible="False"
+                                IsEditable="true"
+                                IsFilteringEnabled="True"
                                 ItemsSource="{Binding ListaTarjetas, Mode=TwoWay}"
+                                NoResultsFoundText="Sin Resultado"
                                 Placeholder="Seleccionar Tarjeta"
                                 PlaceholderColor="#8C8C8C"
                                 SelectedItem="{Binding TarjetaSeleccionada, Mode=TwoWay}"
+                                Stroke="Transparent"
+                                TextColor="{StaticResource ColorTexoEntrada}"
                                 TextMemberPath="Nombre"
-                                VerticalOptions="Center"
+                                VerticalOptions="End"
                                 VerticalTextAlignment="End"
-                                WidthRequest="348" />
+                                WidthRequest="348">
+                                <editors:SfComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Grid
+                                                ColumnDefinitions="55,220"
+                                                HorizontalOptions="Start"
+                                                RowDefinitions="50"
+                                                VerticalOptions="Center"
+                                                WidthRequest="285">
+                                                <Image
+                                                    Grid.Column="0"
+                                                    Aspect="Fill"
+                                                    HeightRequest="24"
+                                                    HorizontalOptions="Center"
+                                                    Source="{Binding Logo}"
+                                                    VerticalOptions="Center"
+                                                    WidthRequest="24" />
+                                                <HorizontalStackLayout
+                                                    Grid.Column="1"
+                                                    HorizontalOptions="Start"
+                                                    VerticalOptions="Center">
+                                                    <Label
+                                                        Style="{StaticResource TextoSecundario}"
+                                                        Text="{Binding Nombre}"
+                                                        TextColor="{StaticResource ColorTexoEntrada}" />
+                                                    <Label
+                                                        Style="{StaticResource TextoSecundario}"
+                                                        Text=" - "
+                                                        TextColor="{StaticResource ColorTexoEntrada}" />
+                                                    <Label
+                                                        Style="{StaticResource TextoSecundario}"
+                                                        Text="{Binding Banco}"
+                                                        TextColor="{StaticResource ColorTexoEntrada}" />
+                                                </HorizontalStackLayout>
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </editors:SfComboBox.ItemTemplate>
+                            </editors:SfComboBox>
                         </Border>
                     </VerticalStackLayout>
+                    <!--  SWITCH DE ESTA PAGADO  -->
+                    <VerticalStackLayout
+                        Grid.Row="4"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center">
+                        <Label
+                            Style="{StaticResource TextoSecundario}"
+                            Text="Ya lo pagaste de la tarjeta?"
+                            TextColor="{StaticResource ColorTextosDescriptivos}" />
+                        <buttons:SfSwitch x:Name="sfSwitch" HorizontalOptions="Start"/>
+                    </VerticalStackLayout>
                     <!--  BOTON GASTO  -->
-                    <VerticalStackLayout Grid.Row="4">
+                    <VerticalStackLayout Grid.Row="5">
                         <Button
                             Command="{Binding GuardarGastoCommand}"
                             Style="{StaticResource botonPrimario}"
