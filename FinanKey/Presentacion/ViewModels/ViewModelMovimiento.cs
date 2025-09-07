@@ -40,6 +40,8 @@ namespace FinanKey.Presentacion.ViewModels
         //Para abrir y cerrar el bottom sheet
         [ObservableProperty]
         public bool _isBottomSheetOpen;
+        string fondoColorBorder;
+        string fondoColorTexto;
         public ViewModelMovimiento(ServicioMovimiento servicioMovimiento)
         {
             inicializarDatos();
@@ -140,7 +142,18 @@ namespace FinanKey.Presentacion.ViewModels
             //if (string.IsNullOrWhiteSpace(Comercio)) return; //El comercio no puede estar vacio
             if(ListaTarjetas is null) return; //La lista de tarjetas no puede estar vacia
             if(TarjetaSeleccionada is null) return; //La tarjeta no puede estar vacia
-
+            if (TarjetaSeleccionada.Tipo == "Credito")
+            {
+                if (EstaPagado==false)
+                {
+                    fondoColorBorder = "#E4E7FC";
+                    fondoColorTexto = "#253FE4";
+                }else
+                {
+                    fondoColorBorder = "#FED1E6";
+                    fondoColorTexto = "#FA288A";
+                }
+            }
             Movimiento movimientoGasto = new Movimiento
             {
                 TipoMovimiento = Enums.TipoMovimiento.Gasto.ToString(),
@@ -150,6 +163,8 @@ namespace FinanKey.Presentacion.ViewModels
                 CategoriaId = CategoriaSeleccionada.Id,
                 TarjetaId = TarjetaSeleccionada.Id,
                 EsPagado = this.EstaPagado,
+                ColorFuenteEstado = fondoColorTexto,
+                BorderFondoEstado = fondoColorBorder
             };
             //Esperamos el resultado de la operacion
             var resultado = await _servicioMovimiento.guardarMovimientoGasto(movimientoGasto);
@@ -175,6 +190,8 @@ namespace FinanKey.Presentacion.ViewModels
             TarjetaSeleccionada = null;
             Descripcion = string.Empty;
             EstaPagado = false;
+            fondoColorBorder = string.Empty;
+            fondoColorTexto = string.Empty;
         }
         #endregion  
     }
