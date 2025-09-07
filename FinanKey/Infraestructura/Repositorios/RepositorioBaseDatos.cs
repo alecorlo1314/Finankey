@@ -4,9 +4,9 @@ using SQLite;
 
 namespace FinanKey.Infraestructura.Repositorios
 {
-    public class ServicioBaseDatos
+    public class RepositorioBaseDatos 
     {
-        private SQLiteAsyncConnection _conexion;
+        private SQLiteAsyncConnection? _conexion;
         private readonly SemaphoreSlim _iniciarBloqueo = new SemaphoreSlim(1, 1);
 
         public async Task<SQLiteAsyncConnection> ObtenerConexion()

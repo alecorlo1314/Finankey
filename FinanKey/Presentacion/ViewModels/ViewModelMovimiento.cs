@@ -9,7 +9,7 @@ namespace FinanKey.Presentacion.ViewModels
     public partial class ViewModelMovimiento : ObservableObject
     {
         //Inyeccion de Dependencias
-        private readonly ServicioMovimiento servicioMovimiento;
+        private readonly ServicioMovimiento _servicioMovimiento;
         //Propiedades de Movimiento
         [ObservableProperty]
         public double _monto = 0;
@@ -20,9 +20,9 @@ namespace FinanKey.Presentacion.ViewModels
         [ObservableProperty]
         public string? _comercio;
         [ObservableProperty]
-        public Tarjeta _tarjetaSeleccionada;
+        public Tarjeta? _tarjetaSeleccionada;
         [ObservableProperty]
-        public bool? _estaPagado;
+        public bool? _estaPagado = false;
         [ObservableProperty]
         public string? _descripcion;
         //Colecciones o listas
@@ -34,7 +34,6 @@ namespace FinanKey.Presentacion.ViewModels
         public ObservableCollection<TipoCategoria>? _listaCategoriasActual;
         [ObservableProperty]
         public ObservableCollection<Tarjeta>? _listaTarjetas;
-
         //Para visar al inicializador de categorias cuando este listo
         [ObservableProperty]
         public bool _isBusy;
@@ -44,15 +43,23 @@ namespace FinanKey.Presentacion.ViewModels
         public ViewModelMovimiento(ServicioMovimiento servicioMovimiento)
         {
             inicializarDatos();
-            //Inyeccion de Dependencias
-            this.servicioMovimiento = servicioMovimiento;
+            _servicioMovimiento = servicioMovimiento;
         }
+
         //Metodo para inicializar las categorias
         private void inicializarDatos()
         {
             _isBusy = true;
             cargarCategoriasGastos();
             _isBusy = false;
+        }
+        public async Task CargarTarjetasAsync()
+        {
+            var resultado = await _servicioMovimiento.obtenerTarjetas();
+            if (resultado != null)
+            {
+                ListaTarjetas = new ObservableCollection<Tarjeta>(resultado);
+            }
         }
 
         #region Metodo para cargar las categorias de gastos
@@ -130,7 +137,7 @@ namespace FinanKey.Presentacion.ViewModels
             if(string.IsNullOrWhiteSpace(Descripcion) || Descripcion.Length > 100) return; //La descripcion no puede estar vacia
             if (ListaTipoCategoriasGastos is null) return; //La lista de categorias no puede estar vacia
             if(Fecha > DateTime.Now || Fecha < DateTime.MinValue) return; //La fecha no puede ser mayor a la fecha actual o menor a DateTime.MinValue
-            if (string.IsNullOrWhiteSpace(Comercio)) return; //El comercio no puede estar vacio
+            //if (string.IsNullOrWhiteSpace(Comercio)) return; //El comercio no puede estar vacio
             if(ListaTarjetas is null) return; //La lista de tarjetas no puede estar vacia
             if(TarjetaSeleccionada is null) return; //La tarjeta no puede estar vacia
 
@@ -141,12 +148,11 @@ namespace FinanKey.Presentacion.ViewModels
                 Descripcion = this.Descripcion,
                 Fecha = Fecha,
                 CategoriaId = CategoriaSeleccionada.Id,
-                Comercio = this.Comercio,
                 TarjetaId = TarjetaSeleccionada.Id,
                 EsPagado = this.EstaPagado,
             };
             //Esperamos el resultado de la operacion
-            var resultado = await servicioMovimiento.guardarMovimientoGasto(movimientoGasto);
+            var resultado = await _servicioMovimiento.guardarMovimientoGasto(movimientoGasto);
 
             if(resultado > 0)
             {
@@ -166,8 +172,8 @@ namespace FinanKey.Presentacion.ViewModels
             Monto = 0;
             Descripcion = string.Empty;
             CategoriaSeleccionada = null;
-            Comercio = string.Empty;
             TarjetaSeleccionada = null;
+            Descripcion = string.Empty;
             EstaPagado = false;
         }
         #endregion  

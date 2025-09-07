@@ -9,7 +9,7 @@ namespace FinanKey.Dominio.Interfaces
         public Task EliminarMovimientoAsync(Movimiento EliminarMovimiento);
         public Task<List<Movimiento>> ObtenerMovimientosAsync();
         public Task<Movimiento?> ObtenerMovimientoPorIdAsync(int IdMovimiento);
-        public Task<List<Movimiento>> ListaCreditosPendientesAsync();
+        //public Task<List<Movimiento>> ListaCreditosPendientesAsync();
         public Task<List<Movimiento>> ListaGastosPorTarjetaAsync(int TarjetaId);
     }
 }

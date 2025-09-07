@@ -5,29 +5,44 @@ namespace FinanKey.Dominio.Models
     public class Movimiento
     {
         [PrimaryKey, AutoIncrement]
-        public int Id { get; set; } 
+        public int Id { get; set; }
 
         [NotNull]
-        public string TipoMovimiento { get; set; }
+        [Column("Tipo")]
+        public string TipoMovimiento { get; set; } = Enums.TipoMovimiento.Gasto.ToString();
 
         [NotNull]
         public double Monto { get; set; }
+
         public string? Descripcion { get; set; }
-        public string? MedioPago { get; set; } = Enums.MedioPago.Efectivo.ToString();
-        public bool? EsRecurrente { get; set; }
-        public string? Frecuencia { get; set; } = Enums.Frecuencia.Mensual.ToString();
-        [NotNull]
-        public DateTime Fecha { get; set; }
-        [NotNull]
-        public int? CategoriaId { get; set; }
-        [NotNull]
-        public string? Comercio { get; set; }
-        [NotNull]
 
-        public int? TarjetaId { get; set; } // Seria como la FK para la tarjeta de crédito o debito
+        public string MedioPago { get; set; } = Enums.MedioPago.Efectivo.ToString();
 
-        public bool? EsPagado { get; set; } // Solo aplica a gastos con tarjeta de crédito
+        public bool EsRecurrente { get; set; } = false;
+
+        public string Frecuencia { get; set; } = Enums.Frecuencia.Mensual.ToString();
+
+        [NotNull]
+        public DateTime Fecha { get; set; } = DateTime.Now;
+
+        [NotNull]
+        public int CategoriaId { get; set; }
+
+        [NotNull]
+        public string Comercio { get; set; } = string.Empty;
+
+        [NotNull]
+        public int TarjetaId { get; set; } // FK para tarjeta
+
+        public bool? EsPagado { get; set; } // Solo para crédito, puede ser null
 
         public DateTime FechaCreacion { get; set; } = DateTime.Now;
+
+        // Propiedades de navegación (no mapeadas)
+        [Ignore]
+        public Tarjeta? Tarjeta { get; set; }
+
+        [Ignore]
+        public Categoria? Categoria { get; set; }
     }
 }
