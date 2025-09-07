@@ -12,16 +12,24 @@ namespace FinanKey.Presentacion.ViewModels
     {
         //Inyección de dependencias 
         public readonly ServicioInicio _servicioInicio;
-        //Inicializar la lista de cuentas como una colección observable
+        //Listas Observable
         [ObservableProperty]
         private ObservableCollection<Tarjeta> _listaTarjetas = new();
+        [ObservableProperty]
+        private ObservableCollection<Movimiento> _listaMovimientos = new();
         //Inicializacion de las propiedades usadas para la vista
         [ObservableProperty]
-        private bool isBusy;
+        public bool isBusy;
         [ObservableProperty]
-        private bool _hayTarjetas = false;
+        public bool _hayTarjetas = false;
+        [ObservableProperty]
+        public bool _noHayMovimientos = true;
         [ObservableProperty]
         private bool _hayMovimientos = true;
+        [ObservableProperty]
+        public string _borderFondoEstado;
+        [ObservableProperty]
+        public string _colorFuenteEstado;
 
         public ViewModelInicio(ServicioInicio servicioInicio)
         {
@@ -52,6 +60,51 @@ namespace FinanKey.Presentacion.ViewModels
                 IsBusy = false;
             }
         }
+        public async Task CargarMovimientosAsync()
+        {
+            try
+            {
+                IsBusy = true;
+                var movimientos = await _servicioInicio.ObtenerMovimientosAsync();
+
+                // Solo actualizar si hay cambios
+                if (!MovimientosIguales(movimientos))
+                {
+                    ListaMovimientos.Clear();
+                    ListaMovimientos = new ObservableCollection<Movimiento>(movimientos);
+                    HayMovimientos = ListaMovimientos.Count > 0;
+                    NoHayMovimientos = !HayMovimientos;
+                }
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", $"Error al cargar tarjetas: {ex.Message}", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        private bool MovimientosIguales(List<Movimiento> movimientosNuevos)
+        {
+            if (ListaMovimientos.Count != movimientosNuevos.Count) return false;
+
+            return ListaMovimientos.Zip(movimientosNuevos, (actual, nuevo) =>
+                actual.Id == nuevo.Id &&
+                actual.TipoMovimiento == nuevo.TipoMovimiento &&
+                actual.Monto == nuevo.Monto &&
+                actual.Descripcion == nuevo.Descripcion &&
+                actual.Fecha == nuevo.Fecha &&
+                actual.CategoriaId == nuevo.CategoriaId &&
+                actual.TarjetaId == nuevo.TarjetaId &&
+                actual.EsPagado == nuevo.EsPagado &&
+                actual.FechaCreacion == nuevo.FechaCreacion &&
+                BorderFondoEstado == BorderFondoEstado &&
+                ColorFuenteEstado == ColorFuenteEstado
+                ).All(iguales => iguales);
+        }
+
         // // Comando para navegar a la página de detalle de cuenta con la cuenta seleccionada
         //[RelayCommand]
         //async Task NavegarADetalleCuenta(Cuenta cuenta)

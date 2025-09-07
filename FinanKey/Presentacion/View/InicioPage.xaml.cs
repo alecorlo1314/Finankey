@@ -20,5 +20,6 @@ public partial class InicioPage : ContentPage
 
         // Llamada al ViewModelInicio
         _= _viewModelInicio.CargarTarjetasAsync();
+        _= _viewModelInicio.CargarMovimientosAsync();
     }
 }

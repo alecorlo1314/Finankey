@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SQLite;
 namespace FinanKey.Dominio.Models
 {
     [Table("Movimiento")]
@@ -16,7 +17,7 @@ namespace FinanKey.Dominio.Models
 
         public string? Descripcion { get; set; }
 
-        public string MedioPago { get; set; } = Enums.MedioPago.Efectivo.ToString();
+        public string MedioPago { get; set; } = Enums.MedioPago.Tarjeta.ToString();
 
         public bool EsRecurrente { get; set; } = false;
 
@@ -37,6 +38,10 @@ namespace FinanKey.Dominio.Models
         public bool? EsPagado { get; set; } // Solo para crédito, puede ser null
 
         public DateTime FechaCreacion { get; set; } = DateTime.Now;
+
+        public string? BorderFondoEstado;
+      
+        public string? ColorFuenteEstado;
 
         // Propiedades de navegación (no mapeadas)
         [Ignore]
