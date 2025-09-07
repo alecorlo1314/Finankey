@@ -4,13 +4,14 @@ using FinanKey.Dominio.Models;
 using FinanKey.Dominio.Interfaces;
 using FinanKey.Presentacion.View;
 using System.Collections.ObjectModel;
+using FinanKey.Aplicacion.UseCases;
 
 namespace FinanKey.Presentacion.ViewModels
 {
     public partial class ViewModelInicio : ObservableObject
     {
         //Inyección de dependencias 
-        public readonly IServicioTarjeta _servicioTarjeta;
+        public readonly ServicioInicio _servicioInicio;
         //Inicializar la lista de cuentas como una colección observable
         [ObservableProperty]
         private ObservableCollection<Tarjeta> _listaTarjetas = new();
@@ -22,32 +23,33 @@ namespace FinanKey.Presentacion.ViewModels
         [ObservableProperty]
         private bool _hayMovimientos = true;
 
-        public ViewModelInicio(IServicioTarjeta servicioTarjeta)
+        public ViewModelInicio(ServicioInicio servicioInicio)
         {
             //Asignar los servicios a las variables privadas
-            _servicioTarjeta = servicioTarjeta;
+            _servicioInicio = servicioInicio;
         }
         //Metodo para cargar las cuentas desde la base de datos
         public async Task CargarTarjetasAsync()
         {
             try
             {
-                var tarjetas = await _servicioTarjeta.ObtenerTarjetasAsync();
+                IsBusy = true;
+                var tarjetas = await _servicioInicio.ObtenerTarjetasAsync();
 
-                if (tarjetas != null && tarjetas.Count > 0)
+                // ⚡ RENDIMIENTO: Solo actualizar si hay cambios
+                if (!TarjetasIguales(tarjetas))
                 {
+                    ListaTarjetas.Clear();
                     ListaTarjetas = new ObservableCollection<Tarjeta>(tarjetas);
-                    HayTarjetas = !true;
-                }
-                else
-                {
-                    ListaTarjetas = new ObservableCollection<Tarjeta>();
-                    HayTarjetas = !false;
                 }
             }
             catch (Exception ex)
             {
                 await Shell.Current.DisplayAlert("Error", $"Error al cargar tarjetas: {ex.Message}", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
             }
         }
         // // Comando para navegar a la página de detalle de cuenta con la cuenta seleccionada
@@ -70,6 +72,28 @@ namespace FinanKey.Presentacion.ViewModels
         public async Task NavegarAgregarTarjeta()
         {
             await Shell.Current.GoToAsync(nameof(AgregarTarjetaPage));
+        }
+        // ⚡ OPTIMIZACIÓN: Solo recargar si realmente hay cambios
+        private bool TarjetasIguales(List<Tarjeta> tarjetasNuevas)
+        {
+            if (ListaTarjetas.Count != tarjetasNuevas.Count) return false;
+
+            return ListaTarjetas.Zip(tarjetasNuevas, (actual, nuevo) =>
+                actual.Id == nuevo.Id &&
+                actual.Nombre == nuevo.Nombre &&
+                actual.Ultimos4Digitos == nuevo.Ultimos4Digitos &&
+                actual.Tipo == nuevo.Tipo &&
+                actual.Banco == nuevo.Banco &&
+                actual.Vencimiento == nuevo.Vencimiento &&
+                actual.LimiteCredito == nuevo.LimiteCredito &&
+                actual.MontoInicial == nuevo.MontoInicial &&
+                actual.Categoria == nuevo.Categoria &&
+                actual.Logo == nuevo.Logo &&
+                actual.Descripcion == nuevo.Descripcion &&
+                actual.ColorHex1 == nuevo.ColorHex1 &&
+                actual.ColorHex2 == nuevo.ColorHex2 &&
+                actual.FechaCreacion == nuevo.FechaCreacion)
+                .All(iguales => iguales);
         }
     }
 }

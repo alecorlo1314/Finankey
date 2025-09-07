@@ -1,5 +1,6 @@
 ﻿
 using FinanKey.Dominio.Interfaces;
+using FinanKey.Dominio.Models;
 
 namespace FinanKey.Aplicacion.UseCases
 {
@@ -11,6 +12,14 @@ namespace FinanKey.Aplicacion.UseCases
         {
             this.servicioMovimiento = servicioMovimiento;
             this.servicioTarjeta = servicioTarjeta;
+        }
+        public async Task<List<Tarjeta>> ObtenerTarjetasAsync()
+        {
+            return await servicioTarjeta.ObtenerTarjetasAsync();
+        }
+        public async Task<List<Movimiento>> ObtenerMovimientosAsync()
+        {
+            return await servicioMovimiento.ObtenerMovimientosAsync();
         }
     }
 }
