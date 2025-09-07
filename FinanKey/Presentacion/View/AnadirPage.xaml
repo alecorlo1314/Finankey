@@ -354,7 +354,7 @@
                         <buttons:SfSwitch
                             x:Name="sfSwitch"
                             HorizontalOptions="Start"
-                            IsOn="{Binding EstaPagado, Mode=TwoWay}"/>
+                            IsOn="{Binding EstaPagado, Mode=TwoWay}" />
                     </VerticalStackLayout>
                     <!--  BOTON GASTO  -->
                     <VerticalStackLayout Grid.Row="5">

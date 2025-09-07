@@ -72,6 +72,7 @@ namespace FinanKey
             //Registrar Interfaz de servicios de Interfaz con inyección de dependencias
             builder.Services.AddSingleton<ServicioMovimiento>();
             builder.Services.AddSingleton<ServicioTarjeta>();
+            builder.Services.AddSingleton<ServicioInicio>();
             //Registrar comportamiento personalizado Behavior
             builder.Services.AddSingleton<SfRadioButtonStateChangedBehavior>();
 
