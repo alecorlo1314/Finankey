@@ -241,12 +241,12 @@
             <!--  IMAGEN LUPA NO HAY MOVIMIENTOS CON MENSAJE  -->
             <VerticalStackLayout
                 Grid.Row="1"
-                Margin="16,40"
+                Margin="16,70"
                 IsVisible="{Binding HayMovimientos}"
                 Spacing="8">
                 <Image
                     Aspect="AspectFit"
-                    HeightRequest="285"
+                    HeightRequest="230"
                     HorizontalOptions="Center"
                     Source="lupa_movimientos.svg"
                     WidthRequest="377" />

@@ -36,7 +36,7 @@ namespace FinanKey.Presentacion.ViewModels
                 IsBusy = true;
                 var tarjetas = await _servicioInicio.ObtenerTarjetasAsync();
 
-                // ⚡ RENDIMIENTO: Solo actualizar si hay cambios
+                // Solo actualizar si hay cambios
                 if (!TarjetasIguales(tarjetas))
                 {
                     ListaTarjetas.Clear();
@@ -73,7 +73,7 @@ namespace FinanKey.Presentacion.ViewModels
         {
             await Shell.Current.GoToAsync(nameof(AgregarTarjetaPage));
         }
-        // ⚡ OPTIMIZACIÓN: Solo recargar si realmente hay cambios
+        // Metodo Solo recargar si realmente hay cambios
         private bool TarjetasIguales(List<Tarjeta> tarjetasNuevas)
         {
             if (ListaTarjetas.Count != tarjetasNuevas.Count) return false;
