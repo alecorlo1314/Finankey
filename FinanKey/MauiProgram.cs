@@ -64,6 +64,7 @@ namespace FinanKey
             builder.Services.AddSingleton<ViewModelMovimiento>();
             builder.Services.AddSingleton<ViewModelTarjeta>();
             builder.Services.AddSingleton<ViewModelAjustes>();
+            builder.Services.AddSingleton<ViewModelGestionCategorias>();
             //Registrar servicios con inyección de dependencias en Respositorios
             builder.Services.AddSingleton<RepositorioBaseDatos>();
             builder.Services.AddSingleton<RespositorioMovimiento>();

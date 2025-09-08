@@ -83,7 +83,7 @@
                         Grid.Column="0"
                         Aspect="AspectFit"
                         HeightRequest="24"
-                        Source="icono_luz.svg"
+                        Source="icono_bombillo.svg"
                         WidthRequest="24" />
                     <Label
                         Grid.Column="1"
