@@ -6,11 +6,12 @@ namespace FinanKey.Dominio.Models
     public class CategoriaMovimiento
     {
         [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
+        public int Id { get; set; }      
         [Indexed,Unique, NotNull]
         public string? Descripcion { get; set; }
-        public int? Icon_id { get; set; }
+        public int Icon_id { get; set; }
+        public string? RutaIcono { get; set; }
         [Ignore]
-        public TipoCategoria? TipoCategoria { get; set; }
+        public string? TipoMovimiento { get; set; }
     }
 }

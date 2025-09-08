@@ -35,11 +35,13 @@
         CollapsedHeight="0"
         ContentWidthMode="Full"
         CornerRadius="20,20,0,0"
+        FullExpandedRatio="0.8"
         GrabberBackground="{StaticResource ColorIconoNavBar}"
         GrabberHeight="5"
         GrabberWidth="90"
         IsModal="True"
-        IsOpen="True">
+        IsOpen="True"
+        State="FullExpanded">
         <bottomSheet:SfBottomSheet.Content>
             <Grid Padding="{StaticResource PaddingPaginas}">
                 <!--  BOTON FLOTANTE QUE LLEVA A LA PAGINA DE ANADIR CATEGORIA  -->
@@ -198,7 +200,7 @@
                             DisplayMemberPath="Descripcion"
                             DropDownBackground="{StaticResource ColorFondoComponentes}"
                             DropDownIconColor="{StaticResource ColorAzulPricipal}"
-                            DropDownPlacement="Top"
+                            DropDownPlacement="Auto"
                             DropDownStroke="{StaticResource ColorPlaceholde}"
                             FontFamily="PoppinsRegular"
                             FontSize="16"

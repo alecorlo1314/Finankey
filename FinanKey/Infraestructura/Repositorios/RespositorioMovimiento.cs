@@ -112,7 +112,7 @@ namespace FinanKey.Infraestructura.Repositorios
         public async Task<List<Movimiento>> ObtenerMovimientosAsync()
         {
             var conexion = await repositorioBaseDatos.ObtenerConexion();
-            return await conexion.Table<Movimiento>().OrderByDescending(m => m.Fecha).ToListAsync();
+            return await conexion.Table<Movimiento>().OrderByDescending(m => m.FechaMovimiento).ToListAsync();
         }
 
         public async Task<Movimiento?> ObtenerMovimientoPorIdAsync(int IdMovimiento)
@@ -133,7 +133,7 @@ namespace FinanKey.Infraestructura.Repositorios
         public async Task<List<Movimiento>> ListaGastosPorTarjetaAsync(int TarjetaId)
         {
             var conexion = await repositorioBaseDatos.ObtenerConexion();
-            return await conexion.Table<Movimiento>().Where(m => m.TarjetaId == TarjetaId).OrderByDescending(m => m.Fecha).ToListAsync();
+            return await conexion.Table<Movimiento>().Where(m => m.TarjetaId == TarjetaId).OrderByDescending(m => m.FechaMovimiento).ToListAsync();
         }
     }
 }
