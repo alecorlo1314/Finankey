@@ -71,6 +71,7 @@
                         <!--  BORDER LISTA DE CATEGORIAS DE INGRESOS  -->
                         <Border
                             Grid.Row="1"
+                            IsVisible="{Binding HayCategoriasIngresos}"
                             Stroke="{StaticResource Terciario}"
                             StrokeShape="RoundRectangle 20"
                             StrokeThickness="1"
@@ -111,6 +112,26 @@
                                 </CollectionView.ItemTemplate>
                             </CollectionView>
                         </Border>
+                        <!--  IMAGEN DE NO HAY CATEGORIAS DE INGRESOS  -->
+                        <VerticalStackLayout
+                            Grid.Row="1"
+                            HorizontalOptions="Center"
+                            IsVisible="{Binding NoHayCategoriasGastos, Mode=TwoWay}"
+                            VerticalOptions="Center">
+                            <Image Aspect="AspectFit" Source="imagen_sin_categoria.svg" />
+                            <Label
+                                HorizontalOptions="Center"
+                                Style="{StaticResource TextoEncabezadoSecundario}"
+                                Text="No hay categorías"
+                                TextColor="{StaticResource ColorTexto}"
+                                VerticalOptions="Center" />
+                            <Label
+                                HorizontalOptions="Center"
+                                Style="{StaticResource TextoLabelInputMenusPequeños}"
+                                Text="Crea una nueva categoría para empezar."
+                                TextColor="{StaticResource Secundario}"
+                                VerticalOptions="Center" />
+                        </VerticalStackLayout>
                     </Grid>
                 </Grid>
             </Grid>

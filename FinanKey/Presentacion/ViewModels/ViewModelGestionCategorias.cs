@@ -7,6 +7,10 @@ namespace FinanKey.Presentacion.ViewModels
 {
     public partial class ViewModelGestionCategorias : ObservableObject
     {
+        //ZONA DE LISTAS
+        [ObservableProperty]
+        public ObservableCollection<CategoriaMovimiento>? _listaCategorias;
+        //ZONA DE ATRIBUTOS
         [ObservableProperty]
         public bool _isBottomSheetOpen;
 
@@ -21,7 +25,10 @@ namespace FinanKey.Presentacion.ViewModels
 
         [ObservableProperty]
         public string? _tipoMovimiento;
-
+        [ObservableProperty]
+        public bool _noHayCategoriasGastos = true;
+        [ObservableProperty]
+        public bool _HayCategoriasIngresos = false;
         public ViewModelGestionCategorias()
         {
             cargarIconos();
