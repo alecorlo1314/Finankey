@@ -9,6 +9,7 @@ public partial class AppShell : Shell
         InitializeComponent();
 
         // Registrar rutas para navegación programática
-        Routing.RegisterRoute("AgregarTarjetaPage", typeof(AgregarTarjetaPage));
+        Routing.RegisterRoute(nameof(AgregarTarjetaPage), typeof(AgregarTarjetaPage));
+        Routing.RegisterRoute(nameof(GestionCategoriaPage), typeof(GestionCategoriaPage));
     }
 }

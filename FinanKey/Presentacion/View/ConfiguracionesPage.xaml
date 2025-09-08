@@ -3,6 +3,7 @@
     x:Class="FinanKey.Presentacion.View.ConfiguracionesPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     Padding="{StaticResource PaddingPaginas}"
     Background="#ffffff"
@@ -12,14 +13,225 @@
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource FondoPrincipal}" StatusBarStyle="DarkContent" />
     </ContentPage.Behaviors>
+    <!--  ESTADOS VISUALES DEL SWITCH  -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="buttons:SfSwitch">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="On">
+                                <VisualState.Setters>
+                                    <Setter Property="SwitchSettings">
+                                        <Setter.Value>
+                                            <buttons:SwitchSettings
+                                                ThumbBackground="#020617"
+                                                ThumbStroke="#020617"
+                                                TrackBackground="{StaticResource ColorAzulPricipal}"
+                                                TrackStroke="{StaticResource ColorAzulPricipal}" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Off">
+                                <VisualState.Setters>
+                                    <Setter Property="SwitchSettings">
+                                        <Setter.Value>
+                                            <buttons:SwitchSettings
+                                                ThumbBackground="{StaticResource ColorFondoComponentes}"
+                                                ThumbStroke="{StaticResource ColorFondoComponentes}"
+                                                TrackBackground="{StaticResource Terciario}"
+                                                TrackStroke="{StaticResource ColorFondoComponentes}" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
-    <VerticalStackLayout>
+    <Grid
+        Padding="{StaticResource PaddingPaginas}"
+        HorizontalOptions="Center"
+        RowDefinitions="Auto, Auto, Auto"
+        RowSpacing="24">
         <Label
-            FontFamily="RobotoBold"
-            FontSize="28"
+            Grid.Row="0"
+            HeightRequest="35"
             HorizontalOptions="Center"
-            Text="PAGINA CONFIGURACION"
-            TextColor="Black"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+            Style="{StaticResource TextoSubtítulo}"
+            Text="Ajustes"
+            TextColor="{StaticResource ColorAzulPricipal}" />
+        <Border
+            Grid.Row="1"
+            Stroke="{StaticResource Terciario}"
+            StrokeShape="RoundRectangle 20"
+            StrokeThickness="1"
+            WidthRequest="380">
+            <Grid RowDefinitions="Auto, Auto,Auto, Auto, Auto, Auto, Auto, Auto,Auto">
+                <!--  AREA TEMAS OSCURO  -->
+                <Grid
+                    Grid.Row="0"
+                    Padding="16"
+                    ColumnDefinitions="Auto,Auto,Auto"
+                    ColumnSpacing="16"
+                    HeightRequest="70">
+                    <Image
+                        Grid.Column="0"
+                        Aspect="AspectFit"
+                        HeightRequest="24"
+                        Source="icono_luz.svg"
+                        WidthRequest="24" />
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource TextoParrafoPrincipal}"
+                        Text="Tarjeta de Credito"
+                        TextColor="{StaticResource ColorTexto}"
+                        VerticalOptions="Center"
+                        WidthRequest="225" />
+                    <!--  SWITCH CLARO OSCURO  -->
+                    <buttons:SfSwitch
+                        x:Name="sfSwitch"
+                        Grid.Column="2"
+                        HorizontalOptions="Start"
+                        IsOn="{Binding EstaPagado, Mode=TwoWay}" />
+                </Grid>
+                <Border
+                    Grid.Row="1"
+                    Stroke="{StaticResource Terciario}"
+                    WidthRequest="380" />
+                <!--  AREA EDITAR TARJETAS  -->
+                <Grid
+                    Grid.Row="2"
+                    Padding="16"
+                    ColumnDefinitions="Auto,Auto,Auto"
+                    ColumnSpacing="16"
+                    HeightRequest="70">
+                    <Image
+                        Grid.Column="0"
+                        Aspect="AspectFit"
+                        HeightRequest="24"
+                        Source="icono_cartera_ajustes.png"
+                        WidthRequest="24" />
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource TextoParrafoPrincipal}"
+                        Text="Editar Tarjetas"
+                        TextColor="{StaticResource ColorTexto}"
+                        VerticalOptions="Center"
+                        WidthRequest="235" />
+                    <!--  FLECHA DERECHA  -->
+                    <Image
+                        Grid.Column="2"
+                        Aspect="AspectFill"
+                        HeightRequest="24"
+                        Source="icono_flecha_derecha.svg"
+                        WidthRequest="24" />
+                </Grid>
+                <Border
+                    Grid.Row="3"
+                    Stroke="{StaticResource Terciario}"
+                    WidthRequest="380" />
+                <!--  AREA GESTIONAR CATEGORIAS  -->
+                <Grid
+                    Grid.Row="4"
+                    Padding="16"
+                    ColumnDefinitions="Auto,Auto,Auto"
+                    ColumnSpacing="16"
+                    HeightRequest="70">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding NavegarGestionCategoriaPageCommand}" />
+                    </Grid.GestureRecognizers>
+                    <Image
+                        Grid.Column="0"
+                        Aspect="AspectFill"
+                        HeightRequest="24"
+                        Source="icono_gestion_categorias.svg"
+                        WidthRequest="24" />
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource TextoParrafoPrincipal}"
+                        Text="Gestionar categorías"
+                        TextColor="{StaticResource ColorTexto}"
+                        VerticalOptions="Center"
+                        WidthRequest="235" />
+                    <!--  FLECHA DERECHA  -->
+                    <Image
+                        Grid.Column="2"
+                        Aspect="AspectFit"
+                        HeightRequest="24"
+                        Source="icono_flecha_derecha.svg"
+                        WidthRequest="24" />
+                </Grid>
+                <Border
+                    Grid.Row="5"
+                    Stroke="{StaticResource Terciario}"
+                    WidthRequest="380" />
+                <!--  AREA EXPORTAR CSV  -->
+                <Grid
+                    Grid.Row="6"
+                    Padding="16"
+                    ColumnDefinitions="Auto,Auto,Auto"
+                    ColumnSpacing="16"
+                    HeightRequest="70">
+                    <Image
+                        Grid.Column="0"
+                        Aspect="AspectFit"
+                        HeightRequest="24"
+                        Source="icono_descargar_csv.png"
+                        WidthRequest="24" />
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource TextoParrafoPrincipal}"
+                        Text="Exportar datos (CSV)"
+                        TextColor="{StaticResource ColorTexto}"
+                        VerticalOptions="Center"
+                        WidthRequest="235" />
+                    <!--  FLECHA DERECHA  -->
+                    <Image
+                        Grid.Column="2"
+                        Aspect="AspectFill"
+                        HeightRequest="24"
+                        Source="icono_flecha_derecha.svg"
+                        WidthRequest="24" />
+                </Grid>
+                <Border
+                    Grid.Row="7"
+                    Stroke="{StaticResource Terciario}"
+                    WidthRequest="380" />
+                <!--  AREA BACKUP  -->
+                <Grid
+                    Grid.Row="8"
+                    Padding="16"
+                    ColumnDefinitions="Auto,Auto,Auto"
+                    ColumnSpacing="16"
+                    HeightRequest="70">
+                    <Image
+                        Grid.Column="0"
+                        Aspect="AspectFit"
+                        HeightRequest="24"
+                        Source="icono_backup.svg"
+                        WidthRequest="24" />
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource TextoParrafoPrincipal}"
+                        Text="Backup local"
+                        TextColor="{StaticResource ColorTexto}"
+                        VerticalOptions="Center"
+                        WidthRequest="235" />
+                    <!--  FLECHA DERECHA  -->
+                    <Image
+                        Grid.Column="2"
+                        Aspect="AspectFill"
+                        HeightRequest="24"
+                        Source="icono_flecha_derecha.svg"
+                        WidthRequest="24" />
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
 </ContentPage>

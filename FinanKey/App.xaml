@@ -25,6 +25,9 @@
             <Color x:Key="ColorTexoEntrada">#0f172a</Color>
             <Color x:Key="ColorIconoNavBar">#757575</Color>
             <Color x:Key="ColorPlaceholde">#8C8C8C</Color>
+            <Color x:Key="Primario">#404040</Color>
+            <Color x:Key="Secundario">#8C8C8C</Color>
+            <Color x:Key="Terciario">#D9D9D9</Color>
 
             <!--  ESTILOS DE TIPOGRAFIA  -->
             <Style x:Key="TextoTituloPrincipal" TargetType="Label">
@@ -133,8 +136,6 @@
 
             <Color x:Key="VentanaEmergente">#ffffff</Color>
             <Color x:Key="TextoVentanaEmergente">#0d0c0f</Color>
-            <Color x:Key="TextoPrimario">#ffffff</Color>
-            <Color x:Key="Secundario">#f1f3f8</Color>
             <Color x:Key="Suave">#f1f3f8</Color>
             <Color x:Key="TextoSuave">#6b7a99</Color>
             <Color x:Key="Acento">#ff4576</Color>
