@@ -8,10 +8,11 @@ namespace FinanKey.Dominio.Models
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }      
         [Indexed,Unique, NotNull]
-        public string? Descripcion { get; set; }
-        public int Icon_id { get; set; }
-        public string? RutaIcono { get; set; }
+        public string? Descripcion { get; set; } //Ejemplo: Comida, Transporte, Entretenimiento
+        public int Icon_id { get; set; } //id del icono seleccionado
+        public string? RutaIcono { get; set; }//Ruta del icono seleccionado
+        public string? TipoMovimiento { get; set; }//Ejemplo: Gasto o Ingreso
         [Ignore]
-        public string? TipoMovimiento { get; set; }
+        public Icono? Icono { get; set; }//No se guarda en la base de datos
     }
 }

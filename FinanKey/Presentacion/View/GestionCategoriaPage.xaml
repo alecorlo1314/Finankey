@@ -148,7 +148,7 @@
                     Style="{StaticResource TextoEncabezadoSecundario}"
                     Text="Anadir Nueva Categoria"
                     TextColor="{StaticResource ColorTexoEntrada}" />
-                <!--  INPUT DE DESCRIPCION  -->
+                <!--  DESCRIPCION  -->
                 <VerticalStackLayout
                     Grid.Row="1"
                     Spacing="8"
@@ -166,7 +166,7 @@
                             Placeholder="Ej: Comida"
                             PlaceholderColor="{StaticResource ColorPlaceholde}"
                             Style="{StaticResource entradaFormulario}"
-                            Text="{Binding Descripcion, Mode=TwoWay}"
+                            Text="{Binding DescripcionCategoria, Mode=TwoWay}"
                             VerticalOptions="Center" />
                     </Border>
                 </VerticalStackLayout>
@@ -181,7 +181,11 @@
                         Text="Tipo Movimiento"
                         TextColor="{StaticResource ColorAzulPricipal}" />
                     <HorizontalStackLayout Grid.Row="1">
-                        <buttons:SfRadioGroup x:Name="grupoCategoriaMovimiento" Orientation="Horizontal">
+                        <buttons:SfRadioGroup
+                            x:Name="grupoCategoriaMovimiento"
+                            Orientation="Horizontal"
+                            SelectedValue="{Binding TipoMovimiento}">
+
                             <buttons:SfRadioButton
                                 x:Name="rdIngreso"
                                 CheckedColor="{StaticResource ColorCascaraNaranja}"
@@ -192,6 +196,7 @@
                                 TextColor="{StaticResource ColorAzulPricipal}"
                                 UncheckedColor="{StaticResource ColorAzulPrincipalSuave}"
                                 Value="Ingreso" />
+
                             <buttons:SfRadioButton
                                 x:Name="rdGasto"
                                 CheckedColor="{StaticResource ColorCascaraNaranja}"
@@ -201,10 +206,11 @@
                                 TextColor="{StaticResource ColorAzulPricipal}"
                                 UncheckedColor="{StaticResource ColorAzulPrincipalSuave}"
                                 Value="Gasto" />
+
                         </buttons:SfRadioGroup>
                     </HorizontalStackLayout>
                 </Grid>
-                <!--  ELECCION DE TARJETA  -->
+                <!--  ELECCION DE ICONO  -->
                 <VerticalStackLayout Grid.Row="3" Spacing="8">
                     <Label
                         Style="{StaticResource TextoSubtítulo}"
@@ -218,7 +224,7 @@
                         WidthRequest="380">
                         <editors:SfComboBox
                             x:Name="cmbIcono"
-                            DisplayMemberPath="Descripcion"
+                            DisplayMemberPath="Nombre"
                             DropDownBackground="{StaticResource ColorFondoComponentes}"
                             DropDownIconColor="{StaticResource ColorAzulPricipal}"
                             DropDownPlacement="Auto"
@@ -231,7 +237,7 @@
                             NoResultsFoundText="Sin Resultado"
                             Placeholder="Seleccionar Tarjeta"
                             PlaceholderColor="#8C8C8C"
-                            SelectedItem="{Binding TarjetaSeleccionada, Mode=TwoWay}"
+                            SelectedItem="{Binding IconoSeleccionado, Mode=TwoWay}"
                             Stroke="Transparent"
                             TextColor="{StaticResource ColorTexoEntrada}"
                             TextMemberPath="Nombre"
@@ -267,6 +273,18 @@
                         </editors:SfComboBox>
                     </Border>
                 </VerticalStackLayout>
+                <!--  BOTONES  -->
+                <Button
+                    Grid.Row="4"
+                    BackgroundColor="{StaticResource ColorAzulPricipal}"
+                    Command="{Binding GuardarCategoriaCommand}"
+                    CornerRadius="20"
+                    FontFamily="PoppinsBold"
+                    FontSize="16"
+                    HorizontalOptions="Center"
+                    Text="Guardar"
+                    TextColor="{StaticResource ColorFondoComponentes}"
+                    WidthRequest="221" />
             </Grid>
         </bottomSheet:SfBottomSheet.BottomSheetContent>
     </bottomSheet:SfBottomSheet>

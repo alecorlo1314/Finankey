@@ -15,7 +15,7 @@ namespace FinanKey.Presentacion.ViewModels
         public bool _isBottomSheetOpen;
 
         [ObservableProperty]
-        public string? _nombreCategoria;
+        public string? _descripcionCategoria;
 
         [ObservableProperty]
         public string? _rutaIcono;
@@ -24,11 +24,12 @@ namespace FinanKey.Presentacion.ViewModels
         public Icono? _iconoSeleccionado;
 
         [ObservableProperty]
-        public string? _tipoMovimiento;
+        private string tipoMovimiento = "Ingreso"; // Valor inicial
         [ObservableProperty]
         public bool _noHayCategoriasGastos = true;
         [ObservableProperty]
         public bool _HayCategoriasIngresos = false;
+   
         public ViewModelGestionCategorias()
         {
             cargarIconos();
@@ -83,17 +84,25 @@ namespace FinanKey.Presentacion.ViewModels
         [RelayCommand]
         public async Task GuardarCategoria()
         {
-            if (string.IsNullOrWhiteSpace(NombreCategoria) || IconoSeleccionado == null )
+            try
             {
-                await Shell.Current.DisplayAlert("Alerta", "Por favor, complete todos los campos.", "Aceptar");
+                if (string.IsNullOrWhiteSpace(DescripcionCategoria) || IconoSeleccionado == null)
+                {
+                    await Shell.Current.DisplayAlert("Alerta", "Por favor, complete todos los campos.", "Aceptar");
+                    return;
+                }
+                CategoriaMovimiento categoriaMovimiento = new()
+                {
+                    Descripcion = DescripcionCategoria,
+                    Icon_id = IconoSeleccionado.Id,
+                    RutaIcono = IconoSeleccionado.Ruta,
+                    TipoMovimiento = TipoMovimiento
+                };
             }
-            CategoriaMovimiento categoriaMovimiento = new()
+            catch (Exception ex)
             {
-                Descripcion = NombreCategoria,
-                Icon_id = IconoSeleccionado.Id,
-                RutaIcono = IconoSeleccionado.Ruta,
-                TipoMovimiento = TipoMovimiento
-            };
+                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+            }
         }
     }
 }   
