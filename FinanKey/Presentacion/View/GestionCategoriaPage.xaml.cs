@@ -19,4 +19,9 @@ public partial class GestionCategoriaPage : ContentPage
     {
 
     }
+
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+        bottomSheetCategoria.Show();
+    }
 }

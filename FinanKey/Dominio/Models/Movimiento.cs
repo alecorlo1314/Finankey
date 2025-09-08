@@ -48,6 +48,6 @@ namespace FinanKey.Dominio.Models
         public Tarjeta? Tarjeta { get; set; }
 
         [Ignore]
-        public Categoria? Categoria { get; set; }
+        public CategoriaMovimiento? Categoria_Movimiento { get; set; }
     }
 }

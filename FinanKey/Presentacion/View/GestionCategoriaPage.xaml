@@ -6,8 +6,8 @@
     xmlns:behaviors="clr-namespace:FinanKey.Presentacion.View.Behaviors"
     xmlns:bottomSheet="clr-namespace:Syncfusion.Maui.Toolkit.BottomSheet;assembly=Syncfusion.Maui.Toolkit"
     xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+    xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     Title="Gestionar Categorias"
-    Padding="{StaticResource PaddingPaginas}"
     BackgroundColor="{StaticResource ColorFondoPrincipal}"
     Shell.TabBarIsVisible="False">
     <ContentPage.Resources>
@@ -30,10 +30,8 @@
     <!--  BUTTON SHEET QUE ENVUELVE EL FORMULARIO  -->
     <bottomSheet:SfBottomSheet
         x:Name="bottomSheetCategoria"
-        AllowedState="All"
         Background="{StaticResource FondoPrincipal}"
         BackgroundColor="{StaticResource ColorFondoPrincipal}"
-        CollapseOnOverlayTap="True"
         CollapsedHeight="0"
         ContentWidthMode="Full"
         CornerRadius="20,20,0,0"
@@ -41,162 +39,212 @@
         GrabberHeight="5"
         GrabberWidth="90"
         IsModal="True"
-        IsOpen="{Binding IsBottomSheetOpen, Mode=TwoWay}"
-        State="Hidden">
-        <Grid>
-            <Button
-                BackgroundColor="{StaticResource ColorAzulPricipal}"
-                Command="{Binding MostrarBottonShellAnadirCategoriaCommand}"
-                CornerRadius="20"
-                HeightRequest="55"
-                HorizontalOptions="End"
-                ImageSource="icono_suma.svg"
-                VerticalOptions="End"
-                WidthRequest="75" />
-            <Grid RowDefinitions="Auto, Auto">
-                <!--  INGRESOS  -->
-                <Grid
+        IsOpen="True">
+        <bottomSheet:SfBottomSheet.Content>
+            <Grid Padding="{StaticResource PaddingPaginas}">
+                <!--  BOTON FLOTANTE QUE LLEVA A LA PAGINA DE ANADIR CATEGORIA  -->
+                <Button
+                    BackgroundColor="{StaticResource ColorAzulPricipal}"
+                    Clicked="Button_Clicked"
+                    Command="{Binding MostrarBottonShellAnadirCategoriaCommand}"
+                    CornerRadius="20"
+                    HeightRequest="55"
+                    HorizontalOptions="End"
+                    ImageSource="icono_suma.svg"
+                    VerticalOptions="End"
+                    WidthRequest="75" />
+
+                <Grid RowDefinitions="Auto, Auto">
+                    <!--  LISTA DE CATEGORIAS DE INGRESOS  -->
+                    <Grid
+                        Grid.Row="0"
+                        RowDefinitions="Auto, Auto"
+                        RowSpacing="8">
+                        <!--  TITULO DEL LISTADO INGRESOS  -->
+                        <Label
+                            Grid.Row="0"
+                            Style="{StaticResource TextoSubtítulo}"
+                            Text="Ingresos"
+                            TextColor="{StaticResource ColorTexto}" />
+                        <!--  BORDER LISTA DE CATEGORIAS DE INGRESOS  -->
+                        <Border
+                            Grid.Row="1"
+                            Stroke="{StaticResource Terciario}"
+                            StrokeShape="RoundRectangle 20"
+                            StrokeThickness="1"
+                            WidthRequest="380">
+                            <CollectionView ItemsSource="{Binding CategoriasIngreso}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <!--  MOLDE DE UNA CATEGORIA DE INGRESO  -->
+                                        <Grid ColumnDefinitions="Auto,Auto,Auto">
+                                            <Image
+                                                Grid.Column="0"
+                                                HeightRequest="40"
+                                                Source="{Binding Icono}"
+                                                WidthRequest="40" />
+                                            <Label
+                                                Grid.Column="1"
+                                                HorizontalOptions="Start"
+                                                Style="{StaticResource TextoParrafoPrincipal}"
+                                                Text="{Binding Descripcion}"
+                                                TextColor="{StaticResource ColorTexto}"
+                                                VerticalOptions="Center" />
+                                            <HorizontalStackLayout Grid.Column="2">
+                                                <ImageButton
+                                                    Aspect="AspectFill"
+                                                    Command="{Binding EliminarCategoriaCommand}"
+                                                    HeightRequest="24"
+                                                    Source="icono_eliminar.svg"
+                                                    WidthRequest="24" />
+                                                <ImageButton
+                                                    Aspect="AspectFill"
+                                                    Command="{Binding EliminarCategoriaCommand}"
+                                                    HeightRequest="24"
+                                                    Source="icono_editar.svg"
+                                                    WidthRequest="24" />
+                                            </HorizontalStackLayout>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </bottomSheet:SfBottomSheet.Content>
+
+        <!--  FONDO INFERIOR DEL BUTTONSHEET  -->
+        <bottomSheet:SfBottomSheet.BottomSheetContent>
+            <Grid
+                Padding="16"
+                RowDefinitions="Auto, Auto, Auto, Auto, Auto"
+                RowSpacing="16">
+                <Label
                     Grid.Row="0"
-                    RowDefinitions="Auto, Auto"
+                    Style="{StaticResource TextoEncabezadoSecundario}"
+                    Text="Anadir Nueva Categoria"
+                    TextColor="{StaticResource ColorTexoEntrada}" />
+                <!--  INPUT DE DESCRIPCION  -->
+                <VerticalStackLayout
+                    Grid.Row="1"
+                    Spacing="8"
+                    WidthRequest="380">
+                    <Label
+                        Style="{StaticResource TextoSubtítulo}"
+                        Text="Monto"
+                        TextColor="{StaticResource ColorAzulPricipal}" />
+                    <Border
+                        x:Name="borderMonto"
+                        StrokeShape="RoundRectangle 20"
+                        Style="{StaticResource bordeFormulario}">
+                        <Entry
+                            Keyboard="Default"
+                            Placeholder="Ej: Comida"
+                            PlaceholderColor="{StaticResource ColorPlaceholde}"
+                            Style="{StaticResource entradaFormulario}"
+                            Text="{Binding Descripcion, Mode=TwoWay}"
+                            VerticalOptions="Center" />
+                    </Border>
+                </VerticalStackLayout>
+                <!--  TIPO DE MOVIMIENTO  -->
+                <Grid
+                    Grid.Row="2"
+                    RowDefinitions="*,*"
                     RowSpacing="8">
                     <Label
                         Grid.Row="0"
                         Style="{StaticResource TextoSubtítulo}"
-                        Text="Ingresos"
-                        TextColor="{StaticResource ColorTexto}" />
-                    <Border
-                        Grid.Row="1"
-                        Stroke="{StaticResource Terciario}"
-                        StrokeShape="RoundRectangle 20"
-                        StrokeThickness="1"
-                        WidthRequest="380">
-                        <CollectionView ItemsSource="{Binding CategoriasIngreso}">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid ColumnDefinitions="Auto,Auto,Auto">
-                                        <Image
-                                            Grid.Column="0"
-                                            HeightRequest="40"
-                                            Source="{Binding Icono}"
-                                            WidthRequest="40" />
-                                        <Label
-                                            Grid.Column="1"
-                                            HorizontalOptions="Start"
-                                            Style="{StaticResource TextoParrafoPrincipal}"
-                                            Text="{Binding Descripcion}"
-                                            TextColor="{StaticResource ColorTexto}"
-                                            VerticalOptions="Center" />
-                                        <HorizontalStackLayout Grid.Column="2">
-                                            <ImageButton
-                                                Aspect="AspectFill"
-                                                Command="{Binding EliminarCategoriaCommand}"
-                                                HeightRequest="24"
-                                                Source="icono_eliminar.svg"
-                                                WidthRequest="24" />
-                                            <ImageButton
-                                                Aspect="AspectFill"
-                                                Command="{Binding EliminarCategoriaCommand}"
-                                                HeightRequest="24"
-                                                Source="icono_editar.svg"
-                                                WidthRequest="24" />
-                                        </HorizontalStackLayout>
-                                    </Grid>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </Border>
+                        Text="Tipo Movimiento"
+                        TextColor="{StaticResource ColorAzulPricipal}" />
+                    <HorizontalStackLayout Grid.Row="1">
+                        <buttons:SfRadioGroup x:Name="grupoCategoriaMovimiento" Orientation="Horizontal">
+                            <buttons:SfRadioButton
+                                x:Name="rdIngreso"
+                                CheckedColor="{StaticResource ColorCascaraNaranja}"
+                                FontFamily="PoppinsRegular"
+                                FontSize="16"
+                                IsChecked="True"
+                                Text="Ingreso"
+                                TextColor="{StaticResource ColorAzulPricipal}"
+                                UncheckedColor="{StaticResource ColorAzulPrincipalSuave}"
+                                Value="Ingreso" />
+                            <buttons:SfRadioButton
+                                x:Name="rdGasto"
+                                CheckedColor="{StaticResource ColorCascaraNaranja}"
+                                FontFamily="PoppinsRegular"
+                                FontSize="16"
+                                Text="Gasto"
+                                TextColor="{StaticResource ColorAzulPricipal}"
+                                UncheckedColor="{StaticResource ColorAzulPrincipalSuave}"
+                                Value="Gasto" />
+                        </buttons:SfRadioGroup>
+                    </HorizontalStackLayout>
                 </Grid>
+                <!--  ELECCION DE TARJETA  -->
+                <VerticalStackLayout Grid.Row="3" Spacing="8">
+                    <Label
+                        Style="{StaticResource TextoSubtítulo}"
+                        Text="Icono"
+                        TextColor="{StaticResource ColorAzulPricipal}" />
+                    <Border
+                        BackgroundColor="{StaticResource ColorTarjeta}"
+                        HeightRequest="52"
+                        Stroke="{StaticResource ColorTarjeta}"
+                        StrokeShape="RoundRectangle 20"
+                        WidthRequest="380">
+                        <editors:SfComboBox
+                            x:Name="cmbIcono"
+                            DisplayMemberPath="Descripcion"
+                            DropDownBackground="{StaticResource ColorFondoComponentes}"
+                            DropDownIconColor="{StaticResource ColorAzulPricipal}"
+                            DropDownPlacement="Top"
+                            DropDownStroke="{StaticResource ColorPlaceholde}"
+                            FontFamily="PoppinsRegular"
+                            FontSize="16"
+                            IsClearButtonVisible="False"
+                            IsFilteringEnabled="True"
+                            ItemsSource="{Binding ListaIconos, Mode=TwoWay}"
+                            NoResultsFoundText="Sin Resultado"
+                            Placeholder="Seleccionar Tarjeta"
+                            PlaceholderColor="#8C8C8C"
+                            SelectedItem="{Binding TarjetaSeleccionada, Mode=TwoWay}"
+                            Stroke="Transparent"
+                            TextColor="{StaticResource ColorTexoEntrada}"
+                            TextMemberPath="Nombre"
+                            VerticalOptions="End"
+                            VerticalTextAlignment="End"
+                            WidthRequest="348">
+                            <editors:SfComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid
+                                            Margin="16,8"
+                                            ColumnDefinitions="45,260"
+                                            ColumnSpacing="8"
+                                            HorizontalOptions="Start"
+                                            VerticalOptions="Center"
+                                            WidthRequest="380">
+                                            <Image
+                                                Grid.Column="0"
+                                                Aspect="AspectFill"
+                                                HorizontalOptions="Center"
+                                                Source="{Binding Ruta}"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                Grid.Column="1"
+                                                Style="{StaticResource TextoSecundario}"
+                                                Text="{Binding Nombre}"
+                                                TextColor="{StaticResource ColorTexoEntrada}"
+                                                VerticalOptions="Center" />
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </editors:SfComboBox.ItemTemplate>
+                        </editors:SfComboBox>
+                    </Border>
+                </VerticalStackLayout>
             </Grid>
-        </Grid>
-        <!--  FONDO INFERIOR DEL BUTTONSHEET  -->
-        <bottomSheet:SfBottomSheet.BottomSheetContent>
-            <CollectionView
-                BackgroundColor="{StaticResource FondoPrincipal}"
-                ItemsSource="{Binding ListaCategoriasActual}"
-                SelectedItem="{Binding CategoriaSeleccionada, Mode=TwoWay}"
-                SelectionChangedCommand="{Binding SeleccionarCategoriaGastoCommand}"
-                SelectionChangedCommandParameter="{Binding CategoriaSeleccionada}"
-                SelectionMode="Single">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid
-                            Margin="16"
-                            ColumnDefinitions="Auto,Auto,Auto,Auto,Auto"
-                            ColumnSpacing="16"
-                            HeightRequest="56"
-                            HorizontalOptions="Start"
-                            VerticalOptions="Center"
-                            WidthRequest="380">
-                            <!--  TITULO DEL BOTON SHEET  -->
-                            <Label
-                                Grid.Column="0"
-                                HorizontalOptions="Start"
-                                Style="{StaticResource TextoEncabezadoSecundario}"
-                                Text="{Binding DescripcionBottonSheet}"
-                                TextColor="{StaticResource ColorTexoEntrada}" />
-                            <!--  DESCRIPCION  -->
-                            <VerticalStackLayout
-                                Grid.Row="1"
-                                Spacing="8"
-                                WidthRequest="182">
-                                <Label
-                                    Style="{StaticResource TextoSubtítulo}"
-                                    Text="Monto"
-                                    TextColor="{StaticResource ColorAzulPricipal}" />
-                                <Border
-                                    x:Name="borderDescripcion"
-                                    StrokeShape="RoundRectangle 20"
-                                    Style="{StaticResource bordeFormulario}">
-                                    <Entry
-                                        Focused="entradaDescripcion_Focused"
-                                        Keyboard="Numeric"
-                                        Placeholder="0"
-                                        PlaceholderColor="{StaticResource ColorPlaceholde}"
-                                        Style="{StaticResource entradaFormulario}"
-                                        Text="{Binding Descripcion, Mode=TwoWay}"
-                                        Unfocused="entradaDescripcion_Unfocused"
-                                        VerticalOptions="Center" />
-                                </Border>
-                            </VerticalStackLayout>
-                            <!--  SELECCION DE TIPO DE CATEGORIA  -->
-                            <Grid
-                                Grid.Row="2"
-                                RowDefinitions="*,*"
-                                RowSpacing="8">
-                                <Label
-                                    Grid.Row="0"
-                                    Style="{StaticResource TextoSubtítulo}"
-                                    Text="Tipo de Categoria"
-                                    TextColor="{StaticResource ColorAzulPricipal}" />
-                                <HorizontalStackLayout Grid.Row="1">
-                                    <buttons:SfRadioGroup x:Name="grupoTipoCategoria" Orientation="Horizontal">
-                                        <buttons:SfRadioButton
-                                            x:Name="rdIngreso"
-                                            CheckedColor="{StaticResource ColorCascaraNaranja}"
-                                            FontFamily="PoppinsRegular"
-                                            FontSize="16"
-                                            IsChecked="{Binding EsIngreso, Mode=TwoWay}"
-                                            Text="Ingreso"
-                                            TextColor="{StaticResource ColorAzulPricipal}"
-                                            UncheckedColor="{StaticResource ColorAzulPrincipalSuave}"
-                                            Value="Credito" />
-                                        <buttons:SfRadioButton
-                                            x:Name="rdGasto"
-                                            CheckedColor="{StaticResource ColorCascaraNaranja}"
-                                            FontFamily="PoppinsRegular"
-                                            FontSize="16"
-                                            IsChecked="{Binding EsGasto, Mode=TwoWay}"
-                                            Text="Debito"
-                                            TextColor="{StaticResource ColorAzulPricipal}"
-                                            UncheckedColor="{StaticResource ColorAzulPrincipalSuave}"
-                                            Value="Debito" />
-                                    </buttons:SfRadioGroup>
-                                </HorizontalStackLayout>
-                            </Grid> 
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
         </bottomSheet:SfBottomSheet.BottomSheetContent>
     </bottomSheet:SfBottomSheet>
 
