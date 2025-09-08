@@ -1,3 +1,5 @@
+using FinanKey.Presentacion.ViewModels;
+
 namespace FinanKey.Presentacion.View;
 
 public partial class GestionCategoriaPage : ContentPage

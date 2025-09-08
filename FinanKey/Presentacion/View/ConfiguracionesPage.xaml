@@ -143,8 +143,7 @@
                     ColumnSpacing="16"
                     HeightRequest="70">
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Command="{Binding NavegarGestionCategoriaPageCommand}" />
+                        <TapGestureRecognizer Command="{Binding NavegarGestionCategoriaPageCommand}" />
                     </Grid.GestureRecognizers>
                     <Image
                         Grid.Column="0"

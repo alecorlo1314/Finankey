@@ -1,12 +1,75 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FinanKey.Presentacion.View.GestionCategoriaPage"
-             Title="GestionCategoriaPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="FinanKey.Presentacion.View.GestionCategoriaPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Gestionar Categorias"
+    Padding="{StaticResource PaddingPaginas}"
+    BackgroundColor="{StaticResource ColorFondoPrincipal}"
+    Shell.TabBarIsVisible="False">
+    <Grid>
+        <Button
+            BackgroundColor="{StaticResource ColorAzulPricipal}"
+            Command="{Binding MostrarBottonShellAnadirCategoriaCommand}"
+            CornerRadius="20"
+            HeightRequest="55"
+            HorizontalOptions="End"
+            ImageSource="icono_suma.svg"
+            VerticalOptions="End"
+            WidthRequest="75" />
+        <Grid RowDefinitions="Auto, Auto">
+            <!--  INGRESOS  -->
+            <Grid
+                Grid.Row="0"
+                RowDefinitions="Auto, Auto"
+                RowSpacing="8">
+                <Label
+                    Grid.Row="0"
+                    Style="{StaticResource TextoSubtítulo}"
+                    Text="Ingresos"
+                    TextColor="{StaticResource ColorTexto}" />
+                <Border
+                    Grid.Row="1"
+                    Stroke="{StaticResource Terciario}"
+                    StrokeShape="RoundRectangle 20"
+                    StrokeThickness="1"
+                    WidthRequest="380">
+                    <CollectionView ItemsSource="{Binding CategoriasIngreso}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="Auto,Auto,Auto">
+                                    <Image
+                                        Grid.Column="0"
+                                        HeightRequest="40"
+                                        Source="{Binding Icono}"
+                                        WidthRequest="40" />
+                                    <Label
+                                        Grid.Column="1"
+                                        HorizontalOptions="Start"
+                                        Style="{StaticResource TextoParrafoPrincipal}"
+                                        Text="{Binding Descripcion}"
+                                        TextColor="{StaticResource ColorTexto}"
+                                        VerticalOptions="Center" />
+                                    <HorizontalStackLayout Grid.Column="2">
+                                        <ImageButton
+                                            Aspect="AspectFill"
+                                            Command="{Binding EliminarCategoriaCommand}"
+                                            HeightRequest="24"
+                                            Source="icono_eliminar.svg"
+                                            WidthRequest="24" />
+                                        <ImageButton
+                                            Aspect="AspectFill"
+                                            Command="{Binding EliminarCategoriaCommand}"
+                                            HeightRequest="24"
+                                            Source="icono_editar.svg"
+                                            WidthRequest="24" />
+                                    </HorizontalStackLayout>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
 </ContentPage>
