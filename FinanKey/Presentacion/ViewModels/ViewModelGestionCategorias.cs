@@ -1,51 +1,92 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinanKey.Dominio.Models;
+using FinanKey.Aplicacion.UseCases;
 using System.Collections.ObjectModel;
 
 namespace FinanKey.Presentacion.ViewModels
 {
     public partial class ViewModelGestionCategorias : ObservableObject
     {
-        //ZONA DE LISTAS
+        #region INYECCION DE DEPENDENCIAS
+        private readonly ServicioCategoriaMovimiento _servicoCategoriaMovimiento;
+        #endregion
+
+        #region PROPIEDADES OBSERVABLES
+
+        // LISTAS - Cambiar a private set para mejor encapsulación
         [ObservableProperty]
-        public ObservableCollection<CategoriaMovimiento>? _listaCategorias;
-        //ZONA DE ATRIBUTOS
-        [ObservableProperty]
-        public bool _isBottomSheetOpen;
+        private ObservableCollection<CategoriaMovimiento> _listaCategoriaIngresos = new();
 
         [ObservableProperty]
-        public string? _descripcionCategoria;
+        private ObservableCollection<CategoriaMovimiento> _listaCategoriaGastos = new();
+
+        public ObservableCollection<Icono> ListaIconos { get; private set; } = new(); 
+
+        // ESTADO UI
+        [ObservableProperty]
+        private bool _isBottomSheetOpen;
 
         [ObservableProperty]
-        public string? _rutaIcono;
+        private bool _isLoading;
 
         [ObservableProperty]
-        public Icono? _iconoSeleccionado;
+        private bool _isGuardando;
+
+        // CAMPOS FORMULARIO
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(GuardarCategoriaCommand))] // ✅ Auto-validación
+        private string _descripcionCategoria = string.Empty;
 
         [ObservableProperty]
-        private string tipoMovimiento = "Ingreso"; // Valor inicial
+        [NotifyCanExecuteChangedFor(nameof(GuardarCategoriaCommand))] // ✅ Auto-validación
+        private Icono? _iconoSeleccionado;
+
         [ObservableProperty]
-        public bool _noHayCategoriasGastos = true;
-        [ObservableProperty]
-        public bool _HayCategoriasIngresos = false;
-   
-        public ViewModelGestionCategorias()
+        private string _tipoMovimiento = "Ingreso"; // ✅ Valor por defecto corregido
+
+        // ✅ PROPIEDADES CALCULADAS - Más eficiente que campos separados
+        public bool NoHayCategoriasIngresos => !HayCategoriasIngresos;
+        public bool HayCategoriasIngresos => ListaCategoriaIngresos?.Count > 0;
+        public bool NoHayCategoriasGastos => !HayCategoriasGastos;
+        public bool HayCategoriasGastos => ListaCategoriaGastos?.Count > 0;
+
+        #endregion
+
+        #region CONSTRUCTOR
+        public ViewModelGestionCategorias(ServicioCategoriaMovimiento servicoCategoriaMovimiento)
         {
-            cargarIconos();
+            _servicoCategoriaMovimiento = servicoCategoriaMovimiento ?? throw new ArgumentNullException(nameof(servicoCategoriaMovimiento));
+            CargarIconos();
+
+            //// ✅ Cargar datos iniciales
+            _ = Task.Run(async () => await CargarDatosInicialesAsync());
         }
+        #endregion
 
-        public ObservableCollection<Icono>? ListaIconos { get; set; }
-
-        [RelayCommand]
-        public Task MostrarBottonShellAnadirCategoria()
+        #region CARGA DE DATOS INICIALES
+        public async Task CargarDatosInicialesAsync()
         {
-            IsBottomSheetOpen = true;
-            return Task.CompletedTask;
+            try
+            {
+                IsLoading = true;
+                await CargarTodasLasCategorias();
+            }
+            catch (Exception ex)
+            {
+                await MostrarError("Error cargando datos iniciales", ex.Message);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
         }
-        private void cargarIconos()
+        #endregion
+
+        #region ICONOS - Más mantenible
+        private void CargarIconos()
         {
-            ListaIconos = new ObservableCollection<Icono>()
+            var iconos = new[]
             {
                 new Icono { Id = 1, Nombre = "Accesorio", Ruta = "icono_accesorio.svg" },
                 new Icono { Id = 2, Nombre = "Avión", Ruta = "icono_avion.svg" },
@@ -79,30 +120,233 @@ namespace FinanKey.Presentacion.ViewModels
                 new Icono { Id = 30, Nombre = "Trabajo", Ruta = "icono_trabajo.svg" },
                 new Icono { Id = 31, Nombre = "Videojuegos", Ruta = "icono_videojuegos.svg" },
             };
+
+            ListaIconos.Clear();
+            foreach (var icono in iconos)
+            {
+                ListaIconos.Add(icono);
+            }
+        }
+        #endregion
+
+        #region COMMANDS
+
+        [RelayCommand]
+        private void MostrarBottomSheetAnadirCategoria()
+        {
+            LimpiarFormulario();
+            IsBottomSheetOpen = true;
         }
 
         [RelayCommand]
-        public async Task GuardarCategoria()
+        private void CerrarBottomSheet()
         {
+            IsBottomSheetOpen = false;
+            LimpiarFormulario();
+        }
+
+        [RelayCommand(CanExecute = nameof(PuedeGuardarCategoria))]
+        private async Task GuardarCategoria()
+        {
+            if (IsGuardando) return;
+
             try
             {
-                if (string.IsNullOrWhiteSpace(DescripcionCategoria) || IconoSeleccionado == null)
+                IsGuardando = true;
+
+                var categoria = new CategoriaMovimiento
                 {
-                    await Shell.Current.DisplayAlert("Alerta", "Por favor, complete todos los campos.", "Aceptar");
-                    return;
-                }
-                CategoriaMovimiento categoriaMovimiento = new()
-                {
-                    Descripcion = DescripcionCategoria,
-                    Icon_id = IconoSeleccionado.Id,
+                    Descripcion = DescripcionCategoria.Trim(),
+                    Icon_id = IconoSeleccionado!.Id,
                     RutaIcono = IconoSeleccionado.Ruta,
                     TipoMovimiento = TipoMovimiento
                 };
+
+                var resultado = await _servicoCategoriaMovimiento.guardarCategoriaMovimiento(categoria);
+
+                if (resultado > 0)
+                {
+                    await MostrarExito($"'{DescripcionCategoria}' guardada exitosamente");
+
+                    // ✅ Agregar a la lista correspondiente sin recargar todo
+                    AgregarCategoriaALista(categoria);
+
+                    IsBottomSheetOpen = false;
+                    LimpiarFormulario();
+                }
+                else
+                {
+                    await MostrarError("Error", "No se pudo guardar la categoría");
+                }
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+                await MostrarError("Error guardando categoría", ex.Message);
+            }
+            finally
+            {
+                IsGuardando = false;
             }
         }
+
+        [RelayCommand]
+        private async Task RefrescarCategorias()
+        {
+            try
+            {
+                IsLoading = true;
+                await CargarTodasLasCategorias();
+            }
+            catch (Exception ex)
+            {
+                await MostrarError("Error refrescando", ex.Message);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
+        //[RelayCommand]
+        //private async Task EliminarCategoria(CategoriaMovimiento categoria)
+        //{
+        //    if (categoria == null) return;
+
+        //    var confirmar = await Shell.Current.DisplayAlert(
+        //        "Confirmar",
+        //        $"¿Eliminar '{categoria.Descripcion}'?",
+        //        "Sí", "No");
+
+        //    if (!confirmar) return;
+
+        //    try
+        //    {
+        //        IsLoading = true;
+        //        var resultado = await _servicoCategoriaMovimiento.EliminarCategoriaAsync(categoria.Id);
+
+        //        if (resultado > 0)
+        //        {
+        //            RemoverCategoriaDeLista(categoria);
+        //            await MostrarExito("Categoría eliminada");
+        //        }
+        //        else
+        //        {
+        //            await MostrarError("Error", "No se pudo eliminar la categoría");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await MostrarError("Error eliminando", ex.Message);
+        //    }
+        //    finally
+        //    {
+        //        IsLoading = false;
+        //    }
+        //}
+
+        #endregion
+
+        #region MÉTODOS PRIVADOS
+
+        private bool PuedeGuardarCategoria()
+        {
+            return !string.IsNullOrWhiteSpace(DescripcionCategoria) &&
+                   IconoSeleccionado != null &&
+                   !IsGuardando;
+        }
+
+        private async Task CargarTodasLasCategorias()
+        {
+            var todasCategorias = await _servicoCategoriaMovimiento.ObtenerTodasAsync();
+            if (todasCategorias == null) return;
+
+            //  Limpiar y llenar ambas listas eficientemente
+            ListaCategoriaIngresos.Clear();
+            ListaCategoriaGastos.Clear();
+
+            foreach (var categoria in todasCategorias)
+            {
+                // ✅ Asociar icono si es necesario
+                //if (categoria.Icon_id > 0)
+                //{
+                //    categoria.Icono = ListaIconos.FirstOrDefault(i => i.Id == categoria.Icon_id);
+                //}
+
+                if (categoria.TipoMovimiento == "Ingreso")
+                {
+                    ListaCategoriaIngresos.Add(categoria);
+                }
+                else if (categoria.TipoMovimiento == "Gasto")
+                {
+                    ListaCategoriaGastos.Add(categoria);
+                }
+            }
+
+            // ✅ Notificar cambios en propiedades calculadas
+            OnPropertyChanged(nameof(HayCategoriasIngresos));
+            OnPropertyChanged(nameof(NoHayCategoriasIngresos));
+            OnPropertyChanged(nameof(HayCategoriasGastos));
+            OnPropertyChanged(nameof(NoHayCategoriasGastos));
+        }
+
+        private void AgregarCategoriaALista(CategoriaMovimiento categoria)
+        {
+            // ✅ Asociar icono
+            categoria.Icono = ListaIconos.FirstOrDefault(i => i.Id == categoria.Icon_id);
+
+            if (categoria.TipoMovimiento == "Ingreso")
+            {
+                ListaCategoriaIngresos.Add(categoria);
+                OnPropertyChanged(nameof(HayCategoriasIngresos));
+                OnPropertyChanged(nameof(NoHayCategoriasIngresos));
+            }
+            else if (categoria.TipoMovimiento == "Gasto")
+            {
+                ListaCategoriaGastos.Add(categoria);
+                OnPropertyChanged(nameof(HayCategoriasGastos));
+                OnPropertyChanged(nameof(NoHayCategoriasGastos));
+            }
+        }
+
+        private void RemoverCategoriaDeLista(CategoriaMovimiento categoria)
+        {
+            if (categoria.TipoMovimiento == "Ingreso")
+            {
+                ListaCategoriaIngresos.Remove(categoria);
+                OnPropertyChanged(nameof(HayCategoriasIngresos));
+                OnPropertyChanged(nameof(NoHayCategoriasIngresos));
+            }
+            else if (categoria.TipoMovimiento == "Gasto")
+            {
+                ListaCategoriaGastos.Remove(categoria);
+                OnPropertyChanged(nameof(HayCategoriasGastos));
+                OnPropertyChanged(nameof(NoHayCategoriasGastos));
+            }
+        }
+
+        private void LimpiarFormulario()
+        {
+            DescripcionCategoria = string.Empty;
+            IconoSeleccionado = null;
+            TipoMovimiento = "Ingreso";
+        }
+
+        partial void OnTipoMovimientoChanged(string value)
+        {
+            // ✅ Reaccionar al cambio de tipo si es necesario
+            System.Diagnostics.Debug.WriteLine($"Tipo movimiento cambiado a: {value}");
+        }
+
+        private async Task MostrarError(string titulo, string mensaje)
+        {
+            await Shell.Current.DisplayAlert(titulo, mensaje, "OK");
+        }
+
+        private async Task MostrarExito(string mensaje)
+        {
+            await Shell.Current.DisplayAlert("Éxito", mensaje, "OK");
+        }
+
+        #endregion
     }
-}   
+}

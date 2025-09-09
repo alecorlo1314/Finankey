@@ -3,7 +3,7 @@ using FinanKey.Dominio.Models;
 
 namespace FinanKey.Dominio.Interfaces
 {
-    internal interface IServicioCategoriaMovimiento
+    public interface IServicioCategoriaMovimiento
     {
         Task<List<CategoriaMovimiento>> ObtenerTodosAsync();
         Task<CategoriaMovimiento?> ObtenerPorIdAsync(int id);

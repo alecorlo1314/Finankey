@@ -5,13 +5,13 @@ using SQLite;
 
 namespace FinanKey.Infraestructura.Repositorios
 {
-    public class CategoriaMovimientoRepositorio : IServicioCategoriaMovimiento
+    public class RepositorioCategoriaMovimiento : IServicioCategoriaMovimiento
     {
-        private readonly SQLiteAsyncConnection _database;
+        private readonly RepositorioBaseDatos _servicioBaseDatos;
 
-        public CategoriaMovimientoRepositorio(SQLiteAsyncConnection database)
+        public RepositorioCategoriaMovimiento(RepositorioBaseDatos servicioBaseDatos)
         {
-            _database = database;
+            _servicioBaseDatos = servicioBaseDatos;
         }
 
         /// <summary>
@@ -21,9 +21,13 @@ namespace FinanKey.Infraestructura.Repositorios
         {
             try
             {
-                return await _database.Table<CategoriaMovimiento>()
+                //Obtenemos la conexion a la base de datos
+                var conexion = await _servicioBaseDatos.ObtenerConexion();
+
+                var listaCategorias = await conexion.Table<CategoriaMovimiento>()
                                      .OrderBy(c => c.Descripcion)
                                      .ToListAsync();
+                return listaCategorias;
             }
             catch (Exception ex)
             {
@@ -38,7 +42,9 @@ namespace FinanKey.Infraestructura.Repositorios
         {
             try
             {
-                return await _database.Table<CategoriaMovimiento>()
+                //Obtenemos la conexion a la base de datos
+                var conexion = await _servicioBaseDatos.ObtenerConexion();
+                return await conexion.Table<CategoriaMovimiento>()
                                      .Where(c => c.Id == id)
                                      .FirstOrDefaultAsync();
             }
@@ -55,10 +61,16 @@ namespace FinanKey.Infraestructura.Repositorios
         {
             try
             {
-                return await _database.Table<CategoriaMovimiento>()
-                                     .Where(c => c.TipoMovimiento == tipoMovimiento)
+                //Obtenemos la conexion a la base de datos
+                var conexion = await _servicioBaseDatos.ObtenerConexion();
+
+                //// Usar comparación más robusta
+                var listaCategorias = await conexion.Table<CategoriaMovimiento>()
+                                     .Where(c => c.TipoMovimiento != null &&
+                                                c.TipoMovimiento.Equals(tipoMovimiento))
                                      .OrderBy(c => c.Descripcion)
                                      .ToListAsync();
+                return listaCategorias;
             }
             catch (Exception ex)
             {
@@ -73,11 +85,13 @@ namespace FinanKey.Infraestructura.Repositorios
         {
             try
             {
-                return await _database.Table<CategoriaMovimiento>()
+                //Obtenemos la conexion a la base de datos
+                var conexion = await _servicioBaseDatos.ObtenerConexion();
+                return await conexion.Table<CategoriaMovimiento>()
                                      .Where(c => c.Descripcion == descripcion)
                                      .FirstOrDefaultAsync();
             }
-            catch (Exception ex)
+            catch (Exception ex)    
             {
                 throw new Exception($"Error al obtener categoría por descripción {descripcion}: {ex.Message}", ex);
             }
@@ -90,6 +104,9 @@ namespace FinanKey.Infraestructura.Repositorios
         {
             try
             {
+                //Obtenemos la conexion a la base de datos
+                var conexion = await _servicioBaseDatos.ObtenerConexion();
+
                 // Validar que no existe una categoría con la misma descripción
                 var existe = await ExisteDescripcionAsync(categoriaMovimiento.Descripcion ?? string.Empty);
                 if (existe)
@@ -97,7 +114,7 @@ namespace FinanKey.Infraestructura.Repositorios
                     throw new InvalidOperationException($"Ya existe una categoría con la descripción '{categoriaMovimiento.Descripcion}'");
                 }
 
-                return await _database.InsertAsync(categoriaMovimiento);
+                return await conexion.InsertAsync(categoriaMovimiento);
             }
             catch (Exception ex)
             {
@@ -112,6 +129,7 @@ namespace FinanKey.Infraestructura.Repositorios
         {
             try
             {
+                var conexion = await _servicioBaseDatos.ObtenerConexion();
                 // Validar que no existe otra categoría con la misma descripción
                 var existe = await ExisteDescripcionAsync(categoriaMovimiento.Descripcion ?? string.Empty, categoriaMovimiento.Id);
                 if (existe)
@@ -119,7 +137,7 @@ namespace FinanKey.Infraestructura.Repositorios
                     throw new InvalidOperationException($"Ya existe otra categoría con la descripción '{categoriaMovimiento.Descripcion}'");
                 }
 
-                return await _database.UpdateAsync(categoriaMovimiento);
+                return await conexion.UpdateAsync(categoriaMovimiento);
             }
             catch (Exception ex)
             {
@@ -134,7 +152,9 @@ namespace FinanKey.Infraestructura.Repositorios
         {
             try
             {
-                return await _database.DeleteAsync<CategoriaMovimiento>(id);
+                //Obtenemos la conexion a la base de datos
+                var conexion = await _servicioBaseDatos.ObtenerConexion();
+                return await conexion.DeleteAsync<CategoriaMovimiento>(id);
             }
             catch (Exception ex)
             {
@@ -149,7 +169,9 @@ namespace FinanKey.Infraestructura.Repositorios
         {
             try
             {
-                return await _database.DeleteAsync(categoriaMovimiento);
+                //Obtenemos la conexion a la base de datos
+                var conexion = await _servicioBaseDatos.ObtenerConexion();
+                return await conexion.DeleteAsync(categoriaMovimiento);
             }
             catch (Exception ex)
             {
@@ -164,7 +186,9 @@ namespace FinanKey.Infraestructura.Repositorios
         {
             try
             {
-                var count = await _database.Table<CategoriaMovimiento>()
+                //Obtenemos la conexion a la base de datos
+                var conexion = await _servicioBaseDatos.ObtenerConexion();
+                var count = await conexion.Table<CategoriaMovimiento>()
                                           .Where(c => c.Descripcion == descripcion)
                                           .CountAsync();
                 return count > 0;
@@ -182,7 +206,9 @@ namespace FinanKey.Infraestructura.Repositorios
         {
             try
             {
-                var count = await _database.Table<CategoriaMovimiento>()
+                //Obtenemos la conexion a la base de datos
+                var conexion = await _servicioBaseDatos.ObtenerConexion();
+                var count = await conexion.Table<CategoriaMovimiento>()
                                           .Where(c => c.Descripcion == descripcion && c.Id != idExcluir)
                                           .CountAsync();
                 return count > 0;

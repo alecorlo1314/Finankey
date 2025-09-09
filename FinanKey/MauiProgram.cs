@@ -20,13 +20,13 @@ namespace FinanKey
             Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoUnderline", (handler, view) =>
             {
 #if ANDROID
-                    handler.PlatformView.Background = null;
+                handler.PlatformView.Background = null;
 #endif
             });
             Microsoft.Maui.Handlers.DatePickerHandler.Mapper.AppendToMapping("NoUnderline", (handler, view) =>
             {
 #if ANDROID
-                    handler.PlatformView.Background = null;
+                handler.PlatformView.Background = null;
 #endif
             });
 
@@ -66,16 +66,20 @@ namespace FinanKey
             builder.Services.AddSingleton<ViewModelAjustes>();
             builder.Services.AddSingleton<ViewModelGestionCategorias>();
             //Registrar servicios con inyección de dependencias en Respositorios
-            builder.Services.AddSingleton<RepositorioBaseDatos>();
             builder.Services.AddSingleton<RespositorioMovimiento>();
             builder.Services.AddSingleton<RepositorioTarjeta>();
+            builder.Services.AddSingleton<RepositorioCategoriaMovimiento>();
+            builder.Services.AddSingleton<RepositorioBaseDatos>();
             //Registrar Interfaz de servicios de Interfaz con inyección de dependencias
             builder.Services.AddSingleton<IServicioMovimiento, RespositorioMovimiento>();
             builder.Services.AddSingleton<IServicioTarjeta, RepositorioTarjeta>();
+            builder.Services.AddSingleton<IServicioCategoriaMovimiento, RepositorioCategoriaMovimiento>();
+            builder.Services.AddSingleton<IServicioBaseDatos, RepositorioBaseDatos>();
             //Registrar Interfaz de servicios de Interfaz con inyección de dependencias
             builder.Services.AddSingleton<ServicioMovimiento>();
             builder.Services.AddSingleton<ServicioTarjeta>();
             builder.Services.AddSingleton<ServicioInicio>();
+            builder.Services.AddSingleton<ServicioCategoriaMovimiento>();
             //Registrar comportamiento personalizado Behavior
             builder.Services.AddSingleton<SfRadioButtonStateChangedBehavior>();
 
@@ -85,7 +89,7 @@ namespace FinanKey
 
 #if ANDROID
 
-        builder.SetDefaultNavigationBarAppearance(Color.FromArgb("#FFFFFF"));
+            builder.SetDefaultNavigationBarAppearance(Color.FromArgb("#FFFFFF"));
 
 #endif
             return builder.Build();
