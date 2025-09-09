@@ -95,7 +95,7 @@ namespace FinanKey.Presentacion.ViewModels
                 actual.TipoMovimiento == nuevo.TipoMovimiento &&
                 actual.Monto == nuevo.Monto &&
                 actual.Descripcion == nuevo.Descripcion &&
-                actual.Fecha == nuevo.Fecha &&
+                actual.FechaMovimiento == nuevo.FechaMovimiento &&
                 actual.CategoriaId == nuevo.CategoriaId &&
                 actual.TarjetaId == nuevo.TarjetaId &&
                 actual.EsPagado == nuevo.EsPagado &&

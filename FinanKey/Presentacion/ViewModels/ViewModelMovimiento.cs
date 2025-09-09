@@ -159,7 +159,7 @@ namespace FinanKey.Presentacion.ViewModels
                 TipoMovimiento = Enums.TipoMovimiento.Gasto.ToString(),
                 Monto = Monto,
                 Descripcion = this.Descripcion,
-                Fecha = Fecha,
+                FechaMovimiento = Fecha,
                 CategoriaId = CategoriaSeleccionada.Id,
                 TarjetaId = TarjetaSeleccionada.Id,
                 EsPagado = this.EstaPagado,

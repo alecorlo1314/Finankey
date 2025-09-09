@@ -11,7 +11,7 @@
     BackgroundColor="{StaticResource ColorFondoPrincipal}"
     Shell.TabBarIsVisible="False">
     <ContentPage.Resources>
-        <!--  CAMBIO COLOR DE LA SELECCION DE CATEGORIA EN BOTTOM SHEET  -->
+        <!--  ESTILO PARA SELECCIÓN EN GRIDS  -->
         <Style TargetType="Grid">
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>
@@ -35,83 +35,237 @@
         CollapsedHeight="0"
         ContentWidthMode="Full"
         CornerRadius="20,20,0,0"
+        FullExpandedRatio="0.8"
         GrabberBackground="{StaticResource ColorIconoNavBar}"
         GrabberHeight="5"
         GrabberWidth="90"
         IsModal="True"
-        IsOpen="True">
+        IsOpen="True"
+        State="FullExpanded">
+
+
+        <!--  CONTENIDO PRINCIPAL - LISTAS DE CATEGORÍAS  -->
         <bottomSheet:SfBottomSheet.Content>
             <Grid Padding="{StaticResource PaddingPaginas}">
-                <!--  BOTON FLOTANTE QUE LLEVA A LA PAGINA DE ANADIR CATEGORIA  -->
+
+                <!--  BOTÓN FLOTANTE MEJORADO  -->
                 <Button
                     BackgroundColor="{StaticResource ColorAzulPricipal}"
                     Clicked="Button_Clicked"
-                    Command="{Binding MostrarBottonShellAnadirCategoriaCommand}"
-                    CornerRadius="20"
-                    HeightRequest="55"
+                    Command="{Binding MostrarBottomSheetAnadirCategoriaCommand}"
+                    CornerRadius="28"
+                    HeightRequest="56"
                     HorizontalOptions="End"
                     ImageSource="icono_suma.svg"
                     VerticalOptions="End"
-                    WidthRequest="75" />
+                    WidthRequest="56"
+                    ZIndex="10" />
 
-                <Grid RowDefinitions="Auto, Auto">
-                    <!--  LISTA DE CATEGORIAS DE INGRESOS  -->
-                    <Grid
-                        Grid.Row="0"
-                        RowDefinitions="Auto, Auto"
-                        RowSpacing="8">
-                        <!--  TITULO DEL LISTADO INGRESOS  -->
-                        <Label
-                            Grid.Row="0"
-                            Style="{StaticResource TextoSubtítulo}"
-                            Text="Ingresos"
-                            TextColor="{StaticResource ColorTexto}" />
-                        <!--  BORDER LISTA DE CATEGORIAS DE INGRESOS  -->
-                        <Border
-                            Grid.Row="1"
-                            Stroke="{StaticResource Terciario}"
-                            StrokeShape="RoundRectangle 20"
-                            StrokeThickness="1"
-                            WidthRequest="380">
-                            <CollectionView ItemsSource="{Binding CategoriasIngreso}">
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate>
-                                        <!--  MOLDE DE UNA CATEGORIA DE INGRESO  -->
-                                        <Grid ColumnDefinitions="Auto,Auto,Auto">
-                                            <Image
-                                                Grid.Column="0"
-                                                HeightRequest="40"
-                                                Source="{Binding Icono}"
-                                                WidthRequest="40" />
-                                            <Label
-                                                Grid.Column="1"
-                                                HorizontalOptions="Start"
-                                                Style="{StaticResource TextoParrafoPrincipal}"
-                                                Text="{Binding Descripcion}"
-                                                TextColor="{StaticResource ColorTexto}"
-                                                VerticalOptions="Center" />
-                                            <HorizontalStackLayout Grid.Column="2">
-                                                <ImageButton
-                                                    Aspect="AspectFill"
-                                                    Command="{Binding EliminarCategoriaCommand}"
-                                                    HeightRequest="24"
-                                                    Source="icono_eliminar.svg"
-                                                    WidthRequest="24" />
-                                                <ImageButton
-                                                    Aspect="AspectFill"
-                                                    Command="{Binding EliminarCategoriaCommand}"
-                                                    HeightRequest="24"
-                                                    Source="icono_editar.svg"
-                                                    WidthRequest="24" />
-                                            </HorizontalStackLayout>
-                                        </Grid>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
-                        </Border>
-                    </Grid>
-                </Grid>
+                <!--  LOADING INDICATOR  -->
+                <ActivityIndicator
+                    HeightRequest="50"
+                    HorizontalOptions="Center"
+                    IsRunning="{Binding IsLoading}"
+                    IsVisible="{Binding IsLoading}"
+                    VerticalOptions="Center"
+                    WidthRequest="50"
+                    ZIndex="5"
+                    Color="{StaticResource ColorAzulPricipal}" />
+
+                <!--  CONTENIDO PRINCIPAL CON SCROLL  -->
+                <ScrollView>
+                    <StackLayout Spacing="24">
+
+                        <!--  SECCIÓN INGRESOS  -->
+                        <Grid RowDefinitions="Auto, Auto">
+                            <Grid
+                                Grid.Row="0"
+                                RowDefinitions="Auto, Auto"
+                                RowSpacing="8">
+                                <!--  TITULO DEL LISTADO INGRESOS  -->
+                                <Label
+                                    Grid.Row="0"
+                                    Style="{StaticResource TextoSubtítulo}"
+                                    Text="Ingresos"
+                                    TextColor="{StaticResource ColorTexto}" />
+                                <!--  BORDER LISTA DE CATEGORIAS DE INGRESOS  -->
+                                <Border
+                                    Grid.Row="1"
+                                    Stroke="{StaticResource Terciario}"
+                                    StrokeShape="RoundRectangle 20"
+                                    StrokeThickness="1"
+                                    WidthRequest="380">
+                                    <CollectionView ItemsSource="{Binding ListaCategoriaIngresos}">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <!--  MOLDE DE UNA CATEGORIA DE INGRESO  -->
+                                                <Grid>
+                                                    <Grid
+                                                        Padding="16,18"
+                                                        ColumnDefinitions="Auto,Auto,Auto"
+                                                        ColumnSpacing="16"
+                                                        HeightRequest="56">
+                                                        <Image
+                                                            Grid.Column="0"
+                                                            HeightRequest="40"
+                                                            Source="{Binding RutaIcono}"
+                                                            WidthRequest="40" />
+                                                        <Label
+                                                            Grid.Column="1"
+                                                            HorizontalOptions="Start"
+                                                            Style="{StaticResource TextoParrafoPrincipal}"
+                                                            Text="{Binding Descripcion}"
+                                                            TextColor="{StaticResource ColorTexto}"
+                                                            VerticalOptions="Center"
+                                                            WidthRequest="212" />
+                                                        <HorizontalStackLayout
+                                                            Grid.Column="2"
+                                                            Spacing="16"
+                                                            WidthRequest="64">
+                                                            <ImageButton
+                                                                Aspect="AspectFill"
+                                                                Command="{Binding EliminarCategoriaCommand}"
+                                                                HeightRequest="24"
+                                                                Source="icono_eliminar.svg"
+                                                                WidthRequest="24" />
+                                                            <ImageButton
+                                                                Aspect="AspectFill"
+                                                                Command="{Binding EliminarCategoriaCommand}"
+                                                                HeightRequest="24"
+                                                                Source="icono_editar.svg"
+                                                                WidthRequest="24" />
+                                                        </HorizontalStackLayout>
+                                                    </Grid>
+                                                    <Border
+                                                        HeightRequest="1"
+                                                        Stroke="{StaticResource Terciario}"
+                                                        VerticalOptions="Start"
+                                                        WidthRequest="380" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </Border>
+                                <!--  IMAGEN DE NO HAY CATEGORIAS DE INGRESOS  -->
+                                <VerticalStackLayout
+                                    Grid.Row="1"
+                                    HorizontalOptions="Center"
+                                    IsVisible="{Binding NoHayCategoriasIngresos, Mode=TwoWay}"
+                                    VerticalOptions="Center">
+                                    <Image Aspect="AspectFit" Source="imagen_sin_categoria.svg" />
+                                    <Label
+                                        HorizontalOptions="Center"
+                                        Style="{StaticResource TextoEncabezadoSecundario}"
+                                        Text="No hay categorías"
+                                        TextColor="{StaticResource ColorTexto}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        HorizontalOptions="Center"
+                                        Style="{StaticResource TextoLabelInputMenusPequeños}"
+                                        Text="Crea una nueva categoría para empezar."
+                                        TextColor="{StaticResource Secundario}"
+                                        VerticalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Grid>
+
+                        </Grid>
+                        <!--  SECCIÓN GASTOS  -->
+                        <Grid RowDefinitions="Auto, Auto">
+                            <Grid
+                                Grid.Row="0"
+                                RowDefinitions="Auto, Auto"
+                                RowSpacing="8">
+                                <!--  TITULO DEL LISTADO GASTOS  -->
+                                <Label
+                                    Grid.Row="0"
+                                    Style="{StaticResource TextoSubtítulo}"
+                                    Text="Gastos"
+                                    TextColor="{StaticResource ColorTexto}" />
+                                <!--  BORDER LISTA DE CATEGORIAS DE GASTOS  -->
+                                <Border
+                                    Grid.Row="1"
+                                    Stroke="{StaticResource Terciario}"
+                                    StrokeShape="RoundRectangle 20"
+                                    StrokeThickness="1"
+                                    WidthRequest="380">
+                                    <CollectionView ItemsSource="{Binding ListaCategoriaGastos}">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <!--  MOLDE DE UNA CATEGORIA DE GASTO  -->
+                                                <Grid>
+                                                    <Grid
+                                                        Padding="16,18"
+                                                        ColumnDefinitions="Auto,Auto,Auto"
+                                                        ColumnSpacing="16"
+                                                        HeightRequest="56">
+                                                        <Image
+                                                            Grid.Column="0"
+                                                            HeightRequest="40"
+                                                            Source="{Binding RutaIcono}"
+                                                            WidthRequest="40" />
+                                                        <Label
+                                                            Grid.Column="1"
+                                                            HorizontalOptions="Start"
+                                                            Style="{StaticResource TextoParrafoPrincipal}"
+                                                            Text="{Binding Descripcion}"
+                                                            TextColor="{StaticResource ColorTexto}"
+                                                            VerticalOptions="Center"
+                                                            WidthRequest="212" />
+                                                        <!--  BOTONES ACCIÓN  -->
+                                                        <HorizontalStackLayout Grid.Column="2" Spacing="16">
+                                                            <ImageButton
+                                                                BackgroundColor="Transparent"
+                                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EliminarCategoriaCommand}"
+                                                                CommandParameter="{Binding .}"
+                                                                HeightRequest="24"
+                                                                Source="icono_eliminar.svg"
+                                                                WidthRequest="24" />
+                                                            <ImageButton
+                                                                BackgroundColor="Transparent"
+                                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditarCategoriaCommand}"
+                                                                CommandParameter="{Binding .}"
+                                                                HeightRequest="24"
+                                                                Source="icono_editar.svg"
+                                                                WidthRequest="24" />
+                                                        </HorizontalStackLayout>
+                                                    </Grid>
+                                                    <Border
+                                                        HeightRequest="1"
+                                                        Stroke="{StaticResource Terciario}"
+                                                        VerticalOptions="Start"
+                                                        WidthRequest="380" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </Border>
+                                <!--  IMAGEN DE NO HAY CATEGORIAS DE INGRESOS  -->
+                                <VerticalStackLayout
+                                    Grid.Row="1"
+                                    HorizontalOptions="Center"
+                                    IsVisible="{Binding NoHayCategoriasGastos, Mode=TwoWay}"
+                                    VerticalOptions="Center">
+                                    <Image Aspect="AspectFit" Source="imagen_sin_categoria.svg" />
+                                    <Label
+                                        HorizontalOptions="Center"
+                                        Style="{StaticResource TextoEncabezadoSecundario}"
+                                        Text="No hay categorías"
+                                        TextColor="{StaticResource ColorTexto}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        HorizontalOptions="Center"
+                                        Style="{StaticResource TextoLabelInputMenusPequeños}"
+                                        Text="Crea una nueva categoría para empezar."
+                                        TextColor="{StaticResource Secundario}"
+                                        VerticalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Grid>
+
+                        </Grid>
+                    </StackLayout>
+                </ScrollView>
             </Grid>
+
         </bottomSheet:SfBottomSheet.Content>
 
         <!--  FONDO INFERIOR DEL BUTTONSHEET  -->
@@ -125,7 +279,7 @@
                     Style="{StaticResource TextoEncabezadoSecundario}"
                     Text="Anadir Nueva Categoria"
                     TextColor="{StaticResource ColorTexoEntrada}" />
-                <!--  INPUT DE DESCRIPCION  -->
+                <!--  DESCRIPCION  -->
                 <VerticalStackLayout
                     Grid.Row="1"
                     Spacing="8"
@@ -143,7 +297,7 @@
                             Placeholder="Ej: Comida"
                             PlaceholderColor="{StaticResource ColorPlaceholde}"
                             Style="{StaticResource entradaFormulario}"
-                            Text="{Binding Descripcion, Mode=TwoWay}"
+                            Text="{Binding DescripcionCategoria, Mode=TwoWay}"
                             VerticalOptions="Center" />
                     </Border>
                 </VerticalStackLayout>
@@ -158,7 +312,11 @@
                         Text="Tipo Movimiento"
                         TextColor="{StaticResource ColorAzulPricipal}" />
                     <HorizontalStackLayout Grid.Row="1">
-                        <buttons:SfRadioGroup x:Name="grupoCategoriaMovimiento" Orientation="Horizontal">
+                        <buttons:SfRadioGroup
+                            x:Name="grupoCategoriaMovimiento"
+                            Orientation="Horizontal"
+                            SelectedValue="{Binding TipoMovimiento}">
+
                             <buttons:SfRadioButton
                                 x:Name="rdIngreso"
                                 CheckedColor="{StaticResource ColorCascaraNaranja}"
@@ -169,6 +327,7 @@
                                 TextColor="{StaticResource ColorAzulPricipal}"
                                 UncheckedColor="{StaticResource ColorAzulPrincipalSuave}"
                                 Value="Ingreso" />
+
                             <buttons:SfRadioButton
                                 x:Name="rdGasto"
                                 CheckedColor="{StaticResource ColorCascaraNaranja}"
@@ -178,10 +337,11 @@
                                 TextColor="{StaticResource ColorAzulPricipal}"
                                 UncheckedColor="{StaticResource ColorAzulPrincipalSuave}"
                                 Value="Gasto" />
+
                         </buttons:SfRadioGroup>
                     </HorizontalStackLayout>
                 </Grid>
-                <!--  ELECCION DE TARJETA  -->
+                <!--  ELECCION DE ICONO  -->
                 <VerticalStackLayout Grid.Row="3" Spacing="8">
                     <Label
                         Style="{StaticResource TextoSubtítulo}"
@@ -195,10 +355,10 @@
                         WidthRequest="380">
                         <editors:SfComboBox
                             x:Name="cmbIcono"
-                            DisplayMemberPath="Descripcion"
+                            DisplayMemberPath="Nombre"
                             DropDownBackground="{StaticResource ColorFondoComponentes}"
                             DropDownIconColor="{StaticResource ColorAzulPricipal}"
-                            DropDownPlacement="Top"
+                            DropDownPlacement="Auto"
                             DropDownStroke="{StaticResource ColorPlaceholde}"
                             FontFamily="PoppinsRegular"
                             FontSize="16"
@@ -208,7 +368,7 @@
                             NoResultsFoundText="Sin Resultado"
                             Placeholder="Seleccionar Tarjeta"
                             PlaceholderColor="#8C8C8C"
-                            SelectedItem="{Binding TarjetaSeleccionada, Mode=TwoWay}"
+                            SelectedItem="{Binding IconoSeleccionado, Mode=TwoWay}"
                             Stroke="Transparent"
                             TextColor="{StaticResource ColorTexoEntrada}"
                             TextMemberPath="Nombre"
@@ -244,6 +404,18 @@
                         </editors:SfComboBox>
                     </Border>
                 </VerticalStackLayout>
+                <!--  BOTONES  -->
+                <Button
+                    Grid.Row="4"
+                    BackgroundColor="{StaticResource ColorAzulPricipal}"
+                    Command="{Binding GuardarCategoriaCommand}"
+                    CornerRadius="20"
+                    FontFamily="PoppinsBold"
+                    FontSize="16"
+                    HorizontalOptions="Center"
+                    Text="Guardar"
+                    TextColor="{StaticResource ColorFondoComponentes}"
+                    WidthRequest="221" />
             </Grid>
         </bottomSheet:SfBottomSheet.BottomSheetContent>
     </bottomSheet:SfBottomSheet>

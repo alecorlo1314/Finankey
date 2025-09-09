@@ -4,11 +4,20 @@ namespace FinanKey.Presentacion.View;
 
 public partial class GestionCategoriaPage : ContentPage
 {
-	public GestionCategoriaPage(ViewModelGestionCategorias viewModelGestionCategorias)
+    //Inteccion de dependencias
+    private readonly ViewModelGestionCategorias _viewModelGestionCategorias;
+
+    public GestionCategoriaPage(ViewModelGestionCategorias viewModelGestionCategorias)
 	{
 		InitializeComponent();
-        BindingContext = viewModelGestionCategorias;
+        _viewModelGestionCategorias = viewModelGestionCategorias;
+        BindingContext = _viewModelGestionCategorias;
 	}
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        _ = _viewModelGestionCategorias.CargarDatosInicialesAsync();
+    }
 
     private void entradaDescripcion_Focused(object sender, FocusEventArgs e)
     {

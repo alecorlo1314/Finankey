@@ -10,24 +10,24 @@ namespace FinanKey.Dominio.Models
 
         [NotNull]
         [Column("Tipo")]
-        public string TipoMovimiento { get; set; } = Enums.TipoMovimiento.Gasto.ToString();
+        public string TipoMovimiento { get; set; } = "Gasto"; // "Ingreso" o "Gasto"
 
         [NotNull]
         public double Monto { get; set; }
 
         public string? Descripcion { get; set; }
 
-        public string MedioPago { get; set; } = Enums.MedioPago.Tarjeta.ToString();
+        public string MedioPago { get; set; } = "Tarjeta"; // "Efectivo" o "Tarjeta"
 
         public bool EsRecurrente { get; set; } = false;
 
-        public string Frecuencia { get; set; } = Enums.Frecuencia.Mensual.ToString();
+        public string Frecuencia { get; set; } = "Mensual"; // "Diario", "Semanal", "Mensual"
 
         [NotNull]
-        public DateTime Fecha { get; set; } = DateTime.Now;
+        public DateTime FechaMovimiento { get; set; } = DateTime.Now;
 
         [NotNull]
-        public int CategoriaId { get; set; }
+        public int CategoriaId { get; set; } // FK para categoria
 
         [NotNull]
         public string Comercio { get; set; } = string.Empty;
@@ -41,7 +41,7 @@ namespace FinanKey.Dominio.Models
 
         public string? BorderFondoEstado;
       
-        public string? ColorFuenteEstado;
+        public string? ColorFuenteEstado; 
 
         // Propiedades de navegación (no mapeadas)
         [Ignore]
