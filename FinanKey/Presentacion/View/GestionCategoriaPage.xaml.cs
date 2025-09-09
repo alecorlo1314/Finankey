@@ -33,4 +33,9 @@ public partial class GestionCategoriaPage : ContentPage
     {
         bottomSheetCategoria.Show();
     }
+
+    private void btnEliminarCategoria_Clicked(object sender, EventArgs e)
+    {
+        popup_EliminarCategoriaIngreso.Show();
+    }
 }

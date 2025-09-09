@@ -7,6 +7,7 @@
     xmlns:bottomSheet="clr-namespace:Syncfusion.Maui.Toolkit.BottomSheet;assembly=Syncfusion.Maui.Toolkit"
     xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     Title="Gestionar Categorias"
     BackgroundColor="{StaticResource ColorFondoPrincipal}"
     Shell.TabBarIsVisible="False">
@@ -43,7 +44,6 @@
         IsOpen="True"
         State="FullExpanded">
 
-
         <!--  CONTENIDO PRINCIPAL - LISTAS DE CATEGORÍAS  -->
         <bottomSheet:SfBottomSheet.Content>
             <Grid Padding="{StaticResource PaddingPaginas}">
@@ -60,6 +60,74 @@
                     VerticalOptions="End"
                     WidthRequest="56"
                     ZIndex="10" />
+
+                <!--  VENTANA EMERGENTE  -->
+                <sfPopup:SfPopup
+                    x:Name="popup_EliminarCategoriaIngreso"
+                    Padding="16"
+                    AutoSizeMode="Height"
+                    BackgroundColor="{StaticResource ColorFondoComponentes}"
+                    FooterHeight="57"
+                    HeaderTitle="57"
+                    HeightRequest="180"
+                    HorizontalOptions="Center"
+                    ShowCloseButton="False"
+                    ShowFooter="True"
+                    ShowHeader="True"
+                    WidthRequest="380">
+                    <sfPopup:SfPopup.PopupStyle>
+                        <sfPopup:PopupStyle
+                            FooterBackground="{StaticResource ColorFondoComponentes}"
+                            HeaderBackground="{StaticResource ColorFondoComponentes}"
+                            MessageBackground="{StaticResource ColorFondoComponentes}" />
+                    </sfPopup:SfPopup.PopupStyle>
+                    <sfPopup:SfPopup.HeaderTemplate>
+                        <DataTemplate>
+                            <Label
+                                Margin="16,16,0,0"
+                                Style="{StaticResource TextoEncabezadoSecundario}"
+                                Text="¿Eliminar 'Cosas del hogar'?"
+                                TextColor="{StaticResource ColorTexto}" />
+                        </DataTemplate>
+                    </sfPopup:SfPopup.HeaderTemplate>
+                    <sfPopup:SfPopup.ContentTemplate>
+                        <DataTemplate>
+                            <Label
+                                Margin="16,0"
+                                HorizontalOptions="Start"
+                                Style="{StaticResource TextoParrafoPrincipal}"
+                                Text="Esta acción es irreversible."
+                                TextColor="{StaticResource Secundario}" />
+                        </DataTemplate>
+                    </sfPopup:SfPopup.ContentTemplate>
+                    <sfPopup:SfPopup.FooterTemplate>
+                        <DataTemplate>
+                            <HorizontalStackLayout
+                                Margin="0,0,16,16"
+                                HorizontalOptions="End"
+                                Spacing="8">
+                                <Button
+                                    BackgroundColor="{StaticResource ColorFondoPrincipal}"
+                                    CornerRadius="10"
+                                    FontFamily="PoppinsBold"
+                                    FontSize="14"
+                                    HeightRequest="42"
+                                    HorizontalOptions="End"
+                                    Text="Cancelar"
+                                    TextColor="{StaticResource ColorAzulPricipal}" />
+                                <Button
+                                    BackgroundColor="{StaticResource ColorAzulPricipal}"
+                                    CornerRadius="10"
+                                    FontFamily="PoppinsBold"
+                                    FontSize="14"
+                                    HeightRequest="42"
+                                    HorizontalOptions="End"
+                                    Text="Eliminar"
+                                    TextColor="{StaticResource ColorFondoComponentes}" />
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </sfPopup:SfPopup.FooterTemplate>
+                </sfPopup:SfPopup>
 
                 <!--  LOADING INDICATOR  -->
                 <ActivityIndicator
@@ -124,13 +192,14 @@
                                                             WidthRequest="64">
                                                             <ImageButton
                                                                 Aspect="AspectFill"
+                                                                Clicked="btnEliminarCategoria_Clicked"
                                                                 Command="{Binding EliminarCategoriaCommand}"
                                                                 HeightRequest="24"
                                                                 Source="icono_eliminar.svg"
                                                                 WidthRequest="24" />
                                                             <ImageButton
                                                                 Aspect="AspectFill"
-                                                                Command="{Binding EliminarCategoriaCommand}"
+                                                                Command="{Binding EditarCategoriaCommand}"
                                                                 HeightRequest="24"
                                                                 Source="icono_editar.svg"
                                                                 WidthRequest="24" />
