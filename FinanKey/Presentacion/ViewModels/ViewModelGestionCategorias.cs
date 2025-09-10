@@ -33,6 +33,22 @@ namespace FinanKey.Presentacion.ViewModels
         [ObservableProperty]
         private bool _isGuardando;
 
+        [ObservableProperty]
+        private bool _popupEliminacionCategoriaAbierto;
+
+        [ObservableProperty]
+        public string _mensajeInformacion = string.Empty;
+
+        [ObservableProperty]
+        private bool _popupInformacionAbierto;
+
+        //PROPIEDADES DE VISTA
+        [ObservableProperty]
+        public string? _nombreCategoria;
+
+        [ObservableProperty]
+        public CategoriaMovimiento? _CategoriaMovimientoSeleccionada;
+
         // CAMPOS FORMULARIO
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(GuardarCategoriaCommand))] // ✅ Auto-validación
@@ -166,7 +182,7 @@ namespace FinanKey.Presentacion.ViewModels
 
                 if (resultado > 0)
                 {
-                    await MostrarExito($"'{DescripcionCategoria}' guardada exitosamente");
+                    MostrarExito($"'{DescripcionCategoria}' guardada exitosamente");
 
                     // ✅ Agregar a la lista correspondiente sin recargar todo
                     AgregarCategoriaALista(categoria);
@@ -206,43 +222,57 @@ namespace FinanKey.Presentacion.ViewModels
                 IsLoading = false;
             }
         }
+        [RelayCommand]
+        public void EliminarCategoria(CategoriaMovimiento categoria)
+        {
+            CategoriaMovimientoSeleccionada = categoria;
+            NombreCategoria = categoria.Descripcion;
+            PopupEliminacionCategoriaAbierto = true;
+        }
+        [RelayCommand]
+        public void CancelarEliminarCategoria()
+        {
+            CategoriaMovimientoSeleccionada = null;
+            PopupEliminacionCategoriaAbierto = false; // cerrar popup
+        }
+        [RelayCommand]
+        public void CerrarPopInformacion()
+        {
+            PopupInformacionAbierto = false; //CerrarPopInformacion
+            _mensajeInformacion = string.Empty;
+        }
 
-        //[RelayCommand]
-        //private async Task EliminarCategoria(CategoriaMovimiento categoria)
-        //{
-        //    if (categoria == null) return;
+        [RelayCommand]
+        private async Task ConfirmarEliminarCategoria()
+        {
+            if (CategoriaMovimientoSeleccionada == null) return;
 
-        //    var confirmar = await Shell.Current.DisplayAlert(
-        //        "Confirmar",
-        //        $"¿Eliminar '{categoria.Descripcion}'?",
-        //        "Sí", "No");
+            try
+            {
+                IsLoading = true;
+                var resultado = await _servicoCategoriaMovimiento.EliminarCategoriaMovimiento(CategoriaMovimientoSeleccionada.Id);
 
-        //    if (!confirmar) return;
+                if (resultado > 0)
+                {
+                    RemoverCategoriaDeLista(CategoriaMovimientoSeleccionada);
+                    PopupEliminacionCategoriaAbierto = false;
+                    MostrarExito($"'{CategoriaMovimientoSeleccionada.Descripcion}' eliminada exitosamente");
 
-        //    try
-        //    {
-        //        IsLoading = true;
-        //        var resultado = await _servicoCategoriaMovimiento.EliminarCategoriaAsync(categoria.Id);
-
-        //        if (resultado > 0)
-        //        {
-        //            RemoverCategoriaDeLista(categoria);
-        //            await MostrarExito("Categoría eliminada");
-        //        }
-        //        else
-        //        {
-        //            await MostrarError("Error", "No se pudo eliminar la categoría");
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        await MostrarError("Error eliminando", ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        IsLoading = false;
-        //    }
-        //}
+                }
+                else
+                {
+                    await MostrarError("Error", "No se pudo eliminar la categoría");
+                }
+            }
+            catch (Exception ex)
+            {
+                await MostrarError("Error eliminando", ex.Message);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
 
         #endregion
 
@@ -342,9 +372,10 @@ namespace FinanKey.Presentacion.ViewModels
             await Shell.Current.DisplayAlert(titulo, mensaje, "OK");
         }
 
-        private async Task MostrarExito(string mensaje)
+        private void MostrarExito(string mensaje)
         {
-            await Shell.Current.DisplayAlert("Éxito", mensaje, "OK");
+            MensajeInformacion = mensaje;
+            PopupInformacionAbierto = true;
         }
 
         #endregion

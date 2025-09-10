@@ -7,6 +7,7 @@
     xmlns:bottomSheet="clr-namespace:Syncfusion.Maui.Toolkit.BottomSheet;assembly=Syncfusion.Maui.Toolkit"
     xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     Title="Gestionar Categorias"
     BackgroundColor="{StaticResource ColorFondoPrincipal}"
     Shell.TabBarIsVisible="False">
@@ -30,7 +31,7 @@
     <!--  BUTTON SHEET QUE ENVUELVE EL FORMULARIO  -->
     <bottomSheet:SfBottomSheet
         x:Name="bottomSheetCategoria"
-        Background="{StaticResource FondoPrincipal}"
+        Background="{StaticResource ColorFondoPrincipal}"
         BackgroundColor="{StaticResource ColorFondoPrincipal}"
         CollapsedHeight="0"
         ContentWidthMode="Full"
@@ -42,7 +43,6 @@
         IsModal="True"
         IsOpen="True"
         State="FullExpanded">
-
 
         <!--  CONTENIDO PRINCIPAL - LISTAS DE CATEGORÍAS  -->
         <bottomSheet:SfBottomSheet.Content>
@@ -61,8 +61,144 @@
                     WidthRequest="56"
                     ZIndex="10" />
 
+                <!--  VENTANA EMERGENTE CONFIRMACION DE ELIMINACION  -->
+                <sfPopup:SfPopup
+                    Padding="16"
+                    AutoSizeMode="Height"
+                    BackgroundColor="Transparent"
+                    FooterHeight="57"
+                    HeaderTitle="57"
+                    HeightRequest="180"
+                    HorizontalOptions="Center"
+                    IsOpen="{Binding PopupEliminacionCategoriaAbierto}"
+                    ShowCloseButton="False"
+                    ShowFooter="True"
+                    ShowHeader="True"
+                    WidthRequest="380">
+                    <sfPopup:SfPopup.PopupStyle>
+                        <sfPopup:PopupStyle
+                            FooterBackground="{StaticResource ColorFondoComponentes}"
+                            HeaderBackground="{StaticResource ColorFondoComponentes}"
+                            MessageBackground="{StaticResource ColorFondoComponentes}" />
+                    </sfPopup:SfPopup.PopupStyle>
+                    <sfPopup:SfPopup.HeaderTemplate>
+                        <DataTemplate>
+                            <HorizontalStackLayout Margin="16,16,0,0">
+                                <Label
+                                    Style="{StaticResource TextoEncabezadoSecundario}"
+                                    Text="¿Eliminar "
+                                    TextColor="{StaticResource ColorTexto}" />
+                                <Label
+                                    Style="{StaticResource TextoEncabezadoSecundario}"
+                                    Text="{Binding NombreCategoria, Mode=TwoWay}"
+                                    TextColor="{StaticResource ColorTexto}" />
+                                <Label
+                                    Style="{StaticResource TextoEncabezadoSecundario}"
+                                    Text="?"
+                                    TextColor="{StaticResource ColorTexto}" />
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </sfPopup:SfPopup.HeaderTemplate>
+                    <sfPopup:SfPopup.ContentTemplate>
+                        <DataTemplate>
+                            <Label
+                                Margin="16,0"
+                                HorizontalOptions="Start"
+                                Style="{StaticResource TextoParrafoPrincipal}"
+                                Text="Esta acción es irreversible."
+                                TextColor="{StaticResource Secundario}" />
+                        </DataTemplate>
+                    </sfPopup:SfPopup.ContentTemplate>
+                    <sfPopup:SfPopup.FooterTemplate>
+                        <DataTemplate>
+                            <HorizontalStackLayout
+                                Margin="0,0,16,16"
+                                HorizontalOptions="End"
+                                Spacing="8">
+                                <Button
+                                    BackgroundColor="{StaticResource ColorFondoPrincipal}"
+                                    Command="{Binding CancelarEliminarCategoriaCommand}"
+                                    CornerRadius="10"
+                                    FontFamily="PoppinsBold"
+                                    FontSize="14"
+                                    HeightRequest="42"
+                                    HorizontalOptions="End"
+                                    Text="Cancelar"
+                                    TextColor="{StaticResource ColorAzulPricipal}" />
+                                <Button
+                                    BackgroundColor="{StaticResource ColorAzulPricipal}"
+                                    Command="{Binding ConfirmarEliminarCategoriaCommand}"
+                                    CornerRadius="10"
+                                    FontFamily="PoppinsBold"
+                                    FontSize="14"
+                                    HeightRequest="42"
+                                    HorizontalOptions="End"
+                                    Text="Eliminar"
+                                    TextColor="{StaticResource ColorFondoComponentes}" />
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </sfPopup:SfPopup.FooterTemplate>
+                </sfPopup:SfPopup>
+
+                <!--  VENTANA EMERGENTE MENSAJE DE INFORMACIÓN -->
+                <sfPopup:SfPopup
+                    Padding="16"
+                    AutoSizeMode="Height"
+                    BackgroundColor="Transparent"
+                    FooterHeight="57"
+                    HeaderTitle="57"
+                    HeightRequest="180"
+                    HorizontalOptions="Center"
+                    IsOpen="{Binding PopupInformacionAbierto}"
+                    ShowCloseButton="False"
+                    ShowFooter="True"
+                    ShowHeader="True"
+                    WidthRequest="380">
+                    <sfPopup:SfPopup.PopupStyle>
+                        <sfPopup:PopupStyle
+                            FooterBackground="{StaticResource ColorFondoComponentes}"
+                            HeaderBackground="{StaticResource ColorFondoComponentes}"
+                            MessageBackground="{StaticResource ColorFondoComponentes}" />
+                    </sfPopup:SfPopup.PopupStyle>
+                    <sfPopup:SfPopup.HeaderTemplate>
+                        <DataTemplate>
+                            <HorizontalStackLayout Margin="16,16,0,0">
+                                <Label
+                                    Style="{StaticResource TextoEncabezadoSecundario}"
+                                    Text="Información"
+                                    TextColor="{StaticResource ColorTexto}" />
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </sfPopup:SfPopup.HeaderTemplate>
+                    <sfPopup:SfPopup.ContentTemplate>
+                        <DataTemplate>
+                            <Label
+                                Margin="16,0"
+                                HorizontalOptions="Start"
+                                Style="{StaticResource TextoParrafoPrincipal}"
+                                Text="{Binding MensajeInformacion}"
+                                TextColor="{StaticResource Secundario}" />
+                        </DataTemplate>
+                    </sfPopup:SfPopup.ContentTemplate>
+                    <sfPopup:SfPopup.FooterTemplate>
+                        <DataTemplate>
+                            <Button
+                                BackgroundColor="{StaticResource ColorFondoPrincipal}" Margin="0,0,16,16"
+                                Command="{Binding CerrarPopInformacionCommand}"
+                                CornerRadius="10"
+                                FontFamily="PoppinsBold"
+                                FontSize="14"
+                                HeightRequest="42"
+                                HorizontalOptions="End"
+                                Text="OK"
+                                TextColor="{StaticResource ColorAzulPricipal}" />
+                        </DataTemplate>
+                    </sfPopup:SfPopup.FooterTemplate>
+                </sfPopup:SfPopup>
+
                 <!--  LOADING INDICATOR  -->
                 <ActivityIndicator
+                    BackgroundColor="Transparent"
                     HeightRequest="50"
                     HorizontalOptions="Center"
                     IsRunning="{Binding IsLoading}"
@@ -91,6 +227,7 @@
                                 <!--  BORDER LISTA DE CATEGORIAS DE INGRESOS  -->
                                 <Border
                                     Grid.Row="1"
+                                    IsVisible="{Binding HayCategoriasIngresos, Mode=TwoWay}"
                                     Stroke="{StaticResource Terciario}"
                                     StrokeShape="RoundRectangle 20"
                                     StrokeThickness="1"
@@ -124,13 +261,14 @@
                                                             WidthRequest="64">
                                                             <ImageButton
                                                                 Aspect="AspectFill"
-                                                                Command="{Binding EliminarCategoriaCommand}"
+                                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EliminarCategoriaCommand}"
+                                                                CommandParameter="{Binding .}"
                                                                 HeightRequest="24"
                                                                 Source="icono_eliminar.svg"
                                                                 WidthRequest="24" />
                                                             <ImageButton
                                                                 Aspect="AspectFill"
-                                                                Command="{Binding EliminarCategoriaCommand}"
+                                                                Command="{Binding EditarCategoriaCommand}"
                                                                 HeightRequest="24"
                                                                 Source="icono_editar.svg"
                                                                 WidthRequest="24" />
@@ -146,28 +284,27 @@
                                         </CollectionView.ItemTemplate>
                                     </CollectionView>
                                 </Border>
-                                <!--  IMAGEN DE NO HAY CATEGORIAS DE INGRESOS  -->
-                                <VerticalStackLayout
-                                    Grid.Row="1"
-                                    HorizontalOptions="Center"
-                                    IsVisible="{Binding NoHayCategoriasIngresos, Mode=TwoWay}"
-                                    VerticalOptions="Center">
-                                    <Image Aspect="AspectFit" Source="imagen_sin_categoria.svg" />
-                                    <Label
-                                        HorizontalOptions="Center"
-                                        Style="{StaticResource TextoEncabezadoSecundario}"
-                                        Text="No hay categorías"
-                                        TextColor="{StaticResource ColorTexto}"
-                                        VerticalOptions="Center" />
-                                    <Label
-                                        HorizontalOptions="Center"
-                                        Style="{StaticResource TextoLabelInputMenusPequeños}"
-                                        Text="Crea una nueva categoría para empezar."
-                                        TextColor="{StaticResource Secundario}"
-                                        VerticalOptions="Center" />
-                                </VerticalStackLayout>
                             </Grid>
-
+                            <!--  IMAGEN DE NO HAY CATEGORIAS DE INGRESOS  -->
+                            <VerticalStackLayout
+                                Grid.Row="1"
+                                HorizontalOptions="Center"
+                                IsVisible="{Binding NoHayCategoriasIngresos, Mode=TwoWay}"
+                                VerticalOptions="Center">
+                                <Image Aspect="AspectFit" Source="imagen_sin_categoria.svg" />
+                                <Label
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource TextoEncabezadoSecundario}"
+                                    Text="No hay categorías"
+                                    TextColor="{StaticResource ColorTexto}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource TextoLabelInputMenusPequeños}"
+                                    Text="Crea una nueva categoría para empezar."
+                                    TextColor="{StaticResource Secundario}"
+                                    VerticalOptions="Center" />
+                            </VerticalStackLayout>
                         </Grid>
                         <!--  SECCIÓN GASTOS  -->
                         <Grid RowDefinitions="Auto, Auto">
@@ -184,6 +321,7 @@
                                 <!--  BORDER LISTA DE CATEGORIAS DE GASTOS  -->
                                 <Border
                                     Grid.Row="1"
+                                    IsVisible="{Binding HayCategoriasGastos}"
                                     Stroke="{StaticResource Terciario}"
                                     StrokeShape="RoundRectangle 20"
                                     StrokeThickness="1"
@@ -239,28 +377,27 @@
                                         </CollectionView.ItemTemplate>
                                     </CollectionView>
                                 </Border>
-                                <!--  IMAGEN DE NO HAY CATEGORIAS DE INGRESOS  -->
-                                <VerticalStackLayout
-                                    Grid.Row="1"
-                                    HorizontalOptions="Center"
-                                    IsVisible="{Binding NoHayCategoriasGastos, Mode=TwoWay}"
-                                    VerticalOptions="Center">
-                                    <Image Aspect="AspectFit" Source="imagen_sin_categoria.svg" />
-                                    <Label
-                                        HorizontalOptions="Center"
-                                        Style="{StaticResource TextoEncabezadoSecundario}"
-                                        Text="No hay categorías"
-                                        TextColor="{StaticResource ColorTexto}"
-                                        VerticalOptions="Center" />
-                                    <Label
-                                        HorizontalOptions="Center"
-                                        Style="{StaticResource TextoLabelInputMenusPequeños}"
-                                        Text="Crea una nueva categoría para empezar."
-                                        TextColor="{StaticResource Secundario}"
-                                        VerticalOptions="Center" />
-                                </VerticalStackLayout>
                             </Grid>
-
+                            <!--  IMAGEN DE NO HAY CATEGORIAS DE INGRESOS  -->
+                            <VerticalStackLayout
+                                Grid.Row="1"
+                                HorizontalOptions="Center"
+                                IsVisible="{Binding NoHayCategoriasGastos, Mode=TwoWay}"
+                                VerticalOptions="Center">
+                                <Image Aspect="AspectFit" Source="imagen_sin_categoria.svg" />
+                                <Label
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource TextoEncabezadoSecundario}"
+                                    Text="No hay categorías"
+                                    TextColor="{StaticResource ColorTexto}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource TextoLabelInputMenusPequeños}"
+                                    Text="Crea una nueva categoría para empezar."
+                                    TextColor="{StaticResource Secundario}"
+                                    VerticalOptions="Center" />
+                            </VerticalStackLayout>
                         </Grid>
                     </StackLayout>
                 </ScrollView>
@@ -286,7 +423,7 @@
                     WidthRequest="380">
                     <Label
                         Style="{StaticResource TextoSubtítulo}"
-                        Text="Monto"
+                        Text="Nombre"
                         TextColor="{StaticResource ColorAzulPricipal}" />
                     <Border
                         x:Name="borderMonto"
