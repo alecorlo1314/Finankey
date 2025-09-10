@@ -26,5 +26,9 @@ namespace FinanKey.Aplicacion.UseCases
         {
             return await _servicioCategoriaMovimiento.EliminarAsync(idCategoriaMovimiento);
         }
+        public async Task<int> ActualizarAsync(CategoriaMovimiento categoriaMovimiento)
+        {
+            return await _servicioCategoriaMovimiento.ActualizarAsync(categoriaMovimiento);
+        }
     }
 }

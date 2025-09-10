@@ -41,7 +41,7 @@
         GrabberHeight="5"
         GrabberWidth="90"
         IsModal="True"
-        IsOpen="True"
+        IsOpen="{Binding IsBottomSheetOpen, Mode=TwoWay}"
         State="FullExpanded">
 
         <!--  CONTENIDO PRINCIPAL - LISTAS DE CATEGORÍAS  -->
@@ -435,7 +435,7 @@
                             PlaceholderColor="{StaticResource ColorPlaceholde}"
                             Style="{StaticResource entradaFormulario}"
                             Text="{Binding DescripcionCategoria, Mode=TwoWay}"
-                            VerticalOptions="Center" />
+                            VerticalOptions="Center" Focused="Entry_Focused" Unfocused="Entry_Unfocused"/>
                     </Border>
                 </VerticalStackLayout>
                 <!--  TIPO DE MOVIMIENTO  -->
