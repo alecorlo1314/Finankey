@@ -39,9 +39,4 @@ public partial class GestionCategoriaPage : ContentPage
     {
         bottomSheetCategoria.State = BottomSheetState.FullExpanded;
     }
-
-    private void Entry_Unfocused(object sender, FocusEventArgs e)
-    {
-
-    }
 }

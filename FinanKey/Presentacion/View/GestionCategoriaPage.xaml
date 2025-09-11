@@ -140,7 +140,7 @@
                     </sfPopup:SfPopup.FooterTemplate>
                 </sfPopup:SfPopup>
 
-                <!--  VENTANA EMERGENTE MENSAJE DE INFORMACIÓN -->
+                <!--  VENTANA EMERGENTE MENSAJE DE INFORMACIÓN  -->
                 <sfPopup:SfPopup
                     Padding="16"
                     AutoSizeMode="Height"
@@ -183,7 +183,8 @@
                     <sfPopup:SfPopup.FooterTemplate>
                         <DataTemplate>
                             <Button
-                                BackgroundColor="{StaticResource ColorFondoPrincipal}" Margin="0,0,16,16"
+                                Margin="0,0,16,16"
+                                BackgroundColor="{StaticResource ColorFondoPrincipal}"
                                 Command="{Binding CerrarPopInformacionCommand}"
                                 CornerRadius="10"
                                 FontFamily="PoppinsBold"
@@ -268,7 +269,8 @@
                                                                 WidthRequest="24" />
                                                             <ImageButton
                                                                 Aspect="AspectFill"
-                                                                Command="{Binding EditarCategoriaCommand}"
+                                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditarCategoriaCommand}"
+                                                                CommandParameter="{Binding .}"
                                                                 HeightRequest="24"
                                                                 Source="icono_editar.svg"
                                                                 WidthRequest="24" />
@@ -430,12 +432,13 @@
                         StrokeShape="RoundRectangle 20"
                         Style="{StaticResource bordeFormulario}">
                         <Entry
+                            Focused="Entry_Focused"
                             Keyboard="Default"
                             Placeholder="Ej: Comida"
                             PlaceholderColor="{StaticResource ColorPlaceholde}"
                             Style="{StaticResource entradaFormulario}"
                             Text="{Binding DescripcionCategoria, Mode=TwoWay}"
-                            VerticalOptions="Center" Focused="Entry_Focused" Unfocused="Entry_Unfocused"/>
+                            VerticalOptions="Center" />
                     </Border>
                 </VerticalStackLayout>
                 <!--  TIPO DE MOVIMIENTO  -->
