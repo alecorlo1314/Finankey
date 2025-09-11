@@ -228,6 +228,7 @@
                                 <!--  BORDER LISTA DE CATEGORIAS DE INGRESOS  -->
                                 <Border
                                     Grid.Row="1"
+                                    BackgroundColor="{StaticResource ColorFondoComponentes}"
                                     IsVisible="{Binding HayCategoriasIngresos, Mode=TwoWay}"
                                     Stroke="{StaticResource Terciario}"
                                     StrokeShape="RoundRectangle 20"
@@ -239,7 +240,7 @@
                                                 <!--  MOLDE DE UNA CATEGORIA DE INGRESO  -->
                                                 <Grid>
                                                     <Grid
-                                                        Padding="16,18"
+                                                        Padding="16,0"
                                                         ColumnDefinitions="Auto,Auto,Auto"
                                                         ColumnSpacing="16"
                                                         HeightRequest="56">
@@ -323,6 +324,7 @@
                                 <!--  BORDER LISTA DE CATEGORIAS DE GASTOS  -->
                                 <Border
                                     Grid.Row="1"
+                                    BackgroundColor="{StaticResource ColorFondoComponentes}"
                                     IsVisible="{Binding HayCategoriasGastos}"
                                     Stroke="{StaticResource Terciario}"
                                     StrokeShape="RoundRectangle 20"
@@ -334,7 +336,7 @@
                                                 <!--  MOLDE DE UNA CATEGORIA DE GASTO  -->
                                                 <Grid>
                                                     <Grid
-                                                        Padding="16,18"
+                                                        Padding="16"
                                                         ColumnDefinitions="Auto,Auto,Auto"
                                                         ColumnSpacing="16"
                                                         HeightRequest="56">

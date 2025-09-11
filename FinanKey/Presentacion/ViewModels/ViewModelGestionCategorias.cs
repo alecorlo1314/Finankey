@@ -230,8 +230,7 @@ namespace FinanKey.Presentacion.ViewModels
                         MostrarExito($"'{DescripcionCategoria}' se actualizo exitosamente");
 
                         //Actualizar la lista
-                        CargarTodasLasCategorias();
-                        //ActualizarListaCategoria(categoriaActualizar);
+                        _ = CargarTodasLasCategorias();
 
                         IsBottomSheetOpen = false;
                         ActualizacionCategoria = false;
