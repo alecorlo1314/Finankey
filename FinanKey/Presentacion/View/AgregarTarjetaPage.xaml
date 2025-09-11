@@ -105,18 +105,21 @@
 
         <!--  ZONA DE SCROLL Y FORMULARIO  -->
         <ScrollView Grid.Row="1">
+
             <!--  FORMULARIO INGRESAR TARJETA  -->
             <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*" RowSpacing="16">
+
                 <!--  NOMRE DE LA TARJETA  -->
                 <VerticalStackLayout Grid.Row="0" Spacing="8">
                     <Label
                         Style="{StaticResource TextoSubtítulo}"
                         Text="Nombre de la Tarjeta"
                         TextColor="{StaticResource ColorAzulPricipal}" />
-                    <Border x:Name="borderNombreCuenta" Style="{StaticResource bordeFormulario}">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="20" />
-                        </Border.StrokeShape>
+                    <Border
+                        x:Name="borderNombreCuenta"
+                        StrokeShape="RoundRectangle 20"
+                        Style="{StaticResource bordeFormulario}">
+
                         <Entry
                             x:Name="entradaNombreTarjeta"
                             ClearButtonVisibility="WhileEditing"

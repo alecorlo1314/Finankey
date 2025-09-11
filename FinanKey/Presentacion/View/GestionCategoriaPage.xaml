@@ -41,7 +41,7 @@
         GrabberHeight="5"
         GrabberWidth="90"
         IsModal="True"
-        IsOpen="True"
+        IsOpen="{Binding IsBottomSheetOpen, Mode=TwoWay}"
         State="FullExpanded">
 
         <!--  CONTENIDO PRINCIPAL - LISTAS DE CATEGORÍAS  -->
@@ -140,7 +140,7 @@
                     </sfPopup:SfPopup.FooterTemplate>
                 </sfPopup:SfPopup>
 
-                <!--  VENTANA EMERGENTE MENSAJE DE INFORMACIÓN -->
+                <!--  VENTANA EMERGENTE MENSAJE DE INFORMACIÓN  -->
                 <sfPopup:SfPopup
                     Padding="16"
                     AutoSizeMode="Height"
@@ -183,7 +183,8 @@
                     <sfPopup:SfPopup.FooterTemplate>
                         <DataTemplate>
                             <Button
-                                BackgroundColor="{StaticResource ColorFondoPrincipal}" Margin="0,0,16,16"
+                                Margin="0,0,16,16"
+                                BackgroundColor="{StaticResource ColorFondoPrincipal}"
                                 Command="{Binding CerrarPopInformacionCommand}"
                                 CornerRadius="10"
                                 FontFamily="PoppinsBold"
@@ -227,6 +228,7 @@
                                 <!--  BORDER LISTA DE CATEGORIAS DE INGRESOS  -->
                                 <Border
                                     Grid.Row="1"
+                                    BackgroundColor="{StaticResource ColorFondoComponentes}"
                                     IsVisible="{Binding HayCategoriasIngresos, Mode=TwoWay}"
                                     Stroke="{StaticResource Terciario}"
                                     StrokeShape="RoundRectangle 20"
@@ -238,7 +240,7 @@
                                                 <!--  MOLDE DE UNA CATEGORIA DE INGRESO  -->
                                                 <Grid>
                                                     <Grid
-                                                        Padding="16,18"
+                                                        Padding="16,0"
                                                         ColumnDefinitions="Auto,Auto,Auto"
                                                         ColumnSpacing="16"
                                                         HeightRequest="56">
@@ -268,7 +270,8 @@
                                                                 WidthRequest="24" />
                                                             <ImageButton
                                                                 Aspect="AspectFill"
-                                                                Command="{Binding EditarCategoriaCommand}"
+                                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditarCategoriaCommand}"
+                                                                CommandParameter="{Binding .}"
                                                                 HeightRequest="24"
                                                                 Source="icono_editar.svg"
                                                                 WidthRequest="24" />
@@ -321,6 +324,7 @@
                                 <!--  BORDER LISTA DE CATEGORIAS DE GASTOS  -->
                                 <Border
                                     Grid.Row="1"
+                                    BackgroundColor="{StaticResource ColorFondoComponentes}"
                                     IsVisible="{Binding HayCategoriasGastos}"
                                     Stroke="{StaticResource Terciario}"
                                     StrokeShape="RoundRectangle 20"
@@ -332,7 +336,7 @@
                                                 <!--  MOLDE DE UNA CATEGORIA DE GASTO  -->
                                                 <Grid>
                                                     <Grid
-                                                        Padding="16,18"
+                                                        Padding="16"
                                                         ColumnDefinitions="Auto,Auto,Auto"
                                                         ColumnSpacing="16"
                                                         HeightRequest="56">
@@ -426,15 +430,17 @@
                         Text="Nombre"
                         TextColor="{StaticResource ColorAzulPricipal}" />
                     <Border
-                        x:Name="borderMonto"
+                        x:Name="borderNombre"
                         StrokeShape="RoundRectangle 20"
                         Style="{StaticResource bordeFormulario}">
                         <Entry
+                            Focused="entradaDescripcion_Focused"
                             Keyboard="Default"
                             Placeholder="Ej: Comida"
                             PlaceholderColor="{StaticResource ColorPlaceholde}"
                             Style="{StaticResource entradaFormulario}"
                             Text="{Binding DescripcionCategoria, Mode=TwoWay}"
+                            Unfocused="entradaDescripcion_Unfocused"
                             VerticalOptions="Center" />
                     </Border>
                 </VerticalStackLayout>

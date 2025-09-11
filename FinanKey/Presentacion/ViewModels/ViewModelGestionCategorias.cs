@@ -9,8 +9,10 @@ namespace FinanKey.Presentacion.ViewModels
     public partial class ViewModelGestionCategorias : ObservableObject
     {
         #region INYECCION DE DEPENDENCIAS
+
         private readonly ServicioCategoriaMovimiento _servicoCategoriaMovimiento;
-        #endregion
+
+        #endregion INYECCION DE DEPENDENCIAS
 
         #region PROPIEDADES OBSERVABLES
 
@@ -21,7 +23,7 @@ namespace FinanKey.Presentacion.ViewModels
         [ObservableProperty]
         private ObservableCollection<CategoriaMovimiento> _listaCategoriaGastos = new();
 
-        public ObservableCollection<Icono> ListaIconos { get; private set; } = new(); 
+        public ObservableCollection<Icono> ListaIconos { get; private set; } = new();
 
         // ESTADO UI
         [ObservableProperty]
@@ -42,12 +44,18 @@ namespace FinanKey.Presentacion.ViewModels
         [ObservableProperty]
         private bool _popupInformacionAbierto;
 
+        [ObservableProperty]
+        private bool actualizacionCategoria;
+
         //PROPIEDADES DE VISTA
         [ObservableProperty]
         public string? _nombreCategoria;
 
         [ObservableProperty]
         public CategoriaMovimiento? _CategoriaMovimientoSeleccionada;
+
+        [ObservableProperty]
+        public int _IdCategoriaSeleccionada;
 
         // CAMPOS FORMULARIO
         [ObservableProperty]
@@ -63,13 +71,15 @@ namespace FinanKey.Presentacion.ViewModels
 
         // ✅ PROPIEDADES CALCULADAS - Más eficiente que campos separados
         public bool NoHayCategoriasIngresos => !HayCategoriasIngresos;
+
         public bool HayCategoriasIngresos => ListaCategoriaIngresos?.Count > 0;
         public bool NoHayCategoriasGastos => !HayCategoriasGastos;
         public bool HayCategoriasGastos => ListaCategoriaGastos?.Count > 0;
 
-        #endregion
+        #endregion PROPIEDADES OBSERVABLES
 
         #region CONSTRUCTOR
+
         public ViewModelGestionCategorias(ServicioCategoriaMovimiento servicoCategoriaMovimiento)
         {
             _servicoCategoriaMovimiento = servicoCategoriaMovimiento ?? throw new ArgumentNullException(nameof(servicoCategoriaMovimiento));
@@ -78,9 +88,11 @@ namespace FinanKey.Presentacion.ViewModels
             //// ✅ Cargar datos iniciales
             _ = Task.Run(async () => await CargarDatosInicialesAsync());
         }
-        #endregion
+
+        #endregion CONSTRUCTOR
 
         #region CARGA DE DATOS INICIALES
+
         public async Task CargarDatosInicialesAsync()
         {
             try
@@ -97,45 +109,47 @@ namespace FinanKey.Presentacion.ViewModels
                 IsLoading = false;
             }
         }
-        #endregion
 
-        #region ICONOS - Más mantenible
+        #endregion CARGA DE DATOS INICIALES
+
+        #region ICONOS - MAS MANTENIBLES
+
         private void CargarIconos()
         {
             var iconos = new[]
-            {
-                new Icono { Id = 1, Nombre = "Accesorio", Ruta = "icono_accesorio.svg" },
-                new Icono { Id = 2, Nombre = "Avión", Ruta = "icono_avion.svg" },
-                new Icono { Id = 3, Nombre = "Bebidas", Ruta = "icono_bebida.svg" },
-                new Icono { Id = 4, Nombre = "Bus", Ruta = "icono_bus.svg" },
-                new Icono { Id = 5, Nombre = "Café", Ruta = "icono_cafe.svg" },
-                new Icono { Id = 6, Nombre = "Carro", Ruta = "icono_carro.svg" },
-                new Icono { Id = 7, Nombre = "Casa", Ruta = "icono_casa.svg" },
-                new Icono { Id = 8, Nombre = "Cine", Ruta = "icono_cine.svg" },
-                new Icono { Id = 9, Nombre = "Corte", Ruta = "icono_corte.svg" },
-                new Icono { Id = 10, Nombre = "Curso", Ruta = "icono_curso.svg" },
-                new Icono { Id = 11, Nombre = "Deporte", Ruta = "icono_deporte.svg" },
-                new Icono { Id = 12, Nombre = "Familia", Ruta = "icono_familia.svg" },
-                new Icono { Id = 13, Nombre = "Gasolina", Ruta = "icono_gasolina.svg" },
-                new Icono { Id = 14, Nombre = "Herramienta", Ruta = "icono_herramienta.svg" },
-                new Icono { Id = 15, Nombre = "Higiene", Ruta = "icono_higiene.svg" },
-                new Icono { Id = 16, Nombre = "Hospital", Ruta = "icono_hospital.svg" },
-                new Icono { Id = 17, Nombre = "Internet", Ruta = "icono_internet.svg" },
-                new Icono { Id = 18, Nombre = "Inversión", Ruta = "icono_inversion.svg" },
-                new Icono { Id = 19, Nombre = "Libro", Ruta = "icono_libro.svg" },
-                new Icono { Id = 20, Nombre = "Luz", Ruta = "icono_luz.svg" },
-                new Icono { Id = 21, Nombre = "Mascota", Ruta = "icono_mascota.svg" },
-                new Icono { Id = 22, Nombre = "Pastilla", Ruta = "icono_pastilla.svg" },
-                new Icono { Id = 23, Nombre = "Regalo", Ruta = "icono_regalo.svg" },
-                new Icono { Id = 24, Nombre = "Restaurante", Ruta = "icono_restaurante.svg" },
-                new Icono { Id = 25, Nombre = "Salario", Ruta = "icono_salario.svg" },
-                new Icono { Id = 26, Nombre = "Ropa", Ruta = "icono_ropa.svg" },
-                new Icono { Id = 27, Nombre = "Serie", Ruta = "icono_serie.svg" },
-                new Icono { Id = 28, Nombre = "Software", Ruta = "icono_software.svg" },
-                new Icono { Id = 29, Nombre = "Supermercado", Ruta = "icono_supermercado.svg" },
-                new Icono { Id = 30, Nombre = "Trabajo", Ruta = "icono_trabajo.svg" },
-                new Icono { Id = 31, Nombre = "Videojuegos", Ruta = "icono_videojuegos.svg" },
-            };
+{
+    new Icono { Id = 1, Nombre = "Casa", Ruta = "icono_casa.svg" },
+    new Icono { Id = 2, Nombre = "Luz", Ruta = "icono_luz.svg" },
+    new Icono { Id = 3, Nombre = "Internet", Ruta = "icono_internet.svg" },
+    new Icono { Id = 4, Nombre = "Herramienta", Ruta = "icono_herramienta.svg" },
+    new Icono { Id = 5, Nombre = "Bus", Ruta = "icono_bus.svg" },
+    new Icono { Id = 6, Nombre = "Carro", Ruta = "icono_carro.svg" },
+    new Icono { Id = 7, Nombre = "Gasolina", Ruta = "icono_gasolina.svg" },
+    new Icono { Id = 8, Nombre = "Bebidas", Ruta = "icono_bebida.svg" },
+    new Icono { Id = 9, Nombre = "Café", Ruta = "icono_cafe.svg" },
+    new Icono { Id = 10, Nombre = "Restaurante", Ruta = "icono_restaurante.svg" },
+    new Icono { Id = 11, Nombre = "Supermercado", Ruta = "icono_supermercado.svg" },
+    new Icono { Id = 12, Nombre = "Accesorio", Ruta = "icono_accesorio.svg" },
+    new Icono { Id = 13, Nombre = "Corte", Ruta = "icono_corte.svg" },
+    new Icono { Id = 14, Nombre = "Ropa", Ruta = "icono_ropa.svg" },
+    new Icono { Id = 15, Nombre = "Higiene", Ruta = "icono_higiene.svg" },
+    new Icono { Id = 16, Nombre = "Hospital", Ruta = "icono_hospital.svg" },
+    new Icono { Id = 17, Nombre = "Pastilla", Ruta = "icono_pastilla.svg" },
+    new Icono { Id = 18, Nombre = "Curso", Ruta = "icono_curso.svg" },
+    new Icono { Id = 19, Nombre = "Libro", Ruta = "icono_libro.svg" },
+    new Icono { Id = 20, Nombre = "Avión", Ruta = "icono_avion.svg" },
+    new Icono { Id = 21, Nombre = "Cine", Ruta = "icono_cine.svg" },
+    new Icono { Id = 22, Nombre = "Serie", Ruta = "icono_serie.svg" },
+    new Icono { Id = 23, Nombre = "Videojuegos", Ruta = "icono_videojuegos.svg" },
+    new Icono { Id = 24, Nombre = "Deporte", Ruta = "icono_deporte.svg" },
+    new Icono { Id = 25, Nombre = "Familia", Ruta = "icono_familia.svg" },
+    new Icono { Id = 26, Nombre = "Mascota", Ruta = "icono_mascota.svg" },
+    new Icono { Id = 27, Nombre = "Regalo", Ruta = "icono_regalo.svg" },
+    new Icono { Id = 28, Nombre = "Software", Ruta = "icono_software.svg" },
+    new Icono { Id = 29, Nombre = "Trabajo", Ruta = "icono_trabajo.svg" },
+    new Icono { Id = 30, Nombre = "Inversión", Ruta = "icono_inversion.svg" },
+    new Icono { Id = 31, Nombre = "Salario", Ruta = "icono_salario.svg" },
+};
 
             ListaIconos.Clear();
             foreach (var icono in iconos)
@@ -143,10 +157,14 @@ namespace FinanKey.Presentacion.ViewModels
                 ListaIconos.Add(icono);
             }
         }
-        #endregion
+
+        #endregion ICONOS - MAS MANTENIBLES
 
         #region COMMANDS
 
+        /// <summary>
+        /// Muestra el BottomSheet para agregar una nueva categoría
+        /// </summary>
         [RelayCommand]
         private void MostrarBottomSheetAnadirCategoria()
         {
@@ -154,6 +172,9 @@ namespace FinanKey.Presentacion.ViewModels
             IsBottomSheetOpen = true;
         }
 
+        /// <summary>
+        /// Cierra el BottomSheet
+        /// </summary>
         [RelayCommand]
         private void CerrarBottomSheet()
         {
@@ -161,6 +182,21 @@ namespace FinanKey.Presentacion.ViewModels
             LimpiarFormulario();
         }
 
+        [RelayCommand]
+        private async Task EditarCategoria(CategoriaMovimiento categoriaMovimiento)
+        {
+            IdCategoriaSeleccionada = categoriaMovimiento.Id;
+            DescripcionCategoria = categoriaMovimiento.Descripcion.Trim();
+            IconoSeleccionado = ListaIconos.FirstOrDefault(x => x.Id == categoriaMovimiento.Icon_id);
+            TipoMovimiento = categoriaMovimiento.TipoMovimiento;
+            ActualizacionCategoria = true;
+            IsBottomSheetOpen = true;
+        }
+
+        /// <summary>
+        /// Guarda la nueva categoría
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand(CanExecute = nameof(PuedeGuardarCategoria))]
         private async Task GuardarCategoria()
         {
@@ -177,6 +213,38 @@ namespace FinanKey.Presentacion.ViewModels
                     RutaIcono = IconoSeleccionado.Ruta,
                     TipoMovimiento = TipoMovimiento
                 };
+                //Preguntar se es actualizacion
+                if (ActualizacionCategoria is true)
+                {
+                    var categoriaActualizar = new CategoriaMovimiento
+                    {
+                        Id = IdCategoriaSeleccionada,
+                        Descripcion = DescripcionCategoria.Trim(),
+                        Icon_id = IconoSeleccionado!.Id,
+                        RutaIcono = IconoSeleccionado.Ruta,
+                        TipoMovimiento = TipoMovimiento
+                    };
+                    var resultadoActualizacion = await _servicoCategoriaMovimiento.ActualizarAsync(categoriaActualizar);
+
+                    if (resultadoActualizacion > 0)
+                    {
+                        MostrarExito($"'{DescripcionCategoria}' se actualizo exitosamente");
+
+                        //Actualizar la lista
+                        _ = CargarTodasLasCategorias();
+
+                        IsBottomSheetOpen = false;
+                        ActualizacionCategoria = false;
+                        LimpiarFormulario();
+                        return;
+                    }
+                    else
+                    {
+                        await MostrarError("Error", "No se pudo actualizar la categoría");
+                        ActualizacionCategoria = false;
+                        return;
+                    }
+                }
 
                 var resultado = await _servicoCategoriaMovimiento.guardarCategoriaMovimiento(categoria);
 
@@ -205,6 +273,10 @@ namespace FinanKey.Presentacion.ViewModels
             }
         }
 
+        /// <summary>
+        /// Refresca las categorías
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
         private async Task RefrescarCategorias()
         {
@@ -222,6 +294,11 @@ namespace FinanKey.Presentacion.ViewModels
                 IsLoading = false;
             }
         }
+
+        /// <summary>
+        /// Elimina una categoría de la lista
+        /// </summary>
+        /// <param name="categoria"></param>
         [RelayCommand]
         public void EliminarCategoria(CategoriaMovimiento categoria)
         {
@@ -229,12 +306,20 @@ namespace FinanKey.Presentacion.ViewModels
             NombreCategoria = categoria.Descripcion;
             PopupEliminacionCategoriaAbierto = true;
         }
+
+        /// <summary>
+        /// Cancela la eliminación de una categoría en el popup
+        /// </summary>
         [RelayCommand]
         public void CancelarEliminarCategoria()
         {
             CategoriaMovimientoSeleccionada = null;
             PopupEliminacionCategoriaAbierto = false; // cerrar popup
         }
+
+        /// <summary>
+        /// Cierra el popup de información
+        /// </summary>
         [RelayCommand]
         public void CerrarPopInformacion()
         {
@@ -242,6 +327,10 @@ namespace FinanKey.Presentacion.ViewModels
             _mensajeInformacion = string.Empty;
         }
 
+        /// <summary>
+        /// Confirma la eliminación de una categoría
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
         private async Task ConfirmarEliminarCategoria()
         {
@@ -257,7 +346,6 @@ namespace FinanKey.Presentacion.ViewModels
                     RemoverCategoriaDeLista(CategoriaMovimientoSeleccionada);
                     PopupEliminacionCategoriaAbierto = false;
                     MostrarExito($"'{CategoriaMovimientoSeleccionada.Descripcion}' eliminada exitosamente");
-
                 }
                 else
                 {
@@ -274,7 +362,7 @@ namespace FinanKey.Presentacion.ViewModels
             }
         }
 
-        #endregion
+        #endregion COMMANDS
 
         #region MÉTODOS PRIVADOS
 
@@ -296,12 +384,6 @@ namespace FinanKey.Presentacion.ViewModels
 
             foreach (var categoria in todasCategorias)
             {
-                // ✅ Asociar icono si es necesario
-                //if (categoria.Icon_id > 0)
-                //{
-                //    categoria.Icono = ListaIconos.FirstOrDefault(i => i.Id == categoria.Icon_id);
-                //}
-
                 if (categoria.TipoMovimiento == "Ingreso")
                 {
                     ListaCategoriaIngresos.Add(categoria);
@@ -360,13 +442,11 @@ namespace FinanKey.Presentacion.ViewModels
             IconoSeleccionado = null;
             TipoMovimiento = "Ingreso";
         }
-
         partial void OnTipoMovimientoChanged(string value)
         {
             // ✅ Reaccionar al cambio de tipo si es necesario
             System.Diagnostics.Debug.WriteLine($"Tipo movimiento cambiado a: {value}");
         }
-
         private async Task MostrarError(string titulo, string mensaje)
         {
             await Shell.Current.DisplayAlert(titulo, mensaje, "OK");
@@ -378,6 +458,6 @@ namespace FinanKey.Presentacion.ViewModels
             PopupInformacionAbierto = true;
         }
 
-        #endregion
+        #endregion MÉTODOS PRIVADOS
     }
 }
