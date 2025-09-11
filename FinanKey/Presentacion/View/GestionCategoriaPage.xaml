@@ -430,16 +430,17 @@
                         Text="Nombre"
                         TextColor="{StaticResource ColorAzulPricipal}" />
                     <Border
-                        x:Name="borderMonto"
+                        x:Name="borderNombre"
                         StrokeShape="RoundRectangle 20"
                         Style="{StaticResource bordeFormulario}">
                         <Entry
-                            Focused="Entry_Focused"
+                            Focused="entradaDescripcion_Focused"
                             Keyboard="Default"
                             Placeholder="Ej: Comida"
                             PlaceholderColor="{StaticResource ColorPlaceholde}"
                             Style="{StaticResource entradaFormulario}"
                             Text="{Binding DescripcionCategoria, Mode=TwoWay}"
+                            Unfocused="entradaDescripcion_Unfocused"
                             VerticalOptions="Center" />
                     </Border>
                 </VerticalStackLayout>
