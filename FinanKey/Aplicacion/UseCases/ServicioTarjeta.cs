@@ -11,9 +11,17 @@ namespace FinanKey.Aplicacion.UseCases
             this.servicioTarjeta = servicioTarjeta;
         }
         //Metodo para obtener tarjetas
-        public async Task<List<Tarjeta>> obtenerTarjetas()
+        public async Task<List<Tarjeta>> ObtenerTodosAsync()
         {
-           return await servicioTarjeta.ObtenerTarjetasAsync();
+           return await servicioTarjeta.ObtenerTodosAsync();
+        }
+        public async Task<int> InsertarAsync(Tarjeta tarjeta)
+        {
+            return await servicioTarjeta.InsertarAsync(tarjeta);
+        }
+        public async Task<int> EliminarAsync(int idTarjeta)
+        {
+            return await servicioTarjeta.EliminarAsync(idTarjeta);
         }
     }
 }

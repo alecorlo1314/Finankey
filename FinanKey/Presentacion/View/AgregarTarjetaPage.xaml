@@ -98,7 +98,7 @@
                 VerticalOptions="End">
                 <Label
                     Style="{StaticResource TextoParrafoPrincipal}"
-                    Text="{Binding Path=Value, Source={x:Reference entradaVencimiento}}"
+                    Text="{Binding Path=Text, Source={x:Reference entradaVencimiento}}"
                     TextColor="{StaticResource ColorFondoPrincipal}" />
             </Grid>
         </Grid>
@@ -176,7 +176,7 @@
                                 UncheckedColor="{StaticResource ColorAzulPrincipalSuave}"
                                 Value="Credito">
                                 <buttons:SfRadioButton.Behaviors>
-                                    <behaviors:SfRadioButtonStateChangedBehavior Command="{Binding MostrarLimiteTarjetaCommand}" />
+                                    <behaviors:SfRadioButtonStateChangedBehavior Command="{Binding CambiarATarjetaDebitoCommand}" />
                                 </buttons:SfRadioButton.Behaviors>
                             </buttons:SfRadioButton>
                             <buttons:SfRadioButton
@@ -189,7 +189,7 @@
                                 UncheckedColor="{StaticResource ColorAzulPrincipalSuave}"
                                 Value="Debito">
                                 <buttons:SfRadioButton.Behaviors>
-                                    <behaviors:SfRadioButtonStateChangedBehavior Command="{Binding MostrarMontoInicialCommand}" />
+                                    <behaviors:SfRadioButtonStateChangedBehavior Command="{Binding CambiarATarjetaCreditoCommand}" />
                                 </buttons:SfRadioButton.Behaviors>
                             </buttons:SfRadioButton>
                         </buttons:SfRadioGroup>
@@ -231,26 +231,22 @@
                                 <RoundRectangle CornerRadius="20" />
                             </Border.StrokeShape>
                             <HorizontalStackLayout>
-                                <editors:SfMaskedEntry
+                                <Entry
                                     x:Name="entradaVencimiento"
-                                    Focused="entradaVencimiento_Focused"
                                     FontFamily="PoppinsRegular"
                                     FontSize="16"
-                                    HidePromptOnLeave="True"
-                                    HorizontalOptions="Start"
-                                    Mask="00/00"
-                                    MaskType="Simple"
-                                    Placeholder="mm/aa"
+                                    Keyboard="Numeric"
+                                    MaxLength="5"
+                                    Placeholder="MM/AA"
                                     PlaceholderColor="{StaticResource ColorTextosDescriptivos}"
                                     ReturnType="Next"
-                                    ShowBorder="False"
-                                    Stroke="Transparent"
+                                    Text="{Binding Vencimiento, Mode=TwoWay}"
                                     TextColor="{StaticResource ColorTexoEntrada}"
-                                    Unfocused="entradaVencimiento_Unfocused"
-                                    ValueMaskFormat="IncludePromptAndLiterals"
-                                    VerticalOptions="Center"
-                                    WidthRequest="120"
-                                    Value="{Binding Vencimiento}" />
+                                    WidthRequest="120">
+                                    <Entry.Behaviors>
+                                        <behaviors:DateMaskBehavior />
+                                    </Entry.Behaviors>
+                                </Entry>
                                 <Image
                                     Aspect="AspectFill"
                                     HeightRequest="24"
