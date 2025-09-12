@@ -203,12 +203,6 @@ namespace FinanKey.Infraestructura.Repositorios
                     throw new InvalidOperationException($"Ya existe una tarjeta con los últimos 4 dígitos '{tarjeta.Ultimos4Digitos}'");
                 }
 
-                // Validar formato de vencimiento si se proporciona
-                if (!string.IsNullOrEmpty(tarjeta.Vencimiento))
-                {
-                    ValidarFormatoVencimiento(tarjeta.Vencimiento);
-                }
-
                 var conexion = await _servicioBaseDatos.ObtenerConexion();
                 tarjeta.FechaCreacion = DateTime.UtcNow;
                 return await conexion.InsertAsync(tarjeta);
@@ -231,12 +225,6 @@ namespace FinanKey.Infraestructura.Repositorios
                 if (existe)
                 {
                     throw new InvalidOperationException($"Ya existe otra tarjeta con los últimos 4 dígitos '{tarjeta.Ultimos4Digitos}'");
-                }
-
-                // Validar formato de vencimiento si se proporciona
-                if (!string.IsNullOrEmpty(tarjeta.Vencimiento))
-                {
-                    ValidarFormatoVencimiento(tarjeta.Vencimiento);
                 }
 
                 var conexion = await _servicioBaseDatos.ObtenerConexion();
@@ -315,33 +303,6 @@ namespace FinanKey.Infraestructura.Repositorios
             catch (Exception ex)
             {
                 throw new Exception($"Error al verificar existencia de tarjeta con últimos 4 dígitos {ultimos4Digitos} excluyendo ID {idExcluir}: {ex.Message}", ex);
-            }
-        }
-
-        /// <summary>
-        /// Valida el formato de vencimiento (MM/YY)
-        /// </summary>
-        private void ValidarFormatoVencimiento(string vencimiento)
-        {
-            if (string.IsNullOrEmpty(vencimiento) || vencimiento.Length != 5 || !vencimiento.Contains('/'))
-            {
-                throw new ArgumentException("El formato de vencimiento debe ser MM/YY");
-            }
-
-            var partes = vencimiento.Split('/');
-            if (partes.Length != 2)
-            {
-                throw new ArgumentException("El formato de vencimiento debe ser MM/YY");
-            }
-
-            if (!int.TryParse(partes[0], out int mes) || mes < 1 || mes > 12)
-            {
-                throw new ArgumentException("El mes debe estar entre 01 y 12");
-            }
-
-            if (!int.TryParse(partes[1], out int año) || año < 0 || año > 99)
-            {
-                throw new ArgumentException("El año debe estar entre 00 y 99");
             }
         }
     }

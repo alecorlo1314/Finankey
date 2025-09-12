@@ -89,7 +89,7 @@ namespace FinanKey.Presentacion.ViewModels
 
         #region PROPIEDADES DE VALIDACIÓN
         public bool NombreTarjetaEsValido => !string.IsNullOrWhiteSpace(NombreTarjeta) && NombreTarjeta.Length >= 2;
-        public bool UltimosCuatroDigitosEsValido => UltimosCuatroDigitos?.Length == 4 && UltimosCuatroDigitos.All(char.IsDigit);
+        public bool UltimosCuatroDigitosEsValido => UltimosCuatroDigitos?.Length == 4;
         public bool VencimientoEsValido => string.IsNullOrEmpty(Vencimiento) || EsFormatoVencimientoValido(Vencimiento);
         public bool MontoEsValido => EsVisibleMonto ? EsMontoValido(MontoInicial) : EsMontoValido(LimiteCredito);
         #endregion
@@ -187,9 +187,6 @@ namespace FinanKey.Presentacion.ViewModels
                         ListaTarjetas.Add(tarjeta);
                     }
                 }
-
-                OnPropertyChanged(nameof(TieneTarjetas));
-                OnPropertyChanged(nameof(NoTieneTarjetas));
             }
             catch (Exception ex)
             {
@@ -209,22 +206,22 @@ namespace FinanKey.Presentacion.ViewModels
 
         #region COMMANDS
         [RelayCommand]
-        private void SeleccionarColorTarjeta(GradienteColor gradiente)
+        public void ColorTarjetaSeleccionada(string colores)
         {
-            if (gradiente != null)
+            var split = colores.Split('|');
+            if (split.Length == 2)
             {
-                LinearColor1 = gradiente.Color1;
-                LinearColor2 = gradiente.Color2;
+                LinearColor1 = split[0];
+                LinearColor2 = split[1];
             }
         }
 
         [RelayCommand]
-        private void SeleccionarIconoTarjeta(OpcionTarjeta opcion)
+        public void IconoSeleccionado(string logoSeleccionado)
         {
-            if (opcion != null)
+            if (logoSeleccionado != null)
             {
-                LogoTarjeta = opcion.Icono;
-                Categoria = opcion.Categoria;
+                LogoTarjeta = logoSeleccionado;
             }
         }
 
@@ -236,10 +233,6 @@ namespace FinanKey.Presentacion.ViewModels
 
             // Limpiar campo no usado
             LimiteCredito = string.Empty;
-
-            OnPropertyChanged(nameof(TipoTarjetaSeleccionado));
-            OnPropertyChanged(nameof(EsTarjetaCredito));
-            OnPropertyChanged(nameof(EsTarjetaDebito));
 
             AgregarTarjetaCommand.NotifyCanExecuteChanged();
         }
@@ -380,10 +373,6 @@ namespace FinanKey.Presentacion.ViewModels
 
             HasError = false;
             MensajeError = string.Empty;
-
-            OnPropertyChanged(nameof(TipoTarjetaSeleccionado));
-            OnPropertyChanged(nameof(EsTarjetaCredito));
-            OnPropertyChanged(nameof(EsTarjetaDebito));
         }
 
         [RelayCommand]
@@ -448,33 +437,6 @@ namespace FinanKey.Presentacion.ViewModels
         private static bool EsMontoValido(string monto)
         {
             return double.TryParse(monto, out double valor) && valor > 0;
-        }
-        #endregion
-
-        #region NOTIFICACIÓN DE CAMBIOS
-        partial void OnNombreTarjetaChanged(string value)
-        {
-            OnPropertyChanged(nameof(NombreTarjetaEsValido));
-        }
-
-        partial void OnUltimosCuatroDigitosChanged(string value)
-        {
-            OnPropertyChanged(nameof(UltimosCuatroDigitosEsValido));
-        }
-
-        partial void OnVencimientoChanged(string value)
-        {
-            //OnPropertyChanged(nameof(VencimientoEsValido));
-        }
-
-        partial void OnLimiteCreditoChanged(string value)
-        {
-            OnPropertyChanged(nameof(MontoEsValido));
-        }
-
-        partial void OnMontoInicialChanged(string value)
-        {
-            OnPropertyChanged(nameof(MontoEsValido));
         }
         #endregion
 

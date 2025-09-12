@@ -276,6 +276,7 @@
                             <VerticalStackLayout>
                                 <editors:SfNumericEntry
                                     x:Name="entraLimiteCredito"
+                                    CustomFormat="#,##0.00"
                                     FontFamily="PoppinsRegular"
                                     FontSize="16"
                                     HeightRequest="45"
@@ -310,12 +311,16 @@
                             <VerticalStackLayout>
                                 <editors:SfNumericEntry
                                     x:Name="entradaMontoInicial"
+                                    AllowNull="False"
+                                    CustomFormat="#,##0.00"
                                     FontFamily="PoppinsRegular"
                                     FontSize="16"
                                     HeightRequest="45"
                                     HorizontalOptions="Center"
                                     MaximumNumberDecimalDigits="2"
+                                    Minimum="0"
                                     ShowBorder="False"
+                                    ShowClearButton="False"
                                     TextColor="{StaticResource ColorTexoEntrada}"
                                     UpDownPlacementMode="InlineVertical"
                                     ValueChangeMode="OnKeyFocus"
