@@ -38,9 +38,25 @@ namespace FinanKey.Aplicacion.UseCases
         /// Obtiene todas las categorias registradas en las base de datos
         /// </summary>
         /// <returns></returns>
-        public async Task<List<CategoriaMovimiento>> ObtenerCategoriasMovimientoAsync()
+        public async Task<List<CategoriaMovimiento?>> ObtenerCategoriasMovimientoAsync()
         {
             return await _servicioCategoriaMovimiento.ObtenerTodosAsync();
+        }
+        /// <summary>
+        /// Obtiene todas las categorias de tipo Gasto
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<CategoriaMovimiento?>> ObtenerCategoriasTipoGastosAsync()
+        {
+            return await _servicioCategoriaMovimiento.ObtenerCategoriasTipoGastosAsync();
+        }
+        /// <summary>
+        /// Obtiene todas las categorias de tipo Ingresos
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<CategoriaMovimiento?>> ObtenerCategoriasTipoIngresosAsync()
+        {
+            return await _servicioCategoriaMovimiento.ObtenerCategoriasTipoIngresosAsync();
         }
     }
 }

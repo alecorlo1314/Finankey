@@ -68,6 +68,7 @@
                 </Setter>
             </Style>
         </ResourceDictionary>
+        
     </ContentPage.Resources>
     <!--  BUTTON SHEET QUE ENVUELVE EL FORMULARIO  -->
     <bottomSheet:SfBottomSheet

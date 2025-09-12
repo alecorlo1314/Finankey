@@ -16,7 +16,7 @@ public partial class AnadirPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        _ = _viewModelMovimiento.CargarTarjetasAsync();
+        _ = _viewModelMovimiento.inicializarDatos();
     }
 
     private enum FormularioSeleccionado
