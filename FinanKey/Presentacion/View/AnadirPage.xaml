@@ -68,7 +68,7 @@
                 </Setter>
             </Style>
         </ResourceDictionary>
-        
+
     </ContentPage.Resources>
     <!--  BUTTON SHEET QUE ENVUELVE EL FORMULARIO  -->
     <bottomSheet:SfBottomSheet
@@ -122,250 +122,265 @@
                 <!--  LINEA DIVOSORIA  -->
                 <Border Stroke="#D9D9D9" WidthRequest="380" />
                 <!--  FORMULARIO INGRESAR GASTO  -->
-                <Grid
-                    x:Name="formularioGasto"
-                    IsVisible="True"
-                    RowDefinitions="auto,auto,auto,auto,auto, auto"
-                    RowSpacing="16">
-                    <!--  MONTO Y FECHA TRANSACCION  -->
+                <ScrollView>
                     <Grid
-                        Grid.Row="0"
-                        ColumnDefinitions="auto,auto"
-                        ColumnSpacing="16">
-                        <!--  MONTO  -->
-                        <VerticalStackLayout
+                        x:Name="formularioGasto"
+                        IsVisible="True"
+                        RowDefinitions="auto,auto,auto,auto,auto,auto"
+                        RowSpacing="16">
+                        <!--  MONTO Y FECHA TRANSACCION  -->
+                        <Grid
                             Grid.Row="0"
-                            Spacing="8"
-                            WidthRequest="182">
+                            ColumnDefinitions="auto,auto"
+                            ColumnSpacing="16">
+                            <!--  MONTO  -->
+                            <VerticalStackLayout
+                                Grid.Row="0"
+                                Spacing="8"
+                                WidthRequest="182">
+                                <Label
+                                    Style="{StaticResource TextoSubtítulo}"
+                                    Text="Monto"
+                                    TextColor="{StaticResource ColorAzulPricipal}" />
+                                <Border
+                                    x:Name="borderMonto"
+                                    StrokeShape="RoundRectangle 20"
+                                    Style="{StaticResource bordeFormulario}">
+                                    <Entry
+                                        Focused="entradaMonto_Focused"
+                                        Keyboard="Numeric"
+                                        Placeholder="0"
+                                        PlaceholderColor="{StaticResource ColorPlaceholde}"
+                                        Style="{StaticResource entradaFormulario}"
+                                        Text="{Binding Monto, Mode=TwoWay}"
+                                        Unfocused="entradaMonto_Unfocused"
+                                        VerticalOptions="Center" />
+                                </Border>
+                            </VerticalStackLayout>
+                            <!--  FECHA TRANSACCION  -->
+                            <VerticalStackLayout
+                                Grid.Column="1"
+                                HorizontalOptions="Start"
+                                Spacing="8"
+                                VerticalOptions="Center"
+                                WidthRequest="182">
+                                <Label
+                                    Style="{StaticResource TextoSubtítulo}"
+                                    Text="Fecha"
+                                    TextColor="{StaticResource ColorAzulPricipal}" />
+                                <Border StrokeShape="RoundRectangle 20" Style="{StaticResource bordeFormulario}">
+                                    <HorizontalStackLayout
+                                        HorizontalOptions="Start"
+                                        Spacing="16"
+                                        VerticalOptions="Center">
+                                        <DatePicker
+                                            x:Name="fechaTransaccionGasto"
+                                            Background="Transparent"
+                                            Date="{Binding FechaSeleccionada, Mode=TwoWay}"
+                                            FontFamily="PoppinsRegular"
+                                            FontSize="16"
+                                            Format="dd/MM/yyyy"
+                                            TextColor="{StaticResource ColorPlaceholde}"
+                                            WidthRequest="110" />
+                                        <Image
+                                            Aspect="AspectFill"
+                                            HeightRequest="24"
+                                            Source="icono_calderario.svg"
+                                            VerticalOptions="Center"
+                                            WidthRequest="24" />
+                                    </HorizontalStackLayout>
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+                        <!--  DESCRIPCION  -->
+                        <VerticalStackLayout Grid.Row="1" Spacing="8">
                             <Label
                                 Style="{StaticResource TextoSubtítulo}"
-                                Text="Monto"
+                                Text="Descripcion"
                                 TextColor="{StaticResource ColorAzulPricipal}" />
                             <Border
-                                x:Name="borderMonto"
+                                x:Name="borderTitulo"
                                 StrokeShape="RoundRectangle 20"
                                 Style="{StaticResource bordeFormulario}">
-                                <Entry
-                                    Focused="entradaMonto_Focused"
-                                    Keyboard="Numeric"
-                                    Placeholder="0"
-                                    PlaceholderColor="{StaticResource ColorPlaceholde}"
-                                    Style="{StaticResource entradaFormulario}"
-                                    Text="{Binding Monto, Mode=TwoWay}"
-                                    Unfocused="entradaMonto_Unfocused"
-                                    VerticalOptions="Center" />
-                            </Border>
-                        </VerticalStackLayout>
-                        <!--  FECHA TRANSACCION  -->
-                        <VerticalStackLayout
-                            Grid.Column="1"
-                            HorizontalOptions="Start"
-                            Spacing="8"
-                            VerticalOptions="Center"
-                            WidthRequest="182">
-                            <Label
-                                Style="{StaticResource TextoSubtítulo}"
-                                Text="Fecha"
-                                TextColor="{StaticResource ColorAzulPricipal}" />
-                            <Border StrokeShape="RoundRectangle 20" Style="{StaticResource bordeFormulario}">
                                 <HorizontalStackLayout
+                                    Padding="8,0"
                                     HorizontalOptions="Start"
                                     Spacing="16"
                                     VerticalOptions="Center">
-                                    <DatePicker
-                                        x:Name="fechaTransaccionGasto"
-                                        Background="Transparent"
-                                        Date="{Binding FechaSeleccionada, Mode=TwoWay}"
-                                        FontFamily="PoppinsRegular"
-                                        FontSize="16"
-                                        Format="dd/MM/yyyy"
-                                        TextColor="{StaticResource ColorPlaceholde}"
-                                        WidthRequest="110" />
+                                    <Entry
+                                        x:Name="entradaDescripcionGasto"
+                                        Focused="entradaDescripcionGasto_Focused"
+                                        Placeholder="Ej: Compras comida"
+                                        PlaceholderColor="{StaticResource ColorPlaceholde}"
+                                        Style="{StaticResource entradaFormulario}"
+                                        Text="{Binding Descripcion, Mode=TwoWay}"
+                                        TextColor="{StaticResource ColorTexoEntrada}"
+                                        Unfocused="entradaDescripcionGasto_Unfocused"
+                                        WidthRequest="290" />
                                     <Image
                                         Aspect="AspectFill"
                                         HeightRequest="24"
-                                        Source="icono_calderario.svg"
+                                        Source="icono_lapiz.svg"
                                         VerticalOptions="Center"
                                         WidthRequest="24" />
                                 </HorizontalStackLayout>
                             </Border>
                         </VerticalStackLayout>
-                    </Grid>
-                    <!--  DESCRIPCION  -->
-                    <VerticalStackLayout Grid.Row="1" Spacing="8">
-                        <Label
-                            Style="{StaticResource TextoSubtítulo}"
-                            Text="Descripcion"
-                            TextColor="{StaticResource ColorAzulPricipal}" />
-                        <Border
-                            x:Name="borderTitulo"
-                            StrokeShape="RoundRectangle 20"
-                            Style="{StaticResource bordeFormulario}">
-                            <HorizontalStackLayout
-                                Padding="8,0"
-                                HorizontalOptions="Start"
-                                Spacing="16"
-                                VerticalOptions="Center">
-                                <Entry
-                                    x:Name="entradaDescripcionGasto"
-                                    Focused="entradaDescripcionGasto_Focused"
-                                    Placeholder="Ej: Compras comida"
-                                    PlaceholderColor="{StaticResource ColorPlaceholde}"
-                                    Style="{StaticResource entradaFormulario}"
-                                    Text="{Binding Descripcion, Mode=TwoWay}"
+                        <!--  CATEGORIA  -->
+                        <VerticalStackLayout Grid.Row="2" Spacing="8">
+                            <Label
+                                Style="{StaticResource TextoSubtítulo}"
+                                Text="Categoria"
+                                TextColor="{StaticResource ColorAzulPricipal}" />
+                            <Border
+                                BackgroundColor="{StaticResource ColorTarjeta}"
+                                HeightRequest="52"
+                                Stroke="{StaticResource ColorTarjeta}"
+                                StrokeShape="RoundRectangle 20"
+                                WidthRequest="380">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding MostrarBottomSheetCategoriasCommand}" />
+                                </Border.GestureRecognizers>
+                                <Grid
+                                    Margin="16,8"
+                                    ColumnDefinitions="40,265,24"
+                                    ColumnSpacing="8"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="Center">
+                                    <Image
+                                        Grid.Column="0"
+                                        Aspect="AspectFill"
+                                        HeightRequest="32"
+                                        Source="{Binding CategoriaSeleccionada.Icono, Mode=TwoWay}"
+                                        WidthRequest="32" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Style="{StaticResource TextoParrafoPrincipal}"
+                                        Text="{Binding CategoriaSeleccionada.Descripcion, Mode=TwoWay}"
+                                        TextColor="{StaticResource ColorTexoEntrada}"
+                                        VerticalOptions="Center" />
+                                    <Image
+                                        Grid.Column="2"
+                                        Aspect="AspectFill"
+                                        HeightRequest="24"
+                                        Source="icono_flecha_abajo.svg"
+                                        WidthRequest="24" />
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+                        <!--  ELECCION DE TARJETA  -->
+                        <VerticalStackLayout Grid.Row="3" Spacing="8">
+                            <Label
+                                Style="{StaticResource TextoSubtítulo}"
+                                Text="Tarjeta"
+                                TextColor="{StaticResource ColorAzulPricipal}" />
+                            <Border
+                                BackgroundColor="{StaticResource ColorTarjeta}"
+                                HeightRequest="52"
+                                Stroke="{StaticResource ColorTarjeta}"
+                                StrokeShape="RoundRectangle 20"
+                                WidthRequest="380">
+                                <editors:SfComboBox
+                                    x:Name="cmbTarjeta"
+                                    DisplayMemberPath="Nombre"
+                                    DropDownBackground="{StaticResource ColorFondoComponentes}"
+                                    DropDownIconColor="{StaticResource ColorAzulPricipal}"
+                                    DropDownPlacement="Top"
+                                    DropDownStroke="{StaticResource ColorPlaceholde}"
+                                    FontFamily="PoppinsRegular"
+                                    FontSize="16"
+                                    IsClearButtonVisible="False"
+                                    IsEditable="true"
+                                    IsFilteringEnabled="True"
+                                    ItemsSource="{Binding ListaTarjetas, Mode=TwoWay}"
+                                    NoResultsFoundText="Sin Resultado"
+                                    Placeholder="Seleccionar Tarjeta"
+                                    PlaceholderColor="#8C8C8C"
+                                    SelectedItem="{Binding TarjetaSeleccionada, Mode=TwoWay}"
+                                    Stroke="Transparent"
                                     TextColor="{StaticResource ColorTexoEntrada}"
-                                    Unfocused="entradaDescripcionGasto_Unfocused"
-                                    WidthRequest="290" />
-                                <Image
-                                    Aspect="AspectFill"
-                                    HeightRequest="24"
-                                    Source="icono_lapiz.svg"
-                                    VerticalOptions="Center"
-                                    WidthRequest="24" />
-                            </HorizontalStackLayout>
-                        </Border>
-                    </VerticalStackLayout>
-                    <!--  CATEGORIA  -->
-                    <VerticalStackLayout Grid.Row="2" Spacing="8">
-                        <Label
-                            Style="{StaticResource TextoSubtítulo}"
-                            Text="Categoria"
-                            TextColor="{StaticResource ColorAzulPricipal}" />
-                        <Border
-                            BackgroundColor="{StaticResource ColorTarjeta}"
-                            HeightRequest="52"
-                            Stroke="{StaticResource ColorTarjeta}"
-                            StrokeShape="RoundRectangle 20"
-                            WidthRequest="380">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding MostrarBottomSheetCategoriaGastoCommand}" />
-                            </Border.GestureRecognizers>
-                            <Grid
-                                Margin="16,8"
-                                ColumnDefinitions="40,265,24"
-                                ColumnSpacing="8"
-                                HorizontalOptions="Start"
-                                VerticalOptions="Center">
-                                <Image
-                                    Grid.Column="0"
-                                    Aspect="AspectFill"
-                                    HeightRequest="32"
-                                    Source="{Binding CategoriaSeleccionada.Icono, Mode=TwoWay}"
-                                    WidthRequest="32" />
-                                <Label
-                                    Grid.Column="1"
-                                    Style="{StaticResource TextoParrafoPrincipal}"
-                                    Text="{Binding CategoriaSeleccionada.Descripcion, Mode=TwoWay}"
-                                    TextColor="{StaticResource ColorTexoEntrada}"
-                                    VerticalOptions="Center" />
-                                <Image
-                                    Grid.Column="2"
-                                    Aspect="AspectFill"
-                                    HeightRequest="24"
-                                    Source="icono_flecha_abajo.svg"
-                                    WidthRequest="24" />
-                            </Grid>
-                        </Border>
-                    </VerticalStackLayout>
-                    <!--  ELECCION DE TARJETA  -->
-                    <VerticalStackLayout Grid.Row="3" Spacing="8">
-                        <Label
-                            Style="{StaticResource TextoSubtítulo}"
-                            Text="Tarjeta"
-                            TextColor="{StaticResource ColorAzulPricipal}" />
-                        <Border
-                            BackgroundColor="{StaticResource ColorTarjeta}"
-                            HeightRequest="52"
-                            Stroke="{StaticResource ColorTarjeta}"
-                            StrokeShape="RoundRectangle 20"
-                            WidthRequest="380">
-                            <editors:SfComboBox
-                                x:Name="cmbTarjeta"
-                                DisplayMemberPath="Nombre"
-                                DropDownBackground="{StaticResource ColorFondoComponentes}"
-                                DropDownIconColor="{StaticResource ColorAzulPricipal}"
-                                DropDownPlacement="Top"
-                                DropDownStroke="{StaticResource ColorPlaceholde}"
-                                FontFamily="PoppinsRegular"
-                                FontSize="16"
-                                IsClearButtonVisible="False"
-                                IsEditable="true"
-                                IsFilteringEnabled="True"
-                                ItemsSource="{Binding ListaTarjetas, Mode=TwoWay}"
-                                NoResultsFoundText="Sin Resultado"
-                                Placeholder="Seleccionar Tarjeta"
-                                PlaceholderColor="#8C8C8C"
-                                SelectedItem="{Binding TarjetaSeleccionada, Mode=TwoWay}"
-                                Stroke="Transparent"
-                                TextColor="{StaticResource ColorTexoEntrada}"
-                                TextMemberPath="Nombre"
-                                VerticalOptions="End"
-                                VerticalTextAlignment="End"
-                                WidthRequest="348">
-                                <editors:SfComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <ViewCell>
-                                            <Grid
-                                                ColumnDefinitions="55,220"
-                                                HorizontalOptions="Start"
-                                                RowDefinitions="50"
-                                                VerticalOptions="Center"
-                                                WidthRequest="285">
-                                                <Image
-                                                    Grid.Column="0"
-                                                    Aspect="Fill"
-                                                    HeightRequest="24"
-                                                    HorizontalOptions="Center"
-                                                    Source="{Binding Logo}"
-                                                    VerticalOptions="Center"
-                                                    WidthRequest="24" />
-                                                <HorizontalStackLayout
-                                                    Grid.Column="1"
+                                    TextMemberPath="Nombre"
+                                    VerticalOptions="End"
+                                    VerticalTextAlignment="End"
+                                    WidthRequest="348">
+                                    <editors:SfComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <Grid
+                                                    ColumnDefinitions="55,220"
                                                     HorizontalOptions="Start"
-                                                    VerticalOptions="Center">
-                                                    <Label
-                                                        Style="{StaticResource TextoSecundario}"
-                                                        Text="{Binding Nombre}"
-                                                        TextColor="{StaticResource ColorTexoEntrada}" />
-                                                    <Label
-                                                        Style="{StaticResource TextoSecundario}"
-                                                        Text=" - "
-                                                        TextColor="{StaticResource ColorTexoEntrada}" />
-                                                    <Label
-                                                        Style="{StaticResource TextoSecundario}"
-                                                        Text="{Binding Banco}"
-                                                        TextColor="{StaticResource ColorTexoEntrada}" />
-                                                </HorizontalStackLayout>
-                                            </Grid>
-                                        </ViewCell>
-                                    </DataTemplate>
-                                </editors:SfComboBox.ItemTemplate>
-                            </editors:SfComboBox>
-                        </Border>
-                    </VerticalStackLayout>
-                    <!--  SWITCH DE ESTA PAGADO  -->
-                    <VerticalStackLayout
-                        Grid.Row="4"
-                        HorizontalOptions="Start"
-                        VerticalOptions="Center">
-                        <Label
-                            Style="{StaticResource TextoSecundario}"
-                            Text="Ya lo pagaste de la tarjeta?"
-                            TextColor="{StaticResource ColorTextosDescriptivos}" />
-                        <buttons:SfSwitch
-                            x:Name="sfSwitch"
+                                                    RowDefinitions="50"
+                                                    VerticalOptions="Center"
+                                                    WidthRequest="285">
+                                                    <Image
+                                                        Grid.Column="0"
+                                                        Aspect="Fill"
+                                                        HeightRequest="24"
+                                                        HorizontalOptions="Center"
+                                                        Source="{Binding Logo}"
+                                                        VerticalOptions="Center"
+                                                        WidthRequest="24" />
+                                                    <HorizontalStackLayout
+                                                        Grid.Column="1"
+                                                        HorizontalOptions="Start"
+                                                        VerticalOptions="Center">
+                                                        <Label
+                                                            Style="{StaticResource TextoSecundario}"
+                                                            Text="{Binding Nombre}"
+                                                            TextColor="{StaticResource ColorTexoEntrada}" />
+                                                        <Label
+                                                            Style="{StaticResource TextoSecundario}"
+                                                            Text=" - "
+                                                            TextColor="{StaticResource ColorTexoEntrada}" />
+                                                        <Label
+                                                            Style="{StaticResource TextoSecundario}"
+                                                            Text="{Binding Banco}"
+                                                            TextColor="{StaticResource ColorTexoEntrada}" />
+                                                    </HorizontalStackLayout>
+                                                </Grid>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </editors:SfComboBox.ItemTemplate>
+                                </editors:SfComboBox>
+                            </Border>
+                        </VerticalStackLayout>
+                        <!--  AGREGAR campo comercio que falta  -->
+                        <VerticalStackLayout Grid.Row="4" Spacing="8">
+                            <Label
+                                Style="{StaticResource TextoSubtítulo}"
+                                Text="Comercio"
+                                TextColor="{StaticResource ColorAzulPricipal}" />
+                            <Border StrokeShape="RoundRectangle 20" Style="{StaticResource bordeFormulario}">
+                                <Entry
+                                    Placeholder="Ej: Walmart, Pali"
+                                    Style="{StaticResource entradaFormulario}"
+                                    Text="{Binding Comercio, Mode=TwoWay}" />
+                            </Border>
+                        </VerticalStackLayout>
+                        <!--  SWITCH DE ESTA PAGADO  -->
+                        <VerticalStackLayout
+                            Grid.Row="5"
                             HorizontalOptions="Start"
-                            IsOn="{Binding EstaPagado, Mode=TwoWay}" />
-                    </VerticalStackLayout>
-                    <!--  BOTON GASTO  -->
-                    <VerticalStackLayout Grid.Row="5">
-                        <Button
-                            Command="{Binding GuardarMovimientoGastoCommand}"
-                            Style="{StaticResource botonPrimario}"
-                            Text="Guardar Gasto"
-                            TextColor="White" />
-                    </VerticalStackLayout>
-                </Grid>
+                            VerticalOptions="Center">
+                            <Label
+                                Style="{StaticResource TextoSecundario}"
+                                Text="Ya lo pagaste de la tarjeta?"
+                                TextColor="{StaticResource ColorTextosDescriptivos}" />
+                            <buttons:SfSwitch
+                                x:Name="sfSwitch"
+                                HorizontalOptions="Start"
+                                IsOn="{Binding EstaPagado, Mode=TwoWay}" />
+                        </VerticalStackLayout>
+                        <!--  BOTON GASTO  -->
+                        <VerticalStackLayout Grid.Row="6">
+                            <Button
+                                Command="{Binding GuardarMovimientoGastoCommand}"
+                                Style="{StaticResource botonPrimario}"
+                                Text="Guardar Gasto"
+                                TextColor="White" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </ScrollView>
                 <!--  FORMULARIO INGRESAR INGRESO  -->
                 <Grid
                     x:Name="formularioIngreso"
@@ -555,7 +570,7 @@
                                 Grid.Column="0"
                                 Aspect="AspectFill"
                                 HeightRequest="40"
-                                Source="{Binding Icono}"
+                                Source="{Binding RutaIcono}"
                                 WidthRequest="40" />
                             <Label
                                 Grid.Column="1"
