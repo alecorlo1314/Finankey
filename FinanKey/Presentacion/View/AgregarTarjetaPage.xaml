@@ -672,7 +672,7 @@
                             </Border>
                         </Grid>
                     </Grid>
-                    <!--  BOTON AGREGAR TARJETA   -->
+                    <!--  BOTON AGREGAR TARJETA  -->
                     <VerticalStackLayout Grid.Row="8">
                         <Button
                             Command="{Binding AgregarTarjetaCommand}"
