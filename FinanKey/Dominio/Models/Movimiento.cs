@@ -39,9 +39,9 @@ namespace FinanKey.Dominio.Models
 
         public DateTime FechaCreacion { get; set; } = DateTime.Now;//La fecha en la que se hizo el registro en la base de datos
 
-        public string? BorderFondoEstado; //Color de fondo del estado
+        public string? BorderFondoEstado { get; set; } //Color de fondo del estado
       
-        public string? ColorFuenteEstado; //Color del texto del estado
+        public string? ColorFuenteEstado { get; set; } //Color del texto del estado
 
         // Propiedades de navegación (no mapeadas)
         [Ignore]
