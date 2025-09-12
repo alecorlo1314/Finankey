@@ -10,10 +10,13 @@ namespace FinanKey.Presentacion.ViewModels
     public partial class ViewModelTarjeta : ObservableObject
     {
         #region DEPENDENCIAS
+
         private readonly ServicioTarjeta _servicioTarjeta;
-        #endregion
+
+        #endregion DEPENDENCIAS
 
         #region PROPIEDADES DE ESTADO
+
         [ObservableProperty]
         private bool _isLoading;
 
@@ -25,9 +28,11 @@ namespace FinanKey.Presentacion.ViewModels
 
         [ObservableProperty]
         private string _mensajeError = string.Empty;
-        #endregion
+
+        #endregion PROPIEDADES DE ESTADO
 
         #region PROPIEDADES DE FORMULARIO
+
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(AgregarTarjetaCommand))]
         private string _nombreTarjeta = string.Empty;
@@ -58,13 +63,22 @@ namespace FinanKey.Presentacion.ViewModels
         [ObservableProperty]
         private bool _esVisibleLimiteCredito = true;
 
+        [ObservableProperty]
+        public string? _mensajeInformacion; //mensaje que se muestra en el Popup de informacion
+
+        [ObservableProperty]
+        public bool _popupInformacionAbierto;// Popup se abrira cuando este en true
+
         // Propiedades calculadas para el tipo de tarjeta
         public string TipoTarjetaSeleccionado => EsVisibleMonto ? "Débito" : "Crédito";
+
         public bool EsTarjetaCredito => !EsVisibleMonto;
         public bool EsTarjetaDebito => EsVisibleMonto;
-        #endregion
+
+        #endregion PROPIEDADES DE FORMULARIO
 
         #region PROPIEDADES DE DISEÑO
+
         [ObservableProperty]
         private string _logoTarjeta = "icono_visa.svg";
 
@@ -76,100 +90,47 @@ namespace FinanKey.Presentacion.ViewModels
 
         [ObservableProperty]
         private string _linearColor2 = "#836EDB";
-        #endregion
+
+        #endregion PROPIEDADES DE DISEÑO
 
         #region COLECCIONES
+
         [ObservableProperty]
         private ObservableCollection<Tarjeta> _listaTarjetas = new();
 
         public ObservableCollection<OpcionTarjeta> ListaLogoTarjeta { get; private set; } = new();
 
-        public ObservableCollection<GradienteColor> ListaGradientes { get; private set; } = new();
-        #endregion
+        #endregion COLECCIONES
 
         #region PROPIEDADES DE VALIDACIÓN
-        public bool NombreTarjetaEsValido => !string.IsNullOrWhiteSpace(NombreTarjeta) && NombreTarjeta.Length >= 2;
+
+        public bool NombreTarjetaEsValido => !string.IsNullOrWhiteSpace(NombreTarjeta) && NombreTarjeta.Length >= 2 && NombreTarjeta.Length <= 100;
         public bool UltimosCuatroDigitosEsValido => UltimosCuatroDigitos?.Length == 4;
         public bool VencimientoEsValido => string.IsNullOrEmpty(Vencimiento) || EsFormatoVencimientoValido(Vencimiento);
-        public bool MontoEsValido => EsVisibleMonto ? EsMontoValido(MontoInicial) : EsMontoValido(LimiteCredito);
-        #endregion
+
+        #endregion PROPIEDADES DE VALIDACIÓN
 
         #region CONSTRUCTOR
+
         public ViewModelTarjeta(ServicioTarjeta servicioTarjeta)
         {
             _servicioTarjeta = servicioTarjeta ?? throw new ArgumentNullException(nameof(servicioTarjeta));
 
             InicializarDatos();
-
-            //// Cargar datos iniciales en background
-            //_ = Task.Run(async () => await CargarDatosInicialesAsync());
         }
-        #endregion
+
+        #endregion CONSTRUCTOR
 
         #region INICIALIZACIÓN
+
         private void InicializarDatos()
         {
-            InicializarLogos();
-            InicializarGradientes();
             RestablecerFormulario();
         }
-
-        private void InicializarLogos()
-        {
-            ListaLogoTarjeta.Clear();
-            var logos = new[]
-            {
-                new OpcionTarjeta { Icono = "icono_visa.svg", Nombre = "Visa", Categoria = "Visa" },
-                new OpcionTarjeta { Icono = "icono_master_card.svg", Nombre = "Mastercard", Categoria = "Mastercard" },
-                new OpcionTarjeta { Icono = "icono_american_express.svg", Nombre = "American Express", Categoria = "American_Express" }
-            };
-
-            foreach (var logo in logos)
-            {
-                ListaLogoTarjeta.Add(logo);
-            }
-        }
-
-        private void InicializarGradientes()
-        {
-            ListaGradientes.Clear();
-            var gradientes = new[]
-            {
-                new GradienteColor { Color1 = "#3E298F", Color2 = "#836EDB", Nombre = "Púrpura Clásico" },
-                new GradienteColor { Color1 = "#FF6B6B", Color2 = "#FF8E8E", Nombre = "Coral Suave" },
-                new GradienteColor { Color1 = "#4ECDC4", Color2 = "#44A08D", Nombre = "Verde Aguamarina" },
-                new GradienteColor { Color1 = "#45B7D1", Color2 = "#96CEB4", Nombre = "Azul Océano" },
-                new GradienteColor { Color1 = "#FFA726", Color2 = "#FFCC02", Nombre = "Naranja Dorado" },
-                new GradienteColor { Color1 = "#667eea", Color2 = "#764ba2", Nombre = "Azul Violeta" },
-                new GradienteColor { Color1 = "#f093fb", Color2 = "#f5576c", Nombre = "Rosa Vibrante" },
-                new GradienteColor { Color1 = "#4facfe", Color2 = "#00f2fe", Nombre = "Azul Cyan" }
-            };
-
-            foreach (var gradiente in gradientes)
-            {
-                ListaGradientes.Add(gradiente);
-            }
-        }
-
-        private async Task CargarDatosInicialesAsync()
-        {
-            try
-            {
-                IsLoading = true;
-                await CargarTarjetasAsync();
-            }
-            catch (Exception ex)
-            {
-                await MostrarError("Error cargando datos iniciales", ex.Message);
-            }
-            finally
-            {
-                IsLoading = false;
-            }
-        }
-        #endregion
+        #endregion INICIALIZACIÓN
 
         #region MÉTODOS DE DATOS
+
         public async Task CargarTarjetasAsync()
         {
             try
@@ -201,10 +162,13 @@ namespace FinanKey.Presentacion.ViewModels
 
         // Propiedades calculadas para UI
         public bool TieneTarjetas => ListaTarjetas?.Count > 0;
+
         public bool NoTieneTarjetas => !TieneTarjetas;
-        #endregion
+
+        #endregion MÉTODOS DE DATOS
 
         #region COMMANDS
+
         [RelayCommand]
         public void ColorTarjetaSeleccionada(string colores)
         {
@@ -289,9 +253,8 @@ namespace FinanKey.Presentacion.ViewModels
 
                 if (resultado > 0)
                 {
-                    await MostrarExito($"Tarjeta '{NombreTarjeta}' agregada correctamente");
+                    MostrarExito($"Tarjeta '{NombreTarjeta}' agregada correctamente");
                     RestablecerFormulario();
-                    await CargarTarjetasAsync();
                 }
                 else
                 {
@@ -311,6 +274,15 @@ namespace FinanKey.Presentacion.ViewModels
             {
                 IsGuardando = false;
             }
+        }
+        /// <summary>
+        /// Cierra el popup de información
+        /// </summary>
+        [RelayCommand]
+        public void CerrarPopInformacion()
+        {
+            PopupInformacionAbierto = false; //CerrarPopInformacion
+            _mensajeInformacion = string.Empty;
         }
 
         [RelayCommand]
@@ -335,7 +307,7 @@ namespace FinanKey.Presentacion.ViewModels
                     ListaTarjetas.Remove(tarjeta);
                     OnPropertyChanged(nameof(TieneTarjetas));
                     OnPropertyChanged(nameof(NoTieneTarjetas));
-                    await MostrarExito("Tarjeta eliminada correctamente");
+                    MostrarExito("Tarjeta eliminada correctamente");
                 }
                 else
                 {
@@ -374,21 +346,15 @@ namespace FinanKey.Presentacion.ViewModels
             HasError = false;
             MensajeError = string.Empty;
         }
-
-        [RelayCommand]
-        private async Task RefrescarTarjetas()
-        {
-            await CargarTarjetasAsync();
-        }
-        #endregion
+        #endregion COMMANDS
 
         #region VALIDACIÓN
+
         private bool PuedeAgregarTarjeta()
         {
             return NombreTarjetaEsValido &&
                    UltimosCuatroDigitosEsValido &&
                    VencimientoEsValido &&
-                   MontoEsValido &&
                    !IsGuardando;
         }
 
@@ -404,12 +370,6 @@ namespace FinanKey.Presentacion.ViewModels
 
             if (!VencimientoEsValido)
                 errores.Add("El formato de vencimiento debe ser MM/YY");
-
-            if (!MontoEsValido)
-            {
-                var campo = EsVisibleMonto ? "monto inicial" : "límite de crédito";
-                errores.Add($"El {campo} debe ser un número válido mayor a 0");
-            }
 
             if (errores.Any())
             {
@@ -434,39 +394,21 @@ namespace FinanKey.Presentacion.ViewModels
                    int.TryParse(partes[1], out int año) && año >= 0 && año <= 99;
         }
 
-        private static bool EsMontoValido(string monto)
-        {
-            return double.TryParse(monto, out double valor) && valor > 0;
-        }
-        #endregion
+        #endregion VALIDACIÓN
 
         #region HELPERS
+
         private async Task MostrarError(string titulo, string mensaje)
         {
             await Shell.Current.DisplayAlert(titulo, mensaje, "OK");
         }
 
-        private async Task MostrarExito(string mensaje)
+        private void MostrarExito(string mensaje)
         {
-            await Shell.Current.DisplayAlert("Éxito", mensaje, "OK");
+            MensajeInformacion = mensaje;
+            PopupInformacionAbierto = true;
         }
-        #endregion
-    }
 
-    #region MODELOS DE APOYO
-    public class OpcionTarjeta
-    {
-        public string Icono { get; set; } = string.Empty;
-        public string Nombre { get; set; } = string.Empty;
-        public string Categoria { get; set; } = string.Empty;
+        #endregion HELPERS
     }
-
-    public class GradienteColor
-    {
-        public string Color1 { get; set; } = string.Empty;
-        public string Color2 { get; set; } = string.Empty;
-        public string Nombre { get; set; } = string.Empty;
-        public string ColoresString => $"{Color1}|{Color2}";
-    }
-    #endregion
 }
