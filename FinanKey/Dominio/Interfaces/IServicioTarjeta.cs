@@ -4,10 +4,18 @@ namespace FinanKey.Dominio.Interfaces
 {
     public interface IServicioTarjeta
     {
-        public Task<int> AgregarAsync(Tarjeta Nuevatarjeta);
-        public Task ActualizarAsync(Tarjeta TarjetaActualizada);
-        public Task EliminarAsync(int idTarjeta);
-        public Task<List<Tarjeta>> ObtenerTarjetasAsync();
-        public Task<Tarjeta?> ObtenerTarjetaPorIdAsync(int idTarjeta);
+        Task<List<Tarjeta>> ObtenerTodosAsync();
+        Task<Tarjeta?> ObtenerPorIdAsync(int id);
+        Task<List<Tarjeta>> ObtenerPorTipoAsync(string tipo);
+        Task<List<Tarjeta>> ObtenerPorBancoAsync(string banco);
+        Task<Tarjeta?> ObtenerPorUltimos4DigitosAsync(string ultimos4Digitos);
+        Task<List<Tarjeta>> ObtenerTarjetasVencenProntoAsync(int diasAnticipacion = 30);
+        Task<List<Tarjeta>> ObtenerTarjetasVencidasAsync();
+        Task<int> InsertarAsync(Tarjeta tarjeta);
+        Task<int> ActualizarAsync(Tarjeta tarjeta);
+        Task<int> EliminarAsync(int id);
+        Task<int> EliminarAsync(Tarjeta tarjeta);
+        Task<bool> ExisteTarjetaConUltimos4DigitosAsync(string ultimos4Digitos);
+        Task<bool> ExisteTarjetaConUltimos4DigitosAsync(string ultimos4Digitos, int idExcluir);
     }
 }

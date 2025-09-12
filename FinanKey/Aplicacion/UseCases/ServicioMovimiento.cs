@@ -7,8 +7,8 @@ namespace FinanKey.Aplicacion.UseCases
     {
         //Inyeccion de Dependencias a la interfaz
         private readonly IServicioMovimiento _servicioMovimiento;
-        private readonly IServicioTarjeta _servicioTarjeta;
-        public ServicioMovimiento(IServicioMovimiento servicioMovimiento, IServicioTarjeta servicioTarjeta)
+        private readonly ServicioTarjeta _servicioTarjeta;
+        public ServicioMovimiento(IServicioMovimiento servicioMovimiento, ServicioTarjeta servicioTarjeta)
         {
             _servicioMovimiento = servicioMovimiento;
             _servicioTarjeta = servicioTarjeta;
@@ -20,7 +20,7 @@ namespace FinanKey.Aplicacion.UseCases
         }
         public async Task<List<Tarjeta>> obtenerTarjetas()
         {
-           return await _servicioTarjeta.ObtenerTarjetasAsync();
+           return await _servicioTarjeta.ObtenerTodosAsync();
         }
     }
 }
