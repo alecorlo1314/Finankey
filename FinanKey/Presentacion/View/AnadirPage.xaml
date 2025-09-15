@@ -86,9 +86,10 @@
         CornerRadius="20,20,0,0"
         GrabberBackground="{StaticResource ColorIconoNavBar}"
         GrabberHeight="5"
-        GrabberWidth="90" 
-        IsModal="True" 
-        IsOpen="{Binding IsBottomSheetOpen}" State="Hidden">
+        GrabberWidth="90"
+        IsModal="True"
+        IsOpen="{Binding IsBottomSheetOpen}"
+        State="Hidden">
 
         <!--  Main Content  -->
         <bottomSheet:SfBottomSheet.Content>
@@ -408,6 +409,7 @@
                                         Placeholder="Seleccionar Tarjeta"
                                         PlaceholderColor="#8C8C8C"
                                         SelectedItem="{Binding TarjetaSeleccionada, Mode=TwoWay}"
+                                        SelectionTextHighlightColor="Transparent"
                                         Stroke="Transparent"
                                         TextColor="{StaticResource ColorTexoEntrada}"
                                         TextMemberPath="Nombre">
