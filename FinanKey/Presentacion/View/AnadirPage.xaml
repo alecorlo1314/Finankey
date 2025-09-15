@@ -111,6 +111,18 @@
                     WidthRequest="56"
                     ZIndex="1" />
 
+                <!--  LOADING INDICATOR  -->
+                <ActivityIndicator
+                    BackgroundColor="Transparent"
+                    HeightRequest="50"
+                    HorizontalOptions="Center"
+                    IsRunning="{Binding IsBusy}"
+                    IsVisible="{Binding IsBusy}"
+                    VerticalOptions="Center"
+                    WidthRequest="50"
+                    ZIndex="5"
+                    Color="{StaticResource ColorAzulPricipal}" />
+
                 <!--  ZONA ESTATICA  -->
                 <StackLayout Spacing="16">
                     <!--  Page Title  -->

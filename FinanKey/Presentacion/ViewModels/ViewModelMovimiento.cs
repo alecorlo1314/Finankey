@@ -264,6 +264,7 @@ namespace FinanKey.Presentacion.ViewModels
 
             try
             {
+                IsBusy = true;
                 IsGuardando = true;
                 HasError = false;
 
@@ -294,6 +295,7 @@ namespace FinanKey.Presentacion.ViewModels
             finally
             {
                 IsGuardando = false;
+                IsBusy = false;
             }
         }
 
@@ -311,8 +313,7 @@ namespace FinanKey.Presentacion.ViewModels
                    Monto > 0 &&
                    !string.IsNullOrWhiteSpace(Descripcion) &&
                    CategoriaSeleccionada != null &&
-                   TarjetaSeleccionada != null &&
-                   !string.IsNullOrWhiteSpace(Comercio);
+                   TarjetaSeleccionada != null;
         }
 
         private bool ValidarFormulario()
@@ -350,6 +351,7 @@ namespace FinanKey.Presentacion.ViewModels
         }
         #endregion
 
+        #region INICIALIZACIÓN FORMULARIO CUANDO SE CAMBIA DE PANTALLA
         [RelayCommand]
         private void InicializarDatosFormulario(string movimiento)
         {
@@ -380,6 +382,8 @@ namespace FinanKey.Presentacion.ViewModels
                 ListaCategoriasActual = ListaTipoCategoriasGastos;
             }
         }
+        #endregion
+
         #region HELPERS
         private Movimiento CrearMovimiento()
         {
