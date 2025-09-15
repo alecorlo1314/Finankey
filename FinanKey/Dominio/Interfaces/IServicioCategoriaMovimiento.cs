@@ -5,7 +5,9 @@ namespace FinanKey.Dominio.Interfaces
 {
     public interface IServicioCategoriaMovimiento
     {
-        Task<List<CategoriaMovimiento>> ObtenerTodosAsync();
+        Task<List<CategoriaMovimiento?>> ObtenerTodosAsync();
+        Task<List<CategoriaMovimiento?>> ObtenerCategoriasTipoGastosAsync();
+        Task<List<CategoriaMovimiento?>> ObtenerCategoriasTipoIngresosAsync();
         Task<CategoriaMovimiento?> ObtenerPorIdAsync(int id);
         Task<List<CategoriaMovimiento>> ObtenerPorTipoMovimientoAsync(string tipoMovimiento);
         Task<CategoriaMovimiento?> ObtenerPorDescripcionAsync(string descripcion);

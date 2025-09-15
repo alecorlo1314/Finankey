@@ -36,6 +36,54 @@ namespace FinanKey.Infraestructura.Repositorios
         }
 
         /// <summary>
+        /// Metodo para Obtener categorias por gastos
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<List<CategoriaMovimiento>> ObtenerCategoriasTipoGastosAsync()
+        {
+            try
+            {
+                //Obtenemos la conexion a la base de datos
+                var conexion = await _servicioBaseDatos.ObtenerConexion();
+
+                var listaCategoriasGastos = await conexion.Table<CategoriaMovimiento>()
+                                     .Where(cg => cg.TipoMovimiento == "Gasto")
+                                     .OrderBy(c => c.Descripcion)
+                                     .ToListAsync();
+                return listaCategoriasGastos;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener categorias por Gastos: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Metodo para Obtener categorias por ingresos
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<List<CategoriaMovimiento>> ObtenerCategoriasTipoIngresosAsync()
+        {
+            try
+            {
+                //Obtenemos la conexion a la base de datos
+                var conexion = await _servicioBaseDatos.ObtenerConexion();
+
+                var listaCategoriasGastos = await conexion.Table<CategoriaMovimiento>()
+                                     .Where(cg => cg.TipoMovimiento == "Ingreso")
+                                     .OrderBy(c => c.Descripcion)
+                                     .ToListAsync();
+                return listaCategoriasGastos;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener categorias por Gastos: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
         /// Obtiene una categoría por su ID
         /// </summary>
         public async Task<CategoriaMovimiento?> ObtenerPorIdAsync(int id)

@@ -16,7 +16,7 @@ public partial class AnadirPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        _ = _viewModelMovimiento.CargarTarjetasAsync();
+        _ = _viewModelMovimiento.InicializarDatosAsync();
     }
 
     private enum FormularioSeleccionado
@@ -101,22 +101,16 @@ public partial class AnadirPage : ContentPage
     {
         border.Stroke = Colors.Transparent;
     }
-
-    private void entradaTitulo_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderTitulo);
-    private void entradaTitulo_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderTitulo);
-
-    private void entradaMonto_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderMonto);
-    private void entradaMonto_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderMonto);
-
-    private void entradaTituloIngreso_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderTituloIngreso);
-    private void entradaTituloIngreso_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderTituloIngreso);
-
-    private void entradaDescripcionGasto_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderTitulo);
-    private void entradaDescripcionGasto_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderTitulo);
-
+    private void entradaMontoGasto_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderMontoGasto);
+    private void entradaMontoGasto_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderMontoGasto);
     private void entradaMontoIngreso_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderMontoIngreso);
     private void entradaMontoIngreso_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderMontoIngreso);
-
+    private void entradaDescripcionIngreso_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderMontoIngreso);
+    private void entradaDescripcionIngreso_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderMontoIngreso);
+    private void entradaDescripcionGasto_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderDescripcionGasto);
+    private void entradaDescripcionGasto_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderDescripcionGasto);
+    private void entradaComercio_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderComercio);
+    private void entradaComercio_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderComercio);
     private void Button_Clicked(object sender, EventArgs e)
     {
         bottomSheetCategoria.Show();

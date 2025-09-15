@@ -1,198 +1,488 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FinanKey.Dominio.Models;
 using FinanKey.Aplicacion.UseCases;
+using FinanKey.Dominio.Models;
 using System.Collections.ObjectModel;
 
 namespace FinanKey.Presentacion.ViewModels
 {
     public partial class ViewModelMovimiento : ObservableObject
     {
-        //Inyeccion de Dependencias
+        #region DEPENDENCIAS
         private readonly ServicioMovimiento _servicioMovimiento;
-        //Propiedades de Movimiento
+        #endregion
+
+        #region ESTADOS DE UI
         [ObservableProperty]
-        public double _monto = 0;
+        private bool _isBusy;
+
         [ObservableProperty]
-        public TipoCategoria? _categoriaSeleccionada;
+        private bool _isBottomSheetOpen;
+
         [ObservableProperty]
-        public DateTime _fecha = DateTime.Now;
+        private bool _isGuardando;
+
         [ObservableProperty]
-        public string? _comercio;
+        private bool _hasError;
+
         [ObservableProperty]
-        public Tarjeta? _tarjetaSeleccionada;
+        private string _mensajeError = string.Empty;
+
+        // Control de pestañas/formularios
         [ObservableProperty]
-        public bool? _estaPagado = false;
+        private bool _esGastoSeleccionado = true;
+
         [ObservableProperty]
-        public string? _descripcion;
-        //Colecciones o listas
+        private bool _esIngresoSeleccionado = false;
+        #endregion
+
+        #region PROPIEDADES DEL FORMULARIO
         [ObservableProperty]
-        public ObservableCollection<TipoCategoria>? _listaTipoCategoriasGastos;
+        [NotifyCanExecuteChangedFor(nameof(GuardarMovimientoCommand))]
+        private double _monto = 0;
+
         [ObservableProperty]
-        public ObservableCollection<TipoCategoria>? _listaTipoCategoriasIngresos;
+        [NotifyCanExecuteChangedFor(nameof(GuardarMovimientoCommand))]
+        private string _descripcion = string.Empty;
+
         [ObservableProperty]
-        public ObservableCollection<TipoCategoria>? _listaCategoriasActual;
+        [NotifyCanExecuteChangedFor(nameof(GuardarMovimientoCommand))]
+        private CategoriaMovimiento? _categoriaSeleccionada;
+
         [ObservableProperty]
-        public ObservableCollection<Tarjeta>? _listaTarjetas;
-        //Para visar al inicializador de categorias cuando este listo
+        [NotifyCanExecuteChangedFor(nameof(GuardarMovimientoCommand))]
+        private Tarjeta? _tarjetaSeleccionada;
+
         [ObservableProperty]
-        public bool _isBusy;
-        //Para abrir y cerrar el bottom sheet
+        private DateTime _fecha = DateTime.Now;
+
         [ObservableProperty]
-        public bool _isBottomSheetOpen;
-        string fondoColorBorder;
-        string fondoColorTexto;
+        private string _comercio = string.Empty;
+
+        [ObservableProperty]
+        private bool _estaPagado = false;
+
+        // Propiedades calculadas
+        public string TipoMovimientoActual => EsGastoSeleccionado ? "Gasto" : "Ingreso";
+        public string TextoBotonGuardar => $"Guardar {TipoMovimientoActual}";
+        #endregion
+
+        #region COLECCIONES
+        [ObservableProperty]
+        private ObservableCollection<CategoriaMovimiento> _listaTipoCategoriasGastos = new();
+
+        [ObservableProperty]
+        private ObservableCollection<CategoriaMovimiento> _listaTipoCategoriasIngresos = new();
+
+        [ObservableProperty]
+        private ObservableCollection<CategoriaMovimiento> _listaCategoriasActual = new();
+
+        [ObservableProperty]
+        private ObservableCollection<Tarjeta> _listaTarjetas = new();
+
+        [ObservableProperty]
+        private ObservableCollection<Tarjeta> _listaTarjetasDebito = new();
+
+        // Propiedades calculadas para UI
+        public bool TieneCategorias => ListaCategoriasActual?.Count > 0;
+        public bool TieneTarjetas => ListaTarjetas?.Count > 0;
+        #endregion
+
+        #region CONSTRUCTOR
         public ViewModelMovimiento(ServicioMovimiento servicioMovimiento)
         {
-            inicializarDatos();
-            _servicioMovimiento = servicioMovimiento;
+            _servicioMovimiento = servicioMovimiento ?? throw new ArgumentNullException(nameof(servicioMovimiento));
         }
+        #endregion
 
-        //Metodo para inicializar las categorias
-        private void inicializarDatos()
+        #region INICIALIZACIÓN
+        public async Task InicializarDatosAsync()
         {
-            _isBusy = true;
-            cargarCategoriasGastos();
-            _isBusy = false;
-        }
-        public async Task CargarTarjetasAsync()
-        {
-            var resultado = await _servicioMovimiento.obtenerTarjetas();
-            if (resultado != null)
+            try
             {
-                ListaTarjetas = new ObservableCollection<Tarjeta>(resultado);
+                IsBusy = true;
+                HasError = false;
+
+                await Task.WhenAll(
+                    CargarTarjetasAsync(),
+                    CargarCategoriasGastosAsync(),
+                    CargarCategoriasIngresosAsync()
+                );
+
+                // Establecer lista inicial (gastos por defecto)
+                ActualizarListaCategorias();
+            }
+            catch (Exception ex)
+            {
+                HasError = true;
+                MensajeError = $"Error inicializando datos: {ex.Message}";
+                await MostrarError("Error de inicialización", ex.Message);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+        #endregion
+
+        #region CARGA DE DATOS
+        private async Task CargarTarjetasAsync()
+        {
+            try
+            {
+                var tarjetas = await _servicioMovimiento.obtenerTarjetas();
+
+                ListaTarjetas.Clear();
+                foreach (var tarjeta in tarjetas ?? new List<Tarjeta>())
+                {
+                    if(tarjeta.Logo.Equals("icono_visa.svg"))
+                    {
+                        tarjeta.Logo = "icono_visa_oscuro.svg";
+                    }
+                    ListaTarjetas.Add(tarjeta);
+                }
+
+                OnPropertyChanged(nameof(TieneTarjetas));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error cargando tarjetas: {ex.Message}", ex);
             }
         }
 
-        #region Metodo para cargar las categorias de gastos
-        private void cargarCategoriasGastos()
+        private async Task CargarCategoriasGastosAsync()
         {
-            ListaTipoCategoriasGastos = new ObservableCollection<TipoCategoria>
+            try
             {
-                new() {Id = 0, Descripcion = "Cosas del Hogar", Icono = "bticono_casa.svg" },
-                new() {Id = 1, Descripcion = "Servicios publicos", Icono = "bticono_servicios.svg" },
-                new() {Id = 2, Descripcion = "Internet y Telefonia", Icono = "btincono_internet.svg" },
-                new() {Id = 3, Descripcion = "Mantenimiento", Icono = "bticono_mantenimiento.svg" },
-                new() {Id = 4, Descripcion = "Streaming", Icono = "bticono_streaming.svg" },
-                new() {Id = 5, Descripcion = "Cine", Icono = "bticono_cine.svg" },
-                new() {Id = 6, Descripcion = "Medicinas", Icono = "btincono_medicinas.svg" },
-                new() {Id = 7, Descripcion = "Medico", Icono = "bticono_medico.svg" },
-                new() {Id = 8, Descripcion = "Libros", Icono = "bticono_libros.svg" },
-                new() {Id = 9, Descripcion = "Cursos", Icono = "bticono_cursos.svg" }
-            };
-        }
-        #endregion
+                var categoriasGastos = await _servicioMovimiento.ObtenerCategoriasTipoGastosAsync();
 
-        #region Metodo se encarga de seleccionar una categoría de gasto
-        [RelayCommand]
-        private async Task SeleccionarCategoriaGasto(TipoCategoria categoriaGasto)
-        {
-            if (categoriaGasto is null) return;
-
-            // Actualizas la categoría gasto seleccionada
-            CategoriaSeleccionada = categoriaGasto;
-
-            // Cierras el bottom sheet
-            IsBottomSheetOpen = false;
-        }
-        #endregion
-
-        #region Metodo para mostrar bottonsheet y actualizar la lista de categorias
-        [RelayCommand]
-        public async Task MostrarBottomSheetCategoriaGasto()
-        {
-            ListaCategoriasActual = ListaTipoCategoriasGastos;
-            IsBottomSheetOpen = true;
-        }
-        #endregion
-
-        #region Metodo se encarga de seleccionar una categoría de ingreso
-        [RelayCommand]
-        private async Task SeleccionarCategoriaIngreso(TipoCategoria categoriaIngreso)
-        {
-            if (categoriaIngreso is null) return;
-
-            // Actualizas la categoría gasto seleccionada
-            CategoriaSeleccionada = categoriaIngreso;
-
-            // Cierras el bottom sheet
-            IsBottomSheetOpen = false;
-        }
-        #endregion
-
-        #region Metodo para mostrar bottonsheet y actualizar la lista de categorias de ingreso
-        [RelayCommand]
-        public async Task MostrarBottomSheetCategoriaIngreso()
-        {
-            ListaCategoriasActual = ListaTipoCategoriasGastos;
-            IsBottomSheetOpen = true;
-        }
-        #endregion
-
-        #region Metodo para guardar el movimiento de Gasto
-        [RelayCommand]
-        public async Task GuardarMovimientoGasto()
-        {
-            //Validaciones antes de guardar el movimiento de gasto
-            if (CategoriaSeleccionada is null) return;//Categoria seleccionada no puede estar vacia
-            if (Monto <= 0 || Monto >= double.MaxValue) return; //El monto debe ser mayor a 0 o mayor a decimal.MaxValue
-            if(string.IsNullOrWhiteSpace(Descripcion) || Descripcion.Length > 100) return; //La descripcion no puede estar vacia
-            if (ListaTipoCategoriasGastos is null) return; //La lista de categorias no puede estar vacia
-            if(Fecha > DateTime.Now || Fecha < DateTime.MinValue) return; //La fecha no puede ser mayor a la fecha actual o menor a DateTime.MinValue
-            //if (string.IsNullOrWhiteSpace(Comercio)) return; //El comercio no puede estar vacio
-            if(ListaTarjetas is null) return; //La lista de tarjetas no puede estar vacia
-            if(TarjetaSeleccionada is null) return; //La tarjeta no puede estar vacia
-            if (TarjetaSeleccionada.Tipo == "Credito")
-            {
-                if (EstaPagado==false)
+                ListaTipoCategoriasGastos.Clear();
+                foreach (var categoria in categoriasGastos ?? new List<CategoriaMovimiento>())
                 {
-                    fondoColorBorder = "#E4E7FC";
-                    fondoColorTexto = "#253FE4";
-                }else
-                {
-                    fondoColorBorder = "#FED1E6";
-                    fondoColorTexto = "#FA288A";
+                    ListaTipoCategoriasGastos.Add(categoria);
                 }
             }
-            Movimiento movimientoGasto = new Movimiento
+            catch (Exception ex)
             {
-                TipoMovimiento = Enums.TipoMovimiento.Gasto.ToString(),
-                Monto = Monto,
-                Descripcion = this.Descripcion,
-                FechaMovimiento = Fecha,
-                CategoriaId = CategoriaSeleccionada.Id,
-                TarjetaId = TarjetaSeleccionada.Id,
-                EsPagado = this.EstaPagado,
-                ColorFuenteEstado = fondoColorTexto,
-                BorderFondoEstado = fondoColorBorder
-            };
-            //Esperamos el resultado de la operacion
-            var resultado = await _servicioMovimiento.guardarMovimientoGasto(movimientoGasto);
-
-            if(resultado > 0)
-            {
-                await Shell.Current.DisplayAlert("Éxito", "Movimiento guardado correctamente", "OK");
-                LimpiarCampos();
+                throw new Exception($"Error cargando categorías de gastos: {ex.Message}", ex);
             }
-            else
+        }
+
+        private async Task CargarCategoriasIngresosAsync()
+        {
+            try
             {
-                await Shell.Current.DisplayAlert("Error", "No se pudo guardar el movimiento", "OK");
+                var categoriasIngresos = await _servicioMovimiento.ObtenerCategoriasTipoIngresosAsync();
+
+                ListaTipoCategoriasIngresos.Clear();
+                foreach (var categoria in categoriasIngresos ?? new List<CategoriaMovimiento>())
+                {
+                    ListaTipoCategoriasIngresos.Add(categoria);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error cargando categorías de ingresos: {ex.Message}", ex);
             }
         }
         #endregion
 
-        #region Metodo para limpiar los campos despues de guardar
-        private void LimpiarCampos()
+        #region COMMANDS - NAVEGACIÓN
+        [RelayCommand]
+        private void SeleccionarGasto()
         {
+            EsGastoSeleccionado = true;
+            EsIngresoSeleccionado = false;
+            ActualizarListaCategorias();
+            LimpiarCategoria();
+
+            OnPropertyChanged(nameof(TipoMovimientoActual));
+            OnPropertyChanged(nameof(TextoBotonGuardar));
+        }
+
+        [RelayCommand]
+        private void SeleccionarIngreso()
+        {
+            EsGastoSeleccionado = false;
+            EsIngresoSeleccionado = true;
+            ActualizarListaCategorias();
+            LimpiarCategoria();
+
+            OnPropertyChanged(nameof(TipoMovimientoActual));
+            OnPropertyChanged(nameof(TextoBotonGuardar));
+        }
+
+        private void ActualizarListaCategorias()
+        {
+            ListaCategoriasActual.Clear();
+
+            var categorias = EsGastoSeleccionado ? ListaTipoCategoriasGastos : ListaTipoCategoriasIngresos;
+
+            foreach (var categoria in categorias ?? new ObservableCollection<CategoriaMovimiento>())
+            {
+                ListaCategoriasActual.Add(categoria);
+            }
+
+            OnPropertyChanged(nameof(TieneCategorias));
+        }
+
+        private void LimpiarCategoria()
+        {
+            CategoriaSeleccionada = null;
+        }
+        #endregion
+
+        #region COMMANDS - CATEGORIAS
+        [RelayCommand]
+        private void MostrarBottomSheetCategorias()
+        {
+            ActualizarListaCategorias();
+            IsBottomSheetOpen = true;
+        }
+
+        [RelayCommand]
+        private void SeleccionarCategoria(CategoriaMovimiento categoria)
+        {
+            if (categoria == null) return;
+
+            CategoriaSeleccionada = categoria;
+            IsBottomSheetOpen = false;
+        }
+
+        [RelayCommand]
+        private void CerrarBottomSheet()
+        {
+            IsBottomSheetOpen = false;
+        }
+        #endregion
+
+        #region COMMANDS - GUARDAR
+        [RelayCommand(CanExecute = nameof(PuedeGuardarMovimiento))]
+        private async Task GuardarMovimiento()
+        {
+            if (IsGuardando) return;
+
+            try
+            {
+                IsGuardando = true;
+                HasError = false;
+
+                if (!ValidarFormulario())
+                {
+                    return;
+                }
+
+                var movimiento = CrearMovimiento();
+                var resultado = await _servicioMovimiento.guardarMovimientoGasto(movimiento);
+
+                if (resultado > 0)
+                {
+                    await MostrarExito($"{TipoMovimientoActual} guardado correctamente");
+                    LimpiarFormulario();
+                }
+                else
+                {
+                    await MostrarError("Error", $"No se pudo guardar el {TipoMovimientoActual.ToLower()}");
+                }
+            }
+            catch (Exception ex)
+            {
+                await MostrarError($"Error guardando {TipoMovimientoActual.ToLower()}", ex.Message);
+                HasError = true;
+                MensajeError = ex.Message;
+            }
+            finally
+            {
+                IsGuardando = false;
+            }
+        }
+
+        [RelayCommand]
+        private async Task RefrescarDatos()
+        {
+            await InicializarDatosAsync();
+        }
+        #endregion
+
+        #region VALIDACIÓN
+        private bool PuedeGuardarMovimiento()
+        {
+            return !IsGuardando &&
+                   Monto > 0 &&
+                   !string.IsNullOrWhiteSpace(Descripcion) &&
+                   CategoriaSeleccionada != null &&
+                   TarjetaSeleccionada != null &&
+                   !string.IsNullOrWhiteSpace(Comercio);
+        }
+
+        private bool ValidarFormulario()
+        {
+            var errores = new List<string>();
+
+            if (Monto <= 0)
+                errores.Add("El monto debe ser mayor a 0");
+
+            if (string.IsNullOrWhiteSpace(Descripcion))
+                errores.Add("La descripción es requerida");
+            else if (Descripcion.Length > 100)
+                errores.Add("La descripción no puede exceder 100 caracteres");
+
+            if (CategoriaSeleccionada == null)
+                errores.Add("Debe seleccionar una categoría");
+
+            if (TarjetaSeleccionada == null)
+                errores.Add("Debe seleccionar una tarjeta");
+
+            if (string.IsNullOrWhiteSpace(Comercio))
+                errores.Add("El comercio es requerido");
+
+            if (Fecha > DateTime.Now)
+                errores.Add("La fecha no puede ser futura");
+
+            if (errores.Any())
+            {
+                HasError = true;
+                MensajeError = string.Join("\n", errores);
+                return false;
+            }
+
+            return true;
+        }
+        #endregion
+
+        [RelayCommand]
+        private void InicializarDatosFormulario(string movimiento)
+        {
+            //LIMPIAR CAMPOS
             Monto = 0;
+            Fecha = DateTime.Now;
             Descripcion = string.Empty;
             CategoriaSeleccionada = null;
             TarjetaSeleccionada = null;
-            Descripcion = string.Empty;
+            Comercio = string.Empty;
             EstaPagado = false;
-            fondoColorBorder = string.Empty;
-            fondoColorTexto = string.Empty;
+
+            if(movimiento == "Ingreso")
+            {
+                ListaCategoriasActual = ListaTipoCategoriasIngresos;
+
+                ListaTarjetasDebito.Clear();
+                foreach (Tarjeta tarjeta in ListaTarjetas)
+                {
+                    if (tarjeta.Tipo == "Debito")
+                    {
+                        ListaTarjetasDebito.Add(tarjeta);
+                    }
+                }
+            }
+            else
+            {
+                ListaCategoriasActual = ListaTipoCategoriasGastos;
+            }
         }
-        #endregion  
+        #region HELPERS
+        private Movimiento CrearMovimiento()
+        {
+            return new Movimiento
+            {
+                TipoMovimiento = TipoMovimientoActual,
+                Monto = Monto,
+                Descripcion = Descripcion.Trim(),
+                FechaMovimiento = Fecha,
+                CategoriaId = CategoriaSeleccionada!.Id,
+                TarjetaId = TarjetaSeleccionada!.Id,
+                Comercio = Comercio.Trim(),
+                EsPagado = EstaPagado,
+                MedioPago = "Tarjeta",
+                // Colores basados en estado y tipo de tarjeta
+                BorderFondoEstado = ObtenerColorFondo(),
+                ColorFuenteEstado = ObtenerColorTexto()
+            };
+        }
+
+        private string ObtenerColorFondo()
+        {
+            if (TarjetaSeleccionada?.Tipo == "Credito" && !EstaPagado)
+                return "#FEF3C7"; // Amarillo claro para pendientes
+
+            return EstaPagado ? "#DCFCE7" : "#FEF2F2"; // Verde claro para pagados, rojo claro para pendientes
+        }
+
+        private string ObtenerColorTexto()
+        {
+            if (TarjetaSeleccionada?.Tipo == "Credito" && !EstaPagado)
+                return "#A16207"; // Amarillo oscuro para pendientes
+
+            return EstaPagado ? "#166534" : "#DC2626"; // Verde oscuro para pagados, rojo oscuro para pendientes
+        }
+
+        private void LimpiarFormulario()
+        {
+            Monto = 0;
+            Descripcion = string.Empty;
+            Comercio = string.Empty;
+            CategoriaSeleccionada = null;
+            TarjetaSeleccionada = null;
+            EstaPagado = false;
+            Fecha = DateTime.Now;
+            HasError = false;
+            MensajeError = string.Empty;
+        }
+
+        private async Task MostrarError(string titulo, string mensaje)
+        {
+            await Shell.Current.DisplayAlert(titulo, mensaje, "OK");
+        }
+
+        private async Task MostrarExito(string mensaje)
+        {
+            await Shell.Current.DisplayAlert("Éxito", mensaje, "OK");
+        }
+        #endregion
+
+        #region NOTIFICACIONES DE CAMBIO
+        partial void OnMontoChanged(double value)
+        {
+            GuardarMovimientoCommand.NotifyCanExecuteChanged();
+        }
+
+        partial void OnDescripcionChanged(string value)
+        {
+            GuardarMovimientoCommand.NotifyCanExecuteChanged();
+        }
+
+        partial void OnCategoriaSeleccionadaChanged(CategoriaMovimiento? value)
+        {
+            GuardarMovimientoCommand.NotifyCanExecuteChanged();
+        }
+
+        partial void OnTarjetaSeleccionadaChanged(Tarjeta? value)
+        {
+            GuardarMovimientoCommand.NotifyCanExecuteChanged();
+        }
+
+        partial void OnComercioChanged(string value)
+        {
+            GuardarMovimientoCommand.NotifyCanExecuteChanged();
+        }
+
+        partial void OnEsGastoSeleccionadoChanged(bool value)
+        {
+            if (value)
+            {
+                EsIngresoSeleccionado = false;
+                ActualizarListaCategorias();
+            }
+        }
+
+        partial void OnEsIngresoSeleccionadoChanged(bool value)
+        {
+            if (value)
+            {
+                EsGastoSeleccionado = false;
+                ActualizarListaCategorias();
+            }
+        }
+        #endregion
     }
 }

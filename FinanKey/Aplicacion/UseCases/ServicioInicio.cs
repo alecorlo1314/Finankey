@@ -7,8 +7,8 @@ namespace FinanKey.Aplicacion.UseCases
     public class ServicioInicio
     {
         private readonly IServicioMovimiento servicioMovimiento;
-        private readonly ServicioTarjeta servicioTarjeta;
-        public ServicioInicio(IServicioMovimiento servicioMovimiento, ServicioTarjeta servicioTarjeta)
+        private readonly IServicioTarjeta servicioTarjeta;
+        public ServicioInicio(IServicioMovimiento servicioMovimiento, IServicioTarjeta servicioTarjeta)
         {
             this.servicioMovimiento = servicioMovimiento;
             this.servicioTarjeta = servicioTarjeta;
@@ -19,7 +19,7 @@ namespace FinanKey.Aplicacion.UseCases
         }
         public async Task<List<Movimiento>> ObtenerMovimientosAsync()
         {
-            return await servicioMovimiento.ObtenerMovimientosAsync();
+            return await servicioMovimiento.ObtenerTodosAsync();
         }
     }
 }
