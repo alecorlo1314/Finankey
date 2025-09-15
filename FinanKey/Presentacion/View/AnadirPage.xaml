@@ -7,6 +7,7 @@
     xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+    xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     Background="{StaticResource ColorFondoPrincipal}"
     Shell.NavBarIsVisible="False">
@@ -85,10 +86,9 @@
         CornerRadius="20,20,0,0"
         GrabberBackground="{StaticResource ColorIconoNavBar}"
         GrabberHeight="5"
-        GrabberWidth="90"
-        IsModal="True"
-        IsOpen="{Binding IsBottomSheetOpen, Mode=TwoWay}"
-        State="Hidden">
+        GrabberWidth="90" 
+        IsModal="True" 
+        IsOpen="{Binding IsBottomSheetOpen}" State="Hidden">
 
         <!--  Main Content  -->
         <bottomSheet:SfBottomSheet.Content>
@@ -113,6 +113,8 @@
 
                 <!--  LOADING INDICATOR  -->
                 <ActivityIndicator
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
                     BackgroundColor="Transparent"
                     HeightRequest="50"
                     HorizontalOptions="Center"
@@ -122,6 +124,64 @@
                     WidthRequest="50"
                     ZIndex="5"
                     Color="{StaticResource ColorAzulPricipal}" />
+
+                <!--  VENTANA EMERGENTE MENSAJE DE INFORMACIÓN  -->
+                <sfPopup:SfPopup
+                    Padding="16"
+                    AutoSizeMode="Height"
+                    BackgroundColor="Transparent"
+                    FooterHeight="57"
+                    HeaderTitle="57"
+                    HeightRequest="180"
+                    HorizontalOptions="Center"
+                    IsOpen="{Binding PopupInformacionAbierto}"
+                    IsVisible="{Binding PopupInformacionAbierto}"
+                    ShowCloseButton="False"
+                    ShowFooter="True"
+                    ShowHeader="True"
+                    WidthRequest="380">
+                    <sfPopup:SfPopup.PopupStyle>
+                        <sfPopup:PopupStyle
+                            FooterBackground="{StaticResource ColorFondoComponentes}"
+                            HeaderBackground="{StaticResource ColorFondoComponentes}"
+                            MessageBackground="{StaticResource ColorFondoComponentes}" />
+                    </sfPopup:SfPopup.PopupStyle>
+                    <sfPopup:SfPopup.HeaderTemplate>
+                        <DataTemplate>
+                            <HorizontalStackLayout Margin="16,16,0,0">
+                                <Label
+                                    Style="{StaticResource TextoEncabezadoSecundario}"
+                                    Text="Información"
+                                    TextColor="{StaticResource ColorTexto}" />
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </sfPopup:SfPopup.HeaderTemplate>
+                    <sfPopup:SfPopup.ContentTemplate>
+                        <DataTemplate>
+                            <Label
+                                Margin="16,0"
+                                HorizontalOptions="Start"
+                                Style="{StaticResource TextoParrafoPrincipal}"
+                                Text="{Binding MensajeInformacion}"
+                                TextColor="{StaticResource Secundario}" />
+                        </DataTemplate>
+                    </sfPopup:SfPopup.ContentTemplate>
+                    <sfPopup:SfPopup.FooterTemplate>
+                        <DataTemplate>
+                            <Button
+                                Margin="0,0,16,16"
+                                BackgroundColor="{StaticResource ColorAzulPricipal}"
+                                Command="{Binding CerrarPopInformacionCommand}"
+                                CornerRadius="10"
+                                FontFamily="PoppinsBold"
+                                FontSize="14"
+                                HeightRequest="42"
+                                HorizontalOptions="End"
+                                Text="OK"
+                                TextColor="{StaticResource ColorFondoComponentes}" />
+                        </DataTemplate>
+                    </sfPopup:SfPopup.FooterTemplate>
+                </sfPopup:SfPopup>
 
                 <!--  ZONA ESTATICA  -->
                 <StackLayout Spacing="16">
@@ -300,9 +360,9 @@
                                         <Image
                                             Grid.Column="0"
                                             Aspect="AspectFit"
-                                            HeightRequest="24"
-                                            Source="{Binding CategoriaSeleccionada.Icono, Mode=TwoWay}"
-                                            WidthRequest="24" />
+                                            HeightRequest="45"
+                                            Source="{Binding CategoriaSeleccionada.RutaIcono, Mode=TwoWay}"
+                                            WidthRequest="35" />
                                         <Label
                                             Grid.Column="1"
                                             Style="{StaticResource TextoParrafoPrincipal}"
@@ -622,7 +682,7 @@
                 BackgroundColor="{StaticResource FondoPrincipal}"
                 ItemsSource="{Binding ListaCategoriasActual}"
                 SelectedItem="{Binding CategoriaSeleccionada, Mode=TwoWay}"
-                SelectionChangedCommand="{Binding SeleccionarCategoriaGastoCommand}"
+                SelectionChangedCommand="{Binding SeleccionarCategoriaCommand}"
                 SelectionChangedCommandParameter="{Binding CategoriaSeleccionada}"
                 SelectionMode="Single">
                 <CollectionView.ItemTemplate>

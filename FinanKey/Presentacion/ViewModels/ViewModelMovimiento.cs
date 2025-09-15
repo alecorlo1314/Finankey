@@ -34,6 +34,15 @@ namespace FinanKey.Presentacion.ViewModels
 
         [ObservableProperty]
         private bool _esIngresoSeleccionado = false;
+
+        [ObservableProperty]
+        private bool _PopupInformacionAbierto;
+
+        [ObservableProperty]
+        private string? _mensajeInformacion;
+
+        [ObservableProperty]
+        private string? _estado;
         #endregion
 
         #region PROPIEDADES DEL FORMULARIO
@@ -195,9 +204,6 @@ namespace FinanKey.Presentacion.ViewModels
             EsIngresoSeleccionado = false;
             ActualizarListaCategorias();
             LimpiarCategoria();
-
-            OnPropertyChanged(nameof(TipoMovimientoActual));
-            OnPropertyChanged(nameof(TextoBotonGuardar));
         }
 
         [RelayCommand]
@@ -207,9 +213,6 @@ namespace FinanKey.Presentacion.ViewModels
             EsIngresoSeleccionado = true;
             ActualizarListaCategorias();
             LimpiarCategoria();
-
-            OnPropertyChanged(nameof(TipoMovimientoActual));
-            OnPropertyChanged(nameof(TextoBotonGuardar));
         }
 
         private void ActualizarListaCategorias()
@@ -236,8 +239,15 @@ namespace FinanKey.Presentacion.ViewModels
         [RelayCommand]
         private void MostrarBottomSheetCategorias()
         {
-            ActualizarListaCategorias();
-            IsBottomSheetOpen = true;
+            if(Estado == "Collapsed" || Estado == null)
+            {
+                if (IsBottomSheetOpen)
+                {
+                    IsBottomSheetOpen = false;
+                    return;
+                }
+                if (!IsBottomSheetOpen) IsBottomSheetOpen = true;
+            }
         }
 
         [RelayCommand]
@@ -303,6 +313,15 @@ namespace FinanKey.Presentacion.ViewModels
         private async Task RefrescarDatos()
         {
             await InicializarDatosAsync();
+        }
+        #endregion
+
+        #region COMANDO CERRAR VENTANA EMERGENTE
+        [RelayCommand]
+        private void CerrarPopInformacion()
+        {
+            PopupInformacionAbierto = false;
+            MensajeInformacion = string.Empty;
         }
         #endregion
 
@@ -440,7 +459,8 @@ namespace FinanKey.Presentacion.ViewModels
 
         private async Task MostrarExito(string mensaje)
         {
-            await Shell.Current.DisplayAlert("Éxito", mensaje, "OK");
+            PopupInformacionAbierto = true;
+            MensajeInformacion = mensaje;
         }
         #endregion
 
