@@ -80,6 +80,9 @@ namespace FinanKey.Presentacion.ViewModels
         [ObservableProperty]
         private ObservableCollection<Tarjeta> _listaTarjetas = new();
 
+        [ObservableProperty]
+        private ObservableCollection<Tarjeta> _listaTarjetasDebito = new();
+
         // Propiedades calculadas para UI
         public bool TieneCategorias => ListaCategoriasActual?.Count > 0;
         public bool TieneTarjetas => ListaTarjetas?.Count > 0;
@@ -347,6 +350,36 @@ namespace FinanKey.Presentacion.ViewModels
         }
         #endregion
 
+        [RelayCommand]
+        private void InicializarDatosFormulario(string movimiento)
+        {
+            //LIMPIAR CAMPOS
+            Monto = 0;
+            Fecha = DateTime.Now;
+            Descripcion = string.Empty;
+            CategoriaSeleccionada = null;
+            TarjetaSeleccionada = null;
+            Comercio = string.Empty;
+            EstaPagado = false;
+
+            if(movimiento == "Ingreso")
+            {
+                ListaCategoriasActual = ListaTipoCategoriasIngresos;
+
+                ListaTarjetasDebito.Clear();
+                foreach (Tarjeta tarjeta in ListaTarjetas)
+                {
+                    if (tarjeta.Tipo == "Debito")
+                    {
+                        ListaTarjetasDebito.Add(tarjeta);
+                    }
+                }
+            }
+            else
+            {
+                ListaCategoriasActual = ListaTipoCategoriasGastos;
+            }
+        }
         #region HELPERS
         private Movimiento CrearMovimiento()
         {
