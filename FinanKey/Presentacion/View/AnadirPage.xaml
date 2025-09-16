@@ -187,6 +187,71 @@
                     </sfPopup:SfPopup.FooterTemplate>
                 </sfPopup:SfPopup>
 
+                <!--  VENTANA EMERGENTE MENSAJE DE ERROR  -->
+                <sfPopup:SfPopup
+                    Padding="16"
+                    AutoSizeMode="Height"
+                    BackgroundColor="Transparent"
+                    FooterHeight="57"
+                    HeaderTitle="57"
+                    HorizontalOptions="Center"
+                    IsOpen="{Binding PopupErrorAbierto}"
+                    IsVisible="{Binding PopupErrorAbierto}"
+                    ShowCloseButton="False"
+                    ShowFooter="True"
+                    ShowHeader="True"
+                    WidthRequest="380">
+                    <sfPopup:SfPopup.PopupStyle>
+                        <sfPopup:PopupStyle
+                            FooterBackground="{StaticResource ColorFondoComponentes}"
+                            HeaderBackground="{StaticResource ColorFondoComponentes}"
+                            MessageBackground="{StaticResource ColorFondoComponentes}" />
+                    </sfPopup:SfPopup.PopupStyle>
+                    <!--  ENCABEZADO DEL POPUP  -->
+                    <sfPopup:SfPopup.HeaderTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                <Image
+                                    Aspect="AspectFit"
+                                    HorizontalOptions="Center"
+                                    Source="icono_error.svg"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Style="{StaticResource TextoEncabezadoSecundario}"
+                                    Text="{Binding TituloError}"
+                                    TextColor="{StaticResource ColorTexto}" />
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </sfPopup:SfPopup.HeaderTemplate>
+                    <!--  CONTENIDO DEL POPUP  -->
+                    <sfPopup:SfPopup.ContentTemplate>
+                        <DataTemplate>
+                            <Label
+                                Margin="16,0"
+                                HorizontalOptions="Start"
+                                Style="{StaticResource TextoParrafoPrincipal}"
+                                Text="{Binding MensajeError}"
+                                TextColor="{StaticResource Secundario}" />
+                        </DataTemplate>
+                    </sfPopup:SfPopup.ContentTemplate>
+                    <!--  PIE DEL POPUP  -->
+                    <sfPopup:SfPopup.FooterTemplate>
+                        <DataTemplate>
+                            <Button
+                                Margin="0,0,16,16"
+                                BackgroundColor="{StaticResource ColorAzulPricipal}"
+                                Command="{Binding CerrarPopErrorCommand}"
+                                CornerRadius="10"
+                                FontFamily="PoppinsBold"
+                                FontSize="14"
+                                HeightRequest="42"
+                                HorizontalOptions="End"
+                                Text="OK"
+                                TextColor="{StaticResource ColorFondoComponentes}" />
+                        </DataTemplate>
+                    </sfPopup:SfPopup.FooterTemplate>
+                </sfPopup:SfPopup>
+
                 <!--  ZONA ESTÁTICA CON TÍTULO Y BOTONES PRINCIPALES  -->
                 <StackLayout Spacing="16">
                     <!--  TÍTULO DE LA PÁGINA  -->

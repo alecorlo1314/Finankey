@@ -9,10 +9,13 @@ namespace FinanKey.Presentacion.ViewModels
     public partial class ViewModelMovimiento : ObservableObject
     {
         #region DEPENDENCIAS
+
         private readonly ServicioMovimiento _servicioMovimiento;
-        #endregion
+
+        #endregion DEPENDENCIAS
 
         #region ESTADOS DE UI
+
         [ObservableProperty]
         private bool _isBusy;
 
@@ -28,6 +31,9 @@ namespace FinanKey.Presentacion.ViewModels
         [ObservableProperty]
         private string _mensajeError = string.Empty;
 
+        [ObservableProperty]
+        private string _tituloError = string.Empty;
+
         // Control de pestañas/formularios
         [ObservableProperty]
         private bool _esGastoSeleccionado = true;
@@ -36,16 +42,21 @@ namespace FinanKey.Presentacion.ViewModels
         private bool _esIngresoSeleccionado = false;
 
         [ObservableProperty]
-        private bool _PopupInformacionAbierto;
+        private bool _popupInformacionAbierto;
+
+        [ObservableProperty]
+        private bool _popupErrorAbierto;
 
         [ObservableProperty]
         private string? _mensajeInformacion;
 
         [ObservableProperty]
         private string? _estado;
-        #endregion
+
+        #endregion ESTADOS DE UI
 
         #region PROPIEDADES DEL FORMULARIO
+
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(GuardarMovimientoCommand))]
         private double _monto = 0;
@@ -73,10 +84,13 @@ namespace FinanKey.Presentacion.ViewModels
 
         // Propiedades calculadas
         public string TipoMovimientoActual => EsGastoSeleccionado ? "Gasto" : "Ingreso";
+
         public string TextoBotonGuardar => $"Guardar {TipoMovimientoActual}";
-        #endregion
+
+        #endregion PROPIEDADES DEL FORMULARIO
 
         #region COLECCIONES
+
         [ObservableProperty]
         private ObservableCollection<CategoriaMovimiento> _listaTipoCategoriasGastos = new();
 
@@ -94,17 +108,22 @@ namespace FinanKey.Presentacion.ViewModels
 
         // Propiedades calculadas para UI
         public bool TieneCategorias => ListaCategoriasActual?.Count > 0;
+
         public bool TieneTarjetas => ListaTarjetas?.Count > 0;
-        #endregion
+
+        #endregion COLECCIONES
 
         #region CONSTRUCTOR
+
         public ViewModelMovimiento(ServicioMovimiento servicioMovimiento)
         {
             _servicioMovimiento = servicioMovimiento ?? throw new ArgumentNullException(nameof(servicioMovimiento));
         }
-        #endregion
+
+        #endregion CONSTRUCTOR
 
         #region INICIALIZACIÓN
+
         public async Task InicializarDatosAsync()
         {
             try
@@ -125,16 +144,18 @@ namespace FinanKey.Presentacion.ViewModels
             {
                 HasError = true;
                 MensajeError = $"Error inicializando datos: {ex.Message}";
-                await MostrarError("Error de inicialización", ex.Message);
+                MostrarError("Error de inicialización", ex.Message);
             }
             finally
             {
                 IsBusy = false;
             }
         }
-        #endregion
 
-        #region CARGA DE DATOS
+        #endregion INICIALIZACIÓN
+
+        #region CARGA DE DATOS ASYNCRONO
+
         private async Task CargarTarjetasAsync()
         {
             try
@@ -144,18 +165,12 @@ namespace FinanKey.Presentacion.ViewModels
                 ListaTarjetas.Clear();
                 foreach (var tarjeta in tarjetas ?? new List<Tarjeta>())
                 {
-                    if(tarjeta.Logo.Equals("icono_visa.svg"))
-                    {
-                        tarjeta.Logo = "icono_visa_oscuro.svg";
-                    }
                     ListaTarjetas.Add(tarjeta);
                 }
-
-                OnPropertyChanged(nameof(TieneTarjetas));
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error cargando tarjetas: {ex.Message}", ex);
+                MensajeErrorExepcion($"Error cargando tarjetas: {ex.Message}", ex);
             }
         }
 
@@ -166,14 +181,14 @@ namespace FinanKey.Presentacion.ViewModels
                 var categoriasGastos = await _servicioMovimiento.ObtenerCategoriasTipoGastosAsync();
 
                 ListaTipoCategoriasGastos.Clear();
-                foreach (var categoria in categoriasGastos ?? new List<CategoriaMovimiento>())
+                foreach (var categoria in categoriasGastos)
                 {
-                    ListaTipoCategoriasGastos.Add(categoria);
+                    ListaTipoCategoriasGastos.Add(categoria ?? new CategoriaMovimiento());
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error cargando categorías de gastos: {ex.Message}", ex);
+                MensajeErrorExepcion($"Error cargando categorías de gastos: {ex.Message}", ex);
             }
         }
 
@@ -184,19 +199,21 @@ namespace FinanKey.Presentacion.ViewModels
                 var categoriasIngresos = await _servicioMovimiento.ObtenerCategoriasTipoIngresosAsync();
 
                 ListaTipoCategoriasIngresos.Clear();
-                foreach (var categoria in categoriasIngresos ?? new List<CategoriaMovimiento>())
+                foreach (var categoria in categoriasIngresos)
                 {
-                    ListaTipoCategoriasIngresos.Add(categoria);
+                    ListaTipoCategoriasIngresos.Add(categoria ?? new CategoriaMovimiento());
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error cargando categorías de ingresos: {ex.Message}", ex);
+                MensajeErrorExepcion($"Error cargando categorías de ingresos: {ex.Message}", ex);
             }
         }
-        #endregion
+
+        #endregion CARGA DE DATOS ASYNCRONO
 
         #region COMMANDS - NAVEGACIÓN
+
         [RelayCommand]
         private void SeleccionarGasto()
         {
@@ -215,6 +232,11 @@ namespace FinanKey.Presentacion.ViewModels
             LimpiarCategoria();
         }
 
+        private void LimpiarCategoria()
+        {
+            CategoriaSeleccionada = null;
+        }
+
         private void ActualizarListaCategorias()
         {
             ListaCategoriasActual.Clear();
@@ -225,21 +247,16 @@ namespace FinanKey.Presentacion.ViewModels
             {
                 ListaCategoriasActual.Add(categoria);
             }
-
-            OnPropertyChanged(nameof(TieneCategorias));
         }
 
-        private void LimpiarCategoria()
-        {
-            CategoriaSeleccionada = null;
-        }
-        #endregion
+        #endregion COMMANDS - NAVEGACIÓN
 
         #region COMMANDS - CATEGORIAS
+
         [RelayCommand]
         private void MostrarBottomSheetCategorias()
         {
-            if(Estado == "Collapsed" || Estado == null)
+            if (Estado == "Collapsed" || Estado == null)
             {
                 if (IsBottomSheetOpen)
                 {
@@ -264,9 +281,11 @@ namespace FinanKey.Presentacion.ViewModels
         {
             IsBottomSheetOpen = false;
         }
-        #endregion
+
+        #endregion COMMANDS - CATEGORIAS
 
         #region COMMANDS - GUARDAR
+
         [RelayCommand(CanExecute = nameof(PuedeGuardarMovimiento))]
         private async Task GuardarMovimiento()
         {
@@ -288,17 +307,17 @@ namespace FinanKey.Presentacion.ViewModels
 
                 if (resultado > 0)
                 {
-                    await MostrarExito($"{TipoMovimientoActual} guardado correctamente");
+                    MostrarExito($"{TipoMovimientoActual} guardado correctamente");
                     LimpiarFormulario();
                 }
                 else
                 {
-                    await MostrarError("Error", $"No se pudo guardar el {TipoMovimientoActual.ToLower()}");
+                    MostrarError("Error", $"No se pudo guardar el {TipoMovimientoActual.ToLower()}");
                 }
             }
             catch (Exception ex)
             {
-                await MostrarError($"Error guardando {TipoMovimientoActual.ToLower()}", ex.Message);
+                MostrarError($"Error guardando {TipoMovimientoActual.ToLower()}", ex.Message);
                 HasError = true;
                 MensajeError = ex.Message;
             }
@@ -314,18 +333,29 @@ namespace FinanKey.Presentacion.ViewModels
         {
             await InicializarDatosAsync();
         }
-        #endregion
+
+        #endregion COMMANDS - GUARDAR
 
         #region COMANDO CERRAR VENTANA EMERGENTE
+
         [RelayCommand]
         private void CerrarPopInformacion()
         {
             PopupInformacionAbierto = false;
             MensajeInformacion = string.Empty;
         }
-        #endregion
+
+        [RelayCommand]
+        private void CerrarPopError()
+        {
+            PopupErrorAbierto = false;
+            MensajeError = string.Empty;
+        }
+
+        #endregion COMANDO CERRAR VENTANA EMERGENTE
 
         #region VALIDACIÓN
+
         private bool PuedeGuardarMovimiento()
         {
             return !IsGuardando &&
@@ -365,9 +395,11 @@ namespace FinanKey.Presentacion.ViewModels
 
             return true;
         }
-        #endregion
+
+        #endregion VALIDACIÓN
 
         #region INICIALIZACIÓN FORMULARIO CUANDO SE CAMBIA DE PANTALLA
+
         [RelayCommand]
         private void InicializarDatosFormulario(string movimiento)
         {
@@ -380,7 +412,7 @@ namespace FinanKey.Presentacion.ViewModels
             Comercio = string.Empty;
             EstaPagado = false;
 
-            if(movimiento == "Ingreso")
+            if (movimiento == "Ingreso")
             {
                 ListaCategoriasActual = ListaTipoCategoriasIngresos;
                 EsGastoSeleccionado = false;
@@ -399,9 +431,11 @@ namespace FinanKey.Presentacion.ViewModels
                 ListaCategoriasActual = ListaTipoCategoriasGastos;
             }
         }
-        #endregion
+
+        #endregion INICIALIZACIÓN FORMULARIO CUANDO SE CAMBIA DE PANTALLA
 
         #region HELPERS
+
         private Movimiento CrearMovimiento()
         {
             return new Movimiento
@@ -450,61 +484,26 @@ namespace FinanKey.Presentacion.ViewModels
             MensajeError = string.Empty;
         }
 
-        private async Task MostrarError(string titulo, string mensaje)
+        private void MostrarError(string titulo, string mensaje)
         {
-            await Shell.Current.DisplayAlert(titulo, mensaje, "OK");
+            PopupErrorAbierto = true;
+            TituloError = titulo;
+            MensajeError = mensaje;
         }
 
-        private async Task MostrarExito(string mensaje)
+        private void MensajeErrorExepcion(string mensaje, Exception ex)
+        {
+            PopupErrorAbierto = true;
+            TituloError = "Error";
+            MensajeError = $"{mensaje}: {ex.Message}";
+        }
+
+        private void MostrarExito(string mensaje)
         {
             PopupInformacionAbierto = true;
             MensajeInformacion = mensaje;
         }
-        #endregion
 
-        #region NOTIFICACIONES DE CAMBIO
-        partial void OnMontoChanged(double value)
-        {
-            GuardarMovimientoCommand.NotifyCanExecuteChanged();
-        }
-
-        partial void OnDescripcionChanged(string value)
-        {
-            GuardarMovimientoCommand.NotifyCanExecuteChanged();
-        }
-
-        partial void OnCategoriaSeleccionadaChanged(CategoriaMovimiento? value)
-        {
-            GuardarMovimientoCommand.NotifyCanExecuteChanged();
-        }
-
-        partial void OnTarjetaSeleccionadaChanged(Tarjeta? value)
-        {
-            GuardarMovimientoCommand.NotifyCanExecuteChanged();
-        }
-
-        partial void OnComercioChanged(string value)
-        {
-            GuardarMovimientoCommand.NotifyCanExecuteChanged();
-        }
-
-        partial void OnEsGastoSeleccionadoChanged(bool value)
-        {
-            if (value)
-            {
-                EsIngresoSeleccionado = false;
-                ActualizarListaCategorias();
-            }
-        }
-
-        partial void OnEsIngresoSeleccionadoChanged(bool value)
-        {
-            if (value)
-            {
-                EsGastoSeleccionado = false;
-                ActualizarListaCategorias();
-            }
-        }
-        #endregion
+        #endregion HELPERS
     }
 }
