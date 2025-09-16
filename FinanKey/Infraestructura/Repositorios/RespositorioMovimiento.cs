@@ -21,9 +21,44 @@ namespace FinanKey.Infraestructura.Repositorios
             try
             {
                 var conexion = await _repositorioBaseDatos.ObtenerConexion();
-                return await conexion.Table<Movimiento>()
-                                   .OrderByDescending(m => m.FechaMovimiento)
-                                   .ToListAsync();
+                //return await conexion.Table<Movimiento>()
+                //                   .OrderByDescending(m => m.FechaMovimiento)
+                //                   .ToListAsync();
+                var movimientos = await conexion.Table<Movimiento>().ToListAsync();
+                var categorias = await conexion.Table<CategoriaMovimiento>().ToListAsync();
+
+                var consulta = from m in movimientos
+                               join c in categorias on m.CategoriaId equals c.Id
+                               select new Movimiento
+                               {
+                                   Id = m.Id,
+                                   TipoMovimiento = m.TipoMovimiento,
+                                   Monto = m.Monto,
+                                   Descripcion = m.Descripcion,
+                                   MedioPago = m.MedioPago,
+                                   EsRecurrente = m.EsRecurrente,
+                                   Frecuencia = m.Frecuencia,
+                                   FechaMovimiento = m.FechaMovimiento,
+                                   CategoriaId = m.CategoriaId,
+                                   Comercio = m.Comercio,
+                                   TarjetaId = m.TarjetaId,
+                                   EsPagado = m.EsPagado,
+                                   FechaCreacion = m.FechaCreacion,
+                                   BorderFondoEstado = m.BorderFondoEstado,
+                                   ColorFuenteEstado = m.ColorFuenteEstado,
+
+                                   // Relación manual
+                                   Categoria_Movimiento = new CategoriaMovimiento
+                                   {
+                                       Id = c.Id,
+                                       Descripcion = c.Descripcion,
+                                       Icon_id = c.Icon_id,
+                                       RutaIcono = c.RutaIcono,
+                                       TipoMovimiento = c.TipoMovimiento,
+                                   }
+                               };
+
+                return consulta.ToList();
             }
             catch (Exception ex)
             {
@@ -272,13 +307,13 @@ namespace FinanKey.Infraestructura.Repositorios
 
                 // Query SQL para obtener resumen por categoría
                 var query = @"
-                    SELECT 
+                    SELECT
                         m.CategoriaId,
                         m.TipoMovimiento,
                         COUNT(*) as Cantidad,
                         SUM(m.Monto) as Total,
                         AVG(m.Monto) as Promedio
-                    FROM Movimiento m 
+                    FROM Movimiento m
                     WHERE m.FechaMovimiento BETWEEN ? AND ?
                     GROUP BY m.CategoriaId, m.TipoMovimiento
                     ORDER BY Total DESC";
@@ -406,6 +441,7 @@ namespace FinanKey.Infraestructura.Repositorios
                 throw new Exception($"Error al marcar movimiento como pendiente: {ex.Message}", ex);
             }
         }
+
         /// <summary>
         /// Valida que el movimiento tenga los datos requeridos
         /// </summary>
