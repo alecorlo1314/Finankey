@@ -104,11 +104,6 @@ namespace FinanKey.Presentacion.ViewModels
         [ObservableProperty]
         private ObservableCollection<Tarjeta> _listaTarjetasDebito = new();
 
-        // Propiedades calculadas para UI
-        public bool TieneCategorias => ListaCategoriasActual?.Count > 0;
-
-        public bool TieneTarjetas => ListaTarjetas?.Count > 0;
-
         #endregion COLECCIONES
 
         #region CONSTRUCTOR
