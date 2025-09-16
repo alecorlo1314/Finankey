@@ -12,15 +12,15 @@
     Background="{StaticResource ColorFondoPrincipal}"
     Shell.NavBarIsVisible="False">
 
-    <!--  Status Bar Configuration  -->
+    <!--  CONFIGURACIÓN DE LA BARRA DE ESTADO  -->
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource FondoPrincipal}" StatusBarStyle="DarkContent" />
     </ContentPage.Behaviors>
 
-    <!--  Page Resources and Styles  -->
+    <!--  RECURSOS Y ESTILOS DE LA PÁGINA  -->
     <ContentPage.Resources>
         <ResourceDictionary>
-            <!--  Grid Selection Style for Category BottomSheet  -->
+            <!--  ESTILO DE SELECCIÓN DE GRID PARA BOTTOMSHEET DE CATEGORÍAS  -->
             <Style TargetType="Grid">
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList>
@@ -36,7 +36,7 @@
                 </Setter>
             </Style>
 
-            <!--  Switch Visual States  -->
+            <!--  ESTADOS VISUALES DEL SWITCH  -->
             <Style TargetType="buttons:SfSwitch">
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList>
@@ -74,7 +74,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <!--  Main BottomSheet Container  -->
+    <!--  CONTENEDOR PRINCIPAL DEL BOTTOMSHEET  -->
     <bottomSheet:SfBottomSheet
         x:Name="bottomSheetCategoria"
         AllowedState="All"
@@ -91,7 +91,7 @@
         IsOpen="{Binding IsBottomSheetOpen}"
         State="Hidden">
 
-        <!--  Main Content  -->
+        <!--  CONTENIDO PRINCIPAL  -->
         <bottomSheet:SfBottomSheet.Content>
 
             <Grid
@@ -99,7 +99,7 @@
                 RowDefinitions="Auto,*"
                 RowSpacing="16">
 
-                <!--  BOTÓN FLOTANTE MEJORADO  -->
+                <!--  BOTÓN FLOTANTE MEJORADO PARA GUARDAR  -->
                 <Button
                     Grid.Row="1"
                     BackgroundColor="{StaticResource ColorAzulPricipal}"
@@ -112,7 +112,7 @@
                     WidthRequest="56"
                     ZIndex="1" />
 
-                <!--  LOADING INDICATOR  -->
+                <!--  INDICADOR DE CARGA  -->
                 <ActivityIndicator
                     Grid.Row="0"
                     Grid.RowSpan="2"
@@ -147,6 +147,7 @@
                             HeaderBackground="{StaticResource ColorFondoComponentes}"
                             MessageBackground="{StaticResource ColorFondoComponentes}" />
                     </sfPopup:SfPopup.PopupStyle>
+                    <!--  ENCABEZADO DEL POPUP  -->
                     <sfPopup:SfPopup.HeaderTemplate>
                         <DataTemplate>
                             <HorizontalStackLayout Margin="16,16,0,0">
@@ -157,6 +158,7 @@
                             </HorizontalStackLayout>
                         </DataTemplate>
                     </sfPopup:SfPopup.HeaderTemplate>
+                    <!--  CONTENIDO DEL POPUP  -->
                     <sfPopup:SfPopup.ContentTemplate>
                         <DataTemplate>
                             <Label
@@ -167,6 +169,7 @@
                                 TextColor="{StaticResource Secundario}" />
                         </DataTemplate>
                     </sfPopup:SfPopup.ContentTemplate>
+                    <!--  PIE DEL POPUP  -->
                     <sfPopup:SfPopup.FooterTemplate>
                         <DataTemplate>
                             <Button
@@ -184,9 +187,9 @@
                     </sfPopup:SfPopup.FooterTemplate>
                 </sfPopup:SfPopup>
 
-                <!--  ZONA ESTATICA  -->
+                <!--  ZONA ESTÁTICA CON TÍTULO Y BOTONES PRINCIPALES  -->
                 <StackLayout Spacing="16">
-                    <!--  Page Title  -->
+                    <!--  TÍTULO DE LA PÁGINA  -->
                     <Label
                         Grid.Row="0"
                         HeightRequest="32"
@@ -196,14 +199,14 @@
                         TextColor="{StaticResource ColorAzulPricipal}"
                         VerticalOptions="Center" />
 
-                    <!--  Divider Line  -->
+                    <!--  LÍNEA DIVISORIA  -->
                     <BoxView
                         Grid.Row="1"
                         BackgroundColor="#D9D9D9"
                         HeightRequest="1"
                         HorizontalOptions="Fill" />
 
-                    <!--  Expense/Income Toggle Buttons  -->
+                    <!--  BOTONES TOGGLE PARA GASTO/INGRESO  -->
                     <HorizontalStackLayout
                         Grid.Row="2"
                         HorizontalOptions="Center"
@@ -231,7 +234,7 @@
                             TextColor="Black" />
                     </HorizontalStackLayout>
 
-                    <!--  Divider Line  -->
+                    <!--  LÍNEA DIVISORIA  -->
                     <BoxView
                         Grid.Row="3"
                         BackgroundColor="#D9D9D9"
@@ -239,16 +242,18 @@
                         HorizontalOptions="Fill" />
                 </StackLayout>
 
+
+                <!--  ÁREA DESPLAZABLE CON FORMULARIOS  -->
                 <ScrollView Grid.Row="1">
                     <Grid>
-                        <!--  FORMULARIO GASTOS  -->
+                        <!--  FORMULARIO PARA GASTOS  -->
                         <StackLayout
                             x:Name="formularioGasto"
                             IsVisible="True"
                             Spacing="16">
-                            <!--  Amount and Date Row  -->
+                            <!--  FILA DE MONTO Y FECHA  -->
                             <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
-                                <!--  Amount Field  -->
+                                <!--  CAMPO DE MONTO  -->
                                 <StackLayout Grid.Column="0" Spacing="8">
                                     <Label
                                         Style="{StaticResource TextoSubtítulo}"
@@ -271,7 +276,7 @@
                                     </Border>
                                 </StackLayout>
 
-                                <!--  Date Field  -->
+                                <!--  CAMPO DE FECHA  -->
                                 <StackLayout Grid.Column="1" Spacing="8">
                                     <Label
                                         Style="{StaticResource TextoSubtítulo}"
@@ -305,7 +310,7 @@
                                 </StackLayout>
                             </Grid>
 
-                            <!--  Description Field  -->
+                            <!--  CAMPO DE DESCRIPCIÓN  -->
                             <StackLayout Spacing="8">
                                 <Label
                                     Style="{StaticResource TextoSubtítulo}"
@@ -339,7 +344,7 @@
                                 </Border>
                             </StackLayout>
 
-                            <!--  Category Field  -->
+                            <!--  CAMPO DE CATEGORÍA  -->
                             <StackLayout Spacing="8">
                                 <Label
                                     Style="{StaticResource TextoSubtítulo}"
@@ -380,7 +385,7 @@
                                 </Border>
                             </StackLayout>
 
-                            <!--  Card Selection Field  -->
+                            <!--  CAMPO DE SELECCIÓN DE TARJETA  -->
                             <StackLayout Spacing="8">
                                 <Label
                                     Style="{StaticResource TextoSubtítulo}"
@@ -404,7 +409,7 @@
                                         IsClearButtonVisible="False"
                                         IsEditable="true"
                                         IsFilteringEnabled="True"
-                                        ItemsSource="{Binding ListaTarjetas, Mode=TwoWay}"
+                                        ItemsSource="{Binding ListaTarjetasDebito, Mode=TwoWay}"
                                         NoResultsFoundText="Sin Resultado"
                                         Placeholder="Seleccionar Tarjeta"
                                         PlaceholderColor="#8C8C8C"
@@ -413,6 +418,7 @@
                                         Stroke="Transparent"
                                         TextColor="{StaticResource ColorTexoEntrada}"
                                         TextMemberPath="Nombre">
+                                        <!--  PLANTILLA PARA ITEMS DE TARJETAS DÉBITO  -->
                                         <editors:SfComboBox.ItemTemplate>
                                             <DataTemplate>
                                                 <ViewCell>
@@ -448,7 +454,7 @@
                                 </Border>
                             </StackLayout>
 
-                            <!--  Commerce Field  -->
+                            <!--  CAMPO DE COMERCIO  -->
                             <StackLayout Spacing="8">
                                 <Label
                                     Style="{StaticResource TextoSubtítulo}"
@@ -470,7 +476,7 @@
                                 </Border>
                             </StackLayout>
 
-                            <!--  Payment Status Switch  -->
+                            <!--  SWITCH DE ESTADO DE PAGO  -->
                             <StackLayout Spacing="8">
                                 <Label
                                     Style="{StaticResource TextoSecundario}"
@@ -484,14 +490,14 @@
 
                         </StackLayout>
 
-                        <!--  FORMULARIO INGRESO  -->
+                        <!--  FORMULARIO PARA INGRESOS  -->
                         <StackLayout
                             x:Name="formularioIngreso"
                             IsVisible="False"
                             Spacing="16">
-                            <!--  Amount and Date Row  -->
+                            <!--  FILA DE MONTO Y FECHA  -->
                             <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
-                                <!--  Amount Field  -->
+                                <!--  CAMPO DE MONTO  -->
                                 <StackLayout Grid.Column="0" Spacing="8">
                                     <Label
                                         Style="{StaticResource TextoSubtítulo}"
@@ -512,7 +518,7 @@
                                     </Border>
                                 </StackLayout>
 
-                                <!--  Date Field  -->
+                                <!--  CAMPO DE FECHA  -->
                                 <StackLayout Grid.Column="1" Spacing="8">
                                     <Label
                                         Style="{StaticResource TextoSubtítulo}"
@@ -530,16 +536,15 @@
                                                 TextColor="{StaticResource ColorPlaceholde}" />
                                             <Image
                                                 Aspect="AspectFit"
-                                                HeightRequest="20"
                                                 Source="icono_calderario.svg"
-                                                VerticalOptions="Center"
-                                                WidthRequest="20" />
+                                                VerticalOptions="Center" />
                                         </HorizontalStackLayout>
                                     </Border>
                                 </StackLayout>
                             </Grid>
 
-                            <!--  Description Field  -->
+
+                            <!--  CAMPO DE DESCRIPCIÓN  -->
                             <StackLayout Spacing="8">
                                 <Label
                                     Style="{StaticResource TextoSubtítulo}"
@@ -550,13 +555,13 @@
                                         <Entry
                                             x:Name="entradaDescripcionIngreso"
                                             Focused="entradaDescripcionIngreso_Focused"
-                                            HorizontalOptions="Fill"
                                             Placeholder="Ej: Compras comida"
                                             PlaceholderColor="{StaticResource ColorPlaceholde}"
                                             Style="{StaticResource entradaFormulario}"
                                             Text="{Binding Descripcion, Mode=TwoWay}"
                                             TextColor="{StaticResource ColorTexoEntrada}"
-                                            Unfocused="entradaDescripcionIngreso_Unfocused" />
+                                            Unfocused="entradaDescripcionIngreso_Unfocused"
+                                            WidthRequest="300" />
                                         <Image
                                             Aspect="AspectFit"
                                             HeightRequest="20"
@@ -567,7 +572,7 @@
                                 </Border>
                             </StackLayout>
 
-                            <!--  Category Field  -->
+                            <!--  CAMPO DE CATEGORÍA  -->
                             <StackLayout Spacing="8">
                                 <Label
                                     Style="{StaticResource TextoSubtítulo}"
@@ -588,9 +593,9 @@
                                         <Image
                                             Grid.Column="0"
                                             Aspect="AspectFit"
-                                            HeightRequest="24"
-                                            Source="{Binding CategoriaSeleccionada.Icono, Mode=TwoWay}"
-                                            WidthRequest="24" />
+                                            HeightRequest="35"
+                                            Source="{Binding CategoriaSeleccionada.RutaIcono, Mode=TwoWay}"
+                                            WidthRequest="35" />
                                         <Label
                                             Grid.Column="1"
                                             Style="{StaticResource TextoParrafoPrincipal}"
@@ -607,7 +612,7 @@
                                 </Border>
                             </StackLayout>
 
-                            <!--  Card Selection Field  -->
+                            <!--  CAMPO DE SELECCIÓN DE TARJETA DÉBITO  -->
                             <StackLayout Spacing="8">
                                 <Label
                                     Style="{StaticResource TextoSubtítulo}"
@@ -629,11 +634,12 @@
                                         IsClearButtonVisible="False"
                                         IsEditable="true"
                                         IsFilteringEnabled="True"
-                                        ItemsSource="{Binding ListaTarjetasDebitta, Mode=TwoWay}"
+                                        ItemsSource="{Binding ListaTarjetasDebito, Mode=TwoWay}"
                                         NoResultsFoundText="Sin Resultado"
                                         Placeholder="Seleccionar Tarjeta"
                                         PlaceholderColor="#8C8C8C"
                                         SelectedItem="{Binding TarjetaSeleccionada, Mode=TwoWay}"
+                                        SelectionTextHighlightColor="Transparent"
                                         Stroke="Transparent"
                                         TextColor="{StaticResource ColorTexoEntrada}"
                                         TextMemberPath="Nombre">
@@ -678,11 +684,11 @@
 
         </bottomSheet:SfBottomSheet.Content>
 
-        <!--  Category Selection BottomSheet  -->
+        <!--BOTON SHEET SELECCIONAR CATEGORIA-->
         <bottomSheet:SfBottomSheet.BottomSheetContent>
             <CollectionView
                 BackgroundColor="{StaticResource FondoPrincipal}"
-                ItemsSource="{Binding ListaCategoriasActual}"
+                ItemsSource="{Binding ListaCategoriasActual, Mode=TwoWay}"
                 SelectedItem="{Binding CategoriaSeleccionada, Mode=TwoWay}"
                 SelectionChangedCommand="{Binding SeleccionarCategoriaCommand}"
                 SelectionChangedCommandParameter="{Binding CategoriaSeleccionada}"
