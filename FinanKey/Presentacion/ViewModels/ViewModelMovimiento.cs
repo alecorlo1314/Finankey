@@ -210,19 +210,33 @@ namespace FinanKey.Presentacion.ViewModels
         [RelayCommand]
         private void SeleccionarGasto()
         {
-            EsGastoSeleccionado = true;
-            EsIngresoSeleccionado = false;
-            ActualizarListaCategorias();
-            LimpiarCategoria();
+            try
+            {
+                EsGastoSeleccionado = true;
+                EsIngresoSeleccionado = false;
+                ActualizarListaCategorias();
+                LimpiarCategoria();
+            }
+            catch (Exception ex)
+            {
+                MostrarError("Error cambiando pestaña", ex.Message);
+            }
         }
 
         [RelayCommand]
         private void SeleccionarIngreso()
         {
-            EsGastoSeleccionado = false;
-            EsIngresoSeleccionado = true;
-            ActualizarListaCategorias();
-            LimpiarCategoria();
+            try
+            {
+                EsGastoSeleccionado = false;
+                EsIngresoSeleccionado = true;
+                ActualizarListaCategorias();
+                LimpiarCategoria();
+            }
+            catch (Exception ex)
+            {
+                MostrarError("Error cambiando pestaña", ex.Message);
+            }
         }
 
         private void LimpiarCategoria()
@@ -232,15 +246,25 @@ namespace FinanKey.Presentacion.ViewModels
 
         private void ActualizarListaCategorias()
         {
-            ListaCategoriasActual.Clear();
-
-            var categorias = EsGastoSeleccionado ? ListaTipoCategoriasGastos : ListaTipoCategoriasIngresos;
-
-            foreach (var categoria in categorias ?? new ObservableCollection<CategoriaMovimiento>())
+            try
             {
-                ListaCategoriasActual.Add(categoria);
+                ListaCategoriasActual.Clear();
+
+                var categorias = EsGastoSeleccionado ? ListaTipoCategoriasGastos : ListaTipoCategoriasIngresos;
+
+                if (categorias == null) return;
+
+                foreach (var categoria in categorias)
+                {
+                    ListaCategoriasActual.Add(categoria);
+                }
+            }
+            catch (Exception ex)
+            {
+                MostrarError("Error actualizando categorías", ex.Message);
             }
         }
+
 
         #endregion COMMANDS - NAVEGACIÓN
 
@@ -396,34 +420,43 @@ namespace FinanKey.Presentacion.ViewModels
         [RelayCommand]
         private void InicializarDatosFormulario(string movimiento)
         {
-            //LIMPIAR CAMPOS
-            Monto = 0;
-            Fecha = DateTime.Now;
-            Descripcion = string.Empty;
-            CategoriaSeleccionada = null;
-            TarjetaSeleccionada = null;
-            Comercio = string.Empty;
-            EstaPagado = false;
-
-            if (movimiento == "Ingreso")
+            try
             {
-                ListaCategoriasActual = ListaTipoCategoriasIngresos;
-                EsGastoSeleccionado = false;
-                ListaTarjetasDebito.Clear();
-                foreach (Tarjeta tarjeta in ListaTarjetas)
+                // limpiar
+                Monto = 0;
+                Fecha = DateTime.Now;
+                Descripcion = string.Empty;
+                CategoriaSeleccionada = null;
+                TarjetaSeleccionada = null;
+                Comercio = string.Empty;
+                EstaPagado = false;
+
+                if (movimiento == "Ingreso")
                 {
-                    if (tarjeta.Tipo == "Debito")
+                    ListaCategoriasActual = ListaTipoCategoriasIngresos ?? new ObservableCollection<CategoriaMovimiento>();
+                    EsGastoSeleccionado = false;
+
+                    ListaTarjetasDebito.Clear();
+                    foreach (Tarjeta tarjeta in ListaTarjetas ?? new ObservableCollection<Tarjeta>())
                     {
-                        ListaTarjetasDebito.Add(tarjeta);
-                        EsGastoSeleccionado = true;
+                        if (tarjeta?.Tipo == "Debito")
+                        {
+                            ListaTarjetasDebito.Add(tarjeta);
+                            EsGastoSeleccionado = true;
+                        }
                     }
                 }
+                else
+                {
+                    ListaCategoriasActual = ListaTipoCategoriasGastos ?? new ObservableCollection<CategoriaMovimiento>();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ListaCategoriasActual = ListaTipoCategoriasGastos;
+                MostrarError("Error inicializando formulario", ex.Message);
             }
         }
+
 
         #endregion INICIALIZACIÓN FORMULARIO CUANDO SE CAMBIA DE PANTALLA
 
@@ -431,29 +464,47 @@ namespace FinanKey.Presentacion.ViewModels
 
         private Movimiento CrearMovimiento()
         {
-            return new Movimiento
+            try
             {
-                TipoMovimiento = TipoMovimientoActual,
-                Monto = Monto,
-                Descripcion = Descripcion.Trim(),
-                FechaMovimiento = Fecha,
-                CategoriaId = CategoriaSeleccionada!.Id,
-                TarjetaId = TarjetaSeleccionada!.Id,
-                Comercio = Comercio.Trim(),
-                EsPagado = EstaPagado,
-                MedioPago = "Tarjeta",
-                // Colores basados en estado y tipo de tarjeta
-                BorderFondoEstado = ObtenerColorFondo(),
-                ColorFuenteEstado = ObtenerColorTexto()
-            };
+                if (CategoriaSeleccionada == null || TarjetaSeleccionada == null)
+                    throw new InvalidOperationException("Debe seleccionar una categoría y una tarjeta");
+
+                return new Movimiento
+                {
+                    TipoMovimiento = TipoMovimientoActual,
+                    Monto = Monto,
+                    Descripcion = Descripcion?.Trim() ?? string.Empty,
+                    FechaMovimiento = Fecha,
+                    CategoriaId = CategoriaSeleccionada.Id,
+                    TarjetaId = TarjetaSeleccionada.Id,
+                    Comercio = Comercio?.Trim() ?? string.Empty,
+                    EsPagado = EstaPagado,
+                    MedioPago = "Tarjeta",
+                    BorderFondoEstado = ObtenerColorFondo(),
+                    ColorFuenteEstado = ObtenerColorTexto()
+                };
+            }
+            catch (Exception ex)
+            {
+                MostrarError("Error creando movimiento", ex.Message);
+                throw; // relanzas para que GuardarMovimiento lo capture también
+            }
         }
+
 
         private string ObtenerColorFondo()
         {
-            if (TarjetaSeleccionada?.Tipo == "Credito" && !EstaPagado)
-                return "#FEF3C7"; // Amarillo claro para pendientes
+            try
+            {
+                if (TarjetaSeleccionada?.Tipo == "Credito" && !EstaPagado)
+                    return "#FEF3C7";
 
-            return EstaPagado ? "#DCFCE7" : "#FEF2F2"; // Verde claro para pagados, rojo claro para pendientes
+                return EstaPagado ? "#DCFCE7" : "#FEF2F2";
+            }
+            catch
+            {
+                return "#FFFFFF"; // fallback
+            }
         }
 
         private string ObtenerColorTexto()

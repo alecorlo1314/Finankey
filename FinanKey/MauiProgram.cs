@@ -92,6 +92,12 @@ namespace FinanKey
             builder.SetDefaultNavigationBarAppearance(Color.FromArgb("#FFFFFF"));
 
 #endif
+
+            builder.ConfigureMauiHandlers(handlers => { });
+#if DEBUG
+            builder.Logging.AddDebug();
+#endif
+
             return builder.Build();
         }
     }
