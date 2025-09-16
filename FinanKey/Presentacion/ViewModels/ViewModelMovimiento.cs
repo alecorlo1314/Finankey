@@ -284,7 +284,7 @@ namespace FinanKey.Presentacion.ViewModels
                 }
 
                 var movimiento = CrearMovimiento();
-                var resultado = await _servicioMovimiento.guardarMovimientoGasto(movimiento);
+                var resultado = await _servicioMovimiento.guardarMovimiento(movimiento);
 
                 if (resultado > 0)
                 {
@@ -353,9 +353,6 @@ namespace FinanKey.Presentacion.ViewModels
             if (TarjetaSeleccionada == null)
                 errores.Add("Debe seleccionar una tarjeta");
 
-            if (string.IsNullOrWhiteSpace(Comercio))
-                errores.Add("El comercio es requerido");
-
             if (Fecha > DateTime.Now)
                 errores.Add("La fecha no puede ser futura");
 
@@ -386,13 +383,14 @@ namespace FinanKey.Presentacion.ViewModels
             if(movimiento == "Ingreso")
             {
                 ListaCategoriasActual = ListaTipoCategoriasIngresos;
-
+                EsGastoSeleccionado = false;
                 ListaTarjetasDebito.Clear();
                 foreach (Tarjeta tarjeta in ListaTarjetas)
                 {
                     if (tarjeta.Tipo == "Debito")
                     {
                         ListaTarjetasDebito.Add(tarjeta);
+                        EsGastoSeleccionado = true;
                     }
                 }
             }

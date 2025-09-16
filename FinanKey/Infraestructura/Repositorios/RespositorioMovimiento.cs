@@ -461,9 +461,6 @@ namespace FinanKey.Infraestructura.Repositorios
 
             if (movimiento.TarjetaId <= 0)
                 throw new ArgumentException("La tarjeta es requerida");
-
-            if (string.IsNullOrWhiteSpace(movimiento.Comercio))
-                throw new ArgumentException("El comercio es requerido");
         }
     }
 

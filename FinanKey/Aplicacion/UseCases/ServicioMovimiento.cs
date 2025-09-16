@@ -22,7 +22,7 @@ namespace FinanKey.Aplicacion.UseCases
         /// </summary>
         /// <param name="movimientoGasto"></param>
         /// <returns></returns>
-        public Task<int> guardarMovimientoGasto(Movimiento movimientoGasto)
+        public Task<int> guardarMovimiento(Movimiento movimientoGasto)
         {
             return _servicioMovimiento.InsertarAsync(movimientoGasto);
         }
