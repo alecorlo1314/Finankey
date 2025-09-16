@@ -530,10 +530,8 @@
                                                 TextColor="{StaticResource ColorPlaceholde}" />
                                             <Image
                                                 Aspect="AspectFit"
-                                                HeightRequest="20"
                                                 Source="icono_calderario.svg"
-                                                VerticalOptions="Center"
-                                                WidthRequest="20" />
+                                                VerticalOptions="Center" />
                                         </HorizontalStackLayout>
                                     </Border>
                                 </StackLayout>
@@ -550,13 +548,13 @@
                                         <Entry
                                             x:Name="entradaDescripcionIngreso"
                                             Focused="entradaDescripcionIngreso_Focused"
-                                            HorizontalOptions="Fill"
                                             Placeholder="Ej: Compras comida"
                                             PlaceholderColor="{StaticResource ColorPlaceholde}"
                                             Style="{StaticResource entradaFormulario}"
                                             Text="{Binding Descripcion, Mode=TwoWay}"
                                             TextColor="{StaticResource ColorTexoEntrada}"
-                                            Unfocused="entradaDescripcionIngreso_Unfocused" />
+                                            Unfocused="entradaDescripcionIngreso_Unfocused"
+                                            WidthRequest="300" />
                                         <Image
                                             Aspect="AspectFit"
                                             HeightRequest="20"
@@ -588,9 +586,9 @@
                                         <Image
                                             Grid.Column="0"
                                             Aspect="AspectFit"
-                                            HeightRequest="24"
-                                            Source="{Binding CategoriaSeleccionada.Icono, Mode=TwoWay}"
-                                            WidthRequest="24" />
+                                            HeightRequest="35"
+                                            Source="{Binding CategoriaSeleccionada.RutaIcono, Mode=TwoWay}"
+                                            WidthRequest="35" />
                                         <Label
                                             Grid.Column="1"
                                             Style="{StaticResource TextoParrafoPrincipal}"
@@ -629,11 +627,12 @@
                                         IsClearButtonVisible="False"
                                         IsEditable="true"
                                         IsFilteringEnabled="True"
-                                        ItemsSource="{Binding ListaTarjetasDebitta, Mode=TwoWay}"
+                                        ItemsSource="{Binding ListaTarjetasDebito, Mode=TwoWay}"
                                         NoResultsFoundText="Sin Resultado"
                                         Placeholder="Seleccionar Tarjeta"
                                         PlaceholderColor="#8C8C8C"
                                         SelectedItem="{Binding TarjetaSeleccionada, Mode=TwoWay}"
+                                        SelectionTextHighlightColor="Transparent"
                                         Stroke="Transparent"
                                         TextColor="{StaticResource ColorTexoEntrada}"
                                         TextMemberPath="Nombre">
@@ -682,7 +681,7 @@
         <bottomSheet:SfBottomSheet.BottomSheetContent>
             <CollectionView
                 BackgroundColor="{StaticResource FondoPrincipal}"
-                ItemsSource="{Binding ListaCategoriasActual}"
+                ItemsSource="{Binding ListaCategoriasActual, Mode=TwoWay}"
                 SelectedItem="{Binding CategoriaSeleccionada, Mode=TwoWay}"
                 SelectionChangedCommand="{Binding SeleccionarCategoriaCommand}"
                 SelectionChangedCommandParameter="{Binding CategoriaSeleccionada}"
