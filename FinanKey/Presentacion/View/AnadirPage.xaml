@@ -543,7 +543,6 @@
                                 </StackLayout>
                             </Grid>
 
-
                             <!--  CAMPO DE DESCRIPCIÓN  -->
                             <StackLayout Spacing="8">
                                 <Label
@@ -555,7 +554,7 @@
                                         <Entry
                                             x:Name="entradaDescripcionIngreso"
                                             Focused="entradaDescripcionIngreso_Focused"
-                                            Placeholder="Ej: Compras comida"
+                                            Placeholder="Ej: Salario"
                                             PlaceholderColor="{StaticResource ColorPlaceholde}"
                                             Style="{StaticResource entradaFormulario}"
                                             Text="{Binding Descripcion, Mode=TwoWay}"
@@ -594,12 +593,12 @@
                                             Grid.Column="0"
                                             Aspect="AspectFit"
                                             HeightRequest="35"
-                                            Source="{Binding CategoriaSeleccionada.RutaIcono, Mode=TwoWay}"
+                                            Source="{Binding CategoriaSeleccionada.RutaIcono}"
                                             WidthRequest="35" />
                                         <Label
                                             Grid.Column="1"
                                             Style="{StaticResource TextoParrafoPrincipal}"
-                                            Text="{Binding CategoriaSeleccionada.Descripcion, Mode=TwoWay}"
+                                            Text="{Binding CategoriaSeleccionada.Descripcion}"
                                             TextColor="{StaticResource ColorTexoEntrada}"
                                             VerticalOptions="Center" />
                                         <Image
@@ -684,11 +683,11 @@
 
         </bottomSheet:SfBottomSheet.Content>
 
-        <!--BOTON SHEET SELECCIONAR CATEGORIA-->
+        <!--  BOTON SHEET SELECCIONAR CATEGORIA  -->
         <bottomSheet:SfBottomSheet.BottomSheetContent>
             <CollectionView
                 BackgroundColor="{StaticResource FondoPrincipal}"
-                ItemsSource="{Binding ListaCategoriasActual, Mode=TwoWay}"
+                ItemsSource="{Binding ListaCategoriasActual}"
                 SelectedItem="{Binding CategoriaSeleccionada, Mode=TwoWay}"
                 SelectionChangedCommand="{Binding SeleccionarCategoriaCommand}"
                 SelectionChangedCommandParameter="{Binding CategoriaSeleccionada}"
