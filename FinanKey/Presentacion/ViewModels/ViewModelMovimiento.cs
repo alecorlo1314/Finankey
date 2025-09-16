@@ -85,8 +85,6 @@ namespace FinanKey.Presentacion.ViewModels
         // Propiedades calculadas
         public string TipoMovimientoActual => EsGastoSeleccionado ? "Gasto" : "Ingreso";
 
-        public string TextoBotonGuardar => $"Guardar {TipoMovimientoActual}";
-
         #endregion PROPIEDADES DEL FORMULARIO
 
         #region COLECCIONES
