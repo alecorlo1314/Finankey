@@ -24,7 +24,6 @@
                 VerticalOptions="Start" />
             <Grid
                 Grid.Row="0"
-                Margin="{StaticResource PaddingPaginas}"
                 ColumnDefinitions="60*,40*"
                 RowDefinitions="34,64,*"
                 RowSpacing="24">
@@ -93,7 +92,7 @@
             <CollectionView
                 Grid.Row="0"
                 Grid.RowSpan="2"
-                Margin="16,180"
+                Margin="16,180,0,180"
                 HeightRequest="184"
                 HorizontalOptions="Start"
                 ItemsSource="{Binding ListaTarjetas, Mode=TwoWay}"
@@ -268,10 +267,11 @@
             <!--  LISTA DE MOVIMIENTOS SEGUN LA TARJETA SELECCIONADA  -->
             <ScrollView
                 Grid.Row="1"
-                Margin="16,70"
+                Margin="0,70,0,0"
                 IsVisible="{Binding HayMovimientos}">
-                <StackLayout>
+                <StackLayout Spacing="8">
                     <Label
+                        Margin="16,0"
                         Style="{StaticResource TextoSubtítulo}"
                         Text="Tus movimientos"
                         TextColor="{StaticResource ColorAzulPricipal}" />
@@ -279,58 +279,68 @@
                     <CollectionView ItemsSource="{Binding ListaMovimientos}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Border
-                                    Margin="0,0,0,8"
-                                    HeightRequest="81"
-                                    Stroke="{StaticResource Terciario}"
-                                    StrokeShape="RoundRectangle 20"
-                                    WidthRequest="380">
-                                    <Grid
-                                        Padding="8"
-                                        BackgroundColor="{StaticResource ColorFondoComponentes}"
-                                        ColumnDefinitions="65,143,132"
-                                        ColumnSpacing="8">
-                                        <Image
-                                            Grid.Column="0"
-                                            Aspect="AspectFit"
-                                            Source="{Binding Categoria_Movimiento.RutaIcono}" />
-                                        <VerticalStackLayout
-                                            Grid.Column="1"
-                                            Spacing="4"
-                                            VerticalOptions="Center">
-                                            <Label
-                                                Style="{StaticResource TextoParrafoPrincipal}"
-                                                Text="{Binding Descripcion}"
-                                                TextColor="{StaticResource ColorTexto}" />
-                                            <Label
-                                                Style="{StaticResource TextoLabelInputMenusPequeños}"
-                                                Text="{Binding FechaMovimiento, StringFormat='{0:dd/MM/yyyy}'}"
-                                                TextColor="{StaticResource ColorTexto}" />
-                                        </VerticalStackLayout>
-                                        <StackLayout
-                                            Grid.Column="2"
-                                            HorizontalOptions="End"
-                                            Spacing="4"
-                                            VerticalOptions="Center">
-                                            <Label
-                                                FontFamily="PoppinsSemibold"
-                                                FontSize="20"
-                                                Text="{Binding Monto, StringFormat='${0:F2}'}"
-                                                TextColor="{StaticResource ColorTexto}"
-                                                VerticalOptions="Center" />
-                                            <Border
-                                                BackgroundColor="{Binding BorderFondoEstado}"
-                                                Stroke="Transparent"
-                                                StrokeShape="RoundRectangle 14">
+                                <StackLayout HeightRequest="90" VerticalOptions="Center">
+                                    <Border
+                                        HeightRequest="81"
+                                        Stroke="Transparent"
+                                        StrokeShape="RoundRectangle 20"
+                                        WidthRequest="380">
+                                        <Border.Shadow>
+                                            <Shadow
+                                                Brush="{StaticResource Terciario}"
+                                                Opacity="0.4"
+                                                Radius="20"
+                                                Offset="4,4" />
+                                        </Border.Shadow>
+                                        <Grid
+                                            Padding="8"
+                                            BackgroundColor="{StaticResource ColorFondoComponentes}"
+                                            ColumnDefinitions="65,143,132"
+                                            ColumnSpacing="8">
+                                            <Image
+                                                Grid.Column="0"
+                                                Aspect="AspectFit"
+                                                Source="{Binding Categoria_Movimiento.RutaIcono}" />
+                                            <VerticalStackLayout
+                                                Grid.Column="1"
+                                                Spacing="4"
+                                                VerticalOptions="Center">
                                                 <Label
-                                                    Style="{StaticResource TextoBotonPequeno}"
-                                                    Text="{Binding Estado}"
-                                                    TextColor="{Binding ColorFuenteEstado}"
+                                                    FontFamily="PoppinsSemibold"
+                                                    FontSize="16"
+                                                    Text="{Binding Descripcion}"
+                                                    TextColor="{StaticResource ColorTexto}" />
+                                                <Label
+                                                    FontFamily="PoppinsRegular"
+                                                    FontSize="12"
+                                                    Text="{Binding FechaMovimiento, StringFormat='{0:dd/MM/yyyy}'}"
+                                                    TextColor="{StaticResource ColorTexto}" />
+                                            </VerticalStackLayout>
+                                            <StackLayout
+                                                Grid.Column="2"
+                                                HorizontalOptions="End"
+                                                Spacing="4"
+                                                VerticalOptions="Center">
+                                                <Label
+                                                    FontFamily="PoppinsSemibold"
+                                                    FontSize="16"
+                                                    Text="{Binding Monto, StringFormat='${0:F2}'}"
+                                                    TextColor="{StaticResource ColorTexto}"
                                                     VerticalOptions="Center" />
-                                            </Border>
-                                        </StackLayout>
-                                    </Grid>
-                                </Border>
+                                                <Border
+                                                    BackgroundColor="{Binding BorderFondoEstado}"
+                                                    Stroke="Transparent"
+                                                    StrokeShape="RoundRectangle 14">
+                                                    <Label
+                                                        Style="{StaticResource TextoBotonPequeno}"
+                                                        Text="{Binding Estado}"
+                                                        TextColor="{Binding ColorFuenteEstado}"
+                                                        VerticalOptions="Center" />
+                                                </Border>
+                                            </StackLayout>
+                                        </Grid>
+                                    </Border>
+                                </StackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>

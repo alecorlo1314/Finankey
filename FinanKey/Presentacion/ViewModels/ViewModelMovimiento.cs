@@ -90,19 +90,19 @@ namespace FinanKey.Presentacion.ViewModels
         #region COLECCIONES
 
         [ObservableProperty]
-        private ObservableCollection<CategoriaMovimiento> _listaTipoCategoriasGastos = new();
+        private ObservableCollection<CategoriaMovimiento> _listaTipoCategoriasGastos = [];
 
         [ObservableProperty]
-        private ObservableCollection<CategoriaMovimiento> _listaTipoCategoriasIngresos = new();
+        private ObservableCollection<CategoriaMovimiento> _listaTipoCategoriasIngresos = [];
 
         [ObservableProperty]
-        private ObservableCollection<CategoriaMovimiento> _listaCategoriasActual = new();
+        private ObservableCollection<CategoriaMovimiento> _listaCategoriasActual = [];
 
         [ObservableProperty]
-        private ObservableCollection<Tarjeta> _listaTarjetas = new();
+        private ObservableCollection<Tarjeta> _listaTarjetas = [];
 
         [ObservableProperty]
-        private ObservableCollection<Tarjeta> _listaTarjetasDebito = new();
+        private ObservableCollection<Tarjeta> _listaTarjetasDebito = [];
 
         #endregion COLECCIONES
 
@@ -490,7 +490,6 @@ namespace FinanKey.Presentacion.ViewModels
                 throw; // relanzas para que GuardarMovimiento lo capture también
             }
         }
-
 
         private string ObtenerColorFondo()
         {
