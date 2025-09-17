@@ -1,6 +1,9 @@
+using FinanKey.Dominio.Models;
+
 namespace FinanKey.Presentacion.View;
 
-public partial class DetalleTarjetaPage : ContentPage
+[QueryProperty(nameof(Tarjeta), "id")]
+public partial class DetalleTarjetaPage : ContentPage, IQueryAttributable
 {
 	public DetalleTarjetaPage()
 	{
