@@ -1,7 +1,7 @@
 ﻿
 namespace FinanKey.Presentacion.ViewModels
 {
-    public class DetalleTarjetaViewModel
+    public class ViewModelDetalleTarjeta
     {
     }
 }
