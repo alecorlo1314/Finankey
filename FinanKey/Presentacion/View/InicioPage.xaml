@@ -13,17 +13,19 @@
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource ColorAzulPricipal}" StatusBarStyle="Default" />
     </ContentPage.Behaviors>
 
-    <ScrollView>
-        <Grid RowDefinitions="Auto,Auto">
-            <!--  IMAGEN DE FONDO Y CONTENIDO  -->
-            <Image
-                Grid.Row="0"
-                Aspect="AspectFill"
-                HeightRequest="298"
-                Source="fondo_superior.png"
-                VerticalOptions="Start" />
+    <Grid>
+        <!--  IMAGEN DE FONDO Y CONTENIDO  -->
+        <Image
+            Aspect="AspectFill"
+            HeightRequest="298"
+            Source="fondo_superior.png"
+            VerticalOptions="Start" />
+
+        <Grid RowDefinitions="160, 186, *" RowSpacing="16">
+            <!--  ZONA DE NOTIFICACIONES, ICONOS Y SALUDO  -->
             <Grid
                 Grid.Row="0"
+                Padding="16"
                 ColumnDefinitions="60*,40*"
                 RowDefinitions="34,64,*"
                 RowSpacing="24">
@@ -87,23 +89,21 @@
                     TextColor="{StaticResource ColorFondoPrincipal}"
                     WidthRequest="148" />
             </Grid>
-
             <!--  LISTA DE TARJETAS  -->
             <CollectionView
-                Grid.Row="0"
-                Grid.RowSpan="2"
-                Margin="16,180,0,180"
+                Grid.Row="1"
                 HeightRequest="184"
-                HorizontalOptions="Start"
+                HorizontalOptions="Start" 
                 ItemsSource="{Binding ListaTarjetas, Mode=TwoWay}"
                 VerticalOptions="Start">
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout ItemSpacing="16" Orientation="Horizontal" />
+                    <LinearItemsLayout Orientation="Horizontal" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
                             <Border
+                                Margin="16,0,0,0"
                                 Padding="16"
                                 BackgroundColor="{Binding ColorTarjeta}"
                                 HeightRequest="184"
@@ -208,7 +208,7 @@
             </CollectionView>
             <!--  IMAGEN CARTERA CUANDO NO HAY TARJETAS  -->
             <VerticalStackLayout
-                Grid.Row="1"
+                Grid.Row="2"
                 Margin="16,0"
                 IsVisible="{Binding HayTarjetas}"
                 Spacing="18">
@@ -240,8 +240,8 @@
             </VerticalStackLayout>
             <!--  IMAGEN LUPA NO HAY MOVIMIENTOS CON MENSAJE  -->
             <VerticalStackLayout
-                Grid.Row="1"
-                Margin="16,70"
+                Grid.Row="2"
+                Margin="16,0"
                 IsVisible="{Binding NoHayMovimientos}"
                 Spacing="8">
                 <Image
@@ -265,17 +265,17 @@
                     VerticalTextAlignment="Center" />
             </VerticalStackLayout>
             <!--  LISTA DE MOVIMIENTOS SEGUN LA TARJETA SELECCIONADA  -->
-            <ScrollView
-                Grid.Row="1"
-                Margin="0,70,0,0"
-                IsVisible="{Binding HayMovimientos}">
-                <StackLayout Spacing="8">
-                    <Label
-                        Margin="16,0"
-                        Style="{StaticResource TextoSubtítulo}"
-                        Text="Tus movimientos"
-                        TextColor="{StaticResource ColorAzulPricipal}" />
-
+            <Grid
+                Grid.Row="2"
+                RowDefinitions="Auto,*"
+                RowSpacing="8">
+                <Label
+                    Grid.Row="0"
+                    Margin="16,0"
+                    Style="{StaticResource TextoSubtítulo}"
+                    Text="Tus movimientos"
+                    TextColor="{StaticResource ColorAzulPricipal}" />
+                <ScrollView Grid.Row="1" IsVisible="{Binding HayMovimientos}">
                     <CollectionView ItemsSource="{Binding ListaMovimientos}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
@@ -344,9 +344,8 @@
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-                </StackLayout>
-            </ScrollView>
+                </ScrollView>
+            </Grid>
         </Grid>
-    </ScrollView>
-
+    </Grid>
 </ContentPage>
