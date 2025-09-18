@@ -160,7 +160,7 @@
                     <Grid
                         Padding="16"
                         BackgroundColor="{StaticResource ColorFondoComponentes}"
-                        RowDefinitions="Auto,Auto,Auto"
+                        RowDefinitions="Auto, Auto, Auto, Auto, Auto"
                         RowSpacing="8">
                         <!--  DETALLES DEL CREDITO O DEBITO  -->
                         <Label
@@ -170,12 +170,13 @@
                             Text="Detalle del Credito"
                             TextColor="{StaticResource ColorTexto}"
                             VerticalOptions="Center" />
+                        <!--  LINEA DE DIVISORIA  -->
+                        <Border Grid.Row="1" Stroke="{StaticResource Terciario}" />
 
                         <Grid
-                            Grid.Row="1"
+                            Grid.Row="2"
                             ColumnDefinitions="*,*"
                             ColumnSpacing="8"
-                            HeightRequest="97"
                             HorizontalOptions="Center"
                             VerticalOptions="Center">
                             <VerticalStackLayout
@@ -212,8 +213,11 @@
                             </VerticalStackLayout>
                         </Grid>
 
+                        <!--  LINEA DE DIVISORIA  -->
+                        <Border Grid.Row="3" Stroke="{StaticResource Terciario}" />
+                        
                         <VerticalStackLayout
-                            Grid.Row="2"
+                            Grid.Row="4"
                             Padding="25,0"
                             HorizontalOptions="Start"
                             Spacing="4">
