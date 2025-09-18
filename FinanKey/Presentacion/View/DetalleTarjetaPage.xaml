@@ -108,5 +108,7 @@
                     TextColor="{StaticResource ColorFondoPrincipal}" />
             </Grid>
         </Grid>
+        <!--BOTONES DE INFORMACION Y MOVIMIENTOS-->
+        
     </Grid>
 </ContentPage>
