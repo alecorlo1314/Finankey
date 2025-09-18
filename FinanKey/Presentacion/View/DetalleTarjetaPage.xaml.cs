@@ -1,12 +1,23 @@
 using FinanKey.Dominio.Models;
+using FinanKey.Presentacion.ViewModels;
 
 namespace FinanKey.Presentacion.View;
 
-[QueryProperty(nameof(Tarjeta), "id")]
-public partial class DetalleTarjetaPage : ContentPage, IQueryAttributable
+public partial class DetalleTarjetaPage : ContentPage
 {
-	public DetalleTarjetaPage()
+	public DetalleTarjetaPage(ViewModelDetalleTarjeta detalleTarjeta)
 	{
 		InitializeComponent();
-	}
+        //Inyeccion de dependencias del ViewModelDetalleTarjeta
+        BindingContext = detalleTarjeta;
+    }
+
+    /// <summary>
+    /// Metodo que se ejecuta al navegar a la pagina
+    /// </summary>
+    /// <param name="args"></param>
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+    }
 }

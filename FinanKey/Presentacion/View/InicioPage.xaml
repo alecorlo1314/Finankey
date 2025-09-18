@@ -93,8 +93,12 @@
             <CollectionView
                 Grid.Row="1"
                 HeightRequest="184"
-                HorizontalOptions="Start" 
+                HorizontalOptions="Start"
                 ItemsSource="{Binding ListaTarjetas, Mode=TwoWay}"
+                SelectedItem="{Binding Tarjeta}"
+                SelectionChangedCommand="{Binding NavegarADetalleTarjetaCommand}"
+                SelectionChangedCommandParameter="{Binding Tarjeta}"
+                SelectionMode="Single"
                 VerticalOptions="Start">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal" />
