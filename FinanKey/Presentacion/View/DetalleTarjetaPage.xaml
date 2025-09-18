@@ -13,7 +13,7 @@
     </ContentPage.Behaviors>
 
     <!--  CONTENIDO PRINCIPAL  -->
-    <Grid RowDefinitions="Auto, Auto, auto">
+    <Grid RowDefinitions="Auto, Auto, auto" RowSpacing="16">
         <!--  FONDO DE LA TARJETA  -->
         <Border
             Grid.Row="0"
@@ -108,7 +108,55 @@
                     TextColor="{StaticResource ColorFondoPrincipal}" />
             </Grid>
         </Grid>
-        <!--BOTONES DE INFORMACION Y MOVIMIENTOS-->
-        
+        <!--  BOTONES DE INFORMACION Y MOVIMIENTOS  -->
+        <Grid
+            Grid.Row="1"
+            Margin="16,0"
+            ColumnDefinitions="*,*"
+            ColumnSpacing="16">
+            <Button
+                x:Name="BotonInformacion"
+                Grid.Column="0"
+                BackgroundColor="{StaticResource ColorAzulPricipal}"
+                Clicked="BotonInformacion_Clicked"
+                CornerRadius="20"
+                FontFamily="PoppinsBold"
+                FontSize="16"
+                Text="Informacion"
+                TextColor="{StaticResource ColorFondoComponentes}"
+                VerticalOptions="Center"
+                WidthRequest="180" />
+            <Button
+                x:Name="BotonMovimientos"
+                Grid.Column="1"
+                BackgroundColor="{StaticResource ColorFondoComponentes}"
+                Clicked="BotonMovimientos_Clicked"
+                CornerRadius="20"
+                FontFamily="PoppinsBold"
+                FontSize="16"
+                Text="Movimientos"
+                TextColor="{StaticResource ColorAzulPricipal}"
+                VerticalOptions="Center"
+                WidthRequest="180" />
+        </Grid>
+        <!--  SECCIONES  -->
+        <Grid
+            Grid.Row="2"
+            IsVisible="True"
+            RowDefinitions="Auto,Auto"
+            RowSpacing="16">
+            <Grid
+                x:Name="SeccionInformacion"
+                Grid.Row="0"
+                IsVisible="True">
+                <Label Text="INFORMACION" VerticalOptions="Center" TextColor="Black" HorizontalOptions="Center"/>
+            </Grid>
+            <Grid
+                x:Name="SeccionMovimientos"
+                Grid.Row="0"
+                IsVisible="False">
+                <Label Text="MOVIMIENTOS" VerticalOptions="Center" TextColor="Black" HorizontalOptions="Center"/>
+            </Grid>
+        </Grid>
     </Grid>
 </ContentPage>

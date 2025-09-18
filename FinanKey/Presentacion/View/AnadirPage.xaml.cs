@@ -22,8 +22,7 @@ public partial class AnadirPage : ContentPage
     private enum FormularioSeleccionado
     {
         Gasto,
-        Ingreso,
-        Cuenta
+        Ingreso
     }
 
     private void MostrarFormulario(FormularioSeleccionado seleccionado)
@@ -84,11 +83,6 @@ public partial class AnadirPage : ContentPage
     private void btnIngreso_Pressed(object sender, EventArgs e)
     {
         MostrarFormulario(FormularioSeleccionado.Ingreso);
-    }
-
-    private void btnCuenta_Pressed(object sender, EventArgs e)
-    {
-        MostrarFormulario(FormularioSeleccionado.Cuenta);
     }
 
     private void OnEntryFocused(Border border)
