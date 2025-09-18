@@ -1,4 +1,4 @@
-using FinanKey.Dominio.Models;
+
 using FinanKey.Presentacion.ViewModels;
 
 namespace FinanKey.Presentacion.View;
