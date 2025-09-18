@@ -12,7 +12,9 @@ namespace FinanKey.Presentacion.ViewModels
     public partial class ViewModelDetalleTarjeta : ObservableObject, IQueryAttributable
     {
         [ObservableProperty]
-        public Tarjeta tarjeta;
+        public Tarjeta? tarjeta;
+        [ObservableProperty]
+        public double? _montoTarjeta;
 
         #region Metodo de la Interface IQueryAttributable
         /// <summary>
@@ -22,7 +24,25 @@ namespace FinanKey.Presentacion.ViewModels
         /// <param name="query"></param>
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            Tarjeta = query["Tarjeta"] as Tarjeta;
+
+            try
+            {
+                Tarjeta = query["Tarjeta"] as Tarjeta;
+
+                if (Tarjeta?.MontoInicial != null)
+                {
+                    MontoTarjeta = Tarjeta?.MontoInicial;
+                }
+                else
+                {
+                    MontoTarjeta = Tarjeta?.LimiteCredito;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Shell.Current.DisplayAlert("Error", $"Ocurrio un error en el metodo ApplyQueryAttributes: {ex}","Cerrar");
+            }
         }
         #endregion
     }

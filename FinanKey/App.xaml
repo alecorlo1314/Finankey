@@ -10,7 +10,7 @@
         <ResourceDictionary>
             <!--  PALETA DE COLORES  -->
             <Color x:Key="ColorFondoPrincipal">#F5F5F5</Color>
-            <Color x:Key="ColorFondoComponentes">#FAFAFA</Color>
+            <Color x:Key="ColorFondoComponentes">#ffffff</Color>
             <Color x:Key="ColorAzulPricipal">#2A218A</Color>
             <Color x:Key="ColorAzulPrincipalSuave">#E4E7FC</Color>
             <Color x:Key="ColorMorado">#693596</Color>

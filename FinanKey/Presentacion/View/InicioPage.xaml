@@ -13,6 +13,24 @@
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource ColorAzulPricipal}" StatusBarStyle="Default" />
     </ContentPage.Behaviors>
 
+    <ContentPage.Resources>
+        <!--  ESTILO PARA SELECCIÓN EN GRIDS  -->
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
     <Grid>
         <!--  IMAGEN DE FONDO Y CONTENIDO  -->
         <Image
@@ -92,6 +110,7 @@
             <!--  LISTA DE TARJETAS  -->
             <CollectionView
                 Grid.Row="1"
+                BackgroundColor="Transparent"
                 HeightRequest="184"
                 HorizontalOptions="Start"
                 ItemsSource="{Binding ListaTarjetas, Mode=TwoWay}"
