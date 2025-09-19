@@ -13,7 +13,7 @@
     </ContentPage.Behaviors>
 
     <!--  CONTENIDO PRINCIPAL  -->
-    <Grid RowDefinitions="Auto, Auto, auto" RowSpacing="16">
+    <Grid RowDefinitions="Auto, Auto, *" RowSpacing="16">
         <!--  FONDO DE LA TARJETA  -->
         <Border
             Grid.Row="0"
@@ -140,70 +140,95 @@
                 WidthRequest="180" />
         </Grid>
         <!--  SECCIONES  -->
-        <Grid
-            Grid.Row="2"
-            IsVisible="True"
-            RowDefinitions="Auto,Auto"
-            RowSpacing="16">
-            <!--  SECCION DE INFORMACION  -->
+        <ScrollView Grid.Row="2">
             <Grid
-                x:Name="SeccionInformacion"
-                Grid.Row="0"
-                Margin="16,0"
                 IsVisible="True"
-                RowDefinitions="Auto,Auto">
-                <Border
+                RowDefinitions="Auto,Auto"
+                RowSpacing="16">
+                <!--  SECCION DE INFORMACION  -->
+                <Grid
+                    x:Name="SeccionInformacion"
                     Grid.Row="0"
-                    Stroke="{StaticResource Terciario}"
-                    StrokeShape="RoundRectangle 20"
-                    StrokeThickness="1">
-                    <Grid
-                        Padding="16"
-                        BackgroundColor="{StaticResource ColorFondoComponentes}"
-                        RowDefinitions="Auto, Auto, Auto, Auto, Auto"
-                        RowSpacing="8">
-                        <!--  DETALLES DEL CREDITO O DEBITO  -->
-                        <Label
-                            Grid.Row="0"
-                            HorizontalOptions="Center"
-                            Style="{StaticResource TextoSubtítulo}"
-                            Text="Detalle del Credito"
-                            TextColor="{StaticResource ColorTexto}"
-                            VerticalOptions="Center" />
-                        <!--  LINEA DE DIVISORIA  -->
-                        <Border Grid.Row="1" Stroke="{StaticResource Terciario}" />
-
+                    Margin="16,0"
+                    IsVisible="True"
+                    RowDefinitions="Auto,Auto"
+                    RowSpacing="16">
+                    <!--  DETALLES DEL CREDITO O DEBITO  -->
+                    <Border
+                        Grid.Row="0"
+                        Stroke="{StaticResource Terciario}"
+                        StrokeShape="RoundRectangle 20"
+                        StrokeThickness="1">
                         <Grid
-                            Grid.Row="2"
-                            ColumnDefinitions="*,*"
-                            ColumnSpacing="8"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center">
-                            <VerticalStackLayout
-                                Grid.Column="0"
+                            Padding="16"
+                            BackgroundColor="{StaticResource ColorFondoComponentes}"
+                            RowDefinitions="Auto, Auto, Auto, Auto, Auto"
+                            RowSpacing="8">
+                            <!--  TITULO DE LA SECCION  -->
+                            <Label
+                                Grid.Row="0"
                                 HorizontalOptions="Center"
-                                Spacing="4"
-                                VerticalOptions="Start">
+                                Style="{StaticResource TextoSubtítulo}"
+                                Text="Detalle del Credito"
+                                TextColor="{StaticResource ColorTexto}"
+                                VerticalOptions="Center" />
+                            <!--  LINEA DE DIVISORIA  -->
+                            <Border Grid.Row="1" Stroke="{StaticResource Terciario}" />
+
+                            <Grid
+                                Grid.Row="2"
+                                ColumnDefinitions="*,*"
+                                ColumnSpacing="8"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+
+                                <VerticalStackLayout
+                                    Grid.Column="0"
+                                    HorizontalOptions="Center"
+                                    Spacing="4"
+                                    VerticalOptions="Start">
+                                    <!--  LIMITE DE CREDITO O MONTO INICIAL  -->
+                                    <Label
+                                        Style="{StaticResource TextoSecundario}"
+                                        Text="Limite de Credito"
+                                        TextColor="{StaticResource Secundario}" />
+                                    <Label
+                                        Style="{StaticResource TextoEncabezadoSecundario}"
+                                        Text="{Binding MontoTarjeta, StringFormat='₡{0:F2}'}"
+                                        TextColor="{StaticResource ColorTexto}" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout
+                                    Grid.Column="1"
+                                    HorizontalOptions="Center"
+                                    Spacing="4"
+                                    VerticalOptions="Start">
+                                    <!--  CREDITO USADO PENDIENTE O GASTADO  -->
+                                    <Label
+                                        Padding="30,0"
+                                        Style="{StaticResource TextoSecundario}"
+                                        Text="Credito Usado (Pendiente)"
+                                        TextColor="{StaticResource Secundario}" />
+                                    <Label
+                                        HorizontalOptions="Center"
+                                        Style="{StaticResource TextoEncabezadoSecundario}"
+                                        Text="{Binding MontoTarjeta, StringFormat='₡{0:F2}'}"
+                                        TextColor="{StaticResource ColorTexto}" />
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <!--  LINEA DE DIVISORIA  -->
+                            <Border Grid.Row="3" Stroke="{StaticResource Terciario}" />
+
+                            <VerticalStackLayout
+                                Grid.Row="4"
+                                Padding="25,0"
+                                HorizontalOptions="Start"
+                                Spacing="4">
                                 <!--  LIMITE DE CREDITO O MONTO INICIAL  -->
                                 <Label
+                                    HorizontalOptions="Center"
                                     Style="{StaticResource TextoSecundario}"
-                                    Text="Limite de Credito"
-                                    TextColor="{StaticResource Secundario}" />
-                                <Label
-                                    Style="{StaticResource TextoEncabezadoSecundario}"
-                                    Text="{Binding MontoTarjeta, StringFormat='₡{0:F2}'}"
-                                    TextColor="{StaticResource ColorTexto}" />
-                            </VerticalStackLayout>
-                            <VerticalStackLayout
-                                Grid.Column="1"
-                                HorizontalOptions="Center"
-                                Spacing="4"
-                                VerticalOptions="Start">
-                                <!--  CREDITO USADO PENDIENTE O GASTADO  -->
-                                <Label
-                                    Padding="30,0"
-                                    Style="{StaticResource TextoSecundario}"
-                                    Text="Credito Usado (Pendiente)"
+                                    Text="Credito Disponible"
                                     TextColor="{StaticResource Secundario}" />
                                 <Label
                                     HorizontalOptions="Center"
@@ -212,40 +237,105 @@
                                     TextColor="{StaticResource ColorTexto}" />
                             </VerticalStackLayout>
                         </Grid>
+                    </Border>
+                    <!--  INFORMACION ADICIONAL  -->
+                    <Border
+                        Grid.Row="1"
+                        Stroke="{StaticResource Terciario}"
+                        StrokeShape="RoundRectangle 20"
+                        StrokeThickness="1">
+                        <Grid
+                            Padding="16"
+                            BackgroundColor="{StaticResource ColorFondoComponentes}"
+                            RowDefinitions="Auto, Auto, Auto, Auto, Auto"
+                            RowSpacing="8">
+                            <!--  TITULO DE LA SECCION  -->
+                            <Label
+                                Grid.Row="0"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource TextoSubtítulo}"
+                                Text="Detalle del Credito"
+                                TextColor="{StaticResource ColorTexto}"
+                                VerticalOptions="Center" />
+                            <!--  LINEA DE DIVISORIA  -->
+                            <Border Grid.Row="1" Stroke="{StaticResource Terciario}" />
 
-                        <!--  LINEA DE DIVISORIA  -->
-                        <Border Grid.Row="3" Stroke="{StaticResource Terciario}" />
-                        
-                        <VerticalStackLayout
-                            Grid.Row="4"
-                            Padding="25,0"
-                            HorizontalOptions="Start"
-                            Spacing="4">
-                            <!--  LIMITE DE CREDITO O MONTO INICIAL  -->
-                            <Label
+                            <Grid
+                                Grid.Row="2"
+                                ColumnDefinitions="*,*"
+                                ColumnSpacing="8"
                                 HorizontalOptions="Center"
-                                Style="{StaticResource TextoSecundario}"
-                                Text="Credito Disponible"
-                                TextColor="{StaticResource Secundario}" />
-                            <Label
-                                HorizontalOptions="Center"
-                                Style="{StaticResource TextoEncabezadoSecundario}"
-                                Text="{Binding MontoTarjeta, StringFormat='₡{0:F2}'}"
-                                TextColor="{StaticResource ColorTexto}" />
-                        </VerticalStackLayout>
-                    </Grid>
-                </Border>
+                                VerticalOptions="Center">
+
+                                <VerticalStackLayout
+                                    Grid.Column="0"
+                                    HorizontalOptions="Center"
+                                    Spacing="4"
+                                    VerticalOptions="Start">
+                                    <!--  LIMITE DE CREDITO O MONTO INICIAL  -->
+                                    <Label
+                                        Style="{StaticResource TextoSecundario}"
+                                        Text="Limite de Credito"
+                                        TextColor="{StaticResource Secundario}" />
+                                    <Label
+                                        Style="{StaticResource TextoEncabezadoSecundario}"
+                                        Text="{Binding MontoTarjeta, StringFormat='₡{0:F2}'}"
+                                        TextColor="{StaticResource ColorTexto}" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout
+                                    Grid.Column="1"
+                                    HorizontalOptions="Center"
+                                    Spacing="4"
+                                    VerticalOptions="Start">
+                                    <!--  CREDITO USADO PENDIENTE O GASTADO  -->
+                                    <Label
+                                        Padding="30,0"
+                                        Style="{StaticResource TextoSecundario}"
+                                        Text="Credito Usado (Pendiente)"
+                                        TextColor="{StaticResource Secundario}" />
+                                    <Label
+                                        HorizontalOptions="Center"
+                                        Style="{StaticResource TextoEncabezadoSecundario}"
+                                        Text="{Binding MontoTarjeta, StringFormat='₡{0:F2}'}"
+                                        TextColor="{StaticResource ColorTexto}" />
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <!--  LINEA DE DIVISORIA  -->
+                            <Border Grid.Row="3" Stroke="{StaticResource Terciario}" />
+
+                            <VerticalStackLayout
+                                Grid.Row="4"
+                                Padding="25,0"
+                                HorizontalOptions="Start"
+                                Spacing="4">
+                                <!--  LIMITE DE CREDITO O MONTO INICIAL  -->
+                                <Label
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource TextoSecundario}"
+                                    Text="Credito Disponible"
+                                    TextColor="{StaticResource Secundario}" />
+                                <Label
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource TextoEncabezadoSecundario}"
+                                    Text="{Binding MontoTarjeta, StringFormat='₡{0:F2}'}"
+                                    TextColor="{StaticResource ColorTexto}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <!--  SECCION DE MOVIMIENTOS  -->
+                <Grid
+                    x:Name="SeccionMovimientos"
+                    Grid.Row="0"
+                    IsVisible="False">
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="MOVIMIENTOS"
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+                </Grid>
             </Grid>
-            <Grid
-                x:Name="SeccionMovimientos"
-                Grid.Row="0"
-                IsVisible="False">
-                <Label
-                    HorizontalOptions="Center"
-                    Text="MOVIMIENTOS"
-                    TextColor="Black"
-                    VerticalOptions="Center" />
-            </Grid>
-        </Grid>
+        </ScrollView>
     </Grid>
 </ContentPage>
