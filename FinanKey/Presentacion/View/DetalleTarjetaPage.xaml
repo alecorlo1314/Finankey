@@ -254,7 +254,7 @@
                                 Grid.Row="0"
                                 HorizontalOptions="Center"
                                 Style="{StaticResource TextoSubtítulo}"
-                                Text="Detalle del Credito"
+                                Text="Información Adicional"
                                 TextColor="{StaticResource ColorTexto}"
                                 VerticalOptions="Center" />
                             <!--  LINEA DE DIVISORIA  -->
@@ -262,65 +262,68 @@
 
                             <Grid
                                 Grid.Row="2"
-                                ColumnDefinitions="*,*"
+                                ColumnDefinitions="24,Auto"
                                 ColumnSpacing="8"
-                                HorizontalOptions="Center"
+                                HorizontalOptions="Start"
+                                RowDefinitions="24,Auto"
                                 VerticalOptions="Center">
-
-                                <VerticalStackLayout
+                                <!--  LOGO DE ETIQUETA  -->
+                                <Image
+                                    Grid.Row="0"
                                     Grid.Column="0"
-                                    HorizontalOptions="Center"
-                                    Spacing="4"
-                                    VerticalOptions="Start">
-                                    <!--  LIMITE DE CREDITO O MONTO INICIAL  -->
-                                    <Label
-                                        Style="{StaticResource TextoSecundario}"
-                                        Text="Limite de Credito"
-                                        TextColor="{StaticResource Secundario}" />
-                                    <Label
-                                        Style="{StaticResource TextoEncabezadoSecundario}"
-                                        Text="{Binding MontoTarjeta, StringFormat='₡{0:F2}'}"
-                                        TextColor="{StaticResource ColorTexto}" />
-                                </VerticalStackLayout>
-                                <VerticalStackLayout
+                                    Aspect="AspectFit"
+                                    HeightRequest="24"
+                                    HorizontalOptions="Start"
+                                    Source="icono_etiqueta.svg"
+                                    WidthRequest="24" />
+
+                                <Label
+                                    Grid.Row="0"
                                     Grid.Column="1"
-                                    HorizontalOptions="Center"
-                                    Spacing="4"
-                                    VerticalOptions="Start">
-                                    <!--  CREDITO USADO PENDIENTE O GASTADO  -->
-                                    <Label
-                                        Padding="30,0"
-                                        Style="{StaticResource TextoSecundario}"
-                                        Text="Credito Usado (Pendiente)"
-                                        TextColor="{StaticResource Secundario}" />
-                                    <Label
-                                        HorizontalOptions="Center"
-                                        Style="{StaticResource TextoEncabezadoSecundario}"
-                                        Text="{Binding MontoTarjeta, StringFormat='₡{0:F2}'}"
-                                        TextColor="{StaticResource ColorTexto}" />
-                                </VerticalStackLayout>
+                                    Style="{StaticResource TextoSecundario}"
+                                    Text="Categoría"
+                                    TextColor="{StaticResource Secundario}" />
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Style="{StaticResource TextoParrafoPrincipal}"
+                                    Text="{Binding Tarjeta.Categoria}"
+                                    TextColor="{StaticResource ColorTexto}" />
                             </Grid>
 
                             <!--  LINEA DE DIVISORIA  -->
                             <Border Grid.Row="3" Stroke="{StaticResource Terciario}" />
 
-                            <VerticalStackLayout
+                            <Grid
                                 Grid.Row="4"
-                                Padding="25,0"
+                                ColumnDefinitions="24,Auto"
+                                ColumnSpacing="8"
                                 HorizontalOptions="Start"
-                                Spacing="4">
-                                <!--  LIMITE DE CREDITO O MONTO INICIAL  -->
+                                RowDefinitions="24,Auto"
+                                VerticalOptions="Center">
+                                <!--  LOGO DE ETIQUETA  -->
+                                <Image
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Aspect="AspectFit"
+                                    HeightRequest="24"
+                                    HorizontalOptions="Start"
+                                    Source="icono_nota.svg"
+                                    WidthRequest="24" />
+
                                 <Label
-                                    HorizontalOptions="Center"
+                                    Grid.Row="0"
+                                    Grid.Column="1"
                                     Style="{StaticResource TextoSecundario}"
-                                    Text="Credito Disponible"
+                                    Text="Notas"
                                     TextColor="{StaticResource Secundario}" />
                                 <Label
-                                    HorizontalOptions="Center"
-                                    Style="{StaticResource TextoEncabezadoSecundario}"
-                                    Text="{Binding MontoTarjeta, StringFormat='₡{0:F2}'}"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Style="{StaticResource TextoParrafoPrincipal}"
+                                    Text="{Binding Tarjeta.Descripcion}"
                                     TextColor="{StaticResource ColorTexto}" />
-                            </VerticalStackLayout>
+                            </Grid>
                         </Grid>
                     </Border>
                 </Grid>
