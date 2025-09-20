@@ -114,4 +114,8 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Core\Dominio\Interfaces\Servicios\" />
+	</ItemGroup>
+
 </Project>
