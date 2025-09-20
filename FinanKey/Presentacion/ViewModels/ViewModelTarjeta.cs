@@ -241,6 +241,7 @@ namespace FinanKey.Presentacion.ViewModels
                     Banco = string.IsNullOrWhiteSpace(Banco) ? null : Banco.Trim(),
                     Vencimiento = string.IsNullOrWhiteSpace(Vencimiento) ? null : Vencimiento.Trim(),
                     LimiteCredito = EsVisibleLimiteCredito && double.TryParse(LimiteCredito, out var limite) ? limite : null,
+                    CreditoUsado = 0, // Nuevo, no tiene crédito usado
                     MontoInicial = EsVisibleMonto && double.TryParse(MontoInicial, out var monto) ? monto : null,
                     Categoria = Categoria,
                     ColorHex1 = LinearColor1,

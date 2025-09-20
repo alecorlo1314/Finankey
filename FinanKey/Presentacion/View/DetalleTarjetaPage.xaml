@@ -211,7 +211,7 @@
                                     <Label
                                         HorizontalOptions="Center"
                                         Style="{StaticResource TextoEncabezadoSecundario}"
-                                        Text="{Binding MontoTarjeta, StringFormat='₡{0:F2}'}"
+                                        Text="{Binding Tarjeta.CreditoUsado, StringFormat='₡{0:F2}'}"
                                         TextColor="{StaticResource ColorTexto}" />
                                 </VerticalStackLayout>
                             </Grid>
@@ -233,7 +233,7 @@
                                 <Label
                                     HorizontalOptions="Center"
                                     Style="{StaticResource TextoEncabezadoSecundario}"
-                                    Text="{Binding MontoTarjeta, StringFormat='₡{0:F2}'}"
+                                    Text="{Binding CreditoDisponible, StringFormat='₡{0:F2}'}"
                                     TextColor="{StaticResource ColorTexto}" />
                             </VerticalStackLayout>
                         </Grid>

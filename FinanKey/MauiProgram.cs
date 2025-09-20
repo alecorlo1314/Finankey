@@ -82,6 +82,7 @@ namespace FinanKey
             builder.Services.AddSingleton<ServicioTarjeta>();
             builder.Services.AddSingleton<ServicioInicio>();
             builder.Services.AddSingleton<ServicioCategoriaMovimiento>();
+            builder.Services.AddSingleton<ServicioDetallesTarjeta>();
             //Registrar comportamiento personalizado Behavior
             builder.Services.AddSingleton<SfRadioButtonStateChangedBehavior>();
 

@@ -361,7 +361,7 @@
                                         ValueChangeMode="OnKeyFocus"
                                         VerticalOptions="Center"
                                         WidthRequest="150"
-                                        Value="{Binding LimiteCredito, Mode=TwoWay}" />
+                                        Value="{Binding LimiteCredito}" />
                                 </VerticalStackLayout>
                             </Border>
                         </VerticalStackLayout>

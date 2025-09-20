@@ -58,5 +58,10 @@ namespace FinanKey.Aplicacion.UseCases
         {
             return await _servicioCategoriaMovimiento.ObtenerCategoriasTipoIngresosAsync();
         }
+
+        public Task<int> ActualizarAsync(Tarjeta tarjeta)
+        {
+            return _servicioTarjeta.ActualizarAsync(tarjeta);
+        }
     }
 }

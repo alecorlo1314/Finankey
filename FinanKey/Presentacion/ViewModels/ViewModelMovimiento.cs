@@ -322,6 +322,15 @@ namespace FinanKey.Presentacion.ViewModels
                 var movimiento = CrearMovimiento();
                 var resultado = await _servicioMovimiento.guardarMovimiento(movimiento);
 
+                //actualizar credito usado si el movimiento fue para tarjeta de credito
+                if(resultado > 0 && movimiento.Tarjeta?.Tipo == "Credito")
+                {
+                    //calcular credito usado
+                    CalcularCreditoUsado();
+                    //Actualizar credito usado
+                    var resultadoCreditoUsado = await _servicioMovimiento.ActualizarAsync(movimiento.Tarjeta);
+                }
+
                 if (resultado > 0)
                 {
                     MostrarExito($"{TipoMovimientoActual} guardado correctamente");
@@ -461,7 +470,12 @@ namespace FinanKey.Presentacion.ViewModels
         #endregion INICIALIZACIÓN FORMULARIO CUANDO SE CAMBIA DE PANTALLA
 
         #region HELPERS
-
+        /// <summary>
+        /// Creacion de una instacia de movimiento
+        /// con los datos del formulario
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         private Movimiento CrearMovimiento()
         {
             try
@@ -488,6 +502,33 @@ namespace FinanKey.Presentacion.ViewModels
             {
                 MostrarError("Error creando movimiento", ex.Message);
                 throw; // relanzas para que GuardarMovimiento lo capture también
+            }
+        }
+
+        /// <summary>
+        /// Calcula el crédito usado de la tarjeta seleccionada
+        /// Antes de guardar el movimiento
+        /// </summary>
+        private void CalcularCreditoUsado()
+        {
+            try
+            {
+                if (TarjetaSeleccionada == null || TarjetaSeleccionada.Tipo != "Credito")
+                    return;
+                // Lógica para actualizar el crédito usado
+                // Esto es un ejemplo, ajusta según tu lógica de negocio
+                double? nuevoCreditoUsado = TarjetaSeleccionada.CreditoUsado + Monto;
+                if (nuevoCreditoUsado > TarjetaSeleccionada.LimiteCredito)
+                {
+                    MostrarError("Error", "El monto excede el límite de crédito disponible.");
+                    return;
+                }
+                //Se actualiza el crédito usado de la tarjeta seleccionada
+                TarjetaSeleccionada.CreditoUsado = nuevoCreditoUsado;
+            }
+            catch (Exception ex)
+            {
+                MostrarError("Error actualizando crédito usado", ex.Message);
             }
         }
 

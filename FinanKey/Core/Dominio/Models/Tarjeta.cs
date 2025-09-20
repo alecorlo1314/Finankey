@@ -23,8 +23,9 @@ namespace FinanKey.Dominio.Models
         [MaxLength(7)]
         public string? Vencimiento { get; set; } // Ej: "09/25"
 
-        // Solo aplica si es crédito
-        public double? LimiteCredito { get; set; }
+        public double? LimiteCredito { get; set; } // Solo aplica si es crédito
+
+        public double? CreditoUsado { get; set; } // Solo aplica si es crédito
 
         // Solo aplica si es débito
         public double? MontoInicial { get; set; }
