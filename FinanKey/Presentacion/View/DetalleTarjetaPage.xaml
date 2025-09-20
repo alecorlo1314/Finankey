@@ -276,13 +276,14 @@
                                     HorizontalOptions="Start"
                                     Source="icono_etiqueta.svg"
                                     WidthRequest="24" />
-
+                                <!--  TITULO DE LA ETIQUETA  -->
                                 <Label
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     Style="{StaticResource TextoSecundario}"
                                     Text="Categoría"
                                     TextColor="{StaticResource Secundario}" />
+                                <!--  CATEGORIA  DE TARJETA  -->
                                 <Label
                                     Grid.Row="1"
                                     Grid.Column="1"
@@ -301,7 +302,7 @@
                                 HorizontalOptions="Start"
                                 RowDefinitions="24,Auto"
                                 VerticalOptions="Center">
-                                <!--  LOGO DE ETIQUETA  -->
+                                <!--  LOGO DE NOTA  -->
                                 <Image
                                     Grid.Row="0"
                                     Grid.Column="0"
@@ -310,13 +311,14 @@
                                     HorizontalOptions="Start"
                                     Source="icono_nota.svg"
                                     WidthRequest="24" />
-
+                                <!--  TITULO DE LA NOTA  -->
                                 <Label
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     Style="{StaticResource TextoSecundario}"
                                     Text="Notas"
                                     TextColor="{StaticResource Secundario}" />
+                                <!--  DESCRIPCION  DE TARJETA  -->
                                 <Label
                                     Grid.Row="1"
                                     Grid.Column="1"
