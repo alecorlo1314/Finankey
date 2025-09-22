@@ -104,9 +104,6 @@ namespace FinanKey.Presentacion.ViewModels
         [ObservableProperty]
         private ObservableCollection<Tarjeta> _listaTarjetasDebito = [];
 
-        [ObservableProperty]
-        private ObservableCollection<Tarjeta> _listaTarjetasCredito = [];
-
         #endregion COLECCIONES
 
         #region CONSTRUCTOR
@@ -170,25 +167,55 @@ namespace FinanKey.Presentacion.ViewModels
             {
                 //Consulta a la base de datos, trae todas las tarjetas
                 var tarjetas = await _servicioMovimiento.obtenerTarjetas();
-                //Si no hay nada en la lista de tarjetas, salimos del metodo, para evitar errores con valores nulos
-                if(tarjetas == null) return;
-                //Limpiamos la lista actual de tarjetas
-                ListaTarjetas.Clear();
-                ListaTarjetas = new ObservableCollection<Tarjeta>(tarjetas);
-                //Inicializamos la lista de tarjetas de debito
-                ListaTarjetasDebito.Clear();
-                //De la lista de tarjetas, filtramos las tarjetas de debito y las asignamos a la lista de tarjetas de debito
-                ListaTarjetasDebito = new ObservableCollection<Tarjeta>(ListaTarjetas.Where(td => td?.Tipo == "Debito"));
-                //inicializamos la lista de tarjetas de credito
-                ListaTarjetasCredito.Clear();
-                //De la lista de tarjetas, filtramos las tarjetas de credito y las asignamos a la lista de tarjetas de credito
-                ListaTarjetasCredito = new ObservableCollection<Tarjeta>(ListaTarjetas.Where(td => td?.Tipo == "Credito"));
+                // Solo actualizar si hay cambios
+                if (!ListaTarjetasIguales(tarjetas))
+                {
+                    ListaTarjetas.Clear();
+                    //Asignamos la consulta a la lista de tarjetas
+                    ListaTarjetas = new ObservableCollection<Tarjeta>(tarjetas);
+                    //Inicializamos la lista de tarjetas de debito
+                    ListaTarjetasDebito.Clear();
+                    //De la lista de tarjetas, filtramos las tarjetas de debito y las asignamos a la lista de tarjetas de debito
+                    ListaTarjetasDebito = new ObservableCollection<Tarjeta>(ListaTarjetas.Where(td => td?.Tipo == "Debito"));
+                }
             }
             catch (Exception ex)
             {
                 MensajeErrorExepcion($"Error cargando tarjetas: {ex.Message}", ex);
             }
         }
+        /// <summary>
+        /// Este metodo se encarga igualar la cantidad de elementos que hay en la lista nueva con la lista actual
+        /// se es diferente retornamos false, para que por medio del ! el sistema cargue la lista nueva
+        /// si es igual, entonces vamos a realizar una comparacion sin la necesitada de cargar todos los elementos y verificar 
+        /// si se realizo algun cambios en los datos de las tarjetas
+        /// </summary>
+        /// <param name="nuevaListaTarjetas"></param>
+        /// <returns></returns>
+        private bool ListaTarjetasIguales(List<Tarjeta> nuevaListaTarjetas)
+        {
+            //Si la nueva lista de tarjetas es diferente a las lista actual, retornamos false
+            if(nuevaListaTarjetas.Count != ListaTarjetas.Count) return false;
+            //Si la nueva lista de tarjetas es igual a la lista actual, entonces realizamos la comparacion
+            return ListaTarjetas.Zip(nuevaListaTarjetas, (actual, nuevo) =>
+                actual.Id == nuevo.Id &&
+                actual.Nombre == nuevo.Nombre &&
+                actual.Ultimos4Digitos == nuevo.Ultimos4Digitos &&
+                actual.Tipo == nuevo.Tipo &&
+                actual.Banco == nuevo.Banco &&
+                actual.Vencimiento == nuevo.Vencimiento &&
+                actual.LimiteCredito == nuevo.LimiteCredito &&
+                actual.CreditoUsado == nuevo.CreditoUsado &&
+                actual.MontoInicial == nuevo.MontoInicial &&
+                actual.Categoria == nuevo.Categoria &&
+                actual.Logo == nuevo.Logo &&
+                actual.Descripcion == nuevo.Descripcion &&
+                actual.ColorHex1 == nuevo.ColorHex1 &&
+                actual.ColorHex2 == nuevo.ColorHex2 &&
+                actual.FechaCreacion == nuevo.FechaCreacion)
+                .All(iguales => iguales);
+        }
+
 
         private async Task CargarCategoriasGastosAsync()
         {
@@ -239,8 +266,6 @@ namespace FinanKey.Presentacion.ViewModels
                 EsIngresoSeleccionado = false;
                 ActualizarListaCategorias();
                 LimpiarCategoria();
-                ListaTarjetasDebito.Clear();
-                ListaTarjetasDebito = new ObservableCollection<Tarjeta>(ListaTarjetas.Where(t => t?.Tipo == "Debito"));
             }
             catch (Exception ex)
             {
@@ -257,8 +282,6 @@ namespace FinanKey.Presentacion.ViewModels
                 EsIngresoSeleccionado = true;
                 ActualizarListaCategorias();
                 LimpiarCategoria();
-                ListaTarjetasDebito.Clear();
-                ListaTarjetasDebito = new ObservableCollection<Tarjeta>(ListaTarjetas.Where(t => t?.Tipo == "Credito"));
             }
             catch (Exception ex)
             {
