@@ -474,7 +474,7 @@
                                         IsClearButtonVisible="False"
                                         IsEditable="true"
                                         IsFilteringEnabled="True"
-                                        ItemsSource="{Binding ListaTarjetasDebito, Mode=TwoWay}"
+                                        ItemsSource="{Binding ListaTarjetas, Mode=TwoWay}"
                                         NoResultsFoundText="Sin Resultado"
                                         Placeholder="Seleccionar Tarjeta"
                                         PlaceholderColor="#8C8C8C"

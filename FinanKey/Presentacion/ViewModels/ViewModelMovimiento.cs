@@ -90,10 +90,10 @@ namespace FinanKey.Presentacion.ViewModels
         #region COLECCIONES
 
         [ObservableProperty]
-        private ObservableCollection<CategoriaMovimiento> _listaTipoCategoriasGastos = [];
+        private ObservableCollection<CategoriaMovimiento> _listaCategoriasGastos = [];
 
         [ObservableProperty]
-        private ObservableCollection<CategoriaMovimiento> _listaTipoCategoriasIngresos = [];
+        private ObservableCollection<CategoriaMovimiento> _listaCategoriasIngresos = [];
 
         [ObservableProperty]
         private ObservableCollection<CategoriaMovimiento> _listaCategoriasActual = [];
@@ -116,6 +116,7 @@ namespace FinanKey.Presentacion.ViewModels
         #endregion CONSTRUCTOR
 
         #region INICIALIZACIÓN
+
         /// <summary>
         /// Metodo para inicializar los datos
         /// inicializa las listas de tarjetas y categorias
@@ -132,8 +133,7 @@ namespace FinanKey.Presentacion.ViewModels
                 // Tarea se encarga de cargar todos los metodos asincronos de carga de tajetas y categorias
                 await Task.WhenAll(
                     CargarTarjetasAsync(),
-                    CargarCategoriasGastosAsync(),
-                    CargarCategoriasIngresosAsync()
+                    CargarCategoriasAsync()
                 );
 
                 // Establecer lista inicial (gastos por defecto)
@@ -154,9 +154,10 @@ namespace FinanKey.Presentacion.ViewModels
         #endregion INICIALIZACIÓN
 
         #region CARGA DE DATOS ASYNCRONO
+
         /// <summary>
         /// Metodo para cargar las tarjetas
-        /// lo que buscamos es cargar la lista de tarjetas 
+        /// lo que buscamos es cargar la lista de tarjetas
         /// asignamos la consulta a la base de datos
         /// y luego repartimos esa consulta segun sea de credito o debito
         /// </summary>
@@ -184,10 +185,11 @@ namespace FinanKey.Presentacion.ViewModels
                 MensajeErrorExepcion($"Error cargando tarjetas: {ex.Message}", ex);
             }
         }
+
         /// <summary>
         /// Este metodo se encarga igualar la cantidad de elementos que hay en la lista nueva con la lista actual
         /// se es diferente retornamos false, para que por medio del ! el sistema cargue la lista nueva
-        /// si es igual, entonces vamos a realizar una comparacion sin la necesitada de cargar todos los elementos y verificar 
+        /// si es igual, entonces vamos a realizar una comparacion sin la necesitada de cargar todos los elementos y verificar
         /// si se realizo algun cambios en los datos de las tarjetas
         /// </summary>
         /// <param name="nuevaListaTarjetas"></param>
@@ -195,7 +197,7 @@ namespace FinanKey.Presentacion.ViewModels
         private bool ListaTarjetasIguales(List<Tarjeta> nuevaListaTarjetas)
         {
             //Si la nueva lista de tarjetas es diferente a las lista actual, retornamos false
-            if(nuevaListaTarjetas.Count != ListaTarjetas.Count) return false;
+            if (nuevaListaTarjetas.Count != ListaTarjetas.Count) return false;
             //Si la nueva lista de tarjetas es igual a la lista actual, entonces realizamos la comparacion
             return ListaTarjetas.Zip(nuevaListaTarjetas, (actual, nuevo) =>
                 actual.Id == nuevo.Id &&
@@ -216,17 +218,32 @@ namespace FinanKey.Presentacion.ViewModels
                 .All(iguales => iguales);
         }
 
-
-        private async Task CargarCategoriasGastosAsync()
+        /// <summary>
+        /// Metodo para cargar las categorias asincronas
+        /// </summary>
+        /// <returns></returns>
+        private async Task CargarCategoriasAsync()
         {
             try
             {
-                var categoriasGastos = await _servicioMovimiento.ObtenerCategoriasTipoGastosAsync();
-
-                ListaTipoCategoriasGastos.Clear();
-                foreach (var categoria in categoriasGastos)
+                //Consulta a la base de datos, trae todas las categorias
+                var categorias = await _servicioMovimiento.ObtenerCategoriasMovimientoAsync();
+                // Solo actualizar si hay cambios
+                if (!ListaCategoriasIguales(categorias))
                 {
-                    ListaTipoCategoriasGastos.Add(categoria ?? new CategoriaMovimiento());
+                    ListaCategoriasActual.Clear();
+                    //Asignamos la consulta a la lista de categorias
+                    ListaCategoriasActual = new ObservableCollection<CategoriaMovimiento>(categorias);
+                    //Inicializamos la lista de categorias de gastos
+                    ListaCategoriasGastos.Clear();
+                    //De la lista de categorias, filtramos las categorias de gastos y las asignamos a la lista de categorias de gastos
+                    ListaCategoriasGastos = new ObservableCollection<CategoriaMovimiento>(
+                        ListaCategoriasActual.Where(cm => cm?.TipoMovimiento == "Gasto"));
+                    //Inicializamos la lista de categorias de ingresos
+                    ListaCategoriasIngresos.Clear();
+                    //De la lista de categorias, filtramos las categorias de gastos y las asignamos a la lista de categorias de gastos
+                    ListaCategoriasIngresos = new ObservableCollection<CategoriaMovimiento>(
+                        ListaCategoriasActual.Where(cm => cm?.TipoMovimiento == "Ingreso"));
                 }
             }
             catch (Exception ex)
@@ -235,22 +252,23 @@ namespace FinanKey.Presentacion.ViewModels
             }
         }
 
-        private async Task CargarCategoriasIngresosAsync()
+        /// <summary>
+        /// Este metodo se encarga igualar la cantidad de elementos que hay en la lista de categorias nueva con la lista actual
+        /// </summary>
+        /// <param name="nuevaListaCategorias"></param>
+        /// <returns></returns>
+        private bool ListaCategoriasIguales(List<CategoriaMovimiento> nuevaListaCategorias)
         {
-            try
-            {
-                var categoriasIngresos = await _servicioMovimiento.ObtenerCategoriasTipoIngresosAsync();
-
-                ListaTipoCategoriasIngresos.Clear();
-                foreach (var categoria in categoriasIngresos)
-                {
-                    ListaTipoCategoriasIngresos.Add(categoria ?? new CategoriaMovimiento());
-                }
-            }
-            catch (Exception ex)
-            {
-                MensajeErrorExepcion($"Error cargando categorías de ingresos: {ex.Message}", ex);
-            }
+            //Si la nueva lista de categorias es diferente a las lista actual, retornamos false
+            if (nuevaListaCategorias.Count != ListaCategoriasActual.Count) return false;
+            //Si la nueva lista de categorias es igual a la lista actual, entonces realizamos la comparacion
+            return ListaCategoriasActual.Zip(nuevaListaCategorias, (actual, nuevo) =>
+                actual.Id == nuevo.Id &&
+                actual.Descripcion == nuevo.Descripcion &&
+                actual.Icon_id == nuevo.Icon_id &&
+                actual.RutaIcono == nuevo.RutaIcono &&
+                actual.TipoMovimiento == nuevo.TipoMovimiento)
+                .All(iguales => iguales);
         }
 
         #endregion CARGA DE DATOS ASYNCRONO
@@ -315,7 +333,6 @@ namespace FinanKey.Presentacion.ViewModels
             }
         }
 
-
         #endregion COMMANDS - NAVEGACIÓN
 
         #region COMMANDS - CATEGORIAS
@@ -373,7 +390,7 @@ namespace FinanKey.Presentacion.ViewModels
                 var resultado = await _servicioMovimiento.guardarMovimiento(movimiento);
 
                 //actualizar credito usado si el movimiento fue para tarjeta de credito
-                if(resultado > 0 && movimiento.Tarjeta?.Tipo == "Credito")
+                if (resultado > 0 && movimiento.Tarjeta?.Tipo == "Credito")
                 {
                     //calcular credito usado
                     CalcularCreditoUsado();
@@ -516,10 +533,10 @@ namespace FinanKey.Presentacion.ViewModels
             }
         }
 
-
         #endregion INICIALIZACIÓN FORMULARIO CUANDO SE CAMBIA DE PANTALLA
 
         #region HELPERS
+
         /// <summary>
         /// Creacion de una instacia de movimiento
         /// con los datos del formulario
