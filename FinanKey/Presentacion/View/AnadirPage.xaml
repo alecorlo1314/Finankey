@@ -279,10 +279,9 @@
                         <Button
                             x:Name="btnGasto"
                             BackgroundColor="{StaticResource ColorAzulPricipal}"
-                            Command="{Binding InicializarDatosFormularioCommand}"
-                            CommandParameter="Gasto"
+                            Command="{Binding SeleccionarGastoCommand}"
                             ImageSource="icono_billetera_blanco.svg"
-                            Pressed="btnGasto_Pressed"
+                            Clicked="btnGasto_Clicked"
                             Style="{StaticResource grupoBotones}"
                             Text="Gasto"
                             TextColor="{StaticResource TextoPrimario}" />
@@ -290,10 +289,10 @@
                         <Button
                             x:Name="btnIngreso"
                             BackgroundColor="{StaticResource ColorFondoComponentes}"
-                            Command="{Binding InicializarDatosFormularioCommand}"
+                            Command="{Binding SeleccionarIngresoCommand}"
                             CommandParameter="Ingreso"
                             ImageSource="icono_billete_azul.svg"
-                            Pressed="btnIngreso_Pressed"
+                            Clicked="btnIngreso_Clicked"
                             Style="{StaticResource grupoBotones}"
                             Text="Ingreso"
                             TextColor="Black" />

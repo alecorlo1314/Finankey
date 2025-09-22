@@ -283,7 +283,6 @@ namespace FinanKey.Presentacion.ViewModels
                 EsGastoSeleccionado = true;
                 EsIngresoSeleccionado = false;
                 ActualizarListaCategorias();
-                LimpiarCategoria();
             }
             catch (Exception ex)
             {
@@ -299,33 +298,30 @@ namespace FinanKey.Presentacion.ViewModels
                 EsGastoSeleccionado = false;
                 EsIngresoSeleccionado = true;
                 ActualizarListaCategorias();
-                LimpiarCategoria();
             }
             catch (Exception ex)
             {
                 MostrarError("Error cambiando pestaña", ex.Message);
             }
         }
-
-        private void LimpiarCategoria()
-        {
-            CategoriaSeleccionada = null;
-        }
-
+        /// <summary>
+        /// Este metodo actualiza la lista que se muestra en la pantalla actualmante
+        /// en la UI tenemos un buttonsheet que no se pude reempleazar facilmente y que se usan en los dos formularios
+        /// tanto en el de ingreso como en el de gasto
+        /// al cambiarr de pestaña se tiene que actualizar la lista de categorias para el buttonsheet
+        /// </summary>
         private void ActualizarListaCategorias()
         {
             try
             {
+                //Limpiamos la lista
                 ListaCategoriasActual.Clear();
-
-                var categorias = EsGastoSeleccionado ? ListaTipoCategoriasGastos : ListaTipoCategoriasIngresos;
-
+                //Si la pestana de gastos esta seleccionada entonces la lista de categorias que se mostraran son las de gastos
+                var categorias = EsGastoSeleccionado ? ListaCategoriasGastos : ListaCategoriasIngresos;
+                //si la lista esta vacia retornamos
                 if (categorias == null) return;
-
-                foreach (var categoria in categorias)
-                {
-                    ListaCategoriasActual.Add(categoria);
-                }
+                //Asignamos la lista que se selecciono a la lista actual
+                ListaCategoriasActual = new ObservableCollection<CategoriaMovimiento>(categorias);
             }
             catch (Exception ex)
             {
@@ -490,50 +486,6 @@ namespace FinanKey.Presentacion.ViewModels
         }
 
         #endregion VALIDACIÓN
-
-        #region INICIALIZACIÓN FORMULARIO CUANDO SE CAMBIA DE PANTALLA
-
-        [RelayCommand]
-        private void InicializarDatosFormulario(string movimiento)
-        {
-            try
-            {
-                // limpiar
-                Monto = 0;
-                Fecha = DateTime.Now;
-                Descripcion = string.Empty;
-                CategoriaSeleccionada = null;
-                TarjetaSeleccionada = null;
-                Comercio = string.Empty;
-                EstaPagado = false;
-
-                if (movimiento == "Ingreso")
-                {
-                    ListaCategoriasActual = ListaTipoCategoriasIngresos ?? new ObservableCollection<CategoriaMovimiento>();
-                    EsGastoSeleccionado = false;
-
-                    ListaTarjetasDebito.Clear();
-                    foreach (Tarjeta tarjeta in ListaTarjetas ?? new ObservableCollection<Tarjeta>())
-                    {
-                        if (tarjeta?.Tipo == "Debito")
-                        {
-                            ListaTarjetasDebito.Add(tarjeta);
-                            EsGastoSeleccionado = true;
-                        }
-                    }
-                }
-                else
-                {
-                    ListaCategoriasActual = ListaTipoCategoriasGastos ?? new ObservableCollection<CategoriaMovimiento>();
-                }
-            }
-            catch (Exception ex)
-            {
-                MostrarError("Error inicializando formulario", ex.Message);
-            }
-        }
-
-        #endregion INICIALIZACIÓN FORMULARIO CUANDO SE CAMBIA DE PANTALLA
 
         #region HELPERS
 

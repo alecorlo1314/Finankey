@@ -109,4 +109,8 @@ public partial class AnadirPage : ContentPage
     {
         bottomSheetCategoria.Show();
     }
+
+    private void btnGasto_Clicked(object sender, EventArgs e) => MostrarFormulario(FormularioSeleccionado.Gasto);
+
+    private void btnIngreso_Clicked(object sender, EventArgs e) => MostrarFormulario(FormularioSeleccionado.Ingreso);
 }
