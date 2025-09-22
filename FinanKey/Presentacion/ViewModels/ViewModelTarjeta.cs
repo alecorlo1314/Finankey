@@ -287,45 +287,6 @@ namespace FinanKey.Presentacion.ViewModels
         }
 
         [RelayCommand]
-        private async Task EliminarTarjeta(Tarjeta tarjeta)
-        {
-            if (tarjeta == null) return;
-
-            var confirmar = await Shell.Current.DisplayAlert(
-                "Confirmar eliminación",
-                $"¿Estás seguro de eliminar la tarjeta '{tarjeta.Nombre}' terminada en {tarjeta.Ultimos4Digitos}?",
-                "Eliminar", "Cancelar");
-
-            if (!confirmar) return;
-
-            try
-            {
-                IsLoading = true;
-                var resultado = await _servicioTarjeta.EliminarAsync(tarjeta.Id);
-
-                if (resultado > 0)
-                {
-                    ListaTarjetas.Remove(tarjeta);
-                    OnPropertyChanged(nameof(TieneTarjetas));
-                    OnPropertyChanged(nameof(NoTieneTarjetas));
-                    MostrarExito("Tarjeta eliminada correctamente");
-                }
-                else
-                {
-                    await MostrarError("Error", "No se pudo eliminar la tarjeta");
-                }
-            }
-            catch (Exception ex)
-            {
-                await MostrarError("Error eliminando tarjeta", ex.Message);
-            }
-            finally
-            {
-                IsLoading = false;
-            }
-        }
-
-        [RelayCommand]
         private void RestablecerFormulario()
         {
             NombreTarjeta = string.Empty;

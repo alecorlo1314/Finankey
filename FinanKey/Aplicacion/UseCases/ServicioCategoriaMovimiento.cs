@@ -18,7 +18,7 @@ namespace FinanKey.Aplicacion.UseCases
         {
             return await _servicioCategoriaMovimiento.ObtenerPorTipoMovimientoAsync(tipoMovimiento);
         }
-        public async Task<List<CategoriaMovimiento>> ObtenerTodasAsync()
+        public async Task<List<CategoriaMovimiento?>> ObtenerTodasAsync()
         {
             return await _servicioCategoriaMovimiento.ObtenerTodosAsync();
         }

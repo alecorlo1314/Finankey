@@ -48,7 +48,7 @@
         <bottomSheet:SfBottomSheet.Content>
             <Grid Padding="{StaticResource PaddingPaginas}">
 
-                <!--  BOTÓN FLOTANTE MEJORADO  -->
+                <!--  BOTÓN FLOTANTE  -->
                 <Button
                     BackgroundColor="{StaticResource ColorAzulPricipal}"
                     Clicked="Button_Clicked"

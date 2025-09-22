@@ -31,5 +31,15 @@ namespace FinanKey.Aplicacion.UseCases
             //Obtiene los movimientos asociados a una tarjeta
            return await _servicioMovimiento.ObtenerPorTarjetaAsync(tarjetaId);
         }
+        /// <summary>
+        /// Metodo para eliminar una tarjeta por su id
+        /// devuelve el numero de filas afectadas en las bases de datos en la tabla de tarjetas
+        /// </summary>
+        /// <param name="idTarjeta"></param>
+        /// <returns></returns>
+        public async Task<int> EliminarTarjetaAsync(int idTarjeta)
+        {
+            return await _servicioTarjeta.EliminarAsync(idTarjeta);
+        }
     }
 }
