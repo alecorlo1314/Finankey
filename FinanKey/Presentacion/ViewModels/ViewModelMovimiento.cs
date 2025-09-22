@@ -104,6 +104,9 @@ namespace FinanKey.Presentacion.ViewModels
         [ObservableProperty]
         private ObservableCollection<Tarjeta> _listaTarjetasDebito = [];
 
+        [ObservableProperty]
+        private ObservableCollection<Tarjeta> _listaTarjetasCredito = [];
+
         #endregion COLECCIONES
 
         #region CONSTRUCTOR
@@ -116,14 +119,20 @@ namespace FinanKey.Presentacion.ViewModels
         #endregion CONSTRUCTOR
 
         #region INICIALIZACIÓN
-
+        /// <summary>
+        /// Metodo para inicializar los datos
+        /// inicializa las listas de tarjetas y categorias
+        /// </summary>
+        /// <returns></returns>
         public async Task InicializarDatosAsync()
         {
             try
             {
+                // Mostrar el indicador de carga
                 IsBusy = true;
+                // Limpiar mensajes de error
                 HasError = false;
-
+                // Tarea se encarga de cargar todos los metodos asincronos de carga de tajetas y categorias
                 await Task.WhenAll(
                     CargarTarjetasAsync(),
                     CargarCategoriasGastosAsync(),
@@ -148,18 +157,32 @@ namespace FinanKey.Presentacion.ViewModels
         #endregion INICIALIZACIÓN
 
         #region CARGA DE DATOS ASYNCRONO
-
+        /// <summary>
+        /// Metodo para cargar las tarjetas
+        /// lo que buscamos es cargar la lista de tarjetas 
+        /// asignamos la consulta a la base de datos
+        /// y luego repartimos esa consulta segun sea de credito o debito
+        /// </summary>
+        /// <returns></returns>
         private async Task CargarTarjetasAsync()
         {
             try
             {
+                //Consulta a la base de datos, trae todas las tarjetas
                 var tarjetas = await _servicioMovimiento.obtenerTarjetas();
-
+                //Si no hay nada en la lista de tarjetas, salimos del metodo, para evitar errores con valores nulos
+                if(tarjetas == null) return;
+                //Limpiamos la lista actual de tarjetas
                 ListaTarjetas.Clear();
-                foreach (var tarjeta in tarjetas ?? new List<Tarjeta>())
-                {
-                    ListaTarjetas.Add(tarjeta);
-                }
+                ListaTarjetas = new ObservableCollection<Tarjeta>(tarjetas);
+                //Inicializamos la lista de tarjetas de debito
+                ListaTarjetasDebito.Clear();
+                //De la lista de tarjetas, filtramos las tarjetas de debito y las asignamos a la lista de tarjetas de debito
+                ListaTarjetasDebito = new ObservableCollection<Tarjeta>(ListaTarjetas.Where(td => td?.Tipo == "Debito"));
+                //inicializamos la lista de tarjetas de credito
+                ListaTarjetasCredito.Clear();
+                //De la lista de tarjetas, filtramos las tarjetas de credito y las asignamos a la lista de tarjetas de credito
+                ListaTarjetasCredito = new ObservableCollection<Tarjeta>(ListaTarjetas.Where(td => td?.Tipo == "Credito"));
             }
             catch (Exception ex)
             {
