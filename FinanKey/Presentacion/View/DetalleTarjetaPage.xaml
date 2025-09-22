@@ -3,6 +3,7 @@
     x:Class="FinanKey.Presentacion.View.DetalleTarjetaPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     Title="Detalle de Tarjeta"
     BackgroundColor="{StaticResource FondoPrincipal}">
@@ -13,7 +14,209 @@
     </ContentPage.Behaviors>
 
     <!--  CONTENIDO PRINCIPAL  -->
-    <Grid RowDefinitions="Auto, Auto, *" RowSpacing="16">
+    <Grid
+        Margin="0,16"
+        RowDefinitions="Auto, Auto, *"
+        RowSpacing="16">
+        <!--  VENTANA EMERGENTE CONFIRMACION DE ELIMINACION  -->
+        <sfPopup:SfPopup
+            Padding="16"
+            AutoSizeMode="Height"
+            BackgroundColor="Transparent"
+            HorizontalOptions="Center"
+            IsOpen="{Binding PopupEliminacionAbierto}"
+            ShowCloseButton="False"
+            ShowFooter="True"
+            ShowHeader="True"
+            WidthRequest="380">
+            <sfPopup:SfPopup.PopupStyle>
+                <sfPopup:PopupStyle
+                    FooterBackground="{StaticResource ColorFondoComponentes}"
+                    HeaderBackground="{StaticResource ColorFondoComponentes}"
+                    MessageBackground="{StaticResource ColorFondoComponentes}" />
+            </sfPopup:SfPopup.PopupStyle>
+            <sfPopup:SfPopup.HeaderTemplate>
+                <DataTemplate>
+                    <Label
+                        Margin="16,16,0,0"
+                        HorizontalOptions="Start"
+                        Style="{StaticResource TextoEncabezadoSecundario}"
+                        Text="¿Estás seguro?"
+                        TextColor="{StaticResource ColorTexto}" />
+                </DataTemplate>
+            </sfPopup:SfPopup.HeaderTemplate>
+            <sfPopup:SfPopup.ContentTemplate>
+                <DataTemplate>
+                    <Label
+                        Margin="16,0"
+                        HorizontalOptions="Start"
+                        Style="{StaticResource TextoParrafoPrincipal}"
+                        Text="Esta acción no se puede deshacer. Esto eliminará permanentemente la tarjeta y sus datos asociados."
+                        TextColor="{StaticResource Secundario}" />
+                </DataTemplate>
+            </sfPopup:SfPopup.ContentTemplate>
+            <sfPopup:SfPopup.FooterTemplate>
+                <DataTemplate>
+                    <HorizontalStackLayout
+                        Margin="0,0,16,16"
+                        HorizontalOptions="End"
+                        Spacing="8">
+                        <Button
+                            BackgroundColor="{StaticResource ColorFondoPrincipal}"
+                            Command="{Binding CancelarEliminacionTarjetaCommand}"
+                            CornerRadius="10"
+                            FontFamily="PoppinsBold"
+                            FontSize="14"
+                            HeightRequest="42"
+                            HorizontalOptions="End"
+                            Text="Cancelar"
+                            TextColor="{StaticResource ColorAzulPricipal}" />
+                        <Button
+                            BackgroundColor="{StaticResource ColorAzulPricipal}"
+                            Command="{Binding ConfirmarEliminacionTarjetaCommand}"
+                            CornerRadius="10"
+                            FontFamily="PoppinsBold"
+                            FontSize="14"
+                            HeightRequest="42"
+                            HorizontalOptions="End"
+                            Text="Eliminar"
+                            TextColor="{StaticResource ColorFondoComponentes}" />
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </sfPopup:SfPopup.FooterTemplate>
+        </sfPopup:SfPopup>
+
+        <!--  VENTANA EMERGENTE MENSAJE DE INFORMACIÓN  -->
+        <sfPopup:SfPopup
+            Padding="16"
+            AutoSizeMode="Height"
+            BackgroundColor="Transparent"
+            FooterHeight="57"
+            HeaderTitle="57"
+            HeightRequest="180"
+            HorizontalOptions="Center"
+            IsOpen="{Binding PopupInformacionAbierto}"
+            ShowCloseButton="False"
+            ShowFooter="True"
+            ShowHeader="True"
+            WidthRequest="380">
+            <sfPopup:SfPopup.PopupStyle>
+                <sfPopup:PopupStyle
+                    FooterBackground="{StaticResource ColorFondoComponentes}"
+                    HeaderBackground="{StaticResource ColorFondoComponentes}"
+                    MessageBackground="{StaticResource ColorFondoComponentes}" />
+            </sfPopup:SfPopup.PopupStyle>
+            <sfPopup:SfPopup.HeaderTemplate>
+                <DataTemplate>
+                    <HorizontalStackLayout Margin="16,16,0,0">
+                        <Label
+                            Style="{StaticResource TextoEncabezadoSecundario}"
+                            Text="{Binding TituloInformacion}"
+                            TextColor="{StaticResource ColorTexto}" />
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </sfPopup:SfPopup.HeaderTemplate>
+            <sfPopup:SfPopup.ContentTemplate>
+                <DataTemplate>
+                    <Label
+                        Margin="16,0"
+                        HorizontalOptions="Start"
+                        Style="{StaticResource TextoParrafoPrincipal}"
+                        Text="{Binding MensajeInformacion}"
+                        TextColor="{StaticResource Secundario}" />
+                </DataTemplate>
+            </sfPopup:SfPopup.ContentTemplate>
+            <sfPopup:SfPopup.FooterTemplate>
+                <DataTemplate>
+                    <Button
+                        Margin="0,0,16,16"
+                        BackgroundColor="{StaticResource ColorFondoPrincipal}"
+                        Command="{Binding CerrarPopInformacionCommand}"
+                        CornerRadius="10"
+                        FontFamily="PoppinsBold"
+                        FontSize="14"
+                        HeightRequest="42"
+                        HorizontalOptions="End"
+                        Text="OK"
+                        TextColor="{StaticResource ColorAzulPricipal}" />
+                </DataTemplate>
+            </sfPopup:SfPopup.FooterTemplate>
+        </sfPopup:SfPopup>
+
+        <!--  VENTANA EMERGENTE MENSAJE DE ERROR  -->
+        <sfPopup:SfPopup
+            Padding="16"
+            AutoSizeMode="Height"
+            BackgroundColor="Transparent"
+            FooterHeight="52"
+            HeaderTitle="52"
+            HorizontalOptions="Center"
+            IsOpen="{Binding PopupErrorAbierto}"
+            ShowCloseButton="False"
+            ShowFooter="True"
+            ShowHeader="True"
+            WidthRequest="380">
+            <sfPopup:SfPopup.PopupStyle>
+                <sfPopup:PopupStyle
+                    FooterBackground="{StaticResource ColorFondoComponentes}"
+                    HeaderBackground="{StaticResource ColorFondoComponentes}"
+                    MessageBackground="{StaticResource ColorFondoComponentes}" />
+            </sfPopup:SfPopup.PopupStyle>
+            <sfPopup:SfPopup.HeaderTemplate>
+                <DataTemplate>
+                    <Image
+                        Margin="16,16,0,0"
+                        Aspect="AspectFit"
+                        Source="icono_error.svg" />
+                </DataTemplate>
+            </sfPopup:SfPopup.HeaderTemplate>
+            <sfPopup:SfPopup.ContentTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout Spacing="8">
+                        <Label
+                            Margin="16,0"
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextoEncabezadoSecundario}"
+                            Text="{Binding TituloError}"
+                            TextColor="{StaticResource ColorTexto}" />
+                        <Label
+                            Margin="16,0"
+                            HorizontalOptions="Start"
+                            Style="{StaticResource TextoParrafoPrincipal}"
+                            Text="{Binding MensajeError}"
+                            TextColor="{StaticResource Secundario}" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </sfPopup:SfPopup.ContentTemplate>
+            <sfPopup:SfPopup.FooterTemplate>
+                <DataTemplate>
+                    <Button
+                        Margin="0,0,16,16"
+                        BackgroundColor="{StaticResource ColorFondoPrincipal}"
+                        Command="{Binding CerrarPopErrorCommand}"
+                        CornerRadius="10"
+                        FontFamily="PoppinsBold"
+                        FontSize="14"
+                        HeightRequest="42"
+                        HorizontalOptions="End"
+                        Text="OK"
+                        TextColor="{StaticResource ColorAzulPricipal}" />
+                </DataTemplate>
+            </sfPopup:SfPopup.FooterTemplate>
+        </sfPopup:SfPopup>
+
+        <!--  LOADING INDICATOR  -->
+        <ActivityIndicator
+            BackgroundColor="Transparent"
+            HeightRequest="50"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsLoading}"
+            IsVisible="{Binding IsLoading}"
+            VerticalOptions="Center"
+            WidthRequest="50"
+            ZIndex="5"
+            Color="{StaticResource ColorAzulPricipal}" />
+
         <!--  FONDO DE LA TARJETA  -->
         <Border
             Grid.Row="0"
@@ -143,7 +346,7 @@
         <ScrollView Grid.Row="2">
             <Grid
                 IsVisible="True"
-                RowDefinitions="Auto,Auto"
+                RowDefinitions="Auto,Auto, Auto"
                 RowSpacing="16">
                 <!--  SECCION DE INFORMACION  -->
                 <Grid
@@ -341,6 +544,21 @@
                         TextColor="Black"
                         VerticalOptions="Center" />
                 </Grid>
+                <!--  BOTON ELIMINAR TARJETA  -->
+                <Button
+                    x:Name="BotonEliminarTarjeta"
+                    Grid.Row="2"
+                    BackgroundColor="{StaticResource ColorAcentoRojo}"
+                    Command="{Binding EliminarTarjetaCommand}"
+                    CornerRadius="20"
+                    FontFamily="PoppinsBold"
+                    FontSize="16"
+                    HeightRequest="42"
+                    HorizontalOptions="End"
+                    Text="Eliminar Tarjeta"
+                    TextColor="{StaticResource ColorFondoComponentes}"
+                    VerticalOptions="Center"
+                    WidthRequest="182" />
             </Grid>
         </ScrollView>
     </Grid>

@@ -115,7 +115,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Core\Dominio\Interfaces\Servicios\" />
+	  <Folder Include="Dominio\Interfaces\Servicios\" />
 	</ItemGroup>
 
 </Project>

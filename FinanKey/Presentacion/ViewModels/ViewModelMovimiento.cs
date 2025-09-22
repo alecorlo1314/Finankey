@@ -216,6 +216,8 @@ namespace FinanKey.Presentacion.ViewModels
                 EsIngresoSeleccionado = false;
                 ActualizarListaCategorias();
                 LimpiarCategoria();
+                ListaTarjetasDebito.Clear();
+                ListaTarjetasDebito = new ObservableCollection<Tarjeta>(ListaTarjetas.Where(t => t?.Tipo == "Debito"));
             }
             catch (Exception ex)
             {
@@ -232,6 +234,8 @@ namespace FinanKey.Presentacion.ViewModels
                 EsIngresoSeleccionado = true;
                 ActualizarListaCategorias();
                 LimpiarCategoria();
+                ListaTarjetasDebito.Clear();
+                ListaTarjetasDebito = new ObservableCollection<Tarjeta>(ListaTarjetas.Where(t => t?.Tipo == "Credito"));
             }
             catch (Exception ex)
             {
