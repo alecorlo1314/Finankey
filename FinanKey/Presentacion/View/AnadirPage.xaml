@@ -192,8 +192,6 @@
                     Padding="16"
                     AutoSizeMode="Height"
                     BackgroundColor="Transparent"
-                    FooterHeight="57"
-                    HeaderTitle="57"
                     HorizontalOptions="Center"
                     IsOpen="{Binding PopupErrorAbierto}"
                     IsVisible="{Binding PopupErrorAbierto}"
@@ -210,28 +208,29 @@
                     <!--  ENCABEZADO DEL POPUP  -->
                     <sfPopup:SfPopup.HeaderTemplate>
                         <DataTemplate>
-                            <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
-                                <Image
-                                    Aspect="AspectFit"
-                                    HorizontalOptions="Center"
-                                    Source="icono_error.svg"
-                                    VerticalOptions="Center" />
-                                <Label
-                                    Style="{StaticResource TextoEncabezadoSecundario}"
-                                    Text="{Binding TituloError}"
-                                    TextColor="{StaticResource ColorTexto}" />
-                            </VerticalStackLayout>
+                            <Image
+                                Margin="16,16,0,0"
+                                Aspect="AspectFit"
+                                HorizontalOptions="Start"
+                                Source="icono_error.svg"
+                                VerticalOptions="Center" />
                         </DataTemplate>
                     </sfPopup:SfPopup.HeaderTemplate>
                     <!--  CONTENIDO DEL POPUP  -->
                     <sfPopup:SfPopup.ContentTemplate>
                         <DataTemplate>
-                            <Label
-                                Margin="16,0"
-                                HorizontalOptions="Start"
-                                Style="{StaticResource TextoParrafoPrincipal}"
-                                Text="{Binding MensajeError}"
-                                TextColor="{StaticResource Secundario}" />
+                            <VerticalStackLayout Margin="16,0" Spacing="8">
+                                <Label
+                                    HorizontalOptions="Start"
+                                    Style="{StaticResource TextoEncabezadoSecundario}"
+                                    Text="{Binding TituloError}"
+                                    TextColor="{StaticResource ColorTexto}" />
+                                <Label
+                                    HorizontalOptions="Start"
+                                    Style="{StaticResource TextoSecundario}"
+                                    Text="{Binding MensajeError}"
+                                    TextColor="{StaticResource Secundario}" />
+                            </VerticalStackLayout>
                         </DataTemplate>
                     </sfPopup:SfPopup.ContentTemplate>
                     <!--  PIE DEL POPUP  -->
@@ -247,7 +246,8 @@
                                 HeightRequest="42"
                                 HorizontalOptions="End"
                                 Text="OK"
-                                TextColor="{StaticResource ColorFondoComponentes}" />
+                                TextColor="{StaticResource ColorFondoComponentes}"
+                                WidthRequest="80" />
                         </DataTemplate>
                     </sfPopup:SfPopup.FooterTemplate>
                 </sfPopup:SfPopup>
@@ -279,9 +279,9 @@
                         <Button
                             x:Name="btnGasto"
                             BackgroundColor="{StaticResource ColorAzulPricipal}"
+                            Clicked="btnGasto_Clicked"
                             Command="{Binding SeleccionarGastoCommand}"
                             ImageSource="icono_billetera_blanco.svg"
-                            Clicked="btnGasto_Clicked"
                             Style="{StaticResource grupoBotones}"
                             Text="Gasto"
                             TextColor="{StaticResource TextoPrimario}" />
@@ -289,10 +289,10 @@
                         <Button
                             x:Name="btnIngreso"
                             BackgroundColor="{StaticResource ColorFondoComponentes}"
+                            Clicked="btnIngreso_Clicked"
                             Command="{Binding SeleccionarIngresoCommand}"
                             CommandParameter="Ingreso"
                             ImageSource="icono_billete_azul.svg"
-                            Clicked="btnIngreso_Clicked"
                             Style="{StaticResource grupoBotones}"
                             Text="Ingreso"
                             TextColor="Black" />
