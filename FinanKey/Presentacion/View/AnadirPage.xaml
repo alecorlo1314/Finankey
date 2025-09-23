@@ -619,7 +619,8 @@
                                     Style="{StaticResource TextoSubtítulo}"
                                     Text="Descripción"
                                     TextColor="{StaticResource ColorAzulPricipal}" />
-                                <Border x:Name="borderDescripcionIngreso"
+                                <Border
+                                    x:Name="borderDescripcionIngreso"
                                     Stroke="{StaticResource Terciario}"
                                     StrokeShape="RoundRectangle 20"
                                     StrokeThickness="0.5"

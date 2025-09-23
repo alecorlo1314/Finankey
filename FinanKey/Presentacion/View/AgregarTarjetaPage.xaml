@@ -18,7 +18,6 @@
     </ContentPage.Behaviors>
 
     <Grid>
-
         <!--  LOADING INDICATOR DE GUARDADO  -->
         <ActivityIndicator
             BackgroundColor="Transparent"
@@ -83,7 +82,8 @@
                         HeightRequest="42"
                         HorizontalOptions="End"
                         Text="OK"
-                        TextColor="{StaticResource ColorFondoComponentes}" />
+                        TextColor="{StaticResource ColorFondoComponentes}"
+                        WidthRequest="80" />
                 </DataTemplate>
             </sfPopup:SfPopup.FooterTemplate>
         </sfPopup:SfPopup>
@@ -361,7 +361,7 @@
                                         ValueChangeMode="OnKeyFocus"
                                         VerticalOptions="Center"
                                         WidthRequest="150"
-                                        Value="{Binding LimiteCredito}" />
+                                        Value="{Binding LimiteCredito, Mode=TwoWay}" />
                                 </VerticalStackLayout>
                             </Border>
                         </VerticalStackLayout>
