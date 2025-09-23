@@ -569,7 +569,9 @@
                                         TextColor="{StaticResource ColorAzulPricipal}" />
                                     <Border
                                         x:Name="borderMontoIngreso"
+                                        Stroke="{StaticResource Terciario}"
                                         StrokeShape="RoundRectangle 20"
+                                        StrokeThickness="0.5"
                                         Style="{StaticResource bordeFormulario}">
                                         <Entry
                                             Focused="entradaMontoIngreso_Focused"
@@ -588,7 +590,11 @@
                                         Style="{StaticResource TextoSubtítulo}"
                                         Text="Fecha"
                                         TextColor="{StaticResource ColorAzulPricipal}" />
-                                    <Border StrokeShape="RoundRectangle 20" Style="{StaticResource bordeFormulario}">
+                                    <Border
+                                        Stroke="{StaticResource Terciario}"
+                                        StrokeShape="RoundRectangle 20"
+                                        StrokeThickness="0.5"
+                                        Style="{StaticResource bordeFormulario}">
                                         <HorizontalStackLayout Padding="12,0" Spacing="8">
                                             <DatePicker
                                                 Background="Transparent"
@@ -613,7 +619,12 @@
                                     Style="{StaticResource TextoSubtítulo}"
                                     Text="Descripción"
                                     TextColor="{StaticResource ColorAzulPricipal}" />
-                                <Border StrokeShape="RoundRectangle 20" Style="{StaticResource bordeFormulario}">
+                                <Border
+                                    x:Name="borderDescripcionIngreso"
+                                    Stroke="{StaticResource Terciario}"
+                                    StrokeShape="RoundRectangle 20"
+                                    StrokeThickness="0.5"
+                                    Style="{StaticResource bordeFormulario}">
                                     <HorizontalStackLayout Padding="12,0" Spacing="8">
                                         <Entry
                                             x:Name="entradaDescripcionIngreso"
@@ -644,8 +655,9 @@
                                 <Border
                                     BackgroundColor="{StaticResource ColorTarjeta}"
                                     HeightRequest="52"
-                                    Stroke="{StaticResource ColorTarjeta}"
-                                    StrokeShape="RoundRectangle 20">
+                                    Stroke="{StaticResource Terciario}"
+                                    StrokeShape="RoundRectangle 20"
+                                    StrokeThickness="0.5">
                                     <Border.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding MostrarBottomSheetCategoriasCommand}" />
                                     </Border.GestureRecognizers>
@@ -683,8 +695,9 @@
                                     TextColor="{StaticResource ColorAzulPricipal}" />
                                 <Border
                                     BackgroundColor="{StaticResource ColorTarjeta}"
-                                    Stroke="{StaticResource ColorTarjeta}"
-                                    StrokeShape="RoundRectangle 20">
+                                    Stroke="{StaticResource Terciario}"
+                                    StrokeShape="RoundRectangle 20"
+                                    StrokeThickness="0.5">
                                     <editors:SfComboBox
                                         Margin="8,0"
                                         DisplayMemberPath="Nombre"
