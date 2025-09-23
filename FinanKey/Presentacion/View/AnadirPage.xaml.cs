@@ -99,8 +99,8 @@ public partial class AnadirPage : ContentPage
     private void entradaMontoGasto_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderMontoGasto);
     private void entradaMontoIngreso_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderMontoIngreso);
     private void entradaMontoIngreso_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderMontoIngreso);
-    private void entradaDescripcionIngreso_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderMontoIngreso);
-    private void entradaDescripcionIngreso_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderMontoIngreso);
+    private void entradaDescripcionIngreso_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderDescripcionIngreso);
+    private void entradaDescripcionIngreso_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderDescripcionIngreso);
     private void entradaDescripcionGasto_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderDescripcionGasto);
     private void entradaDescripcionGasto_Unfocused(object sender, FocusEventArgs e) => OnEntryUnfocused(borderDescripcionGasto);
     private void entradaComercio_Focused(object sender, FocusEventArgs e) => OnEntryFocused(borderComercio);
