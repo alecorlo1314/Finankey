@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using FinanKey.Aplicacion.UseCases;
 using FinanKey.Dominio.Models;
-
+using FinanKey.Presentacion.View.Validaciones;
 using System.Collections.ObjectModel;
 
 namespace FinanKey.Presentacion.ViewModels
@@ -14,6 +14,10 @@ namespace FinanKey.Presentacion.ViewModels
         private readonly ServicioTarjeta _servicioTarjeta;
 
         #endregion DEPENDENCIAS
+
+        #region PROPIEDADES REGLAS DE VALIDACION
+        public ObjetoValidable<string> NombreTarjetaValida { get; private set; } = new();
+        #endregion
 
         #region PROPIEDADES DE ESTADO
 
