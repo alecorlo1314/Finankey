@@ -16,7 +16,7 @@ namespace FinanKey.Presentacion.ViewModels
         #endregion DEPENDENCIAS
 
         #region PROPIEDADES REGLAS DE VALIDACION
-        public ObjetoValidable<string> NombreTarjetaValida { get; private set; } = new();
+        public ValidatableObject<string> NombreTarjetaValida { get; private set; }
         #endregion
 
         #region PROPIEDADES DE ESTADO
@@ -120,7 +120,7 @@ namespace FinanKey.Presentacion.ViewModels
         {
             _servicioTarjeta = servicioTarjeta ?? throw new ArgumentNullException(nameof(servicioTarjeta));
             //inicializar la propidad de validación
-            NombreTarjetaValida = new ObjetoValidable<string>();
+            NombreTarjetaValida = new ValidatableObject<string>();
             AgregaValidaciones();
 
             InicializarDatos();
@@ -128,12 +128,28 @@ namespace FinanKey.Presentacion.ViewModels
 
         private void AgregaValidaciones()
         {
-            NombreTarjetaValida.Validaciones.Add(new IsNotNullOrEmptyRule<string>
+            NombreTarjetaValida.Validations.Add(new IsNotNullOrEmptyRule<string>
             {
-                ValidandoMensaje = "El nombre de la tarjeta es requerido"
+                ValidationMessage = "El nombre de la tarjeta es requerido"
+            });
+            NombreTarjetaValida.Validations.Add(new MinLengthRule<string>
+            {
+                MinLength = 3,
+                ValidationMessage = "El nombre de la tarjeta debe tener al menos 3 caracteres."
             });
         }
+        private bool Validate()
+        {
+            bool isValidUserName = NombreTarjetaValida.Validate();
 
+            return isValidUserName;
+        }
+
+        [RelayCommand]
+        private void ValidarNombreTarjeta()
+        {
+            NombreTarjetaValida.Validate();
+        }
         #endregion CONSTRUCTOR
 
         #region INICIALIZACIÓN

@@ -1,7 +1,7 @@
 ﻿
 namespace FinanKey.Presentacion.View.Intefaces;
 
-public interface IValidable
+public interface IValidity
 {
-    bool EsValido { get; }
+    bool IsValid { get; }
 }

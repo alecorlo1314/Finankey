@@ -3,42 +3,39 @@ using FinanKey.Presentacion.Intefaces;
 using FinanKey.Presentacion.View.Intefaces;
 namespace FinanKey.Presentacion.View.Validaciones;
 
-public partial class ObjetoValidable<T> : ObservableObject, IValidable
+public partial class ValidatableObject<T> : ObservableObject, IValidity
 {
     #region PROPIEDADES
-    //contiene los errores de validacion
     [ObservableProperty]
-    private IEnumerable<string> _listaErrores;
-
-    //decide si el objetos es valido o no
+    private IEnumerable<string> _errors;
     [ObservableProperty]
-    private bool _esValido;
-
+    private bool _isValid;
     [ObservableProperty]
     private T _value;
 
     //contiene las reglas de validacion
-    public List<IReglaValidacion<T>> Validaciones { get; } = new();
+    public List<IValidationRule<T>> Validations { get; } = new();
     #endregion
 
     #region CONSTRUCTOR
-    public ObjetoValidable()
+    public ValidatableObject()
     {
-        EsValido = true;
-        ListaErrores = Enumerable.Empty<string>();
+        _isValid = true;
+        _errors = Enumerable.Empty<string>();
     }
     #endregion
 
     #region METODO DE VALIDACION
-    public bool Validar()
+    public bool Validate()
     {
-        ListaErrores = Validaciones
+        Errors = Validations
             ?.Where(v => !v.Check(Value))
             ?.Select(v => v.ValidationMessage)
             ?.ToArray()
             ?? Enumerable.Empty<string>();
-        EsValido = !ListaErrores.Any();
-        return EsValido;
+
+        IsValid = !Errors.Any();
+        return IsValid;
     }
     #endregion
 }
