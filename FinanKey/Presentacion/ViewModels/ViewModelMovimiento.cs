@@ -90,19 +90,19 @@ namespace FinanKey.Presentacion.ViewModels
         #region COLECCIONES
 
         [ObservableProperty]
-        private ObservableCollection<CategoriaMovimiento> _listaCategoriasGastos = [];
+        private ObservableCollection<CategoriaMovimiento?> _listaCategoriasGastos = [];
 
         [ObservableProperty]
-        private ObservableCollection<CategoriaMovimiento> _listaCategoriasIngresos = [];
+        private ObservableCollection<CategoriaMovimiento?> _listaCategoriasIngresos = [];
 
         [ObservableProperty]
-        private ObservableCollection<CategoriaMovimiento> _listaCategoriasActual = [];
+        private ObservableCollection<CategoriaMovimiento?> _listaCategoriasActual = [];
 
         [ObservableProperty]
-        private ObservableCollection<Tarjeta> _listaTarjetas = [];
+        private ObservableCollection<Tarjeta?> _listaTarjetas = [];
 
         [ObservableProperty]
-        private ObservableCollection<Tarjeta> _listaTarjetasDebito = [];
+        private ObservableCollection<Tarjeta?> _listaTarjetasDebito = [];
 
         #endregion COLECCIONES
 
@@ -168,16 +168,23 @@ namespace FinanKey.Presentacion.ViewModels
             {
                 //Consulta a la base de datos, trae todas las tarjetas
                 var tarjetas = await _servicioMovimiento.obtenerTarjetas();
+                if (tarjetas == null) return;
                 // Solo actualizar si hay cambios
                 if (!ListaTarjetasIguales(tarjetas))
                 {
                     ListaTarjetas.Clear();
                     //Asignamos la consulta a la lista de tarjetas
-                    ListaTarjetas = new ObservableCollection<Tarjeta>(tarjetas);
+                    foreach (var tarjeta in tarjetas)
+                    {
+                        //Asignamos el logo de la tarjeta porque cuando se ingreso a la base de datos es de color claro
+                        //pero aqui lo necesitamos oscuro para que se pueda ver porque el fondo es claro
+                        if(tarjeta.Logo == "icono_visa.svg") tarjeta.Logo = "icono_visa_oscuro.svg";
+                        ListaTarjetas.Add(tarjeta);
+                    }
                     //Inicializamos la lista de tarjetas de debito
                     ListaTarjetasDebito.Clear();
                     //De la lista de tarjetas, filtramos las tarjetas de debito y las asignamos a la lista de tarjetas de debito
-                    ListaTarjetasDebito = new ObservableCollection<Tarjeta>(ListaTarjetas.Where(td => td?.Tipo == "Debito"));
+                    ListaTarjetasDebito = new ObservableCollection<Tarjeta?>(ListaTarjetas.Where(td => td?.Tipo == "Debito"));
                 }
             }
             catch (Exception ex)
@@ -233,16 +240,16 @@ namespace FinanKey.Presentacion.ViewModels
                 {
                     ListaCategoriasActual.Clear();
                     //Asignamos la consulta a la lista de categorias
-                    ListaCategoriasActual = new ObservableCollection<CategoriaMovimiento>(categorias);
+                    ListaCategoriasActual = new ObservableCollection<CategoriaMovimiento?>(categorias);
                     //Inicializamos la lista de categorias de gastos
                     ListaCategoriasGastos.Clear();
                     //De la lista de categorias, filtramos las categorias de gastos y las asignamos a la lista de categorias de gastos
-                    ListaCategoriasGastos = new ObservableCollection<CategoriaMovimiento>(
+                    ListaCategoriasGastos = new ObservableCollection<CategoriaMovimiento?>(
                         ListaCategoriasActual.Where(cm => cm?.TipoMovimiento == "Gasto"));
                     //Inicializamos la lista de categorias de ingresos
                     ListaCategoriasIngresos.Clear();
                     //De la lista de categorias, filtramos las categorias de gastos y las asignamos a la lista de categorias de gastos
-                    ListaCategoriasIngresos = new ObservableCollection<CategoriaMovimiento>(
+                    ListaCategoriasIngresos = new ObservableCollection<CategoriaMovimiento?>(
                         ListaCategoriasActual.Where(cm => cm?.TipoMovimiento == "Ingreso"));
                 }
             }
@@ -263,7 +270,7 @@ namespace FinanKey.Presentacion.ViewModels
             if (nuevaListaCategorias.Count != ListaCategoriasActual.Count) return false;
             //Si la nueva lista de categorias es igual a la lista actual, entonces realizamos la comparacion
             return ListaCategoriasActual.Zip(nuevaListaCategorias, (actual, nuevo) =>
-                actual.Id == nuevo.Id &&
+                actual?.Id == nuevo.Id &&
                 actual.Descripcion == nuevo.Descripcion &&
                 actual.Icon_id == nuevo.Icon_id &&
                 actual.RutaIcono == nuevo.RutaIcono &&
@@ -282,6 +289,7 @@ namespace FinanKey.Presentacion.ViewModels
             {
                 EsGastoSeleccionado = true;
                 EsIngresoSeleccionado = false;
+       
                 ActualizarListaCategorias();
             }
             catch (Exception ex)
@@ -297,6 +305,7 @@ namespace FinanKey.Presentacion.ViewModels
             {
                 EsGastoSeleccionado = false;
                 EsIngresoSeleccionado = true;
+
                 ActualizarListaCategorias();
             }
             catch (Exception ex)
@@ -321,11 +330,11 @@ namespace FinanKey.Presentacion.ViewModels
                 //si la lista esta vacia retornamos
                 if (categorias == null) return;
                 //Asignamos la lista que se selecciono a la lista actual
-                ListaCategoriasActual = new ObservableCollection<CategoriaMovimiento>(categorias);
+                ListaCategoriasActual = new ObservableCollection<CategoriaMovimiento?>(categorias);
             }
             catch (Exception ex)
             {
-                MostrarError("Error actualizando categorías", ex.Message);
+                MostrarError("Error al actualizar categorias", ex.Message);
             }
         }
 
