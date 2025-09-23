@@ -1,8 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using FinanKey.Presentacion.Intefaces;
+using FinanKey.Presentacion.View.Intefaces;
 namespace FinanKey.Presentacion.View.Validaciones;
 
-class ObjetoValidable<T> : ObservableObject, IValidity
+public partial class ObjetoValidable<T> : ObservableObject, IValidable
 {
     #region PROPIEDADES
     //contiene los errores de validacion
@@ -17,14 +18,14 @@ class ObjetoValidable<T> : ObservableObject, IValidity
     private T _value;
 
     //contiene las reglas de validacion
-    public List<ReglasValidacion<T>> Validaciones { get; } = new();
+    public List<IReglaValidacion<T>> Validaciones { get; } = new();
     #endregion
 
     #region CONSTRUCTOR
     public ObjetoValidable()
     {
         EsValido = true;
-        ListaErrores = new Enumerable.Empty<string>();
+        ListaErrores = Enumerable.Empty<string>();
     }
     #endregion
 
