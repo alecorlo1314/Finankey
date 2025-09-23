@@ -119,8 +119,19 @@ namespace FinanKey.Presentacion.ViewModels
         public ViewModelTarjeta(ServicioTarjeta servicioTarjeta)
         {
             _servicioTarjeta = servicioTarjeta ?? throw new ArgumentNullException(nameof(servicioTarjeta));
+            //inicializar la propidad de validación
+            NombreTarjetaValida = new ObjetoValidable<string>();
+            AgregaValidaciones();
 
             InicializarDatos();
+        }
+
+        private void AgregaValidaciones()
+        {
+            NombreTarjetaValida.Validaciones.Add(new IsNotNullOrEmptyRule<string>
+            {
+                ValidandoMensaje = "El nombre de la tarjeta es requerido"
+            });
         }
 
         #endregion CONSTRUCTOR
