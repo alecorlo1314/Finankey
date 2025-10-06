@@ -193,7 +193,6 @@ namespace FinanKey.Presentacion.ViewModels
 
             InitializeValidatableObjects();
             AgregaValidaciones();
-
             InicializarDatos();
         }
       
@@ -378,7 +377,7 @@ namespace FinanKey.Presentacion.ViewModels
             HasError = false;
             MensajeError = string.Empty;
         }
-        #endregion COMMANDS
+        #endregion
 
         #region HELPERS
 
@@ -393,6 +392,6 @@ namespace FinanKey.Presentacion.ViewModels
             PopupInformacionAbierto = true;
         }
 
-        #endregion HELPERS
+        #endregion
     }
 }
