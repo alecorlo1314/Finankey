@@ -1,22 +1,55 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinanKey.Aplicacion.UseCases;
+using FinanKey.Aplicacion.Validation;
 using FinanKey.Dominio.Models;
-using FinanKey.Presentacion.View.Validaciones;
 using System.Collections.ObjectModel;
 
 namespace FinanKey.Presentacion.ViewModels
 {
     public partial class ViewModelTarjeta : ObservableObject
     {
-        #region DEPENDENCIAS
+        #region INYECCION DE DEPENDENCIAS
 
         private readonly ServicioTarjeta _servicioTarjeta;
 
         #endregion DEPENDENCIAS
 
-        #region PROPIEDADES REGLAS DE VALIDACION
-        public ValidatableObject<string> NombreTarjetaValida { get; private set; }
+        #region DECLARACION DE PROPIEDADES DEVALIDACIONES
+        public ValidatableObject<string> NombreTarjeta { get; private set; }
+        #endregion
+
+        #region METODOS DEL PROYECTO PARA VALIDACIONES
+        private void InitializeValidatableObjects()
+        {
+            NombreTarjeta = new ValidatableObject<string>();
+        }
+        private void AgregaValidaciones()
+        {
+            NombreTarjeta.Validations.Add(new IsNotNullOrEmptyRule<string>
+            {
+                ValidationMessage = "El nombre de la tarjeta es requerido"
+            });
+            NombreTarjeta.Validations.Add(new MinLengthRule<string>
+            {
+                MinLength = 3,
+                ValidationMessage = "debe tener al menos 3 caracteres."
+            });
+        }
+        private bool ValidarTodos()
+        {
+            var validationResults = new[]
+            {
+                NombreTarjeta.Validate(),
+            };
+
+            return validationResults.All(result => result);
+        }
+        #endregion
+
+        #region COMANDOS VALIDACION DE ENTRADAS
+        [RelayCommand]
+        private void ValidarNombreTarjeta() => NombreTarjeta.Validate();
         #endregion
 
         #region PROPIEDADES DE ESTADO
@@ -36,10 +69,6 @@ namespace FinanKey.Presentacion.ViewModels
         #endregion PROPIEDADES DE ESTADO
 
         #region PROPIEDADES DE FORMULARIO
-
-        [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(AgregarTarjetaCommand))]
-        private string _nombreTarjeta = string.Empty;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(AgregarTarjetaCommand))]
@@ -108,14 +137,13 @@ namespace FinanKey.Presentacion.ViewModels
 
         #region PROPIEDADES DE VALIDACIÓN
 
-        public bool NombreTarjetaEsValido => !string.IsNullOrWhiteSpace(NombreTarjeta) && NombreTarjeta.Length >= 2 && NombreTarjeta.Length <= 100;
+        //public bool NombreTarjetaEsValido => !string.IsNullOrWhiteSpace(NombreTarjeta) && NombreTarjeta.Length >= 2 && NombreTarjeta.Length <= 100;
         public bool UltimosCuatroDigitosEsValido => UltimosCuatroDigitos?.Length == 4;
         public bool VencimientoEsValido => string.IsNullOrEmpty(Vencimiento) || EsFormatoVencimientoValido(Vencimiento);
 
         #endregion PROPIEDADES DE VALIDACIÓN
 
         #region CONSTRUCTOR
-
         public ViewModelTarjeta(ServicioTarjeta servicioTarjeta)
         {
             _servicioTarjeta = servicioTarjeta ?? throw new ArgumentNullException(nameof(servicioTarjeta));
@@ -125,46 +153,17 @@ namespace FinanKey.Presentacion.ViewModels
 
             InicializarDatos();
         }
-        private void InitializeValidatableObjects()
-        {
-            NombreTarjetaValida = new ValidatableObject<string>();
-        }
-        private void AgregaValidaciones()
-        {
-            NombreTarjetaValida.Validations.Add(new IsNotNullOrEmptyRule<string>
-            {
-                ValidationMessage = "El nombre de la tarjeta es requerido"
-            });
-            NombreTarjetaValida.Validations.Add(new MinLengthRule<string>
-            {
-                MinLength = 3,
-                ValidationMessage = "El nombre de la tarjeta debe tener al menos 3 caracteres."
-            });
-        }
-        private bool Validate()
-        {
-            bool isValidUserName = NombreTarjetaValida.Validate();
-
-            return isValidUserName;
-        }
-
-        [RelayCommand]
-        private void ValidarNombreTarjeta()
-        {
-            NombreTarjetaValida.Validate();
-        }
+      
         #endregion CONSTRUCTOR
 
         #region INICIALIZACIÓN
-
         private void InicializarDatos()
         {
             RestablecerFormulario();
         }
-        #endregion INICIALIZACIÓN
+        #endregion
 
         #region MÉTODOS DE DATOS
-
         public async Task CargarTarjetasAsync()
         {
             try
@@ -251,7 +250,7 @@ namespace FinanKey.Presentacion.ViewModels
             AgregarTarjetaCommand.NotifyCanExecuteChanged();
         }
 
-        [RelayCommand(CanExecute = nameof(PuedeAgregarTarjeta))]
+        [RelayCommand]
         private async Task AgregarTarjeta()
         {
             if (IsGuardando) return;
@@ -262,14 +261,14 @@ namespace FinanKey.Presentacion.ViewModels
                 HasError = false;
 
                 // Validación final
-                if (!ValidarFormulario())
+                if (!ValidarFormulario() && !ValidarTodos())
                 {
                     return;
                 }
 
                 var nuevaTarjeta = new Tarjeta
                 {
-                    Nombre = NombreTarjeta.Trim(),
+                    Nombre = NombreTarjeta.Value,
                     Ultimos4Digitos = UltimosCuatroDigitos.Trim(),
                     Tipo = EsVisibleMonto ? "Debito" : "Credito",
                     Banco = string.IsNullOrWhiteSpace(Banco) ? null : Banco.Trim(),
@@ -323,7 +322,8 @@ namespace FinanKey.Presentacion.ViewModels
         [RelayCommand]
         private void RestablecerFormulario()
         {
-            NombreTarjeta = string.Empty;
+
+            NombreTarjeta.Value = string.Empty;
             UltimosCuatroDigitos = string.Empty;
             Banco = string.Empty;
             Vencimiento = string.Empty;
@@ -348,7 +348,7 @@ namespace FinanKey.Presentacion.ViewModels
 
         private bool PuedeAgregarTarjeta()
         {
-            return NombreTarjetaEsValido &&
+            return 
                    UltimosCuatroDigitosEsValido &&
                    VencimientoEsValido &&
                    !IsGuardando;
@@ -357,9 +357,6 @@ namespace FinanKey.Presentacion.ViewModels
         private bool ValidarFormulario()
         {
             var errores = new List<string>();
-
-            if (!NombreTarjetaEsValido)
-                errores.Add("El nombre de la tarjeta debe tener al menos 2 caracteres");
 
             if (!UltimosCuatroDigitosEsValido)
                 errores.Add("Los últimos 4 dígitos deben ser exactamente 4 números");
@@ -406,7 +403,5 @@ namespace FinanKey.Presentacion.ViewModels
         }
 
         #endregion HELPERS
-
-
     }
 }

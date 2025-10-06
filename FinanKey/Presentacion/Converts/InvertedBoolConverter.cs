@@ -1,7 +1,6 @@
-﻿
-using System.Globalization;
+﻿using System.Globalization;
 
-namespace FinanKey.Presentacion.View.Conver;
+namespace FinanKey.Presentacion.Converts;
 
 public class InvertedBoolConverter : IValueConverter
 {

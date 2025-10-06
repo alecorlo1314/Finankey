@@ -6,7 +6,8 @@
     xmlns:behaviors="clr-namespace:FinanKey.Presentacion.View.Behaviors"
     xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
-    xmlns:local="clr-namespace:FinanKey.Presentacion.View.Conver"
+    xmlns:viewmodels="clr-namespace:FinanKey.Presentacion.ViewModels"
+    x:DataType="viewmodels:ViewModelTarjeta"
     xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     Title="Agregar Nueva Tarjeta"
@@ -17,12 +18,6 @@
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource FondoPrincipal}" StatusBarStyle="DarkContent" />
     </ContentPage.Behaviors>
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <!--  Converter para mostrar el primer error  -->
-            <local:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <Grid>
         <!--  LOADING INDICATOR DE GUARDADO  -->
         <ActivityIndicator
@@ -212,22 +207,13 @@
                                 <Entry.Behaviors>
                                     <toolkit:EventToCommandBehavior Command="{Binding ValidarNombreTarjetaCommand}" EventName="TextChanged" />
                                 </Entry.Behaviors>
-
-                                <Entry.Triggers>
-                                    <DataTrigger
-                                        Binding="{Binding NombreTarjetaValida.IsValid}"
-                                        TargetType="Entry"
-                                        Value="False">
-                                        <Setter Property="BackgroundColor" Value="{StaticResource ColorAcentoRojo}" />
-                                    </DataTrigger>
-                                </Entry.Triggers>
                             </Entry>
                         </Border>
                         <!--  Mensaje de error para nombre Tarjeta  -->
                         <Label
-                            IsVisible="{Binding NombreTarjetaValida.IsValid, Converter={StaticResource InvertedBoolConverter}}"
-                            Style="{StaticResource ValidationErrorLabelStyle}"
-                            Text="{Binding NombreTarjetaValida.Errors, Converter={StaticResource FirstValidationErrorConverter}}" />
+                            IsVisible="{Binding NombreTarjeta.IsValid, Converter={StaticResource InvertedBoolConverter}}"
+                            Style="{StaticResource EstiloEtiquetaErrorValidacion}"
+                            Text="{Binding NombreTarjeta.Errors, Converter={StaticResource FirstValidationErrorConverter}}" />
                     </VerticalStackLayout>
                     <!--  ULTIMOS CUATRO DIGITOS  -->
                     <VerticalStackLayout Grid.Row="1" Spacing="8">

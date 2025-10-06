@@ -1,6 +1,6 @@
-﻿
-namespace FinanKey.Presentacion.Intefaces;
+﻿namespace FinanKey.Aplicacion.Validation;
 
+// 1. Interfaz base para reglas de validación
 public interface IValidationRule<T>
 {
     string ValidationMessage { get; set; }

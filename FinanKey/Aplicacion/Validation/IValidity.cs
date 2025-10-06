@@ -1,5 +1,4 @@
-﻿
-namespace FinanKey.Presentacion.View.Intefaces;
+﻿namespace FinanKey.Aplicacion.Validation;
 
 public interface IValidity
 {
