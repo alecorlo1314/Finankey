@@ -18,6 +18,7 @@ namespace FinanKey.Presentacion.ViewModels
         #region DECLARACION DE PROPIEDADES DEVALIDACIONES
         public ValidatableObject<string> NombreTarjeta { get; private set; }
         public ValidatableObject<string> UltimosCuatroDigitos { get; private set; }
+        public ValidatableObject<string> Banco { get; private set; }
         #endregion
 
         #region METODOS DEL PROYECTO PARA VALIDACIONES
@@ -25,6 +26,7 @@ namespace FinanKey.Presentacion.ViewModels
         {
             NombreTarjeta = new ValidatableObject<string>();
             UltimosCuatroDigitos = new ValidatableObject<string>();
+            Banco = new ValidatableObject<string>();
         }
         private void AgregaValidaciones()
         {
@@ -35,7 +37,7 @@ namespace FinanKey.Presentacion.ViewModels
             NombreTarjeta.Validations.Add(new MinLengthRule<string>
             {
                 MinLength = 3,
-                ValidationMessage = "debe tener al menos 3 caracteres."
+                ValidationMessage = "Debe tener al menos 3 caracteres."
             });
             UltimosCuatroDigitos.Validations.Add(new IsNotNullOrEmptyRule<string>
             {
@@ -46,13 +48,23 @@ namespace FinanKey.Presentacion.ViewModels
                 MinLength = 4,
                 ValidationMessage = "Los cuatro ultimos digitos son requeridos"
             });
+            Banco.Validations.Add(new IsNotNullOrEmptyRule<string>
+            {
+                ValidationMessage = "Debes ingresar el banco o entidad financiera"
+            });
+            Banco.Validations.Add(new MinLengthRule<string>
+            {
+                MinLength = 3,
+                ValidationMessage = "Debe tener al menos 3 caracteres."
+            });
         }
         private bool ValidarTodos()
         {
             var validationResults = new[]
             {
                 NombreTarjeta.Validate(),
-                UltimosCuatroDigitos.Validate()
+                UltimosCuatroDigitos.Validate(),
+                Banco.Validate()
             };
 
             return validationResults.All(result => result);
@@ -65,6 +77,9 @@ namespace FinanKey.Presentacion.ViewModels
 
         [RelayCommand]
         private void ValidarUltimosCuatroDigitos() => UltimosCuatroDigitos.Validate();
+
+        [RelayCommand]
+        private void ValidarBanco() => Banco.Validate();
         #endregion
 
         #region PROPIEDADES DE ESTADO
@@ -89,8 +104,8 @@ namespace FinanKey.Presentacion.ViewModels
         //[NotifyCanExecuteChangedFor(nameof(AgregarTarjetaCommand))]
         //private string _ultimosCuatroDigitos = string.Empty;
 
-        [ObservableProperty]
-        private string _banco = string.Empty;
+        //[ObservableProperty]
+        //private string _banco = string.Empty;
 
         [ObservableProperty]
         private string _vencimiento = string.Empty;
@@ -282,7 +297,7 @@ namespace FinanKey.Presentacion.ViewModels
                         Nombre = NombreTarjeta.Value,
                         Ultimos4Digitos = UltimosCuatroDigitos.Value,
                         Tipo = EsVisibleMonto ? "Debito" : "Credito",
-                        Banco = string.IsNullOrWhiteSpace(Banco) ? null : Banco.Trim(),
+                        Banco = Banco.Value,
                         Vencimiento = string.IsNullOrWhiteSpace(Vencimiento) ? null : Vencimiento.Trim(),
                         LimiteCredito = EsVisibleLimiteCredito && double.TryParse(LimiteCredito, out var limite) ? limite : null,
                         CreditoUsado = 0, // Nuevo, no tiene crédito usado
@@ -337,7 +352,7 @@ namespace FinanKey.Presentacion.ViewModels
 
             NombreTarjeta.Value = string.Empty;
             UltimosCuatroDigitos.Value = string.Empty;
-            Banco = string.Empty;
+            Banco.Value = string.Empty;
             Vencimiento = string.Empty;
             LimiteCredito = string.Empty;
             MontoInicial = string.Empty;

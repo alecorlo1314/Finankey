@@ -6,12 +6,12 @@
     xmlns:behaviors="clr-namespace:FinanKey.Presentacion.View.Behaviors"
     xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
-    xmlns:viewmodels="clr-namespace:FinanKey.Presentacion.ViewModels"
-    x:DataType="viewmodels:ViewModelTarjeta"
     xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodels="clr-namespace:FinanKey.Presentacion.ViewModels"
     Title="Agregar Nueva Tarjeta"
     Padding="{StaticResource PaddingPaginas}"
+    x:DataType="viewmodels:ViewModelTarjeta"
     BackgroundColor="{StaticResource ColorFondoPrincipal}"
     Shell.NavBarIsVisible="True">
     <!--  CAMBIO COLOR DE BARRA  -->
@@ -234,14 +234,14 @@
                                 Placeholder="Ej: 1234"
                                 Style="{StaticResource entradaFormulario}"
                                 Text="{Binding UltimosCuatroDigitos.Value, Mode=TwoWay}"
-                                Unfocused="entradaUltimosDigitos_Unfocused" >
+                                Unfocused="entradaUltimosDigitos_Unfocused">
 
                                 <Entry.Behaviors>
                                     <toolkit:EventToCommandBehavior Command="{Binding ValidarUltimosCuatroDigitosCommand}" EventName="TextChanged" />
                                 </Entry.Behaviors>
                             </Entry>
                         </Border>
-                        <!--  MENSAJE DE ERROR PARA LA TARJETA  -->
+                        <!--  MENSAJE DE ERROR PARA LOS ULTIMOS CUATRO DIGITOS DE LA TARJETA  -->
                         <Label
                             IsVisible="{Binding UltimosCuatroDigitos.IsValid, Converter={StaticResource InvertedBoolConverter}}"
                             Style="{StaticResource EstiloEtiquetaErrorValidacion}"
@@ -305,9 +305,19 @@
                                 MaxLength="30"
                                 Placeholder="Ej: Banco Nacional"
                                 Style="{StaticResource entradaFormulario}"
-                                Text="{Binding Banco, Mode=TwoWay}"
-                                Unfocused="entradaBancoCuenta_Unfocused" />
+                                Text="{Binding Banco.Value, Mode=TwoWay}"
+                                Unfocused="entradaBancoCuenta_Unfocused">
+
+                                <Entry.Behaviors>
+                                    <toolkit:EventToCommandBehavior Command="{Binding ValidarBancoCommand}" EventName="TextChanged" />
+                                </Entry.Behaviors>
+                            </Entry>
                         </Border>
+                        <!--  MENSAJE DE ERROR PARA EL NOMBRE DEL BANCO O ENTIDAD FINANCIERA  -->
+                        <Label
+                            IsVisible="{Binding Banco.IsValid, Converter={StaticResource InvertedBoolConverter}}"
+                            Style="{StaticResource EstiloEtiquetaErrorValidacion}"
+                            Text="{Binding Banco.Errors, Converter={StaticResource FirstValidationErrorConverter}}" />
                     </VerticalStackLayout>
                     <!--  VECIMIENTO Y (LIMITE DE CREDO O MONTO)  -->
                     <Grid Grid.Row="4" ColumnDefinitions="*,*">
