@@ -3,6 +3,7 @@
     x:Class="FinanKey.App"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:FinanKey.Presentacion.Converts"
     xmlns:local="clr-namespace:FinanKey"
     xmlns:simpleCore="clr-namespace:SimpleToolkit.Core.MarkupExtensions;assembly=SimpleToolkit.Core">
 
@@ -117,6 +118,18 @@
                 <Setter Property="WidthRequest" Value="182" />
                 <Setter Property="HeightRequest" Value="44" />
             </Style>
+
+            <!--  REFERENCIAS DE RECURSOS Y CLASES  -->
+            <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
+            <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+
+            <!--  ESTILOS DE VALIDACION  -->
+            <Style x:Key="EstiloEtiquetaErrorValidacion" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource ColorMagenta}" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontFamily" Value="PoppinsRegular" />
+            </Style>
+
 
 
             <Color x:Key="ColorTexto">#0F1724</Color>

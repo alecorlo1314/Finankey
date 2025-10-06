@@ -8,15 +8,16 @@
     xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodels="clr-namespace:FinanKey.Presentacion.ViewModels"
     Title="Agregar Nueva Tarjeta"
     Padding="{StaticResource PaddingPaginas}"
+    x:DataType="viewmodels:ViewModelTarjeta"
     BackgroundColor="{StaticResource ColorFondoPrincipal}"
     Shell.NavBarIsVisible="True">
     <!--  CAMBIO COLOR DE BARRA  -->
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource FondoPrincipal}" StatusBarStyle="DarkContent" />
     </ContentPage.Behaviors>
-
     <Grid>
         <!--  LOADING INDICATOR DE GUARDADO  -->
         <ActivityIndicator
@@ -183,7 +184,7 @@
                 <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*" RowSpacing="16">
 
                     <!--  NOMRE DE LA TARJETA  -->
-                    <VerticalStackLayout Grid.Row="0" Spacing="8">
+                    <VerticalStackLayout Grid.Row="0" Spacing="4">
                         <Label
                             Style="{StaticResource TextoSubtítulo}"
                             Text="Nombre de la Tarjeta"
@@ -200,12 +201,22 @@
                                 MaxLength="30"
                                 Placeholder="Ej: Mi Tarjeta Personal"
                                 Style="{StaticResource entradaFormulario}"
-                                Text="{Binding NombreTarjeta, Mode=TwoWay}"
-                                Unfocused="entradaNombreTarjeta_Unfocused" />
+                                Text="{Binding NombreTarjeta.Value, Mode=TwoWay}"
+                                Unfocused="entradaNombreTarjeta_Unfocused">
+
+                                <Entry.Behaviors>
+                                    <toolkit:EventToCommandBehavior Command="{Binding ValidarNombreTarjetaCommand}" EventName="TextChanged" />
+                                </Entry.Behaviors>
+                            </Entry>
                         </Border>
+                        <!--  MENSAJE DE ERROR PARA LA TARJETA  -->
+                        <Label
+                            IsVisible="{Binding NombreTarjeta.IsValid, Converter={StaticResource InvertedBoolConverter}}"
+                            Style="{StaticResource EstiloEtiquetaErrorValidacion}"
+                            Text="{Binding NombreTarjeta.Errors, Converter={StaticResource FirstValidationErrorConverter}}" />
                     </VerticalStackLayout>
                     <!--  ULTIMOS CUATRO DIGITOS  -->
-                    <VerticalStackLayout Grid.Row="1" Spacing="8">
+                    <VerticalStackLayout Grid.Row="1" Spacing="4">
                         <Label
                             Style="{StaticResource TextoSubtítulo}"
                             Text="Ultimos 4 digitos"
@@ -222,9 +233,19 @@
                                 MaxLength="4"
                                 Placeholder="Ej: 1234"
                                 Style="{StaticResource entradaFormulario}"
-                                Text="{Binding UltimosCuatroDigitos, Mode=TwoWay}"
-                                Unfocused="entradaUltimosDigitos_Unfocused" />
+                                Text="{Binding UltimosCuatroDigitos.Value, Mode=TwoWay}"
+                                Unfocused="entradaUltimosDigitos_Unfocused">
+
+                                <Entry.Behaviors>
+                                    <toolkit:EventToCommandBehavior Command="{Binding ValidarUltimosCuatroDigitosCommand}" EventName="TextChanged" />
+                                </Entry.Behaviors>
+                            </Entry>
                         </Border>
+                        <!--  MENSAJE DE ERROR PARA LOS ULTIMOS CUATRO DIGITOS DE LA TARJETA  -->
+                        <Label
+                            IsVisible="{Binding UltimosCuatroDigitos.IsValid, Converter={StaticResource InvertedBoolConverter}}"
+                            Style="{StaticResource EstiloEtiquetaErrorValidacion}"
+                            Text="{Binding UltimosCuatroDigitos.Errors, Converter={StaticResource FirstValidationErrorConverter}}" />
                     </VerticalStackLayout>
                     <!--  SELECCION DE TIPO DE TARJETA  -->
                     <Grid
@@ -284,9 +305,19 @@
                                 MaxLength="30"
                                 Placeholder="Ej: Banco Nacional"
                                 Style="{StaticResource entradaFormulario}"
-                                Text="{Binding Banco, Mode=TwoWay}"
-                                Unfocused="entradaBancoCuenta_Unfocused" />
+                                Text="{Binding Banco.Value, Mode=TwoWay}"
+                                Unfocused="entradaBancoCuenta_Unfocused">
+
+                                <Entry.Behaviors>
+                                    <toolkit:EventToCommandBehavior Command="{Binding ValidarBancoCommand}" EventName="TextChanged" />
+                                </Entry.Behaviors>
+                            </Entry>
                         </Border>
+                        <!--  MENSAJE DE ERROR PARA EL NOMBRE DEL BANCO O ENTIDAD FINANCIERA  -->
+                        <Label
+                            IsVisible="{Binding Banco.IsValid, Converter={StaticResource InvertedBoolConverter}}"
+                            Style="{StaticResource EstiloEtiquetaErrorValidacion}"
+                            Text="{Binding Banco.Errors, Converter={StaticResource FirstValidationErrorConverter}}" />
                     </VerticalStackLayout>
                     <!--  VECIMIENTO Y (LIMITE DE CREDO O MONTO)  -->
                     <Grid Grid.Row="4" ColumnDefinitions="*,*">
@@ -313,11 +344,12 @@
                                         Placeholder="MM/AA"
                                         PlaceholderColor="{StaticResource ColorTextosDescriptivos}"
                                         ReturnType="Next"
-                                        Text="{Binding Vencimiento, Mode=TwoWay}"
+                                        Text="{Binding FechaVencimiento.Value, Mode=TwoWay}"
                                         TextColor="{StaticResource ColorTexoEntrada}"
                                         WidthRequest="120">
                                         <Entry.Behaviors>
                                             <behaviors:DateMaskBehavior />
+                                            <toolkit:EventToCommandBehavior Command="{Binding ValidarFechaVencimientoCommand}" EventName="TextChanged" />
                                         </Entry.Behaviors>
                                     </Entry>
                                     <Image
@@ -329,6 +361,11 @@
                                         WidthRequest="24" />
                                 </HorizontalStackLayout>
                             </Border>
+                            <!--  MENSAJE DE ERROR PARA LA FECHA DE VENCIMIENTO  -->
+                            <Label
+                                IsVisible="{Binding FechaVencimiento.IsValid, Converter={StaticResource InvertedBoolConverter}}"
+                                Style="{StaticResource EstiloEtiquetaErrorValidacion}"
+                                Text="{Binding FechaVencimiento.Errors, Converter={StaticResource FirstValidationErrorConverter}}" />
                         </VerticalStackLayout>
                         <!--  LIMITE DE CREDITO O MONTO POR DEFAULT SE VERA LIMITE DE CREDITO  -->
                         <VerticalStackLayout
@@ -361,7 +398,7 @@
                                         ValueChangeMode="OnKeyFocus"
                                         VerticalOptions="Center"
                                         WidthRequest="150"
-                                        Value="{Binding LimiteCredito, Mode=TwoWay}" />
+                                        Value="{Binding LimiteCredito}" />
                                 </VerticalStackLayout>
                             </Border>
                         </VerticalStackLayout>
@@ -511,9 +548,18 @@
                                 MaxLength="100"
                                 Placeholder="Escribe una descripcion..."
                                 Style="{StaticResource entradaFormulario}"
-                                Text="{Binding Descripcion, Mode=TwoWay}"
-                                Unfocused="entradaDescripcion_Unfocused" />
+                                Text="{Binding Descripcion.Value, Mode=TwoWay}"
+                                Unfocused="entradaDescripcion_Unfocused">
+                                <Entry.Behaviors>
+                                    <toolkit:EventToCommandBehavior Command="{Binding ValidarDescripcionCommand}" EventName="TextChanged" />
+                                </Entry.Behaviors>
+                            </Entry>
                         </Border>
+                        <!--  MENSAJE DE ERROR PARA LA FECHA DE VENCIMIENTO  -->
+                        <Label
+                            IsVisible="{Binding Descripcion.IsValid, Converter={StaticResource InvertedBoolConverter}}"
+                            Style="{StaticResource EstiloEtiquetaErrorValidacion}"
+                            Text="{Binding Descripcion.Errors, Converter={StaticResource FirstValidationErrorConverter}}" />
                     </VerticalStackLayout>
                     <!--  ELECCION DEL COLOR DE LA TARJETA  -->
                     <Grid

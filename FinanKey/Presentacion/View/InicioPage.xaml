@@ -8,11 +8,6 @@
     BackgroundImageSource="fondo_superior.svg"
     Shell.NavBarIsVisible="False">
 
-    <!--  Cambio de color de la barra  -->
-    <ContentPage.Behaviors>
-        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource ColorAzulPricipal}" StatusBarStyle="Default" />
-    </ContentPage.Behaviors>
-
     <ContentPage.Resources>
         <!--  ESTILO PARA SELECCIÓN EN GRIDS  -->
         <Style TargetType="Grid">
