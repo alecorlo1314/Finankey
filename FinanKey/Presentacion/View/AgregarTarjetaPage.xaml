@@ -363,9 +363,9 @@
                             </Border>
                             <!--  MENSAJE DE ERROR PARA LA FECHA DE VENCIMIENTO  -->
                             <Label
-                            IsVisible="{Binding FechaVencimiento.IsValid, Converter={StaticResource InvertedBoolConverter}}"
-                            Style="{StaticResource EstiloEtiquetaErrorValidacion}"
-                            Text="{Binding FechaVencimiento.Errors, Converter={StaticResource FirstValidationErrorConverter}}" />
+                                IsVisible="{Binding FechaVencimiento.IsValid, Converter={StaticResource InvertedBoolConverter}}"
+                                Style="{StaticResource EstiloEtiquetaErrorValidacion}"
+                                Text="{Binding FechaVencimiento.Errors, Converter={StaticResource FirstValidationErrorConverter}}" />
                         </VerticalStackLayout>
                         <!--  LIMITE DE CREDITO O MONTO POR DEFAULT SE VERA LIMITE DE CREDITO  -->
                         <VerticalStackLayout
@@ -398,7 +398,7 @@
                                         ValueChangeMode="OnKeyFocus"
                                         VerticalOptions="Center"
                                         WidthRequest="150"
-                                        Value="{Binding LimiteCredito, Mode=TwoWay}" />
+                                        Value="{Binding LimiteCredito}" />
                                 </VerticalStackLayout>
                             </Border>
                         </VerticalStackLayout>
@@ -548,9 +548,18 @@
                                 MaxLength="100"
                                 Placeholder="Escribe una descripcion..."
                                 Style="{StaticResource entradaFormulario}"
-                                Text="{Binding Descripcion, Mode=TwoWay}"
-                                Unfocused="entradaDescripcion_Unfocused" />
+                                Text="{Binding Descripcion.Value, Mode=TwoWay}"
+                                Unfocused="entradaDescripcion_Unfocused">
+                                <Entry.Behaviors>
+                                    <toolkit:EventToCommandBehavior Command="{Binding ValidarDescripcionCommand}" EventName="TextChanged" />
+                                </Entry.Behaviors>
+                            </Entry>
                         </Border>
+                        <!--  MENSAJE DE ERROR PARA LA FECHA DE VENCIMIENTO  -->
+                        <Label
+                            IsVisible="{Binding Descripcion.IsValid, Converter={StaticResource InvertedBoolConverter}}"
+                            Style="{StaticResource EstiloEtiquetaErrorValidacion}"
+                            Text="{Binding Descripcion.Errors, Converter={StaticResource FirstValidationErrorConverter}}" />
                     </VerticalStackLayout>
                     <!--  ELECCION DEL COLOR DE LA TARJETA  -->
                     <Grid

@@ -20,6 +20,7 @@ namespace FinanKey.Presentacion.ViewModels
         public ValidatableObject<string> UltimosCuatroDigitos { get; private set; }
         public ValidatableObject<string> Banco { get; private set; }
         public ValidatableObject<string> FechaVencimiento { get; private set; }
+        public ValidatableObject<string> Descripcion { get; private set; }
         #endregion
 
         #region METODOS DEL PROYECTO PARA VALIDACIONES
@@ -29,6 +30,7 @@ namespace FinanKey.Presentacion.ViewModels
             UltimosCuatroDigitos = new ValidatableObject<string>();
             Banco = new ValidatableObject<string>();
             FechaVencimiento = new ValidatableObject<string>();
+            Descripcion = new ValidatableObject<string>();
         }
         private void AgregaValidaciones()
         {
@@ -72,6 +74,15 @@ namespace FinanKey.Presentacion.ViewModels
             {
                 ValidationMessage = "El formato de vencimiento debe ser MM/YY"
             });
+            Descripcion.Validations.Add(new IsNotNullOrEmptyRule<string>
+            {
+                ValidationMessage = "La descripcion es requerida"
+            });
+            Descripcion.Validations.Add(new MinLengthRule<string>
+            {
+                MinLength = 3,
+                ValidationMessage = "Debe tener al menos 3 caracteres."
+            });
         }
         private bool ValidarTodos()
         {
@@ -80,7 +91,8 @@ namespace FinanKey.Presentacion.ViewModels
                 NombreTarjeta.Validate(),
                 UltimosCuatroDigitos.Validate(),
                 Banco.Validate(),
-                FechaVencimiento.Validate()
+                FechaVencimiento.Validate(),
+                Descripcion.Validate()
             };
 
             return validationResults.All(result => result);
@@ -99,6 +111,9 @@ namespace FinanKey.Presentacion.ViewModels
 
         [RelayCommand]
         private void ValidarFechaVencimiento() => FechaVencimiento.Validate();
+
+        [RelayCommand]
+        private void ValidarDescripcion() => Descripcion.Validate();
         #endregion
 
         #region PROPIEDADES DE ESTADO
@@ -124,9 +139,6 @@ namespace FinanKey.Presentacion.ViewModels
 
         [ObservableProperty]
         private string _montoInicial = string.Empty; //Solo para tarjetas de débito
-
-        [ObservableProperty]
-        private string _descripcion = string.Empty;
 
         // Estados de UI
         [ObservableProperty]
@@ -260,7 +272,8 @@ namespace FinanKey.Presentacion.ViewModels
             EsVisibleMonto = true;
 
             // Limpiar campo no usado
-            LimiteCredito = string.Empty;
+            LimiteCredito = "0";
+            MontoInicial = "0";
 
             AgregarTarjetaCommand.NotifyCanExecuteChanged();
         }
@@ -272,13 +285,8 @@ namespace FinanKey.Presentacion.ViewModels
             EsVisibleMonto = false;
 
             // Limpiar campo no usado
-            MontoInicial = string.Empty;
-
-            OnPropertyChanged(nameof(TipoTarjetaSeleccionado));
-            OnPropertyChanged(nameof(EsTarjetaCredito));
-            OnPropertyChanged(nameof(EsTarjetaDebito));
-
-            AgregarTarjetaCommand.NotifyCanExecuteChanged();
+            MontoInicial = "0";
+            LimiteCredito = "0";
         }
 
         [RelayCommand]
@@ -307,14 +315,14 @@ namespace FinanKey.Presentacion.ViewModels
                         ColorHex1 = LinearColor1,
                         ColorHex2 = LinearColor2,
                         Logo = LogoTarjeta,
-                        Descripcion = string.IsNullOrWhiteSpace(Descripcion) ? null : Descripcion.Trim()
+                        Descripcion = Descripcion.Value
                     };
 
                     var resultado = await _servicioTarjeta.InsertarAsync(nuevaTarjeta);
 
                     if (resultado > 0)
                     {
-                        MostrarExito($"Tarjeta '{NombreTarjeta}' agregada correctamente");
+                        MostrarExito($"Tarjeta '{NombreTarjeta.Value}' agregada correctamente");
                         RestablecerFormulario();
                     }
                     else
@@ -344,7 +352,7 @@ namespace FinanKey.Presentacion.ViewModels
         public void CerrarPopInformacion()
         {
             PopupInformacionAbierto = false; //CerrarPopInformacion
-            _mensajeInformacion = string.Empty;
+            MensajeInformacion = string.Empty;
         }
 
         [RelayCommand]
@@ -355,9 +363,9 @@ namespace FinanKey.Presentacion.ViewModels
             UltimosCuatroDigitos.Value = string.Empty;
             Banco.Value = string.Empty;
             FechaVencimiento.Value = string.Empty;
-            LimiteCredito = string.Empty;
-            MontoInicial = string.Empty;
-            Descripcion = string.Empty;
+            MontoInicial = "0";
+            LimiteCredito = "0";
+            Descripcion.Value = string.Empty;
 
             // Valores por defecto
             LinearColor1 = "#3E298F";
@@ -371,37 +379,6 @@ namespace FinanKey.Presentacion.ViewModels
             MensajeError = string.Empty;
         }
         #endregion COMMANDS
-
-        #region VALIDACIÓN
-
-        private bool ValidarFormulario()
-        {
-            var errores = new List<string>();
-
-            if (errores.Any())
-            {
-                MensajeError = string.Join("\n", errores);
-                HasError = true;
-                return false;
-            }
-
-            return true;
-        }
-
-        private static bool EsFormatoVencimientoValido(string vencimiento)
-        {
-            if (string.IsNullOrEmpty(vencimiento) || vencimiento.Length != 5 || !vencimiento.Contains('/'))
-                return false;
-
-            var partes = vencimiento.Split('/');
-            if (partes.Length != 2)
-                return false;
-
-            return int.TryParse(partes[0], out int mes) && mes >= 1 && mes <= 12 &&
-                   int.TryParse(partes[1], out int año) && año >= 0 && año <= 99;
-        }
-
-        #endregion VALIDACIÓN
 
         #region HELPERS
 
