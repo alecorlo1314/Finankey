@@ -184,7 +184,7 @@
                 <Grid RowDefinitions="*,*,*,*,*,*,*,*,*,*" RowSpacing="16">
 
                     <!--  NOMRE DE LA TARJETA  -->
-                    <VerticalStackLayout Grid.Row="0" Spacing="8">
+                    <VerticalStackLayout Grid.Row="0" Spacing="4">
                         <Label
                             Style="{StaticResource TextoSubtítulo}"
                             Text="Nombre de la Tarjeta"
@@ -209,14 +209,14 @@
                                 </Entry.Behaviors>
                             </Entry>
                         </Border>
-                        <!--  Mensaje de error para nombre Tarjeta  -->
+                        <!--  MENSAJE DE ERROR PARA LA TARJETA  -->
                         <Label
                             IsVisible="{Binding NombreTarjeta.IsValid, Converter={StaticResource InvertedBoolConverter}}"
                             Style="{StaticResource EstiloEtiquetaErrorValidacion}"
                             Text="{Binding NombreTarjeta.Errors, Converter={StaticResource FirstValidationErrorConverter}}" />
                     </VerticalStackLayout>
                     <!--  ULTIMOS CUATRO DIGITOS  -->
-                    <VerticalStackLayout Grid.Row="1" Spacing="8">
+                    <VerticalStackLayout Grid.Row="1" Spacing="4">
                         <Label
                             Style="{StaticResource TextoSubtítulo}"
                             Text="Ultimos 4 digitos"
@@ -233,9 +233,19 @@
                                 MaxLength="4"
                                 Placeholder="Ej: 1234"
                                 Style="{StaticResource entradaFormulario}"
-                                Text="{Binding UltimosCuatroDigitos, Mode=TwoWay}"
-                                Unfocused="entradaUltimosDigitos_Unfocused" />
+                                Text="{Binding UltimosCuatroDigitos.Value, Mode=TwoWay}"
+                                Unfocused="entradaUltimosDigitos_Unfocused" >
+
+                                <Entry.Behaviors>
+                                    <toolkit:EventToCommandBehavior Command="{Binding ValidarUltimosCuatroDigitosCommand}" EventName="TextChanged" />
+                                </Entry.Behaviors>
+                            </Entry>
                         </Border>
+                        <!--  MENSAJE DE ERROR PARA LA TARJETA  -->
+                        <Label
+                            IsVisible="{Binding UltimosCuatroDigitos.IsValid, Converter={StaticResource InvertedBoolConverter}}"
+                            Style="{StaticResource EstiloEtiquetaErrorValidacion}"
+                            Text="{Binding UltimosCuatroDigitos.Errors, Converter={StaticResource FirstValidationErrorConverter}}" />
                     </VerticalStackLayout>
                     <!--  SELECCION DE TIPO DE TARJETA  -->
                     <Grid

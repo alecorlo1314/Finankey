@@ -17,12 +17,14 @@ namespace FinanKey.Presentacion.ViewModels
 
         #region DECLARACION DE PROPIEDADES DEVALIDACIONES
         public ValidatableObject<string> NombreTarjeta { get; private set; }
+        public ValidatableObject<string> UltimosCuatroDigitos { get; private set; }
         #endregion
 
         #region METODOS DEL PROYECTO PARA VALIDACIONES
         private void InitializeValidatableObjects()
         {
             NombreTarjeta = new ValidatableObject<string>();
+            UltimosCuatroDigitos = new ValidatableObject<string>();
         }
         private void AgregaValidaciones()
         {
@@ -35,12 +37,22 @@ namespace FinanKey.Presentacion.ViewModels
                 MinLength = 3,
                 ValidationMessage = "debe tener al menos 3 caracteres."
             });
+            UltimosCuatroDigitos.Validations.Add(new IsNotNullOrEmptyRule<string>
+            {
+                ValidationMessage = "Los ultimos cuatro digitos son requeridos"
+            });
+            UltimosCuatroDigitos.Validations.Add(new MinLengthRule<string>
+            {
+                MinLength = 4,
+                ValidationMessage = "Los cuatro ultimos digitos son requeridos"
+            });
         }
         private bool ValidarTodos()
         {
             var validationResults = new[]
             {
                 NombreTarjeta.Validate(),
+                UltimosCuatroDigitos.Validate()
             };
 
             return validationResults.All(result => result);
@@ -50,6 +62,9 @@ namespace FinanKey.Presentacion.ViewModels
         #region COMANDOS VALIDACION DE ENTRADAS
         [RelayCommand]
         private void ValidarNombreTarjeta() => NombreTarjeta.Validate();
+
+        [RelayCommand]
+        private void ValidarUltimosCuatroDigitos() => UltimosCuatroDigitos.Validate();
         #endregion
 
         #region PROPIEDADES DE ESTADO
@@ -70,9 +85,9 @@ namespace FinanKey.Presentacion.ViewModels
 
         #region PROPIEDADES DE FORMULARIO
 
-        [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(AgregarTarjetaCommand))]
-        private string _ultimosCuatroDigitos = string.Empty;
+        //[ObservableProperty]
+        //[NotifyCanExecuteChangedFor(nameof(AgregarTarjetaCommand))]
+        //private string _ultimosCuatroDigitos = string.Empty;
 
         [ObservableProperty]
         private string _banco = string.Empty;
@@ -138,7 +153,7 @@ namespace FinanKey.Presentacion.ViewModels
         #region PROPIEDADES DE VALIDACIÓN
 
         //public bool NombreTarjetaEsValido => !string.IsNullOrWhiteSpace(NombreTarjeta) && NombreTarjeta.Length >= 2 && NombreTarjeta.Length <= 100;
-        public bool UltimosCuatroDigitosEsValido => UltimosCuatroDigitos?.Length == 4;
+        //public bool UltimosCuatroDigitosEsValido => UltimosCuatroDigitos?.Length == 4;
         public bool VencimientoEsValido => string.IsNullOrEmpty(Vencimiento) || EsFormatoVencimientoValido(Vencimiento);
 
         #endregion PROPIEDADES DE VALIDACIÓN
@@ -260,39 +275,36 @@ namespace FinanKey.Presentacion.ViewModels
                 IsGuardando = true;
                 HasError = false;
 
-                // Validación final
-                if (!ValidarFormulario() && !ValidarTodos())
+                if (ValidarTodos())
                 {
-                    return;
-                }
+                    var nuevaTarjeta = new Tarjeta
+                    {
+                        Nombre = NombreTarjeta.Value,
+                        Ultimos4Digitos = UltimosCuatroDigitos.Value,
+                        Tipo = EsVisibleMonto ? "Debito" : "Credito",
+                        Banco = string.IsNullOrWhiteSpace(Banco) ? null : Banco.Trim(),
+                        Vencimiento = string.IsNullOrWhiteSpace(Vencimiento) ? null : Vencimiento.Trim(),
+                        LimiteCredito = EsVisibleLimiteCredito && double.TryParse(LimiteCredito, out var limite) ? limite : null,
+                        CreditoUsado = 0, // Nuevo, no tiene crédito usado
+                        MontoInicial = EsVisibleMonto && double.TryParse(MontoInicial, out var monto) ? monto : null,
+                        Categoria = Categoria,
+                        ColorHex1 = LinearColor1,
+                        ColorHex2 = LinearColor2,
+                        Logo = LogoTarjeta,
+                        Descripcion = string.IsNullOrWhiteSpace(Descripcion) ? null : Descripcion.Trim()
+                    };
 
-                var nuevaTarjeta = new Tarjeta
-                {
-                    Nombre = NombreTarjeta.Value,
-                    Ultimos4Digitos = UltimosCuatroDigitos.Trim(),
-                    Tipo = EsVisibleMonto ? "Debito" : "Credito",
-                    Banco = string.IsNullOrWhiteSpace(Banco) ? null : Banco.Trim(),
-                    Vencimiento = string.IsNullOrWhiteSpace(Vencimiento) ? null : Vencimiento.Trim(),
-                    LimiteCredito = EsVisibleLimiteCredito && double.TryParse(LimiteCredito, out var limite) ? limite : null,
-                    CreditoUsado = 0, // Nuevo, no tiene crédito usado
-                    MontoInicial = EsVisibleMonto && double.TryParse(MontoInicial, out var monto) ? monto : null,
-                    Categoria = Categoria,
-                    ColorHex1 = LinearColor1,
-                    ColorHex2 = LinearColor2,
-                    Logo = LogoTarjeta,
-                    Descripcion = string.IsNullOrWhiteSpace(Descripcion) ? null : Descripcion.Trim()
-                };
+                    var resultado = await _servicioTarjeta.InsertarAsync(nuevaTarjeta);
 
-                var resultado = await _servicioTarjeta.InsertarAsync(nuevaTarjeta);
-
-                if (resultado > 0)
-                {
-                    MostrarExito($"Tarjeta '{NombreTarjeta}' agregada correctamente");
-                    RestablecerFormulario();
-                }
-                else
-                {
-                    await MostrarError("Error", "No se pudo agregar la tarjeta");
+                    if (resultado > 0)
+                    {
+                        MostrarExito($"Tarjeta '{NombreTarjeta}' agregada correctamente");
+                        RestablecerFormulario();
+                    }
+                    else
+                    {
+                        await MostrarError("Error", "No se pudo agregar la tarjeta");
+                    }
                 }
             }
             catch (InvalidOperationException ex)
@@ -324,7 +336,7 @@ namespace FinanKey.Presentacion.ViewModels
         {
 
             NombreTarjeta.Value = string.Empty;
-            UltimosCuatroDigitos = string.Empty;
+            UltimosCuatroDigitos.Value = string.Empty;
             Banco = string.Empty;
             Vencimiento = string.Empty;
             LimiteCredito = string.Empty;
@@ -349,7 +361,6 @@ namespace FinanKey.Presentacion.ViewModels
         private bool PuedeAgregarTarjeta()
         {
             return 
-                   UltimosCuatroDigitosEsValido &&
                    VencimientoEsValido &&
                    !IsGuardando;
         }
@@ -357,9 +368,6 @@ namespace FinanKey.Presentacion.ViewModels
         private bool ValidarFormulario()
         {
             var errores = new List<string>();
-
-            if (!UltimosCuatroDigitosEsValido)
-                errores.Add("Los últimos 4 dígitos deben ser exactamente 4 números");
 
             if (!VencimientoEsValido)
                 errores.Add("El formato de vencimiento debe ser MM/YY");
