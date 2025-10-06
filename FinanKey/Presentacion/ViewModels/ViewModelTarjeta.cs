@@ -19,6 +19,7 @@ namespace FinanKey.Presentacion.ViewModels
         public ValidatableObject<string> NombreTarjeta { get; private set; }
         public ValidatableObject<string> UltimosCuatroDigitos { get; private set; }
         public ValidatableObject<string> Banco { get; private set; }
+        public ValidatableObject<string> FechaVencimiento { get; private set; }
         #endregion
 
         #region METODOS DEL PROYECTO PARA VALIDACIONES
@@ -27,6 +28,7 @@ namespace FinanKey.Presentacion.ViewModels
             NombreTarjeta = new ValidatableObject<string>();
             UltimosCuatroDigitos = new ValidatableObject<string>();
             Banco = new ValidatableObject<string>();
+            FechaVencimiento = new ValidatableObject<string>();
         }
         private void AgregaValidaciones()
         {
@@ -57,6 +59,19 @@ namespace FinanKey.Presentacion.ViewModels
                 MinLength = 3,
                 ValidationMessage = "Debe tener al menos 3 caracteres."
             });
+            FechaVencimiento.Validations.Add(new IsNotNullOrEmptyRule<string>
+            {
+                ValidationMessage = "La fecha de vencimiento es requerida"
+            });
+            FechaVencimiento.Validations.Add(new MinLengthRule<string>
+            {
+                MinLength = 5,
+                ValidationMessage = "Debe tener al menos 4 caracteres"
+            });
+            FechaVencimiento.Validations.Add(new ReglaFechaTarjeta<string>
+            {
+                ValidationMessage = "El formato de vencimiento debe ser MM/YY"
+            });
         }
         private bool ValidarTodos()
         {
@@ -64,7 +79,8 @@ namespace FinanKey.Presentacion.ViewModels
             {
                 NombreTarjeta.Validate(),
                 UltimosCuatroDigitos.Validate(),
-                Banco.Validate()
+                Banco.Validate(),
+                FechaVencimiento.Validate()
             };
 
             return validationResults.All(result => result);
@@ -80,6 +96,9 @@ namespace FinanKey.Presentacion.ViewModels
 
         [RelayCommand]
         private void ValidarBanco() => Banco.Validate();
+
+        [RelayCommand]
+        private void ValidarFechaVencimiento() => FechaVencimiento.Validate();
         #endregion
 
         #region PROPIEDADES DE ESTADO
@@ -99,16 +118,6 @@ namespace FinanKey.Presentacion.ViewModels
         #endregion PROPIEDADES DE ESTADO
 
         #region PROPIEDADES DE FORMULARIO
-
-        //[ObservableProperty]
-        //[NotifyCanExecuteChangedFor(nameof(AgregarTarjetaCommand))]
-        //private string _ultimosCuatroDigitos = string.Empty;
-
-        //[ObservableProperty]
-        //private string _banco = string.Empty;
-
-        [ObservableProperty]
-        private string _vencimiento = string.Empty;
 
         [ObservableProperty]
         private string _limiteCredito = string.Empty; //Solo para tarjetas de crédito
@@ -164,14 +173,6 @@ namespace FinanKey.Presentacion.ViewModels
         public ObservableCollection<OpcionTarjeta> ListaLogoTarjeta { get; private set; } = new();
 
         #endregion COLECCIONES
-
-        #region PROPIEDADES DE VALIDACIÓN
-
-        //public bool NombreTarjetaEsValido => !string.IsNullOrWhiteSpace(NombreTarjeta) && NombreTarjeta.Length >= 2 && NombreTarjeta.Length <= 100;
-        //public bool UltimosCuatroDigitosEsValido => UltimosCuatroDigitos?.Length == 4;
-        public bool VencimientoEsValido => string.IsNullOrEmpty(Vencimiento) || EsFormatoVencimientoValido(Vencimiento);
-
-        #endregion PROPIEDADES DE VALIDACIÓN
 
         #region CONSTRUCTOR
         public ViewModelTarjeta(ServicioTarjeta servicioTarjeta)
@@ -298,7 +299,7 @@ namespace FinanKey.Presentacion.ViewModels
                         Ultimos4Digitos = UltimosCuatroDigitos.Value,
                         Tipo = EsVisibleMonto ? "Debito" : "Credito",
                         Banco = Banco.Value,
-                        Vencimiento = string.IsNullOrWhiteSpace(Vencimiento) ? null : Vencimiento.Trim(),
+                        Vencimiento = FechaVencimiento.Value,
                         LimiteCredito = EsVisibleLimiteCredito && double.TryParse(LimiteCredito, out var limite) ? limite : null,
                         CreditoUsado = 0, // Nuevo, no tiene crédito usado
                         MontoInicial = EsVisibleMonto && double.TryParse(MontoInicial, out var monto) ? monto : null,
@@ -353,7 +354,7 @@ namespace FinanKey.Presentacion.ViewModels
             NombreTarjeta.Value = string.Empty;
             UltimosCuatroDigitos.Value = string.Empty;
             Banco.Value = string.Empty;
-            Vencimiento = string.Empty;
+            FechaVencimiento.Value = string.Empty;
             LimiteCredito = string.Empty;
             MontoInicial = string.Empty;
             Descripcion = string.Empty;
@@ -373,19 +374,9 @@ namespace FinanKey.Presentacion.ViewModels
 
         #region VALIDACIÓN
 
-        private bool PuedeAgregarTarjeta()
-        {
-            return 
-                   VencimientoEsValido &&
-                   !IsGuardando;
-        }
-
         private bool ValidarFormulario()
         {
             var errores = new List<string>();
-
-            if (!VencimientoEsValido)
-                errores.Add("El formato de vencimiento debe ser MM/YY");
 
             if (errores.Any())
             {

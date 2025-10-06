@@ -344,11 +344,12 @@
                                         Placeholder="MM/AA"
                                         PlaceholderColor="{StaticResource ColorTextosDescriptivos}"
                                         ReturnType="Next"
-                                        Text="{Binding Vencimiento, Mode=TwoWay}"
+                                        Text="{Binding FechaVencimiento.Value, Mode=TwoWay}"
                                         TextColor="{StaticResource ColorTexoEntrada}"
                                         WidthRequest="120">
                                         <Entry.Behaviors>
                                             <behaviors:DateMaskBehavior />
+                                            <toolkit:EventToCommandBehavior Command="{Binding ValidarFechaVencimientoCommand}" EventName="TextChanged" />
                                         </Entry.Behaviors>
                                     </Entry>
                                     <Image
@@ -360,6 +361,11 @@
                                         WidthRequest="24" />
                                 </HorizontalStackLayout>
                             </Border>
+                            <!--  MENSAJE DE ERROR PARA LA FECHA DE VENCIMIENTO  -->
+                            <Label
+                            IsVisible="{Binding FechaVencimiento.IsValid, Converter={StaticResource InvertedBoolConverter}}"
+                            Style="{StaticResource EstiloEtiquetaErrorValidacion}"
+                            Text="{Binding FechaVencimiento.Errors, Converter={StaticResource FirstValidationErrorConverter}}" />
                         </VerticalStackLayout>
                         <!--  LIMITE DE CREDITO O MONTO POR DEFAULT SE VERA LIMITE DE CREDITO  -->
                         <VerticalStackLayout
