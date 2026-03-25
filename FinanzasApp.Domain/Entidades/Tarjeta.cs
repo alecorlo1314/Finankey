@@ -13,7 +13,6 @@ public class Tarjeta
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
 
-    // ── Datos básicos ────────────────────────────────
     /// Nombre descriptivo de la tarjeta (ej: "Visa Banco Nacional")
     public string Nombre { get; set; } = string.Empty;
 
@@ -30,14 +29,12 @@ public class Tarjeta
     /// Banco emisor de la tarjeta
     public string Banco { get; set; } = string.Empty;
 
-    // ── Información financiera ───────────────────────
     /// Límite de crédito (solo aplica en tarjetas de crédito)
     public decimal? LimiteCredito { get; set; }
 
     /// En crédito: deuda acumulada. En débito: dinero disponible
     public decimal SaldoActual { get; set; }
 
-    // ── Metadatos ────────────────────────────────────
     /// Fecha en que se registró la tarjeta
     public DateTime FechaRegistro { get; set; } = DateTime.Now;
 
@@ -58,7 +55,7 @@ public class Tarjeta
         Tipo == TipoTarjeta.Credito && LimiteCredito is > 0
             ? (double)(SaldoActual / LimiteCredito.Value) * 100 : 0;
 
-    // ── Relación con transacciones ───────────────────
+
     /// Lista de transacciones asociadas (se llena manualmente)
     [Ignore]
     public List<Transaccion> Transacciones { get; set; } = [];

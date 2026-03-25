@@ -1,13 +1,17 @@
 namespace FinanzasApp.Domain.Enumeraciones;
 
-/// <summary>Define si una tarjeta es de crédito o débito</summary>
+/// <summary>
+/// Define si una tarjeta es de crédito o débito
+/// </summary>
 public enum TipoTarjeta
 {
     Credito = 0,
     Debito = 1
 }
 
-/// <summary>Define si una transacción representa un gasto o un ingreso</summary>
+/// <summary>
+/// Define si una transacción representa un gasto o un ingreso
+/// </summary>
 public enum TipoTransaccion
 {
     Gasto = 0,
@@ -29,7 +33,7 @@ public enum CategoriaTransaccion
     Ropa = 6,
     Tecnologia = 7,
     Viajes = 8,
-    Servicios = 9,    // Luz, agua, internet
+    Servicios = 9, 
     Restaurantes = 10,
     Deportes = 11,
     Suscripciones = 12,
