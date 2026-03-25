@@ -44,6 +44,16 @@ public class Tarjeta
     /// Red de la tarjeta (ej: Visa, MasterCard)
     public string RedTarjeta { get; set; } = "Visa";
 
+
+    //EL VENCIMIENTO SERA PARA AMBOS TIPOS DE TARJETAS
+    public int MesVencimiento { get; set; }
+    public int AnioVencimiento { get; set; }
+
+    //EL DIA DE PAGO Y CORTE SERA SOLO PARA LA TARJETA DE CREDITO
+    public int? DiaCorte { get; set; }
+    public int? DiaPago { get; set; }
+
+
     // ── Propiedades calculadas (no se guardan en BD) ─
     [Ignore]
     public decimal CreditoDisponible =>
