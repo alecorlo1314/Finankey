@@ -1,8 +1,0 @@
-<api type="debug" assembly-name="Maui.Biometric" mvid="42930ed6bfa541ce87b00b0d3b010135">
-  <java-to-managed>
-    <entry java-name="crc64fc95ff435eaa1645/AuthenticationHandler" managed-name="Maui.Biometric.AuthenticationHandler, Maui.Biometric" managed-type-token-id="33554447" />
-  </java-to-managed>
-  <managed-to-java>
-    <entry java-name="crc64fc95ff435eaa1645/AuthenticationHandler" managed-name="Maui.Biometric.AuthenticationHandler, Maui.Biometric" managed-type-token-id="33554447" />
-  </managed-to-java>
-</api>

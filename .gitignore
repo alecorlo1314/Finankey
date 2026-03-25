@@ -1,0 +1,17 @@
+# Visual Studio
+.vs/
+
+# Build results
+bin/
+obj/
+
+# User files
+*.user
+*.suo
+
+# Xamarin / MAUI
+*.apk
+*.aab
+
+# Logs
+*.log

@@ -10,36 +10,45 @@ namespace FinanzasApp.Domain.Entidades;
 [Table("Transaccion")]
 public class Transaccion
 {
+    // ── Clave primaria ───────────────────────────────
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
 
-    /// <summary>FK hacia la tarjeta propietaria</summary>
-    [Indexed]   // Índice en BD para acelerar consultas por tarjeta
+    // ── Relación con tarjeta ─────────────────────────
+    /// FK hacia la tarjeta propietaria
+    [Indexed]   // índice en BD para acelerar consultas por tarjeta
     public int TarjetaId { get; set; }
 
-    /// <summary>Descripción breve (ej: "Supermercado Walmart")</summary>
+    // ── Datos principales ────────────────────────────
+    /// Descripción breve (ej: "Supermercado Walmart")
     public string Descripcion { get; set; } = string.Empty;
 
-    /// <summary>Monto siempre positivo; el Tipo define si es gasto o ingreso</summary>
+    /// Monto siempre positivo; el Tipo define si es gasto o ingreso
     public decimal Monto { get; set; }
 
+    /// Tipo de transacción: Gasto o Ingreso
     public TipoTransaccion Tipo { get; set; }
 
-    /// <summary>Categoría asignada (por IA o manualmente)</summary>
+    // ── Clasificación ────────────────────────────────
+    /// Categoría asignada (por IA o manualmente)
     public CategoriaTransaccion Categoria { get; set; }
 
-    /// <summary>true si la categoría fue sugerida por el modelo ONNX</summary>
+    /// true si la categoría fue sugerida por el modelo ONNX
     public bool CategoriaPredicha { get; set; }
 
-    /// <summary>Nivel de confianza del modelo ONNX (0.0–1.0)</summary>
+    /// Nivel de confianza del modelo ONNX (0.0–1.0)
     public float ConfianzaPrediccion { get; set; }
 
-    [Indexed]   // Índice para acelerar filtros y ordenamientos por fecha
+    // ── Metadatos ────────────────────────────────────
+    /// Fecha de la transacción
+    [Indexed]   // índice para acelerar filtros y ordenamientos por fecha
     public DateTime Fecha { get; set; } = DateTime.Now;
 
+    /// Notas adicionales opcionales
     public string? Notas { get; set; }
 
-    /// <summary>Navigation property — SQLite-net la ignora, se llena manualmente</summary>
+    // ── Propiedades de navegación (no se guardan en BD) ─
+    /// Relación con la tarjeta (se llena manualmente)
     [Ignore]
     public Tarjeta? Tarjeta { get; set; }
 }

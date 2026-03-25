@@ -5,44 +5,49 @@ namespace FinanzasApp.Domain.Entidades;
 
 /// <summary>
 /// Entidad principal que representa una tarjeta financiera (crédito o débito).
-/// Los atributos SQLite-net se colocan aquí por pragmatismo en apps móviles.
 /// </summary>
 [Table("Tarjeta")]
 public class Tarjeta
 {
+    // ── Clave primaria ───────────────────────────────
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
 
-    /// <summary>Nombre descriptivo de la tarjeta (ej: "Visa Banco Nacional")</summary>
+    // ── Datos básicos ────────────────────────────────
+    /// Nombre descriptivo de la tarjeta (ej: "Visa Banco Nacional")
     public string Nombre { get; set; } = string.Empty;
 
-    /// <summary>Últimos 4 dígitos para identificación visual</summary>
+    /// Últimos 4 dígitos para identificación visual
     [MaxLength(4)]
     public string UltimosDigitos { get; set; } = string.Empty;
 
-    /// <summary>Tipo: Credito=0 o Debito=1</summary>
+    /// Tipo de tarjeta: Crédito o Débito
     public TipoTarjeta Tipo { get; set; }
 
-    /// <summary>Color de fondo en HEX para personalización visual</summary>
+    /// Color en HEX para personalización visual
     public string ColorHex { get; set; } = "#3A86FF";
 
+    /// Banco emisor de la tarjeta
     public string Banco { get; set; } = string.Empty;
 
-    /// <summary>Límite de crédito. Null en tarjetas de débito</summary>
+    // ── Información financiera ───────────────────────
+    /// Límite de crédito (solo aplica en tarjetas de crédito)
     public decimal? LimiteCredito { get; set; }
 
-    /// <summary>En crédito: deuda acumulada. En débito: dinero disponible</summary>
+    /// En crédito: deuda acumulada. En débito: dinero disponible
     public decimal SaldoActual { get; set; }
 
+    // ── Metadatos ────────────────────────────────────
+    /// Fecha en que se registró la tarjeta
     public DateTime FechaRegistro { get; set; } = DateTime.Now;
 
-    /// <summary>false = archivada (eliminación lógica)</summary>
+    /// true = activa, false = archivada (eliminación lógica)
     public bool EstaActiva { get; set; } = true;
 
+    /// Red de la tarjeta (ej: Visa, MasterCard)
     public string RedTarjeta { get; set; } = "Visa";
 
-    // ── Propiedades calculadas — [Ignore] indica a SQLite-net que NO las persista
-
+    // ── Propiedades calculadas (no se guardan en BD) ─
     [Ignore]
     public decimal CreditoDisponible =>
         Tipo == TipoTarjeta.Credito && LimiteCredito.HasValue
@@ -53,7 +58,8 @@ public class Tarjeta
         Tipo == TipoTarjeta.Credito && LimiteCredito is > 0
             ? (double)(SaldoActual / LimiteCredito.Value) * 100 : 0;
 
-    /// <summary>Navigation property — se llena manualmente, SQLite-net la ignora</summary>
+    // ── Relación con transacciones ───────────────────
+    /// Lista de transacciones asociadas (se llena manualmente)
     [Ignore]
     public List<Transaccion> Transacciones { get; set; } = [];
 }
