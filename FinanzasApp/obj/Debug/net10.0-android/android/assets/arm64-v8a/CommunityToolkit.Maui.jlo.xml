@@ -1,0 +1,30 @@
+<api>
+  <jcw-types>
+    <type name="TouchBehavior_AccessibilityListener" package="crc640fd0ddb16fe433d4" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="CommunityToolkit.Maui.Behaviors.TouchBehavior+AccessibilityListener, CommunityToolkit.Maui">
+      <implemented_interfaces>
+        <interface name="android.view.accessibility.AccessibilityManager.AccessibilityStateChangeListener" />
+        <interface name="android.view.accessibility.AccessibilityManager.TouchExplorationStateChangeListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="TouchBehavior_AccessibilityListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onAccessibilityStateChanged" method="n_onAccessibilityStateChanged:(Z)V:GetOnAccessibilityStateChanged_ZHandler:Android.Views.Accessibility.AccessibilityManager+IAccessibilityStateChangeListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Z)V" params="boolean p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onTouchExplorationStateChanged" method="n_onTouchExplorationStateChanged:(Z)V:GetOnTouchExplorationStateChanged_ZHandler:Android.Views.Accessibility.AccessibilityManager+ITouchExplorationStateChangeListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Z)V" params="boolean p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="Snackbar_SnackbarCallback" package="crc648fc34c62be8fbbff" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="com.google.android.material.snackbar.BaseTransientBottomBar.BaseCallback" partial_assembly_qualified_name="CommunityToolkit.Maui.Alerts.Snackbar+SnackbarCallback, CommunityToolkit.Maui">
+      <constructors>
+        <constructor name="Snackbar_SnackbarCallback" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onShown" method="n_onShown:(Ljava/lang/Object;)V:GetOnShown_Ljava_lang_Object_Handler" jni_signature="(Ljava/lang/Object;)V" params="java.lang.Object p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onDismissed" method="n_onDismissed:(Ljava/lang/Object;I)V:GetOnDismissed_Ljava_lang_Object_IHandler" jni_signature="(Ljava/lang/Object;I)V" params="java.lang.Object p0, int p1" retval="void" is_dynamically_registered="True" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+  </jcw-types>
+  <acw-types partial-assembly-name="CommunityToolkit.Maui" module-name="CommunityToolkit.Maui.dll">
+    <type assembly-qualified-name="CommunityToolkit.Maui.Behaviors.TouchBehavior+AccessibilityListener, CommunityToolkit.Maui, Version=14.0.1.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="communitytoolkit.maui.behaviors.TouchBehavior_AccessibilityListener" java-key="crc640fd0ddb16fe433d4.TouchBehavior_AccessibilityListener" managed-key="CommunityToolkit.Maui.Behaviors.TouchBehavior.AccessibilityListener" partial-assembly-qualified-name="CommunityToolkit.Maui.Behaviors.TouchBehavior+AccessibilityListener, CommunityToolkit.Maui" />
+    <type assembly-qualified-name="CommunityToolkit.Maui.Alerts.Snackbar+SnackbarCallback, CommunityToolkit.Maui, Version=14.0.1.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="communitytoolkit.maui.alerts.Snackbar_SnackbarCallback" java-key="crc648fc34c62be8fbbff.Snackbar_SnackbarCallback" managed-key="CommunityToolkit.Maui.Alerts.Snackbar.SnackbarCallback" partial-assembly-qualified-name="CommunityToolkit.Maui.Alerts.Snackbar+SnackbarCallback, CommunityToolkit.Maui" />
+  </acw-types>
+</api>

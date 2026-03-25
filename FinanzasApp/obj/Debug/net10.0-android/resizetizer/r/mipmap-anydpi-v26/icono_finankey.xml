@@ -1,0 +1,1 @@
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android"><background android:drawable="@mipmap/icono_finankey_background" /><foreground android:drawable="@mipmap/icono_finankey_foreground" /><monochrome android:drawable="@mipmap/icono_finankey_foreground" /></adaptive-icon>

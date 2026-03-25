@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FinanzasApp.Presentacion.Vistas.Transacciones.TransaccionesGlobalPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bottomSheet="clr-namespace:Syncfusion.Maui.Toolkit.BottomSheet;assembly=Syncfusion.Maui.Toolkit"
+    xmlns:dto="clr-namespace:FinanzasApp.Aplicacion.DTOs;assembly=FinanzasApp.Aplicacion"
+    xmlns:vm="clr-namespace:FinanzasApp.Presentacion.ViewModels.Transacciones"
+    Title="Movimientos"
+    x:DataType="vm:MovimientosViewModel"
+    BackgroundColor="White"
+    Shell.BackgroundColor="#FF006E">
+
+    <AbsoluteLayout>
+
+        <!--  CONTENEDOR PRINCIPAL  -->
+        <Grid
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            RowDefinitions="Auto,Auto,*">
+
+            <!--  HEADER CON LOS GASTO E INGRESOS  -->
+            <Grid
+                Grid.Row="0"
+                Padding="20,16,20,20"
+                BackgroundColor="#FFFFFF"
+                ColumnDefinitions="*,*">
+
+                <VerticalStackLayout Grid.Column="0" Spacing="4">
+                    <Label
+                        FontFamily="InterBold"
+                        FontSize="10"
+                        Text="TOTAL GASTOS"
+                        TextColor="#595C5E" />
+                    <Label
+                        FontFamily="PoppinsBold"
+                        FontSize="20"
+                        HeightRequest="28"
+                        Text="{Binding TotalGastos, StringFormat='₡{0:N0}'}"
+                        TextColor="#FF006E" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    Grid.Column="1"
+                    HorizontalOptions="End"
+                    Spacing="4">
+                    <Label
+                        FontFamily="InterBold"
+                        FontSize="10"
+                        Text="TOTAL INGRESOS"
+                        TextColor="#595C5E" />
+                    <Label
+                        FontFamily="PoppinsBold"
+                        FontSize="20"
+                        HeightRequest="28"
+                        Text="{Binding TotalIngresos, StringFormat='₡{0:N0}'}"
+                        TextColor="#3A86FF" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <!--  BARRA DE FILTROS  -->
+            <Grid
+                Grid.Row="1"
+                Padding="16,10"
+                BackgroundColor="White"
+                ColumnDefinitions="*,8,*,8,*">
+
+                <Button
+                    Grid.Column="0"
+                    BackgroundColor="{Binding MostrarTabTodos, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FF006E|FFFFFF'}"
+                    Command="{Binding CambiarFiltroCommand}"
+                    CommandParameter="todos"
+                    CornerRadius="20"
+                    FontSize="13"
+                    HeightRequest="38"
+                    Text="Todos"
+                    TextColor="{Binding MostrarTabTodos, Converter={StaticResource BoolToColorConverter}, ConverterParameter='FFFFFF|#0F172A'}" />
+
+                <Button
+                    Grid.Column="2"
+                    BackgroundColor="{Binding MostrarTabTodos, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FF006E|FFFFFF'}"
+                    Command="{Binding CambiarFiltroCommand}"
+                    CommandParameter="gastos"
+                    CornerRadius="20"
+                    FontSize="13"
+                    HeightRequest="38"
+                    Text="Gastos"
+                    TextColor="{Binding MostrarTabTodos, Converter={StaticResource BoolToColorConverter}, ConverterParameter='FFFFFF|#0F172A'}" />
+
+                <Button
+                    Grid.Column="4"
+                    BackgroundColor="{Binding MostrarTabTodos, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FF006E|FFFFFF'}"
+                    Command="{Binding CambiarFiltroCommand}"
+                    CommandParameter="ingresos"
+                    CornerRadius="20"
+                    FontSize="13"
+                    HeightRequest="38"
+                    Text="Ingresos"
+                    TextColor="{Binding MostrarTabTodos, Converter={StaticResource BoolToColorConverter}, ConverterParameter='FFFFFF|#0F172A'}" />
+            </Grid>
+
+            <!--  LISTA DE TRANSACCIONES AGRUPADA  -->
+            <RefreshView
+                Grid.Row="2"
+                Command="{Binding CargarTransaccionesCommand}"
+                IsRefreshing="{Binding EstaCargando}"
+                RefreshColor="#FF006E">
+
+                <CollectionView
+                    Margin="16,8,16,0"
+                    IsGrouped="True"
+                    ItemsSource="{Binding TransaccionesAgrupadas}">
+
+                    <!--  ENCABEZADO DE GRUPO  ────────────────────────────────────  -->
+                    <CollectionView.GroupHeaderTemplate>
+                        <DataTemplate x:DataType="vm:GrupoTransacciones">
+                            <Grid Padding="4,16,4,8" ColumnDefinitions="Auto,*,Auto">
+
+                                <!--  Etiqueta del grupo: "Hoy", "Ayer", etc.  -->
+                                <Label
+                                    Grid.Column="0"
+                                    FontFamily="InterBold"
+                                    FontSize="13"
+                                    Text="{Binding Etiqueta}"
+                                    TextColor="#1A2B3C"
+                                    VerticalOptions="Center" />
+
+                                <!--  Línea separadora  -->
+                                <BoxView
+                                    Grid.Column="1"
+                                    Margin="10,0"
+                                    BackgroundColor="#E2E8F0"
+                                    HeightRequest="1"
+                                    VerticalOptions="Center" />
+
+                                <!--  Subtítulo: "3 movimientos · ₡45,200"  -->
+                                <Label
+                                    Grid.Column="2"
+                                    FontFamily="InterRegular"
+                                    FontSize="11"
+                                    Text="{Binding Subtitulo}"
+                                    TextColor="#94A3B8"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.GroupHeaderTemplate>
+
+                    <!--  VISTA VACÍA  -->
+                    <CollectionView.EmptyView>
+                        <VerticalStackLayout
+                            Margin="0,80"
+                            HorizontalOptions="Center"
+                            Spacing="16"
+                            VerticalOptions="Center">
+                            <Label
+                                FontSize="56"
+                                HorizontalOptions="Center"
+                                Text="🔍" />
+                            <Label
+                                HorizontalOptions="Center"
+                                Style="{StaticResource TextoSubtitulo}"
+                                Text="Sin movimientos" />
+                            <Label
+                                Margin="32,0"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                Style="{StaticResource TextoCuerpo}"
+                                Text="Agrega una tarjeta y comienza a registrar tus movimientos" />
+                        </VerticalStackLayout>
+                    </CollectionView.EmptyView>
+
+                    <!--  ITEM DE TRANSACCIÓN  -->
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="dto:TransaccionResumenDto">
+                            <SwipeView Margin="0,0,0,8">
+
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem
+                                            BackgroundColor="#FF006E"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MovimientosViewModel}}, Path=MostrarConfirmacionEliminarCommand}"
+                                            CommandParameter="{Binding .}"
+                                            Text="Eliminar" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+
+                                <SwipeView.LeftItems>
+                                    <SwipeItems>
+                                        <SwipeItem
+                                            BackgroundColor="#3A86FF"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MovimientosViewModel}}, Path=EditarTransaccionCommand}"
+                                            CommandParameter="{Binding .}"
+                                            Text="Editar" />
+                                    </SwipeItems>
+                                </SwipeView.LeftItems>
+
+                                <Border
+                                    Padding="8"
+                                    HeightRequest="79"
+                                    StrokeShape="RoundRectangle 20"
+                                    Style="{StaticResource TarjetaBase}">
+
+                                    <Border.Shadow>
+                                        <Shadow
+                                            Brush="#33000000"
+                                            Opacity="0.35"
+                                            Radius="6"
+                                            Offset="0,2" />
+                                    </Border.Shadow>
+
+                                    <Grid ColumnDefinitions="65,*,Auto" ColumnSpacing="8">
+
+                                        <!--  Icono  -->
+                                        <Image
+                                            Grid.Column="0"
+                                            Aspect="AspectFit"
+                                            HeightRequest="60"
+                                            HorizontalOptions="Center"
+                                            Source="{Binding Categoria, Converter={StaticResource CategoriaIconoConverter}}"
+                                            VerticalOptions="Center"
+                                            WidthRequest="60" />
+
+                                        <!--  Descripción y fecha  -->
+                                        <VerticalStackLayout
+                                            Grid.Column="1"
+                                            Spacing="2"
+                                            VerticalOptions="Center">
+
+                                            <!--  Descripción  -->
+                                            <Label
+                                                FontFamily="InterSemiBold"
+                                                FontSize="16"
+                                                LineBreakMode="TailTruncation"
+                                                Text="{Binding Descripcion}"
+                                                TextColor="{StaticResource TextoPrimario}" />
+
+                                            <HorizontalStackLayout Spacing="6">
+                                                <Label
+                                                    FontFamily="InterRegular"
+                                                    FontSize="12"
+                                                    Text="{Binding NombreTarjeta}"
+                                                    TextColor="{StaticResource TextoSecundario}" />
+                                                <Label
+                                                    FontFamily="InterRegular"
+                                                    FontSize="12"
+                                                    Text="·"
+                                                    TextColor="{StaticResource TextoDeshabilitado}" />
+                                                <Label
+                                                    FontFamily="InterRegular"
+                                                    FontSize="12"
+                                                    Text="{Binding Fecha, StringFormat='{0:dd MMM}'}"
+                                                    TextColor="{StaticResource TextoDeshabilitado}" />
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+                                        <!--  Monto  -->
+                                        <Label
+                                            Grid.Column="2"
+                                            FontFamily="InterSemiBold"
+                                            FontSize="16"
+                                            Text="{Binding Monto, Converter={StaticResource MontoConSignoConverter}}"
+                                            TextColor="Black"
+                                            VerticalOptions="Center" />
+                                    </Grid>
+                                </Border>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+            </RefreshView>
+        </Grid>
+
+        <!--  BOTTOM SHEET ELIMINAR  -->
+        <bottomSheet:SfBottomSheet
+            x:Name="SheetEliminar"
+            Padding="16"
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            AllowedState="HalfExpanded"
+            Background="White"
+            CornerRadius="20"
+            EnableSwiping="False"
+            GrabberBackground="#D9DDE1"
+            GrabberHeight="4"
+            GrabberWidth="48"
+            HalfExpandedRatio="0.70"
+            IsModal="True"
+            IsOpen="{Binding MostrarSheetEliminar, Mode=TwoWay}"
+            IsVisible="{Binding MostrarSheetEliminar, Mode=TwoWay}"
+            ShowGrabber="True">
+
+            <bottomSheet:SfBottomSheet.BottomSheetContent>
+                <VerticalStackLayout
+                    Padding="24,24,24,40"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+
+                    <!--  Imagen ilustrativa  -->
+                    <Image
+                        Aspect="Center"
+                        HeightRequest="96"
+                        HorizontalOptions="Center"
+                        Source="bs_eliminar_tarjeta.png"
+                        WidthRequest="96" />
+
+                    <!--  Título dinámico con nombre de la tarjeta  -->
+                    <Label
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        TextColor="#2C2F32">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span FontFamily="PoppinsBold" Text="¿Deseas eliminar " />
+                                <Span
+                                    FontFamily="PoppinsBold"
+                                    Text="{Binding TransaccionAEliminar.Descripcion}"
+                                    TextColor="#FF006E" />
+                                <Span FontFamily="PoppinsBold" Text="?" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <!--  Subtítulo  -->
+                    <Label
+                        Margin="0,0,0,32"
+                        FontFamily="InterRegular"
+                        FontSize="14"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Text="Este movimiento se eliminará permanentemente, asegúrate de que deseas continuar."
+                        TextColor="#595C5E" />
+
+                    <!--  Botones de acción  -->
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="12">
+
+                        <!--  Botón Eliminar  -->
+                        <Button
+                            BackgroundColor="#FF006E"
+                            Command="{Binding ConfirmarEliminarCommand}"
+                            CornerRadius="50"
+                            FontFamily="InterBold"
+                            FontSize="16"
+                            HeightRequest="56"
+                            Text="Eliminar"
+                            TextColor="White"
+                            WidthRequest="340">
+                            <Button.Shadow>
+                                <Shadow
+                                    Brush="#FFB3D4"
+                                    Opacity="0.45"
+                                    Radius="20"
+                                    Offset="0,4" />
+                            </Button.Shadow>
+                        </Button>
+
+                        <!--  Botón Cancelar  -->
+                        <Button
+                            BackgroundColor="White"
+                            BorderColor="#D9DDE1"
+                            BorderWidth="1.5"
+                            Command="{Binding CancelarEliminarCommand}"
+                            CornerRadius="50"
+                            FontFamily="InterBold"
+                            FontSize="16"
+                            HeightRequest="56"
+                            Text="Cancelar"
+                            TextColor="#2C2F32"
+                            WidthRequest="340" />
+
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </bottomSheet:SfBottomSheet.BottomSheetContent>
+
+        </bottomSheet:SfBottomSheet>
+    </AbsoluteLayout>
+
+</ContentPage>

@@ -1,0 +1,5 @@
+<api>
+  <acw-types partial-assembly-name="Xamarin.AndroidX.Biometric" module-name="Xamarin.AndroidX.Biometric.dll">
+    <type assembly-qualified-name="AndroidX.Biometric.BiometricManager+IAuthenticators, Xamarin.AndroidX.Biometric, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="androidx.biometric.BiometricManager$Authenticators" java-key="androidx.biometric.BiometricManager$Authenticators" managed-key="AndroidX.Biometric.BiometricManager.IAuthenticators" partial-assembly-qualified-name="AndroidX.Biometric.BiometricManager+IAuthenticators, Xamarin.AndroidX.Biometric" />
+  </acw-types>
+</api>

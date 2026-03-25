@@ -1,0 +1,121 @@
+﻿using CommunityToolkit.Maui;
+using FinanzasApp.Aplicacion.DTOs;
+using FinanzasApp.Aplicacion.Interfaces;
+using FinanzasApp.Aplicacion.Tarjetas.Comandos;
+using FinanzasApp.Aplicacion.Tarjetas.Consultas;
+using FinanzasApp.Aplicacion.Transacciones.Comandos;
+using FinanzasApp.Aplicacion.Transacciones.Consultas;
+using FinanzasApp.Domain.Interfaces;
+using FinanzasApp.Infraestructura;
+using FinanzasApp.Infraestructura.Biometria;
+using FinanzasApp.Infraestructura.Persistencia;
+using FinanzasApp.Infraestructura.Persistencia.Repositorios;
+using FinanzasApp.Infraestructura.Prediccion;
+using FinanzasApp.Presentacion.ViewModels;
+using FinanzasApp.Presentacion.ViewModels.Configuracion;
+using FinanzasApp.Presentacion.ViewModels.Tarjetas;
+using FinanzasApp.Presentacion.ViewModels.Transacciones;
+using FinanzasApp.Presentacion.Vistas;
+using FinanzasApp.Presentacion.Vistas.Configuracion;
+using FinanzasApp.Presentacion.Vistas.Tarjetas;
+using FinanzasApp.Presentacion.Vistas.Transacciones;
+using Maui.Biometric;
+using Microsoft.Extensions.Logging;
+using Syncfusion.Maui.Core.Hosting;
+using Syncfusion.Maui.Toolkit.Hosting;
+
+namespace FinanzasApp
+{
+    public static class MauiProgram
+    {
+        public static MauiApp CreateMauiApp()
+        {
+            var builder = MauiApp.CreateBuilder();
+            builder
+                .UseMauiApp<App>()
+                .UseBiometricAuthentication()
+                .ConfigureSyncfusionCore()
+                .ConfigureSyncfusionToolkit()
+                .UseMauiCommunityToolkit()
+                .ConfigureFonts(fonts =>
+                {
+                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Poppins-Bold.ttf", "PoppinsBold");
+                    fonts.AddFont("Poppins-SemiBold.ttf", "PoppinsSemiBold");
+                    fonts.AddFont("Inter_24pt-Bold.ttf", "InterBold");
+                    fonts.AddFont("Inter_24pt-Medium.ttf", "InterMedium");
+                    fonts.AddFont("Inter_24pt-Regular.ttf", "InterRegular");
+                    fonts.AddFont("Inter_24pt-SemiBold.ttf", "InterSemiBold");
+                });
+
+            // Scoped: nueva instancia por operación, comparten la misma conexión
+            builder.Services.AddScoped<ContextoBD>();
+            builder.Services.AddScoped<IRepositorioTarjeta, RepositorioTarjeta>();
+            builder.Services.AddScoped<IRepositorioTransaccion, RepositorioTransaccion>();
+
+            // Servicios de sistema: Singleton porque son stateless o manejan recursos nativos
+            builder.Services.AddSingleton<IServicioBiometrico, ServicioBiometricoMaui>();
+            builder.Services.AddSingleton<IServicioPrediccion, ServicioPrediccionOnnx>();
+
+            // Mediador: Singleton para reutilizar el IServiceProvider interno
+            builder.Services.AddSingleton<IMediator, Mediador>();
+
+            // Tarjetas
+            builder.Services.AddTransient<IManejadorComando<CrearTarjetaComando, int>, CrearTarjetaManejador>();
+            builder.Services.AddTransient<IManejadorComando<ActualizarTarjetaComando, bool>, ActualizarTarjetaManejador>();
+            builder.Services.AddTransient<IManejadorComando<EliminarTarjetaComando, bool>, EliminarTarjetaManejador>();
+
+            // Transacciones
+            builder.Services.AddTransient<IManejadorComando<CrearTransaccionComando, int>, CrearTransaccionManejador>();
+            builder.Services.AddTransient<IManejadorComando<ActualizarTransaccionComando, bool>, ActualizarTransaccionManejador>();
+            builder.Services.AddTransient<IManejadorComando<EliminarTransaccionComando, bool>, EliminarTransaccionManejador>();
+
+            // Tarjetas
+            builder.Services.AddTransient<
+                IManejadorConsulta<ObtenerTarjetasConsulta, IEnumerable<TarjetaResumenDto>>,
+                ObtenerTarjetasManejador>();
+            builder.Services.AddTransient<
+                IManejadorConsulta<ObtenerTarjetaPorIdConsulta, TarjetaResumenDto?>,
+                ObtenerTarjetaPorIdManejador>();
+            builder.Services.AddTransient<
+                IManejadorConsulta<ObtenerResumenFinancieroConsulta, ResumenFinancieroDto>,
+                ObtenerResumenFinancieroManejador>();
+
+            // Transacciones
+            builder.Services.AddTransient<
+                IManejadorConsulta<ObtenerTransaccionesPorTarjetaConsulta, IEnumerable<TransaccionResumenDto>>,
+                ObtenerTransaccionesPorTarjetaManejador>();
+            builder.Services.AddTransient<
+                IManejadorConsulta<ObtenerTransaccionesRecientesConsulta, IEnumerable<TransaccionResumenDto>>,
+                ObtenerTransaccionesRecientesManejador>();
+            builder.Services.AddTransient<
+                IManejadorConsulta<ObtenerTransaccionPorIdConsulta, TransaccionResumenDto?>,
+                ObtenerTransaccionPorIdManejador>();
+
+            // Transient: cada página obtiene una instancia nueva y limpia
+            builder.Services.AddTransient<DashboardViewModel>();
+            builder.Services.AddTransient<TarjetasViewModel>();
+            builder.Services.AddTransient<TarjetaFormViewModel>();
+            builder.Services.AddTransient<TransaccionesViewModel>();
+            builder.Services.AddTransient<TransaccionFormViewModel>();
+            builder.Services.AddTransient<ConfiguracionViewModel>();
+            builder.Services.AddTransient<MovimientosViewModel>();
+
+            builder.Services.AddTransient<DashboardPage>();
+            builder.Services.AddTransient<TarjetasPage>();
+            builder.Services.AddTransient<TarjetaFormPage>();
+            builder.Services.AddTransient<TarjetaDetallePage>();
+            builder.Services.AddTransient<TransaccionFormPage>();
+            builder.Services.AddTransient<TransaccionesGlobalPage>();
+            builder.Services.AddTransient<ConfiguracionPage>();
+            builder.Services.AddTransient<LoginBiometricoPage>();
+
+#if DEBUG
+            builder.Logging.AddDebug();
+#endif
+
+            return builder.Build();
+        }
+    }
+}

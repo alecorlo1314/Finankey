@@ -1,0 +1,20 @@
+<api>
+  <jcw-types>
+    <type name="AuthenticationHandler" package="crc64fc95ff435eaa1645" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="androidx.biometric.BiometricPrompt.AuthenticationCallback" partial_assembly_qualified_name="Maui.Biometric.AuthenticationHandler, Maui.Biometric">
+      <implemented_interfaces>
+        <interface name="android.content.DialogInterface.OnClickListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="AuthenticationHandler" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onAuthenticationSucceeded" method="n_onAuthenticationSucceeded:(Landroidx/biometric/BiometricPrompt$AuthenticationResult;)V:GetOnAuthenticationSucceeded_Landroidx_biometric_BiometricPrompt_AuthenticationResult_Handler" jni_signature="(Landroidx/biometric/BiometricPrompt$AuthenticationResult;)V" params="androidx.biometric.BiometricPrompt.AuthenticationResult p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onAuthenticationError" method="n_onAuthenticationError:(ILjava/lang/CharSequence;)V:GetOnAuthenticationError_ILjava_lang_CharSequence_Handler" jni_signature="(ILjava/lang/CharSequence;)V" params="int p0, java.lang.CharSequence p1" retval="void" is_dynamically_registered="True" super_call="p0, p1" activate_call="p0, p1" />
+        <method name="onClick" method="n_onClick:(Landroid/content/DialogInterface;I)V:GetOnClick_Landroid_content_DialogInterface_IHandler:Android.Content.IDialogInterfaceOnClickListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/content/DialogInterface;I)V" params="android.content.DialogInterface p0, int p1" retval="void" is_dynamically_registered="True" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+  </jcw-types>
+  <acw-types partial-assembly-name="Maui.Biometric" module-name="Maui.Biometric.dll">
+    <type assembly-qualified-name="Maui.Biometric.AuthenticationHandler, Maui.Biometric, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="maui.biometric.AuthenticationHandler" java-key="crc64fc95ff435eaa1645.AuthenticationHandler" managed-key="Maui.Biometric.AuthenticationHandler" partial-assembly-qualified-name="Maui.Biometric.AuthenticationHandler, Maui.Biometric" />
+  </acw-types>
+</api>

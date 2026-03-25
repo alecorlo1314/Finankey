@@ -1,0 +1,10 @@
+<api type="debug" assembly-name="CommunityToolkit.Maui" mvid="5cca5a97a63c4f9abb90a1674b9a5965">
+  <java-to-managed>
+    <entry java-name="crc640fd0ddb16fe433d4/TouchBehavior_AccessibilityListener" managed-name="CommunityToolkit.Maui.Behaviors.TouchBehavior+AccessibilityListener, CommunityToolkit.Maui" managed-type-token-id="33554815" />
+    <entry java-name="crc648fc34c62be8fbbff/Snackbar_SnackbarCallback" managed-name="CommunityToolkit.Maui.Alerts.Snackbar+SnackbarCallback, CommunityToolkit.Maui" managed-type-token-id="33554847" />
+  </java-to-managed>
+  <managed-to-java>
+    <entry java-name="crc640fd0ddb16fe433d4/TouchBehavior_AccessibilityListener" managed-name="CommunityToolkit.Maui.Behaviors.TouchBehavior+AccessibilityListener, CommunityToolkit.Maui" managed-type-token-id="33554815" />
+    <entry java-name="crc648fc34c62be8fbbff/Snackbar_SnackbarCallback" managed-name="CommunityToolkit.Maui.Alerts.Snackbar+SnackbarCallback, CommunityToolkit.Maui" managed-type-token-id="33554847" />
+  </managed-to-java>
+</api>

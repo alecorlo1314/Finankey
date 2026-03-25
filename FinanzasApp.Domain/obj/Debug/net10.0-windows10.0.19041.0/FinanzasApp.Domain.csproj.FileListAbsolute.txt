@@ -1,0 +1,15 @@
+C:\Users\aleco\source\repos\FinanzasApp\FinanzasApp.Domain\bin\Debug\net10.0-windows10.0.19041.0\FinanzasApp.Domain.deps.json
+C:\Users\aleco\source\repos\FinanzasApp\FinanzasApp.Domain\bin\Debug\net10.0-windows10.0.19041.0\FinanzasApp.Domain.dll
+C:\Users\aleco\source\repos\FinanzasApp\FinanzasApp.Domain\bin\Debug\net10.0-windows10.0.19041.0\FinanzasApp.Domain.pdb
+C:\Users\aleco\source\repos\FinanzasApp\FinanzasApp.Domain\bin\Debug\net10.0-windows10.0.19041.0\Microsoft.Web.WebView2.Core.dll
+C:\Users\aleco\source\repos\FinanzasApp\FinanzasApp.Domain\bin\Debug\net10.0-windows10.0.19041.0\Microsoft.Web.WebView2.Core.Projection.dll
+C:\Users\aleco\source\repos\FinanzasApp\FinanzasApp.Domain\obj\Debug\net10.0-windows10.0.19041.0\FinanzasApp.Domain.csproj.AssemblyReference.cache
+C:\Users\aleco\source\repos\FinanzasApp\FinanzasApp.Domain\obj\Debug\net10.0-windows10.0.19041.0\FinanzasApp.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\aleco\source\repos\FinanzasApp\FinanzasApp.Domain\obj\Debug\net10.0-windows10.0.19041.0\FinanzasApp.Domain.AssemblyInfoInputs.cache
+C:\Users\aleco\source\repos\FinanzasApp\FinanzasApp.Domain\obj\Debug\net10.0-windows10.0.19041.0\FinanzasApp.Domain.AssemblyInfo.cs
+C:\Users\aleco\source\repos\FinanzasApp\FinanzasApp.Domain\obj\Debug\net10.0-windows10.0.19041.0\FinanzasApp.Domain.csproj.CoreCompileInputs.cache
+C:\Users\aleco\source\repos\FinanzasApp\FinanzasApp.Domain\obj\Debug\net10.0-windows10.0.19041.0\Finanzas.505CD8C5.Up2Date
+C:\Users\aleco\source\repos\FinanzasApp\FinanzasApp.Domain\obj\Debug\net10.0-windows10.0.19041.0\FinanzasApp.Domain.dll
+C:\Users\aleco\source\repos\FinanzasApp\FinanzasApp.Domain\obj\Debug\net10.0-windows10.0.19041.0\refint\FinanzasApp.Domain.dll
+C:\Users\aleco\source\repos\FinanzasApp\FinanzasApp.Domain\obj\Debug\net10.0-windows10.0.19041.0\FinanzasApp.Domain.pdb
+C:\Users\aleco\source\repos\FinanzasApp\FinanzasApp.Domain\obj\Debug\net10.0-windows10.0.19041.0\ref\FinanzasApp.Domain.dll

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FinanzasApp.Presentacion.Vistas.LoginBiometricoPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="{StaticResource AzulPrimario}"
+    Shell.NavBarIsVisible="False">
+
+    <VerticalStackLayout
+        Padding="48"
+        HorizontalOptions="Center"
+        Spacing="32"
+        VerticalOptions="Center">
+
+        <!--  Logo / Ícono app  -->
+        <Border
+            BackgroundColor="#33FFFFFF"
+            HeightRequest="120"
+            HorizontalOptions="Center"
+            Stroke="Transparent"
+            StrokeShape="RoundRectangle 32"
+            WidthRequest="120">
+            <Label
+                FontSize="56"
+                HorizontalOptions="Center"
+                Text="💳"
+                VerticalOptions="Center" />
+        </Border>
+
+        <!--  Nombre app  -->
+        <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
+            <Label
+                FontAttributes="Bold"
+                FontSize="32"
+                HorizontalOptions="Center"
+                Text="FinanzasApp"
+                TextColor="White" />
+            <Label
+                FontSize="15"
+                HorizontalOptions="Center"
+                Text="Tus finanzas, bajo control"
+                TextColor="#B0C4DE" />
+        </VerticalStackLayout>
+
+        <!--  Ícono biométrico  -->
+        <Border
+            BackgroundColor="#22FFFFFF"
+            HeightRequest="96"
+            HorizontalOptions="Center"
+            Stroke="#44FFFFFF"
+            StrokeShape="RoundRectangle 48"
+            WidthRequest="96">
+            <Label
+                FontSize="44"
+                HorizontalOptions="Center"
+                Text="👆"
+                VerticalOptions="Center" />
+        </Border>
+
+        <!--  Mensaje  -->
+        <Label
+            FontSize="15"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            Text="Toca el sensor o usa Face ID para acceder"
+            TextColor="#B0C4DE" />
+
+        <!--  Botón reintentar  -->
+        <Button
+            x:Name="BtnReintentar"
+            Margin="0,16,0,0"
+            BackgroundColor="#33FFFFFF"
+            Clicked="OnReintentar_Clicked"
+            CornerRadius="14"
+            FontSize="16"
+            HeightRequest="50"
+            Text="Reintentar"
+            TextColor="White" />
+    </VerticalStackLayout>
+</ContentPage>

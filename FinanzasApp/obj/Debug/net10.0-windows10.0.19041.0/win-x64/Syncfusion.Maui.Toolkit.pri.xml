@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PriInfo>
+	<ResourceMap name="Syncfusion.Maui.Toolkit" version="1.0" primary="true">
+		<Qualifiers/>
+		<ResourceMapSubtree name="Files">
+			<ResourceMapSubtree name="Syncfusion.Maui.Toolkit">
+				<ResourceMapSubtree name="Carousel">
+					<ResourceMapSubtree name="Platform">
+						<ResourceMapSubtree name="Windows">
+							<ResourceMapSubtree name="Styles">
+								<NamedResource name="CarouselStyles.xbf" uri="ms-resource://Syncfusion.Maui.Toolkit/Files/Syncfusion.Maui.Toolkit/Carousel/Platform/Windows/Styles/CarouselStyles.xbf">
+									<Candidate type="EmbeddedData">
+										<Base64Value>[Embedded Binary Data]</Base64Value>
+									</Candidate>
+								</NamedResource>
+								<NamedResource name="Resources.xbf" uri="ms-resource://Syncfusion.Maui.Toolkit/Files/Syncfusion.Maui.Toolkit/Carousel/Platform/Windows/Styles/Resources.xbf">
+									<Candidate type="EmbeddedData">
+										<Base64Value>[Embedded Binary Data]</Base64Value>
+									</Candidate>
+								</NamedResource>
+							</ResourceMapSubtree>
+						</ResourceMapSubtree>
+					</ResourceMapSubtree>
+				</ResourceMapSubtree>
+			</ResourceMapSubtree>
+		</ResourceMapSubtree>
+	</ResourceMap>
+</PriInfo>

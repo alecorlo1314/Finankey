@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!--  ── Colores de la app (paleta "tranquilidad financiera") ───────────────  -->
+
+    <!--  Azules  -->
+    <Color x:Key="AzulPrimario">#3A86FF</Color>
+    <Color x:Key="AzulMedio">#4E92FF</Color>
+    <Color x:Key="AzulClaro">#619EFF</Color>
+    <Color x:Key="AzulPastel">#DBEAFE</Color>
+
+    <!--  Teal  -->
+    <Color x:Key="TealPrimario">#0D9488</Color>
+    <Color x:Key="TealClaro">#2DD4BF</Color>
+    <Color x:Key="TealPastel">#CCFBF1</Color>
+
+    <!--  Fondos y superficies  -->
+    <Color x:Key="FondoPrincipal">#F0F4F8</Color>
+    <Color x:Key="FondoTarjeta">#FFFFFF</Color>
+    <Color x:Key="FondoInput">#F8FAFC</Color>
+    <Color x:Key="Separador">#E2E8F0</Color>
+
+    <!--  Texto  -->
+    <Color x:Key="TextoPrimario">#1A2B3C</Color>
+    <Color x:Key="TextoSecundario">#64748B</Color>
+    <Color x:Key="TextoDeshabilitado">#94A3B8</Color>
+    <Color x:Key="TextoBlanco">#FFFFFF</Color>
+
+    <!--  Semánticos  -->
+    <Color x:Key="ColorExito">#10B981</Color>
+    <Color x:Key="ColorAlerta">#F59E0B</Color>
+    <Color x:Key="ColorError">#EF4444</Color>
+    <Color x:Key="ColorIngreso">#41D4A8</Color>
+    <Color x:Key="ColorGasto">#FF4B4A</Color>
+
+    <!--
+        ── Tokens requeridos por los estilos base de MAUI ────────────────────
+        Estos alias mapean los tokens de MAUI a nuestra paleta.
+        Sin ellos, los AppThemeBinding de los estilos de MAUI fallan.
+    -->
+
+    <!--  Primary → nuestro azul medio  -->
+    <Color x:Key="Primary">#2E6DA4</Color>
+    <Color x:Key="PrimaryDark">#1E3A5F</Color>
+    <Color x:Key="PrimaryDarkText">#FFFFFF</Color>
+
+    <!--  Secondary → nuestro teal  -->
+    <Color x:Key="Secondary">#0D9488</Color>
+    <Color x:Key="SecondaryDarkText">#FFFFFF</Color>
+
+    <!--  Magenta del template → reemplazado por nuestro azul medio  -->
+    <Color x:Key="Magenta">#2E6DA4</Color>
+
+    <!--  MidnightBlue del template → nuestro azul primario  -->
+    <Color x:Key="MidnightBlue">#1E3A5F</Color>
+
+    <!--  Neutros requeridos por MAUI  -->
+    <Color x:Key="White">#FFFFFF</Color>
+    <Color x:Key="Black">#000000</Color>
+    <Color x:Key="OffBlack">#1A1A1A</Color>
+
+    <Color x:Key="Gray100">#E1E1E1</Color>
+    <Color x:Key="Gray200">#C8C8C8</Color>
+    <Color x:Key="Gray300">#ACACAC</Color>
+    <Color x:Key="Gray400">#919191</Color>
+    <Color x:Key="Gray500">#6E6E6E</Color>
+    <Color x:Key="Gray600">#404040</Color>
+    <Color x:Key="Gray900">#212121</Color>
+    <Color x:Key="Gray950">#141414</Color>
+
+</ResourceDictionary>

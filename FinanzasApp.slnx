@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="FinanzasApp.Aplicacion/FinanzasApp.Aplicacion.csproj" />
+  <Project Path="FinanzasApp.Domain/FinanzasApp.Domain.csproj" />
+  <Project Path="FinanzasApp.Infrastructure/FinanzasApp.Infraestructura.csproj" />
+  <Project Path="FinanzasApp/FinanzasApp.Presentacion.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+</Solution>

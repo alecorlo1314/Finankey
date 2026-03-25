@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PriInfo>
+	<ResourceMap name="Syncfusion.Maui.Core" version="1.0" primary="true">
+		<Qualifiers/>
+		<ResourceMapSubtree name="Files">
+			<ResourceMapSubtree name="Syncfusion.Maui.Core">
+				<ResourceMapSubtree name="Platform">
+					<ResourceMapSubtree name="Windows">
+						<ResourceMapSubtree name="Styles">
+							<NamedResource name="CarouselStyles.xbf" uri="ms-resource://Syncfusion.Maui.Core/Files/Syncfusion.Maui.Core/Platform/Windows/Styles/CarouselStyles.xbf">
+								<Candidate type="EmbeddedData">
+									<Base64Value>[Embedded Binary Data]</Base64Value>
+								</Candidate>
+							</NamedResource>
+							<NamedResource name="Resources.xbf" uri="ms-resource://Syncfusion.Maui.Core/Files/Syncfusion.Maui.Core/Platform/Windows/Styles/Resources.xbf">
+								<Candidate type="EmbeddedData">
+									<Base64Value>[Embedded Binary Data]</Base64Value>
+								</Candidate>
+							</NamedResource>
+							<NamedResource name="RotatorStyles.xbf" uri="ms-resource://Syncfusion.Maui.Core/Files/Syncfusion.Maui.Core/Platform/Windows/Styles/RotatorStyles.xbf">
+								<Candidate type="EmbeddedData">
+									<Base64Value>[Embedded Binary Data]</Base64Value>
+								</Candidate>
+							</NamedResource>
+						</ResourceMapSubtree>
+					</ResourceMapSubtree>
+				</ResourceMapSubtree>
+			</ResourceMapSubtree>
+		</ResourceMapSubtree>
+	</ResourceMap>
+</PriInfo>

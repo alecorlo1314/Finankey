@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FinanzasApp.Presentacion.Vistas.Tarjetas.TarjetaDetallePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bottomSheet="clr-namespace:Syncfusion.Maui.Toolkit.BottomSheet;assembly=Syncfusion.Maui.Toolkit"
+    xmlns:conv="clr-namespace:FinanzasApp.Presentacion.Convertidores"
+    xmlns:dto="clr-namespace:FinanzasApp.Aplicacion.DTOs;assembly=FinanzasApp.Aplicacion"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:FinanzasApp.Presentacion.ViewModels.Transacciones"
+    Title="{Binding NombreTarjeta}"
+    x:DataType="vm:TransaccionesViewModel"
+    BackgroundColor="White"
+    Shell.BackgroundColor="#FF006E"
+    Shell.NavBarIsVisible="True">
+
+    <ContentPage.Resources>
+        <conv:TipoTransaccionColorConverter x:Key="TipoTransaccionColorConverter" />
+        <conv:CategoriaIconoConverter x:Key="CategoriaIconoConverter" />
+        <conv:MontoConSignoConverter x:Key="MontoConSignoConverter" />
+        <conv:InvertirBoolConverter x:Key="InvertirBoolConverter" />
+        <conv:NullToBoolConverter x:Key="NullToBoolConverter" />
+        <conv:PorcentajeProgressConverter x:Key="PorcentajeProgressConverter" />
+        <conv:PorcentajeColorConverter x:Key="PorcentajeColorConverter" />
+    </ContentPage.Resources>
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding CargarTransaccionesCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+
+    <AbsoluteLayout>
+
+        <!--  CONTENIDO PRINCIPAL  -->
+        <Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+            <ScrollView>
+                <VerticalStackLayout Spacing="0">
+
+                    <Grid
+                        Padding="0,16"
+                        BackgroundColor="White"
+                        ColumnDefinitions="*,*,*">
+
+                        <VerticalStackLayout
+                            Grid.Column="0"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Label
+                                FontFamily="InterBold"
+                                FontSize="12"
+                                Text="GASTOS"
+                                TextColor="#64748B" />
+
+                            <Label
+                                CharacterSpacing="-1"
+                                FontFamily="PoppinsBold"
+                                FontSize="14"
+                                Text="{Binding TotalGastos, StringFormat='₡{0:N2}'}"
+                                TextColor="#FF006E" />
+                        </VerticalStackLayout>
+
+                        <!--  Saldo principal  -->
+                        <VerticalStackLayout
+                            Grid.Column="1"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+
+                            <Label
+                                FontFamily="InterBold"
+                                FontSize="12"
+                                Text="SALDO ACTUAL"
+                                TextColor="#64748B" />
+
+                            <Label
+                                CharacterSpacing="-1"
+                                FontFamily="PoppinsBold"
+                                FontSize="20"
+                                Text="{Binding Balance, StringFormat='₡{0:N2}'}"
+                                TextColor="#0F172A" />
+
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout
+                            Grid.Column="2"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Label
+                                FontFamily="InterBold"
+                                FontSize="12"
+                                Text="INGRESOS"
+                                TextColor="#64748B" />
+
+                            <Label
+                                CharacterSpacing="-1"
+                                FontFamily="PoppinsBold"
+                                FontSize="14"
+                                Text="{Binding TotalIngresos, StringFormat='₡{0:N2}'}"
+                                TextColor="#3A86FF" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <!--  Separador sutil  -->
+                    <BoxView
+                        BackgroundColor="{StaticResource Gray100}"
+                        HeightRequest="1"
+                        Opacity="0.3" />
+
+                    <!--  TABS DE FILTROS  -->
+                    <Grid
+                        Padding="16"
+                        BackgroundColor="White"
+                        ColumnDefinitions="*,*,*"
+                        ColumnSpacing="12">
+
+                        <!--  Tab: Todos  -->
+                        <Button
+                            Grid.Column="0"
+                            BackgroundColor="{Binding MostrarTabTodos, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FF006E|FFFFFF'}"
+                            Command="{Binding CambiarFiltroCommand}"
+                            CommandParameter="todos"
+                            CornerRadius="50"
+                            FontFamily="InterSemiBold"
+                            FontSize="14"
+                            HeightRequest="42"
+                            Text="Todos"
+                            TextColor="{Binding MostrarTabTodos, Converter={StaticResource BoolToColorConverter}, ConverterParameter='FFFFFF|#0F172A'}"
+                            WidthRequest="105" />
+
+                        <!--  Tab: Gastos  -->
+                        <Button
+                            Grid.Column="1"
+                            BackgroundColor="{Binding MostrarTabGastos, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FF006E|FFFFFF'}"
+                            Command="{Binding CambiarFiltroCommand}"
+                            CommandParameter="gastos"
+                            CornerRadius="50"
+                            FontFamily="InterSemiBold"
+                            FontSize="14"
+                            HeightRequest="42"
+                            Text="Gastos"
+                            TextColor="{Binding MostrarTabGastos, Converter={StaticResource BoolToColorConverter}, ConverterParameter='FFFFFF|#0F172A'}"
+                            WidthRequest="105" />
+
+                        <!--  Tab: Ingresos (solo visible para tarjetas débito)  -->
+                        <Button
+                            Grid.Column="2"
+                            BackgroundColor="{Binding MostrarTabIngresos, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FF006E|FFFFFF'}"
+                            Command="{Binding CambiarFiltroCommand}"
+                            CommandParameter="ingresos"
+                            CornerRadius="50"
+                            FontFamily="InterSemiBold"
+                            FontSize="14"
+                            HeightRequest="42"
+                            IsVisible="{Binding MostrarTabIngresos_Visible}"
+                            Text="Ingresos"
+                            TextColor="{Binding MostrarTabIngresos, Converter={StaticResource BoolToColorConverter}, ConverterParameter='FFFFFF|#0F172A'}"
+                            WidthRequest="105" />
+
+                    </Grid>
+
+                    <!--  lISTA DE TRANSACCIONES  -->
+                    <VerticalStackLayout Padding="16,12,16,100" Spacing="8">
+
+                        <!--  Cargando  -->
+                        <ActivityIndicator
+                            Margin="0,24"
+                            IsRunning="{Binding EstaCargando}"
+                            IsVisible="{Binding EstaCargando}"
+                            Color="{StaticResource AzulMedio}" />
+
+                        <!--  Estado vacío  -->
+                        <VerticalStackLayout
+                            Margin="0,48,0,0"
+                            HorizontalOptions="Center"
+                            IsVisible="{Binding SinTransacciones}"
+                            Spacing="8">
+                            <Image
+                                Aspect="AspectFit"
+                                HeightRequest="200"
+                                HorizontalOptions="Center"
+                                Source="vista_vacia_transacciones.svg"
+                                WidthRequest="200" />
+                            <Label
+                                HorizontalOptions="Center"
+                                Style="{StaticResource TextoSubtitulo}"
+                                Text="Sin transacciones" />
+                            <Label
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                Style="{StaticResource TextoCuerpo}"
+                                Text="Agrega tu primer gasto o ingreso con el botón +" />
+                        </VerticalStackLayout>
+
+                        <!--  Filas de transacciones  -->
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Transacciones}" Spacing="4">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="dto:TransaccionResumenDto">
+
+                                    <SwipeView>
+
+                                        <!--  Acción eliminar  -->
+                                        <SwipeView.RightItems>
+                                            <SwipeItems Mode="Reveal">
+                                                <SwipeItem
+                                                    BackgroundColor="#FF006E"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TransaccionesViewModel}}, Path=MostrarConfirmacionEliminarCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    Text="Eliminar" />
+                                            </SwipeItems>
+                                        </SwipeView.RightItems>
+
+                                        <!--  Card de la transacción  -->
+                                        <Border
+                                            Padding="8"
+                                            HeightRequest="79"
+                                            StrokeShape="RoundRectangle 20"
+                                            Style="{StaticResource TarjetaBase}">
+
+                                            <Border.Shadow>
+                                                <Shadow
+                                                    Brush="#33000000"
+                                                    Opacity="0.35"
+                                                    Radius="6"
+                                                    Offset="0,2" />
+                                            </Border.Shadow>
+
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TransaccionesViewModel}}, Path=EditarTransaccionCommand}" CommandParameter="{Binding .}" />
+                                            </Border.GestureRecognizers>
+
+                                            <Grid ColumnDefinitions="65,*,Auto" ColumnSpacing="12">
+                                                <!--  Ícono de categoría  -->
+                                                <Image
+                                                    Grid.Column="0"
+                                                    Aspect="AspectFit"
+                                                    HeightRequest="60"
+                                                    HorizontalOptions="Center"
+                                                    Source="{Binding Categoria, Converter={StaticResource CategoriaIconoConverter}}"
+                                                    VerticalOptions="Center"
+                                                    WidthRequest="60" />
+
+
+                                                <!--  Descripción, tarjeta, fecha  -->
+                                                <VerticalStackLayout
+                                                    Grid.Column="1"
+                                                    Spacing="2"
+                                                    VerticalOptions="Center">
+                                                    <Label
+                                                        FontFamily="InterSemiBold"
+                                                        FontSize="16"
+                                                        LineBreakMode="TailTruncation"
+                                                        MaxLines="1"
+                                                        Text="{Binding Descripcion}"
+                                                        TextColor="{StaticResource TextoPrimario}" />
+                                                    <HorizontalStackLayout Spacing="6">
+                                                        <Label
+                                                            FontFamily="InterRegular"
+                                                            FontSize="12"
+                                                            Style="{StaticResource TextoCuerpo}"
+                                                            Text="{Binding Fecha, StringFormat='{0:dd MMM yyy}'}" />
+                                                        <!--  Badge IA si la categoría fue predicha  -->
+                                                        <Border
+                                                            Padding="6,2"
+                                                            BackgroundColor="#EDE9FE"
+                                                            IsVisible="{Binding CategoriaPredicha}"
+                                                            Stroke="Transparent"
+                                                            StrokeShape="RoundRectangle 8">
+                                                            <Label
+                                                                FontFamily="InterMedium"
+                                                                FontSize="10"
+                                                                Text="✨ IA"
+                                                                TextColor="#FB5607" />
+                                                        </Border>
+                                                    </HorizontalStackLayout>
+                                                </VerticalStackLayout>
+
+                                                <!--  Monto con signo y color  -->
+                                                <VerticalStackLayout
+                                                    Grid.Column="2"
+                                                    HorizontalOptions="End"
+                                                    Spacing="2"
+                                                    VerticalOptions="Center">
+                                                    <Label
+                                                        FontFamily="InterSemiBold"
+                                                        FontSize="16"
+                                                        HorizontalOptions="End"
+                                                        Text="{Binding Monto, StringFormat='₡{0:N2}'}"
+                                                        TextColor="{Binding Tipo, Converter={StaticResource TipoTransaccionColorConverter}}" />
+                                                    <Label
+                                                        FontSize="12"
+                                                        HorizontalOptions="End"
+                                                        Text="{Binding Categoria, Converter={StaticResource CategoriaNombreConverter}}"
+                                                        TextColor="{StaticResource TextoSecundario}" />
+                                                </VerticalStackLayout>
+                                            </Grid>
+                                        </Border>
+                                    </SwipeView>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!--  ── Botón flotante para agregar transacción ──────────────────  -->
+            <VerticalStackLayout
+                Margin="0,0,24,24"
+                HorizontalOptions="End"
+                Spacing="12"
+                VerticalOptions="End">
+
+                <!--  Ingreso (solo débito)  -->
+                <Button
+                    Padding="16,0"
+                    BackgroundColor="#8338EC"
+                    Command="{Binding AgregarIngresoCommand}"
+                    CornerRadius="24"
+                    FontAttributes="Bold"
+                    FontSize="13"
+                    HeightRequest="44"
+                    IsVisible="{Binding MostrarTabIngresos_Visible}"
+                    Text="+ Ingreso"
+                    TextColor="White">
+                    <Button.Shadow>
+                        <Shadow
+                            Brush="#44059669"
+                            Opacity="0.5"
+                            Radius="12"
+                            Offset="0,4" />
+                    </Button.Shadow>
+                </Button>
+
+                <!--  Gasto  -->
+                <Button
+                    Command="{Binding AgregarGastoCommand}"
+                    FontAttributes="Bold"
+                    FontSize="14"
+                    Style="{StaticResource BotonFlotante}"
+                    Text="+ Gasto"
+                    WidthRequest="120" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <!--  BottomSheet para eliminar tarjeta  -->
+        <bottomSheet:SfBottomSheet
+            x:Name="SheetEliminar"
+            Padding="16"
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            AllowedState="HalfExpanded"
+            Background="White"
+            CornerRadius="20"
+            EnableSwiping="False"
+            GrabberBackground="#D9DDE1"
+            GrabberHeight="4"
+            GrabberWidth="48"
+            HalfExpandedRatio="0.70"
+            IsModal="True"
+            IsOpen="{Binding MostrarSheetEliminar, Mode=TwoWay}"
+            IsVisible="{Binding MostrarSheetEliminar, Mode=TwoWay}"
+            ShowGrabber="True">
+
+            <bottomSheet:SfBottomSheet.BottomSheetContent>
+                <VerticalStackLayout
+                    Padding="24,24,24,40"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+
+                    <!--  Imagen ilustrativa  -->
+                    <Image
+                        Aspect="Center"
+                        HeightRequest="96"
+                        HorizontalOptions="Center"
+                        Source="bs_eliminar_tarjeta.png"
+                        WidthRequest="96" />
+
+                    <!--  Título dinámico con nombre de la tarjeta  -->
+                    <Label
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        TextColor="#2C2F32">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span FontFamily="PoppinsBold" Text="¿Deseas eliminar " />
+                                <Span
+                                    FontFamily="PoppinsBold"
+                                    Text="{Binding TransaccionAEliminar.Descripcion}"
+                                    TextColor="#FF006E" />
+                                <Span FontFamily="PoppinsBold" Text="?" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <!--  Subtítulo  -->
+                    <Label
+                        Margin="0,0,0,32"
+                        FontFamily="InterRegular"
+                        FontSize="14"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Text="Este movimiento se eliminará permanentemente, asegúrate de que deseas continuar."
+                        TextColor="#595C5E" />
+
+                    <!--  Botones de acción  -->
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="12">
+
+                        <!--  Botón Eliminar  -->
+                        <Button
+                            BackgroundColor="#FF006E"
+                            Command="{Binding ConfirmarEliminarCommand}"
+                            CornerRadius="50"
+                            FontFamily="InterBold"
+                            FontSize="16"
+                            HeightRequest="56"
+                            Text="Eliminar"
+                            TextColor="White"
+                            WidthRequest="340">
+                            <Button.Shadow>
+                                <Shadow
+                                    Brush="#FFB3D4"
+                                    Opacity="0.45"
+                                    Radius="20"
+                                    Offset="0,4" />
+                            </Button.Shadow>
+                        </Button>
+
+                        <!--  Botón Cancelar  -->
+                        <Button
+                            BackgroundColor="White"
+                            BorderColor="#D9DDE1"
+                            BorderWidth="1.5"
+                            Command="{Binding CancelarEliminarCommand}"
+                            CornerRadius="50"
+                            FontFamily="InterBold"
+                            FontSize="16"
+                            HeightRequest="56"
+                            Text="Cancelar"
+                            TextColor="#2C2F32"
+                            WidthRequest="340" />
+
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </bottomSheet:SfBottomSheet.BottomSheetContent>
+
+        </bottomSheet:SfBottomSheet>
+
+    </AbsoluteLayout>
+
+</ContentPage>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FinanzasApp.Presentacion.Vistas.Configuracion.ConfiguracionPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:FinanzasApp.Presentacion.ViewModels.Configuracion"
+    Title="{Binding Titulo}"
+    x:DataType="vm:ConfiguracionViewModel">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="24">
+
+            <!--  ── Encabezado ───────────────────────────────────────────────  -->
+            <VerticalStackLayout Margin="0,8,0,0" Spacing="4">
+                <Label Style="{StaticResource TextoTituloPagina}" Text="Ajustes" />
+                <Label Style="{StaticResource TextoCuerpo}" Text="Personaliza tu experiencia" />
+            </VerticalStackLayout>
+
+            <!--  ── Sección: Seguridad ───────────────────────────────────────  -->
+            <Border Style="{StaticResource TarjetaBase}">
+                <VerticalStackLayout Spacing="0">
+                    <!--  Encabezado sección  -->
+                    <Label
+                        Margin="0,0,0,16"
+                        Style="{StaticResource TextoEtiqueta}"
+                        Text="🔒  Seguridad" />
+
+                    <!--  Fila biometría  -->
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="15"
+                                Text="{Binding DescripcionBiometria}"
+                                TextColor="{StaticResource TextoPrimario}" />
+                            <Label
+                                FontSize="12"
+                                Style="{StaticResource TextoCuerpo}"
+                                Text="Accede con huella o Face ID al abrir la app" />
+                        </VerticalStackLayout>
+
+                        <Switch
+                            Grid.Column="1"
+                            IsEnabled="{Binding BiometriaDisponible}"
+                            IsToggled="{Binding BiometriaHabilitada}"
+                            OnColor="{StaticResource AzulMedio}"
+                            ThumbColor="White"
+                            VerticalOptions="Center" />
+                    </Grid>
+
+                    <!--  Aviso si no hay biometría en el dispositivo  -->
+                    <Label
+                        Margin="0,12,0,0"
+                        FontSize="12"
+                        IsVisible="{Binding BiometriaDisponible, Converter={StaticResource InvertirBoolConverter}}"
+                        Text="⚠️ Tu dispositivo no soporta autenticación biométrica."
+                        TextColor="{StaticResource ColorAlerta}" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!--  ── Sección: Apariencia ──────────────────────────────────────  -->
+            <Border Style="{StaticResource TarjetaBase}">
+                <VerticalStackLayout Spacing="16">
+                    <Label Style="{StaticResource TextoEtiqueta}" Text="🎨  Apariencia" />
+
+                    <Grid ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="15"
+                                Text="Tema oscuro"
+                                TextColor="{StaticResource TextoPrimario}" />
+                            <Label
+                                FontSize="12"
+                                Style="{StaticResource TextoCuerpo}"
+                                Text="Cambia el tema de la aplicación" />
+                        </VerticalStackLayout>
+                        <!--  En producción conectar a un TemaNightViewModel  -->
+                        <Switch
+                            Grid.Column="1"
+                            OnColor="{StaticResource AzulMedio}"
+                            ThumbColor="White"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!--  ── Sección: Datos ───────────────────────────────────────────  -->
+            <Border Style="{StaticResource TarjetaBase}">
+                <VerticalStackLayout Spacing="16">
+                    <Label Style="{StaticResource TextoEtiqueta}" Text="🗄️  Datos" />
+
+                    <!--  Limpiar datos  -->
+                    <Button
+                        Padding="20,0"
+                        Command="{Binding LimpiarDatosCommand}"
+                        HorizontalOptions="Start"
+                        Style="{StaticResource BotonPeligro}"
+                        Text="Eliminar todos los datos" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!--  ── Sección: Acerca de ───────────────────────────────────────  -->
+            <Border Style="{StaticResource TarjetaBase}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Style="{StaticResource TextoEtiqueta}" Text="ℹ️  Acerca de" />
+
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label
+                            Grid.Column="0"
+                            FontSize="15"
+                            Text="Versión"
+                            TextColor="{StaticResource TextoPrimario}" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource TextoCuerpo}"
+                            Text="{Binding VersionApp}" />
+                    </Grid>
+
+                    <BoxView HeightRequest="1" Color="{StaticResource Separador}" />
+
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label
+                            Grid.Column="0"
+                            FontSize="15"
+                            Text="Tecnologías"
+                            TextColor="{StaticResource TextoPrimario}" />
+                        <Label
+                            Grid.Column="1"
+                            FontSize="12"
+                            Style="{StaticResource TextoCuerpo}"
+                            Text=".NET MAUI 10 · SQLite · ONNX" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!--  ── Error ────────────────────────────────────────────────────  -->
+            <Border
+                Padding="16"
+                BackgroundColor="#FEE2E2"
+                IsVisible="{Binding TieneError}"
+                Stroke="Transparent"
+                StrokeShape="RoundRectangle 12">
+                <Label
+                    FontSize="14"
+                    Text="{Binding MensajeError}"
+                    TextColor="{StaticResource ColorError}" />
+            </Border>
+
+            <BoxView HeightRequest="48" Color="Transparent" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FinanzasApp.Presentacion.Vistas.Transacciones.TransaccionFormPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:modelos="clr-namespace:FinanzasApp.Presentacion.Modelos"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:FinanzasApp.Presentacion.ViewModels.Transacciones"
+    Title="{Binding Titulo}"
+    x:DataType="vm:TransaccionFormViewModel"
+    BackgroundColor="#FFFFFF"
+    Shell.BackgroundColor="#FF006E">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="20">
+
+            <!--  ── Descripción (campo clave para la predicción IA) ──────────  -->
+            <VerticalStackLayout Spacing="6">
+                <Label Style="{StaticResource TextoEtiqueta}" Text="Descripción" />
+                <Border Style="{StaticResource EntradaContenedor}">
+                    <Entry
+                        MaxLength="100"
+                        Placeholder="Ej: Walmart, pago de luz, salario..."
+                        Style="{StaticResource EntradaTexto}"
+                        Text="{Binding Descripcion}" />
+                </Border>
+
+                <!--  ── Panel de predicción IA ───────────────────────────────  -->
+                <Border
+                    Padding="12,8"
+                    BackgroundColor="{StaticResource AzulPastel}"
+                    IsVisible="{Binding IaDisponible}"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 10">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <!--  Mensaje de predicción o spinner  -->
+                        <VerticalStackLayout
+                            Grid.Column="0"
+                            Spacing="2"
+                            VerticalOptions="Center">
+                            <Label
+                                FontSize="13"
+                                IsVisible="{Binding PrediccionEnProceso, Converter={StaticResource InvertirBoolConverter}}"
+                                Text="{Binding MensajePrediccion}"
+                                TextColor="{StaticResource AzulMedio}" />
+                            <ActivityIndicator
+                                HeightRequest="20"
+                                HorizontalOptions="Start"
+                                IsRunning="{Binding PrediccionEnProceso}"
+                                IsVisible="{Binding PrediccionEnProceso}"
+                                Color="{StaticResource AzulMedio}" />
+                        </VerticalStackLayout>
+
+                        <!--  Botón para forzar predicción  -->
+                        <Button
+                            Grid.Column="1"
+                            Padding="4"
+                            BackgroundColor="Transparent"
+                            Command="{Binding PredecirCategoriaManualCommand}"
+                            FontSize="18"
+                            IsEnabled="{Binding PrediccionEnProceso, Converter={StaticResource InvertirBoolConverter}}"
+                            Text="✨"
+                            TextColor="{StaticResource AzulMedio}"
+                            ToolTipProperties.Text="Re-analizar con IA" />
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+
+            <!--  ── Monto ────────────────────────────────────────────────────  -->
+            <VerticalStackLayout Spacing="6">
+                <Label Style="{StaticResource TextoEtiqueta}" Text="Monto" />
+                <Border Style="{StaticResource EntradaContenedor}">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Label
+                            Grid.Column="0"
+                            Margin="0,0,8,0"
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            Text="₡"
+                            TextColor="{StaticResource TextoSecundario}"
+                            VerticalOptions="Center" />
+                        <Entry
+                            Grid.Column="1"
+                            Keyboard="Numeric"
+                            Placeholder="0.00"
+                            Style="{StaticResource EntradaTexto}"
+                            Text="{Binding Monto}" />
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+
+            <!--  ── Categoría ──────────────────────────────────────────────────  -->
+            <VerticalStackLayout Spacing="10">
+
+                <!--  Encabezado: título + badge IA + botón  -->
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+
+                    <!--  Título  -->
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource TextoEtiqueta}"
+                        Text="Categoría"
+                        VerticalOptions="Center" />
+
+                    <!--  Badge IA — visible solo cuando la categoría fue predicha  -->
+                    <Border
+                        Grid.Column="1"
+                        Padding="8,3"
+                        BackgroundColor="#FFF0F5"
+                        HorizontalOptions="Start"
+                        IsVisible="{Binding CategoriaFuePredicha}"
+                        Stroke="Transparent"
+                        StrokeShape="RoundRectangle 10"
+                        VerticalOptions="Center">
+                        <Label
+                            FontFamily="InterBold"
+                            FontSize="11"
+                            Text="✨ IA"
+                            TextColor="#FF006E" />
+                    </Border>
+
+                    <!--  Botón ver todas  -->
+                    <Button
+                        Grid.Column="2"
+                        Padding="12,0"
+                        BackgroundColor="White"
+                        Command="{Binding VerTodasCategoriasCommand}"
+                        CornerRadius="20"
+                        FontFamily="InterSemiBold"
+                        FontSize="12"
+                        HeightRequest="30"
+                        HorizontalOptions="End"
+                        Text="Ver todas"
+                        TextColor="#FF006E"
+                        VerticalOptions="Center">
+                        <Button.Shadow>
+                            <Shadow
+                                Brush="#15000000"
+                                Opacity="0.15"
+                                Radius="4"
+                                Offset="0,1" />
+                        </Button.Shadow>
+                    </Button>
+                </Grid>
+
+                <!--  Listado de categorías  -->
+                <CollectionView ItemsSource="{Binding CategoriasDisponibles}" SelectionMode="None">
+
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                            HorizontalItemSpacing="8"
+                            Orientation="Vertical"
+                            Span="3"
+                            VerticalItemSpacing="8" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+
+                        <DataTemplate x:DataType="modelos:CategoriaItem">
+
+                            <Border
+                                Padding="8,10"
+                                BackgroundColor="{Binding EstaSeleccionada, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FF006E|FFFFFF'}"
+                                HeightRequest="73"
+                                Stroke="{Binding EstaSeleccionada, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FF006E|#E9EAEF'}"
+                                StrokeShape="RoundRectangle 16"
+                                StrokeThickness="1.2"
+                                WidthRequest="106">
+
+                                <!--  Sombra sutil en estado no seleccionado  -->
+                                <Border.Shadow>
+                                    <Shadow
+                                        Brush="#10000000"
+                                        Opacity="0.1"
+                                        Radius="4"
+                                        Offset="0,1" />
+                                </Border.Shadow>
+
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SeleccionarCategoriaCommand}" CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+
+                                <!--  Contenido: icono arriba, nombre abajo  -->
+                                <VerticalStackLayout
+                                    HorizontalOptions="Center"
+                                    Spacing="8"
+                                    VerticalOptions="Center">
+
+                                    <Image
+                                        Aspect="AspectFit"
+                                        HeightRequest="20"
+                                        MaximumHeightRequest="24"
+                                        MinimumHeightRequest="20"
+                                        Source="{Binding Icono}"
+                                        VerticalOptions="Center"
+                                        WidthRequest="20">
+                                        <Image.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="{Binding EstaSeleccionada, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#43474E|#43474E'}" />
+                                        </Image.Behaviors>
+                                    </Image>
+
+                                    <Label
+                                        FontFamily="InterSemiBold"
+                                        FontSize="12"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        LineBreakMode="TailTruncation"
+                                        MaxLines="1"
+                                        Text="{Binding Nombre}"
+                                        TextColor="{Binding EstaSeleccionada, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FFFFFF|#43474E'}" />
+
+                                </VerticalStackLayout>
+                            </Border>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+
+            <!--  ── Fecha ────────────────────────────────────────────────────  -->
+            <VerticalStackLayout Spacing="6">
+                <Label Style="{StaticResource TextoEtiqueta}" Text="Fecha" />
+                <DatePicker
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    BackgroundColor="{StaticResource FondoInput}"
+                    Date="{Binding FechaSeleccionada}"
+                    Format="dd MMMM yyyy"
+                    MaximumDate="{Binding FechaHoy}"
+                    TextColor="{StaticResource TextoPrimario}" />
+            </VerticalStackLayout>
+
+            <!--  ── Notas opcionales ─────────────────────────────────────────  -->
+            <VerticalStackLayout Spacing="6">
+                <Label Style="{StaticResource TextoEtiqueta}" Text="Notas (opcional)" />
+                <Border HeightRequest="80" Style="{StaticResource EntradaContenedor}">
+                    <Editor
+                        FontSize="14"
+                        MaxLength="200"
+                        Placeholder="Agrega una nota..."
+                        Text="{Binding Notas}"
+                        TextColor="{StaticResource TextoPrimario}" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!--  ── Error ────────────────────────────────────────────────────  -->
+            <Border
+                Padding="16"
+                BackgroundColor="#FEE2E2"
+                IsVisible="{Binding TieneError}"
+                Stroke="Transparent"
+                StrokeShape="RoundRectangle 12">
+                <Label
+                    FontSize="14"
+                    Text="{Binding MensajeError}"
+                    TextColor="{StaticResource ColorError}" />
+            </Border>
+
+            <!--  ── Botón guardar ─────────────────────────────────────────────  -->
+            <Button
+                Margin="0,8,0,32"
+                Command="{Binding GuardarCommand}"
+                IsEnabled="{Binding EsFormularioValido}"
+                Style="{StaticResource BotonPrimario}"
+                Text="Guardar" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

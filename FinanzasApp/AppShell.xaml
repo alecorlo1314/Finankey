@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="FinanzasApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:config="clr-namespace:FinanzasApp.Presentacion.Vistas.Configuracion"
+    xmlns:local="clr-namespace:FinanzasApp"
+    xmlns:tarjetas="clr-namespace:FinanzasApp.Presentacion.Vistas.Tarjetas"
+    xmlns:transacciones="clr-namespace:FinanzasApp.Presentacion.Vistas.Transacciones"
+    xmlns:vistas="clr-namespace:FinanzasApp.Presentacion.Vistas"
+    Title="FinanzasApp"
+    FlyoutBehavior="Disabled"
+    Shell.NavBarHasShadow="True">
+
+    <!--  ── Estilos del Shell ─────────────────────────────────────────────────  -->
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style TargetType="TabBar">
+                <Setter Property="Shell.TabBarBackgroundColor" Value="#FFFFFF" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="#FF006E" />
+                <Setter Property="Shell.TabBarUnselectedColor" Value="#94A3B8" />
+                <Setter Property="Shell.TabBarTitleColor" Value="#FF006E" />
+            </Style>
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <!--  ── TabBar principal ─────────────────────────────────────────────────  -->
+    <TabBar>
+
+        <!--  Tab 1: Dashboard / Inicio  -->
+        <ShellContent
+            Title="Inicio"
+            ContentTemplate="{DataTemplate vistas:DashboardPage}"
+            Icon=" tab_home.png"
+            Route="inicio" />
+
+        <!--  Tab 2: Mis Tarjetas  -->
+        <ShellContent
+            Title="Tarjetas"
+            ContentTemplate="{DataTemplate tarjetas:TarjetasPage}"
+            Icon="tab_tarjetas.png"
+            Route="tarjetas" />
+
+        <!--  Tab 3: Transacciones (acceso global al historial)  -->
+        <ShellContent
+            Title="Movimientos"
+            ContentTemplate="{DataTemplate transacciones:TransaccionesGlobalPage}"
+            Icon="tab_movimientos.png"
+            Route="movimientos" />
+
+        <!--  Tab 4: Configuración  -->
+        <ShellContent
+            Title="Ajustes"
+            ContentTemplate="{DataTemplate config:ConfiguracionPage}"
+            Icon="tab_ajustes.png"
+            Route="configuracion" />
+
+    </TabBar>
+</Shell>

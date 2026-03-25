@@ -1,0 +1,323 @@
+using FinanzasApp.Domain.Enumeraciones;
+using System.Globalization;
+
+namespace FinanzasApp.Presentacion.Convertidores;
+
+/// <summary>Invierte un valor booleano. Usado para mostrar/ocultar elementos opuestos.</summary>
+public class InvertirBoolConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        value is bool b && !b;
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        value is bool b && !b;
+}
+
+public class MayorQueCeroConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        // Si el valor es un número y mayor que 0, devuelve true
+        if (value is int count)
+            return count > 0;
+
+        return false; // Por defecto, ocultar
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
+}
+
+/// <summary>
+/// Convierte un monto decimal con signo según el tipo de transacción.
+/// Gasto → "-₡1,500.00" | Ingreso → "+₡3,000.00"
+/// </summary>
+public class MontoConSignoConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is not decimal monto) return "₡0.00";
+        return $"₡{monto:N2}";
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
+}
+
+/// <summary>
+/// Retorna el color del texto según el tipo de transacción.
+/// Ingreso → verde | Gasto → rojo
+/// </summary>
+public class TipoTransaccionColorConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is TipoTransaccion tipo)
+        {
+            return tipo == TipoTransaccion.Ingreso
+                ? Color.FromArgb("#0F172A")
+                : Color.FromArgb("#0F172A");
+        }
+        return Color.FromArgb("#64748B");
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
+}
+
+/// <summary>
+/// Retorna un emoji representativo de cada categoría de transacción.
+/// </summary>
+public class CategoriaIconoConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        return value is CategoriaTransaccion categoria ? categoria switch
+        {
+            CategoriaTransaccion.Alimentacion    => "icono_alimentacion_historial.svg",
+            CategoriaTransaccion.Transporte      => "icono_transporte_historial.svg",
+            CategoriaTransaccion.Entretenimiento => "icono_entretenimiento_historial.svg",
+            CategoriaTransaccion.Salud           => "icono_salud_historial.svg",
+            CategoriaTransaccion.Educacion       => "icono_educacion_historial.svg",
+            CategoriaTransaccion.Hogar           => "icono_hogar_historial.svg",
+            CategoriaTransaccion.Ropa            => "icono_ropa_historial.svg",
+            CategoriaTransaccion.Tecnologia      => "icono_tecnologia_historial.svg",
+            CategoriaTransaccion.Viajes          => "icono_viajes_historial.svg",
+            CategoriaTransaccion.Servicios       => "icono_servicios_historial.svg",
+            CategoriaTransaccion.Restaurantes    => "icono_restaurantes_historial.svg",
+            CategoriaTransaccion.Deportes        => "icono_deportes_historial.svg",
+            CategoriaTransaccion.Suscripciones   => "icono_suscripciones_historial.svg",
+            CategoriaTransaccion.SalarioSueldo   => "icono_salario_historial.svg",
+            CategoriaTransaccion.Freelance       => "icono_freelance_historial.svg",
+            CategoriaTransaccion.Inversiones     => "icono_inversiones_historial.svg", 
+            CategoriaTransaccion.Reembolsos      => "icono_reembolso_historial.svg",
+            _                                    => "icono_otros_historial.svg"
+        } : "icono_otros_historial.svg";
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
+}
+
+/// <summary>
+/// Retorna el nombre legible de una categoría.
+/// </summary>
+public class CategoriaNombreConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is not CategoriaTransaccion cat) return string.Empty;
+
+        return cat switch
+        {
+            CategoriaTransaccion.Alimentacion    => $"ALIMENTACION",
+            CategoriaTransaccion.Transporte      => $"TRANSPORTE",
+            CategoriaTransaccion.Entretenimiento => $"ENTRETENIMIENTO",
+            CategoriaTransaccion.Salud           => $"SALUD",
+            CategoriaTransaccion.Educacion       => $"EDUCACION",
+            CategoriaTransaccion.Hogar           => $"HOGAR",
+            CategoriaTransaccion.Ropa            => $"ROPA",
+            CategoriaTransaccion.Tecnologia      => $"TECNOLOGIA",
+            CategoriaTransaccion.Viajes          => $"VIAJES",
+            CategoriaTransaccion.Servicios       => $"SERVICIOS",
+            CategoriaTransaccion.Restaurantes    => $"RESTAURANTES",
+            CategoriaTransaccion.Deportes        => $"DEPORTES",
+            CategoriaTransaccion.Suscripciones   => $"SUSCRIPCIONES",
+            CategoriaTransaccion.SalarioSueldo   => $"SALARIO / SUELDOS",
+            CategoriaTransaccion.Freelance       => $"FREELANCE",
+            CategoriaTransaccion.Inversiones     => $"INVERSIONES",
+            CategoriaTransaccion.Reembolsos      => $"REEMBOLSOS",
+            _                                    => $"OTROS"
+        };
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
+}
+
+/// <summary>Convierte el tipo de tarjeta a color para el badge.</summary>
+public class TipoTarjetaColorConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        value is TipoTarjeta tipo && tipo == TipoTarjeta.Credito
+            ? Color.FromArgb("#7C3AED")
+            : Color.FromArgb("#0369A1");
+        
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
+}
+
+public class TipoTarjetaTextoColorConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is TipoTarjeta tipo)
+        {
+            return tipo == TipoTarjeta.Credito
+                ? Color.FromArgb("#00B7A4") // verde fuerte
+                : Color.FromArgb("#BA1A1A"); // rojo fuerte
+        }
+
+        return Colors.Gray; // fallback
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
+}
+
+public class TipoTarjetaFondoColorConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is TipoTarjeta tipo)
+        {
+            return tipo == TipoTarjeta.Credito
+                ? Color.FromArgb("#B3EDE7") // verde suave (derivado de #00B7A4)
+                : Color.FromArgb("#F5C7C7"); // rojo suave (derivado de #BA1A1A)
+        }
+
+        return Colors.LightGray; // fallback
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
+}
+
+public class TipoTarjetaIconoConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+          value is TipoTarjeta tipo
+            ? tipo == TipoTarjeta.Credito ? "icono_credito.png" : "icono_credito.png"
+            : string.Empty;
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
+}
+
+/// <summary>Convierte el tipo de tarjeta a texto legible.</summary>
+public class TipoTarjetaTextoConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        value is TipoTarjeta tipo
+            ? tipo == TipoTarjeta.Credito ? "Crédito" : "Débito"
+            : string.Empty;
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
+}
+
+/// <summary>Convierte un porcentaje (0-100) a un valor Progress (0.0-1.0).</summary>
+public class PorcentajeProgressConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        value is double pct ? Math.Min(pct / 100.0, 1.0) : 0.0;
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
+}
+
+/// <summary>
+/// Retorna el color de la barra de progreso de crédito según el porcentaje de uso.
+/// Verde ≤ 60%, Amarillo ≤ 80%, Rojo > 80%
+/// </summary>
+public class PorcentajeColorConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is not double pct) return Color.FromArgb("#10B981");
+        return pct switch
+        {
+            <= 60 => Color.FromArgb("#10B981"),  // Verde: uso saludable
+            <= 80 => Color.FromArgb("#F59E0B"),  // Amarillo: precaución
+            _     => Color.FromArgb("#EF4444")   // Rojo: uso alto
+        };
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
+}
+
+/// <summary>Retorna true si el valor no es null. Útil para mostrar elementos opcionales.</summary>
+public class NullToBoolConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        value is not null;
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
+}
+
+/// <summary>Convierte la red de la tarjeta (Visa, Mastercard) en un emoji representativo.</summary>
+public class RedIconoConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        value?.ToString() switch
+        {
+            "Visa"             => "💳",
+            "Mastercard"       => "🔴",
+            "American Express" => "🟦",
+            _                  => "💳"
+        };
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
+}
+
+public class TipoTarjetaConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        value?.ToString() switch
+        {
+            "Visa" => "icono_visa.png",
+            "Mastercard" => "icono_mastercard.png",
+            "American Express" => "icono_amex.png",
+            _ => "icono_visa.png"
+        };
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
+}
+
+/// <summary>
+/// Converter para el selector de tipo en el formulario de tarjeta.
+/// Retorna el color de fondo según si el botón está seleccionado.
+/// </summary>
+public class TipoSeleccionadoColorConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is not TipoTarjeta tipo || parameter is not string parametro) 
+            return Color.FromArgb("#3A86FF");
+
+        var estaSeleccionado = (tipo == TipoTarjeta.Credito && parametro == "Credito")
+                            || (tipo == TipoTarjeta.Debito  && parametro == "Debito");
+
+        return estaSeleccionado
+            ? Color.FromArgb("#3A86FF")
+            : Color.FromArgb("#F8FAFC");
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
+}
+
+/// <summary>Color del texto del botón tipo tarjeta según selección.</summary>
+public class TipoSeleccionadoTextoColorConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is not TipoTarjeta tipo || parameter is not string parametro)
+            return Color.FromArgb("#64748B");
+
+        var estaSeleccionado = (tipo == TipoTarjeta.Credito && parametro == "Credito")
+                            || (tipo == TipoTarjeta.Debito  && parametro == "Debito");
+
+        return estaSeleccionado
+            ? Colors.White
+            : Color.FromArgb("#2E6DA4");
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
+}

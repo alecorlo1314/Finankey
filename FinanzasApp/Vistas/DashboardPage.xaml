@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    DashboardPage.xaml — Pantalla principal de la app.
+    Muestra: saludo, resumen financiero del mes, carrusel de tarjetas
+    y las últimas transacciones.
+-->
+<ContentPage
+    x:Class="FinanzasApp.Presentacion.Vistas.DashboardPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:FinanzasApp.Presentacion.ViewModels"
+    x:DataType="vm:DashboardViewModel"
+    BackgroundColor="White"
+    Shell.NavBarIsVisible="False">
+
+    <ContentPage.Behaviors>
+        <!--  Llama a AlAparecerAsync cada vez que la página se muestra  -->
+        <toolkit:EventToCommandBehavior Command="{Binding CargarDashboardCommand}" EventName="Appearing" />
+        <toolkit:StatusBarBehavior StatusBarColor="#FF006E" StatusBarStyle="LightContent" />
+    </ContentPage.Behaviors>
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0">
+
+            <!--  Header con gradiente dentro de un Border  -->
+            <Border
+                BackgroundColor="#FF006E"
+                HeightRequest="250"
+                Stroke="#FF80B7"
+                StrokeShape="RoundRectangle 0,0,25,25"
+                StrokeThickness="0">
+
+                <Grid Padding="24,32,24,32">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!--  Saludo  -->
+                    <Label
+                        Grid.Row="0"
+                        Style="{StaticResource TextoCuerpo}"
+                        Text="{Binding SaludoUsuario}"
+                        TextColor="#F8FAFC" />
+
+                    <!--  Balance del mes  -->
+                    <Label
+                        Grid.Row="1"
+                        Style="{StaticResource TextoMoneda}"
+                        Text="{Binding ResumenFinanciero.BalanceMes, StringFormat='₡{0:N0}'}"
+                        TextColor="White" />
+
+                    <!--  Selector de mes  -->
+                    <Border
+                        Grid.Row="3"
+                        BackgroundColor="#FF4D9A"
+                        Stroke="#FF99C5"
+                        StrokeShape="RoundRectangle 20"
+                        StrokeThickness="1"
+                        VerticalOptions="Start"
+                        WidthRequest="350">
+                        <Grid Padding="12,4" ColumnDefinitions="Auto,*,Auto">
+                            <Button
+                                Grid.Column="0"
+                                Padding="0"
+                                BackgroundColor="Transparent"
+                                Command="{Binding MesAnteriorCommand}"
+                                FontSize="24"
+                                Text="‹"
+                                TextColor="{StaticResource TextoBlanco}"
+                                WidthRequest="36" />
+
+                            <Label
+                                Grid.Column="1"
+                                FontFamily="InterSemiBold"
+                                FontSize="16"
+                                HorizontalOptions="Center"
+                                Text="{Binding EtiquetaMes}"
+                                TextColor="{StaticResource TextoBlanco}"
+                                VerticalOptions="Center" />
+
+                            <Button
+                                Grid.Column="2"
+                                Padding="0"
+                                BackgroundColor="Transparent"
+                                Command="{Binding MesSiguienteCommand}"
+                                FontSize="24"
+                                Text="›"
+                                TextColor="{StaticResource TextoBlanco}"
+                                WidthRequest="36" />
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!--  ── Tarjetas de resumen (gastos / ingresos) ─────────────────  -->
+            <Grid Margin="16,-45,16,0" ColumnDefinitions="*,8,*">
+
+                <!--  Gastos del mes  -->
+                <Border
+                    Grid.Column="0"
+                    Padding="16"
+                    Style="{StaticResource TarjetaBase}">
+                    <Border.Shadow>
+                        <Shadow
+                            Brush="#33000000"
+                            Opacity="0.4"
+                            Radius="6"
+                            Offset="0,2" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="8">
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                            <Image
+                                HeightRequest="24"
+                                Source="icono_gasto_dashboard.png"
+                                WidthRequest="24" />
+                            <Label
+                                FontFamily="InterSemiBold"
+                                Style="{StaticResource TextoEtiqueta}"
+                                Text="Gastos" />
+                        </HorizontalStackLayout>
+                        <Label
+                            FontFamily="PoppinsBold"
+                            Style="{StaticResource TextoMonedaChico}"
+                            Text="{Binding ResumenFinanciero.GastosMesActual, StringFormat='₡{0:N0}'}"
+                            TextColor="{StaticResource Gray600}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!--  Ingresos del mes  -->
+                <Border
+                    Grid.Column="2"
+                    Padding="16"
+                    Style="{StaticResource TarjetaBase}">
+                    <Border.Shadow>
+                        <Shadow
+                            Brush="#33000000"
+                            Opacity="0.4"
+                            Radius="6"
+                            Offset="0,2" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="8">
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                            <Image
+                                HeightRequest="24"
+                                Source="icono_ingreso_dashboard.png"
+                                WidthRequest="24" />
+                            <Label
+                                FontFamily="InterSemiBold"
+                                Style="{StaticResource TextoEtiqueta}"
+                                Text="Ingresos" />
+                        </HorizontalStackLayout>
+                        <Label
+                            FontFamily="PoppinsBold"
+                            Style="{StaticResource TextoMonedaChico}"
+                            Text="{Binding ResumenFinanciero.IngresosMesActual, StringFormat='₡{0:N0}'}"
+                            TextColor="{StaticResource Gray600}" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+
+            <!--  ── Sección de tarjetas ──────────────────────────────────────  -->
+            <VerticalStackLayout Padding="24,16,24,0" Spacing="8">
+                <Label
+                    FontFamily="PoppinsSemiBold"
+                    FontSize="18"
+                    Style="{StaticResource TextoSubtitulo}"
+                    Text="Mis tarjetas" />
+
+                <!--  CarouselView horizontal de tarjetas  -->
+                <CarouselView ItemsSource="{Binding Tarjetas}" Loop="False">
+                    <!--  Vista vacía cuando no hay tarjetas  -->
+                    <CarouselView.EmptyView>
+                        <StackLayout>
+
+                            <!--  Imagen  -->
+                            <Image
+                                HeightRequest="150"
+                                Source="vista_sin_tarjetas.png"
+                                VerticalOptions="Start"
+                                WidthRequest="150" />
+
+                            <!--  Título  -->
+                            <Label
+                                FontFamily="PoppinsSemiBold"
+                                FontSize="20"
+                                HorizontalOptions="Center"
+                                Text="No hay tarjetas aun"
+                                TextColor="{StaticResource TextoPrimario}" />
+
+                            <!--  Mensaje  -->
+                            <Label
+                                FontFamily="PoppinsRegular"
+                                FontSize="16"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                Text="Agrega tu primera tarjeta para empezar a gestionar tus finanzas."
+                                TextColor="#808080" />
+                        </StackLayout>
+
+                    </CarouselView.EmptyView>
+
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Margin="8"
+                                Padding="24"
+                                BackgroundColor="{Binding ColorHex}"
+                                HeightRequest="200"
+                                Stroke="Transparent"
+                                StrokeShape="RoundRectangle 20"
+                                WidthRequest="320">
+
+                                <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,Auto,Auto">
+
+                                    <!--  Red de la tarjeta (superior izquierda)  -->
+                                    <Image
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        HeightRequest="48"
+                                        HorizontalOptions="Start"
+                                        Source="{Binding RedTarjeta, Converter={StaticResource TipoTarjetaConverter}}"
+                                        VerticalOptions="Start"
+                                        WidthRequest="48" />
+
+                                    <!--  Icono chip (superior derecha)  -->
+                                    <Image
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        HeightRequest="48"
+                                        HorizontalOptions="End"
+                                        Source="icono_chip.png"
+                                        VerticalOptions="Start"
+                                        WidthRequest="48" />
+
+                                    <!--  Últimos dígitos  -->
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.ColumnSpan="2"
+                                        Margin="0,0,0,12"
+                                        CharacterSpacing="2"
+                                        FontSize="16"
+                                        Text="{Binding UltimosDigitos, StringFormat='•••• •••• •••• {0}'}"
+                                        TextColor="White" />
+
+                                    <!--  Nombre y saldo  -->
+                                    <Grid
+                                        Grid.Row="2"
+                                        Grid.ColumnSpan="2"
+                                        ColumnDefinitions="*,Auto">
+                                        <Label
+                                            Grid.Column="0"
+                                            FontSize="14"
+                                            Text="{Binding Nombre}"
+                                            TextColor="#CCFFFFFF" />
+                                        <Label
+                                            Grid.Column="1"
+                                            FontAttributes="Bold"
+                                            FontSize="18"
+                                            Text="{Binding SaldoActual, StringFormat='₡{0:N0}'}"
+                                            TextColor="White" />
+                                    </Grid>
+                                </Grid>
+                            </Border>
+
+
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+            </VerticalStackLayout>
+
+            <!--  Sección de últimos movimientos  -->
+            <VerticalStackLayout Padding="24,24,24,32" Spacing="16">
+
+                <!--  Header con título y botón de filtro  -->
+                <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding TransaccionesRecientes.Count, Converter={StaticResource MayorQueCeroConverter}}">
+                    <!--  Título  -->
+                    <Label
+                        Style="{StaticResource TextoSubtitulo}"
+                        Text="Últimos movimientos"
+                        VerticalOptions="Center" />
+
+                    <!--  Botón de filtro  -->
+                    <ImageButton
+                        Grid.Column="1"
+                        BackgroundColor="Transparent"
+                        Command="{Binding AbrirFiltroCommand}"
+                        HeightRequest="24"
+                        HorizontalOptions="End"
+                        Source="icono_filtro.png"
+                        VerticalOptions="Center"
+                        WidthRequest="24" />
+                </Grid>
+
+                <!--  Lista de transacciones recientes  -->
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding TransaccionesRecientes}" Spacing="4">
+                    <BindableLayout.EmptyView>
+                        <Label
+                            Margin="0,40"
+                            FontFamily="PoppinsRegular"
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="No se registran movimientos este mes"
+                            TextColor="#808080" />
+                    </BindableLayout.EmptyView>
+
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <!--  Fila de transacción  -->
+                            <Border
+                                Padding="8"
+                                HeightRequest="79"
+                                StrokeShape="RoundRectangle 20"
+                                Style="{StaticResource TarjetaBase}">
+                                <Border.Shadow>
+                                    <Shadow
+                                        Brush="#33000000"
+                                        Opacity="0.35"
+                                        Radius="6"
+                                        Offset="0,2" />
+                                </Border.Shadow>
+
+                                <Grid ColumnDefinitions="65,*,Auto" ColumnSpacing="12">
+
+                                    <!--  Ícono de categoría  -->
+                                    <Image
+                                        Grid.Column="0"
+                                        Aspect="AspectFit"
+                                        HeightRequest="60"
+                                        HorizontalOptions="Center"
+                                        Source="{Binding Categoria, Converter={StaticResource CategoriaIconoConverter}}"
+                                        VerticalOptions="Center"
+                                        WidthRequest="60" />
+
+                                    <!--  Descripción y fecha  -->
+                                    <VerticalStackLayout
+                                        Grid.Column="1"
+                                        Spacing="2"
+                                        VerticalOptions="Center">
+
+                                        <!--  Descripción  -->
+                                        <Label
+                                            FontFamily="InterSemiBold"
+                                            FontSize="16"
+                                            LineBreakMode="TailTruncation"
+                                            Text="{Binding Descripcion}"
+                                            TextColor="{StaticResource TextoPrimario}" />
+
+                                        <!--  Fecha  -->
+                                        <Label
+                                            FontFamily="InterRegular"
+                                            FontSize="12"
+                                            Text="{Binding Fecha, StringFormat='{0:dd MMM yyyy}'}"
+                                            TextColor="{StaticResource TextoPrimario}" />
+                                    </VerticalStackLayout>
+
+                                    <!--  Monto  -->
+                                    <Label
+                                        Grid.Column="2"
+                                        FontFamily="InterSemiBold"
+                                        FontSize="16"
+                                        Text="{Binding Monto, Converter={StaticResource MontoConSignoConverter}}"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+
+                    </BindableLayout.ItemTemplate>
+
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

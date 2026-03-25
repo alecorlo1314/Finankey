@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Application
+    x:Class="FinanzasApp.App"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:convertidores="clr-namespace:FinanzasApp.Presentacion.Convertidores"
+    xmlns:local="clr-namespace:FinanzasApp">
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <!--
+                Único punto de entrada de estilos.
+                Estilos.xaml a su vez importa Colores.xaml internamente,
+                por lo que no hay que incluir Colores.xaml aquí también
+                (eso causaría otro duplicado de los tokens de color).
+            -->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--  ── Convertidores globales ──────────────────────────────────  -->
+
+            <convertidores:InvertirBoolConverter x:Key="InvertirBoolConverter" />
+            <convertidores:MontoConSignoConverter x:Key="MontoConSignoConverter" />
+            <convertidores:TipoTransaccionColorConverter x:Key="TipoTransaccionColorConverter" />
+            <convertidores:TipoTransaccionFondoConverter x:Key="TipoTransaccionFondoConverter" />
+            <convertidores:TipoTransaccionTextoConverter x:Key="TipoTransaccionTextoConverter" />
+            <convertidores:CategoriaIconoConverter x:Key="CategoriaIconoConverter" />
+            <convertidores:CategoriaNombreConverter x:Key="CategoriaNombreConverter" />
+            <convertidores:TipoTarjetaColorConverter x:Key="TipoTarjetaColorConverter" />
+            <convertidores:TipoTarjetaTextoConverter x:Key="TipoTarjetaTextoConverter" />
+            <convertidores:PorcentajeProgressConverter x:Key="PorcentajeProgressConverter" />
+            <convertidores:PorcentajeColorConverter x:Key="PorcentajeColorConverter" />
+            <convertidores:NullToBoolConverter x:Key="NullToBoolConverter" />
+            <convertidores:RedIconoConverter x:Key="RedIconoConverter" />
+            <convertidores:BoolToColorConverter x:Key="BoolToColorConverter" />
+            <convertidores:TipoSeleccionadoColorConverter x:Key="TipoSeleccionadoColorConverter" />
+            <convertidores:TipoSeleccionadoTextoColorConverter x:Key="TipoSeleccionadoTextoColorConverter" />
+            <convertidores:TipoTarjetaIconoConverter x:Key="TipoTarjetaIconoConverter" />
+            <convertidores:TipoTarjetaTextoColorConverter x:Key="TipoTarjetaTextoColorConverter" />
+            <convertidores:TipoTarjetaFondoColorConverter x:Key="TipoTarjetaFondoColorConverter" />
+            <convertidores:TipoTarjetaConverter x:Key="TipoTarjetaConverter" />
+            <convertidores:MayorQueCeroConverter x:Key="MayorQueCeroConverter" />
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

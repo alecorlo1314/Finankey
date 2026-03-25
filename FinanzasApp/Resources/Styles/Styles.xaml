@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+
+    <!--
+        Importa los tokens de color.
+        Colores.xaml debe ir PRIMERO para que los StaticResource de abajo lo encuentren.
+    -->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Resources/Styles/Colors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--
+        ══════════════════════════════════════════════════════════════════════
+        ESTILOS CON CLAVE (x:Key) — se aplican de forma explícita en XAML
+        ══════════════════════════════════════════════════════════════════════
+    -->
+
+    <!--  ── Texto ───────────────────────────────────────────────────────────  -->
+    <!--
+        SISTEMA TIPOGRÁFICO
+        ───────────────────
+        Inter    → UI general: cuerpo, etiquetas, botones, nav.
+        Pesos: Regular(400) Medium(500) SemiBold(600) Bold(700)
+        Poppins  → Display: montos grandes y títulos hero.
+        Pesos: SemiBold(600) Bold(700)
+        
+        Alias registrados en MauiProgram.cs:
+        InterRegular / InterMedium / InterSemiBold / InterBold
+        PoppinsSemiBold / PoppinsBold
+    -->
+
+    <!--
+        Título de página — Inter Bold 26px
+        Usado en encabezados de sección ("Mis Tarjetas", "Ajustes").
+        CharacterSpacing negativo aprieta las letras para look más moderno.
+    -->
+    <Style x:Key="TextoTituloPagina" TargetType="Label">
+        <Setter Property="FontFamily" Value="InterBold" />
+        <Setter Property="FontSize" Value="26" />
+        <Setter Property="TextColor" Value="{StaticResource TextoPrimario}" />
+        <Setter Property="CharacterSpacing" Value="-0.5" />
+    </Style>
+
+    <!--
+        Subtítulo — Inter SemiBold 18px
+        Encabezados de subsección dentro de una página.
+    -->
+    <Style x:Key="TextoSubtitulo" TargetType="Label">
+        <Setter Property="FontFamily" Value="InterSemiBold" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="TextColor" Value="{StaticResource TextoPrimario}" />
+    </Style>
+
+    <!--
+        Cuerpo — Inter Regular 14px
+        Texto descriptivo, fechas, notas. LineHeight 1.5 mejora la legibilidad
+        en párrafos cortos.
+    -->
+    <Style x:Key="TextoCuerpo" TargetType="Label">
+        <Setter Property="FontFamily" Value="InterRegular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{StaticResource TextoSecundario}" />
+        <Setter Property="LineHeight" Value="1.5" />
+    </Style>
+
+    <!--
+        Cuerpo medio — Inter Medium 14px
+        Para nombres de transacciones, nombres de tarjetas dentro de listas.
+        Más peso que TextoCuerpo sin llegar a ser subtítulo.
+    -->
+    <Style x:Key="TextoCuerpoMedio" TargetType="Label">
+        <Setter Property="FontFamily" Value="InterMedium" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{StaticResource TextoPrimario}" />
+    </Style>
+
+    <!--
+        Monto grande — Poppins Bold 34px
+        Balance principal del dashboard. Poppins le da carácter de "display";
+        el tracking negativo unifica los dígitos visualmente.
+    -->
+    <Style x:Key="TextoMoneda" TargetType="Label">
+        <Setter Property="FontFamily" Value="PoppinsBold" />
+        <Setter Property="FontSize" Value="34" />
+        <Setter Property="TextColor" Value="{StaticResource TextoPrimario}" />
+        <Setter Property="CharacterSpacing" Value="-1" />
+    </Style>
+
+    <!--
+        Monto mediano — Poppins SemiBold 22px
+        Montos en tarjetas del carrusel y totales de sección.
+    -->
+    <Style x:Key="TextoMonedaChico" TargetType="Label">
+        <Setter Property="FontFamily" Value="PoppinsSemiBold" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="TextColor" Value="{StaticResource TextoPrimario}" />
+        <Setter Property="CharacterSpacing" Value="-0.5" />
+    </Style>
+
+    <!--
+        Monto pequeño — Poppins SemiBold 16px
+        Montos en filas de transacciones y resúmenes compactos.
+    -->
+    <Style x:Key="TextoMonedaMini" TargetType="Label">
+        <Setter Property="FontFamily" Value="PoppinsSemiBold" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="TextColor" Value="{StaticResource TextoPrimario}" />
+        <Setter Property="CharacterSpacing" Value="-0.3" />
+    </Style>
+
+    <!--
+        Etiqueta — Inter Medium 11px UPPERCASE
+        Labels de categorías, encabezados de campos del formulario.
+        CharacterSpacing positivo mejora la legibilidad en tamaños pequeños.
+    -->
+    <Style x:Key="TextoEtiqueta" TargetType="Label">
+        <Setter Property="FontFamily" Value="InterMedium" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="TextColor" Value="{StaticResource TextoSecundario}" />
+        <Setter Property="TextTransform" Value="Uppercase" />
+        <Setter Property="CharacterSpacing" Value="0.8" />
+    </Style>
+
+    <!--
+        Botón — Inter SemiBold 15px
+        Texto de todos los botones de acción.
+    -->
+    <Style x:Key="TextoBoton" TargetType="Label">
+        <Setter Property="FontFamily" Value="InterSemiBold" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="TextColor" Value="{StaticResource TextoBlanco}" />
+        <Setter Property="CharacterSpacing" Value="0.2" />
+    </Style>
+
+    <!--
+        Encabezado Hero — Poppins Bold 28px
+        Saludo y títulos de pantallas de bienvenida/login.
+    -->
+    <Style x:Key="TextoHero" TargetType="Label">
+        <Setter Property="FontFamily" Value="PoppinsBold" />
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="TextColor" Value="{StaticResource TextoBlanco}" />
+        <Setter Property="CharacterSpacing" Value="-0.5" />
+    </Style>
+
+    <!--
+        Caption — Inter Regular 12px
+        Fechas en filas de transacciones, metadatos secundarios.
+    -->
+    <Style x:Key="TextoCaption" TargetType="Label">
+        <Setter Property="FontFamily" Value="InterRegular" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" Value="{StaticResource TextoDeshabilitado}" />
+    </Style>
+
+
+    <!--  ── Cards (Border) ──────────────────────────────────────────────────  -->
+
+    <Style x:Key="TarjetaBase" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource FondoTarjeta}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 16" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow
+                    Brush="#1A000000"
+                    Opacity="0.08"
+                    Radius="12"
+                    Offset="0,2" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Padding" Value="20" />
+        <Setter Property="Margin" Value="0,0,0,12" />
+    </Style>
+
+    <!--  ── Botones ──────────────────────────────────────────────────────────  -->
+
+    <Style x:Key="BotonPrimario" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#8338EC" />
+        <Setter Property="TextColor" Value="{StaticResource TextoBlanco}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="HeightRequest" Value="54" />
+        <Setter Property="Padding" Value="24,0" />
+    </Style>
+
+    <Style x:Key="BotonSecundario" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource AzulMedio}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="HeightRequest" Value="54" />
+        <Setter Property="BorderColor" Value="{StaticResource AzulMedio}" />
+        <Setter Property="BorderWidth" Value="1.5" />
+    </Style>
+
+    <Style x:Key="BotonPeligro" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorError}" />
+        <Setter Property="TextColor" Value="{StaticResource TextoBlanco}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="HeightRequest" Value="48" />
+    </Style>
+
+    <Style x:Key="BotonFlotante" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource AzulMedio}" />
+        <Setter Property="TextColor" Value="{StaticResource TextoBlanco}" />
+        <Setter Property="CornerRadius" Value="28" />
+        <Setter Property="HeightRequest" Value="56" />
+        <Setter Property="WidthRequest" Value="56" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow
+                    Brush="#662E6DA4"
+                    Opacity="0.4"
+                    Radius="16"
+                    Offset="0,4" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ── Inputs ───────────────────────────────────────────────────────────  -->
+
+    <Style x:Key="EntradaTexto" TargetType="Entry">
+        <Setter Property="BackgroundColor" Value="{StaticResource FondoInput}" />
+        <Setter Property="TextColor" Value="{StaticResource TextoPrimario}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource TextoDeshabilitado}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="HeightRequest" Value="52" />
+    </Style>
+
+    <Style x:Key="EntradaContenedor" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource FondoInput}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+        <Setter Property="Stroke" Value="{StaticResource Separador}" />
+        <Setter Property="Padding" Value="16,0" />
+        <Setter Property="HeightRequest" Value="54" />
+    </Style>
+
+    <!--  ── Chips / Badges ──────────────────────────────────────────────────  -->
+
+    <Style x:Key="ChipIngreso" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource TealPastel}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 20" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="Padding" Value="10,4" />
+    </Style>
+
+    <Style x:Key="ChipGasto" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="#FEE2E2" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 20" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="Padding" Value="10,4" />
+    </Style>
+
+    <!--
+        ══════════════════════════════════════════════════════════════════════
+        ESTILOS IMPLÍCITOS (sin x:Key) — se aplican a TODOS los controles
+        del tipo indicado. Solo puede haber UNO por TargetType en toda la
+        cadena de ResourceDictionary.
+        ══════════════════════════════════════════════════════════════════════
+    -->
+
+    <!--
+        ContentPage: fondo principal de la app.
+        ApplyToDerivedTypes=True cubre también TabbedPage, etc.
+    -->
+    <Style ApplyToDerivedTypes="True" TargetType="ContentPage">
+        <Setter Property="BackgroundColor" Value="{StaticResource FondoPrincipal}" />
+    </Style>
+
+    <!--
+        Shell: colores del TabBar y barra de navegación.
+        
+        IMPORTANTE: este bloque reemplaza al estilo implícito de Shell que
+        viene en el Styles.xaml del template de MAUI. Si tienes ese archivo
+        incluido en App.xaml, ELIMINA la referencia a él o quita el estilo
+        de Shell de allá para evitar la ArgumentException de clave duplicada.
+    -->
+    <Style ApplyToDerivedTypes="True" TargetType="Shell">
+        <Setter Property="Shell.BackgroundColor" Value="{StaticResource AzulPrimario}" />
+        <Setter Property="Shell.ForegroundColor" Value="{StaticResource TextoBlanco}" />
+        <Setter Property="Shell.TitleColor" Value="{StaticResource TextoBlanco}" />
+        <Setter Property="Shell.DisabledColor" Value="{StaticResource TextoDeshabilitado}" />
+        <Setter Property="Shell.UnselectedColor" Value="{StaticResource TextoDeshabilitado}" />
+        <Setter Property="Shell.NavBarHasShadow" Value="False" />
+        <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource FondoTarjeta}" />
+        <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource AzulMedio}" />
+        <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource AzulMedio}" />
+        <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource TextoDeshabilitado}" />
+    </Style>
+
+    <!--
+        NavigationPage: barra superior cuando se usa NavigationPage.
+        Solo un estilo implícito — reemplaza al del template de MAUI.
+    -->
+    <Style TargetType="NavigationPage">
+        <Setter Property="BarBackgroundColor" Value="{StaticResource AzulPrimario}" />
+        <Setter Property="BarTextColor" Value="{StaticResource TextoBlanco}" />
+    </Style>
+
+</ResourceDictionary>
