@@ -69,4 +69,39 @@ public class Tarjeta
     /// Lista de transacciones asociadas (se llena manualmente)
     [Ignore]
     public List<Transaccion> Transacciones { get; set; } = [];
+
+
+    /// <summary>
+    /// Fecha exacta del próximo corte a partir de hoy.
+    /// Si hoy es después del día de corte, el próximo corte
+    /// es el mes siguiente.
+    /// </summary>
+    [Ignore]
+    public DateTime? ProximoCorte
+    {
+        get
+        {
+            //Si esta vacio devulve null
+            if(!DiaCorte.HasValue) return null;
+
+            var hoy = DateTime.Today;
+            var diaCorte = DiaCorte.Value;
+
+            // Ajusta si el día no existe en el mes (ej: día 31 en febrero)
+            var diasEnMesActual = DateTime.DaysInMonth(hoy.Year, hoy.Month);
+            var diaReal = Math.Min(diaCorte, diasEnMesActual);
+
+            var corteMesActual = new DateTime(hoy.Year, hoy.Month, diaReal);
+
+            // Si el corte de este mes ya pasó, el próximo es el siguiente mes
+            if (hoy > corteMesActual)
+            {
+                var mesSiguiente = hoy.AddMonths(1);
+                var diasEnMesSiguiente = DateTime.DaysInMonth(mesSiguiente.Year, mesSiguiente.Month);
+                diaReal = Math.Min(diaCorte, diasEnMesSiguiente);
+                return new DateTime(mesSiguiente.Year, mesSiguiente.Month, diaReal);
+            }
+            return corteMesActual;
+        }
+    } 
 }
