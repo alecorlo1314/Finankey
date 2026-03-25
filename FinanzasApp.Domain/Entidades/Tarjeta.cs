@@ -103,5 +103,62 @@ public class Tarjeta
             }
             return corteMesActual;
         }
-    } 
+    }
+
+    /// <summary>
+    /// Fecha exacta del próximo pago a partir del próximo corte.
+    /// El pago siempre es el mes siguiente al corte.
+    /// </summary>
+    [Ignore]
+    public DateTime? ProximoPago
+    {
+        get
+        {
+            if (!DiaPago.HasValue || !ProximoCorte.HasValue) return null;
+
+            var mesCorte = ProximoCorte.Value.AddMonths(1);
+            var diasEnMes = DateTime.DaysInMonth(mesCorte.Year, mesCorte.Month);
+            var diaReal = Math.Min(DiaPago.Value, diasEnMes);
+
+            return new DateTime(mesCorte.Year, mesCorte.Month, diaReal);
+        }
+    }
+
+    /// <summary>
+    /// Días restantes para el próximo corte desde hoy.
+    /// </summary>
+    [Ignore]
+    public int? DiasParaCorte =>
+        ProximoCorte.HasValue
+            ? (ProximoCorte.Value - DateTime.Today).Days
+            : null;
+
+    /// <summary>
+    /// Días restantes para el próximo pago desde hoy.
+    /// </summary>
+    [Ignore]
+    public int? DiasParaPago =>
+        ProximoPago.HasValue
+            ? (ProximoPago.Value - DateTime.Today).Days
+            : null;
+
+    /// <summary>
+    /// Fecha de vencimiento de la tarjeta física como DateTime.
+    /// Usa el último día del mes de vencimiento.
+    /// </summary>
+    [Ignore]
+    public DateTime? FechaVencimiento =>
+        MesVencimiento > 0 && AnioVencimiento > 0
+            ? new DateTime(
+                AnioVencimiento,
+                MesVencimiento,
+                DateTime.DaysInMonth(AnioVencimiento, MesVencimiento))
+            : null;
+
+    /// <summary>
+    /// Indica si la tarjeta física está vencida.
+    /// </summary>
+    [Ignore]
+    public bool EstaVencida =>
+        FechaVencimiento.HasValue && FechaVencimiento.Value < DateTime.Today;
 }
