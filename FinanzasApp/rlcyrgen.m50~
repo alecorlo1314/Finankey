@@ -85,7 +85,7 @@ namespace FinanzasApp
                 ObtenerResumenFinancieroManejador>();
             builder.Services.AddTransient<
                 IManejadorConsulta<ObtenerResumenCorteConsulta, ResumenCorteDto>,
-                ObtenerResumenCorteManejador>();
+                ObtenerResumenFinancieroManejador>()
 
             // Transacciones
             builder.Services.AddTransient<

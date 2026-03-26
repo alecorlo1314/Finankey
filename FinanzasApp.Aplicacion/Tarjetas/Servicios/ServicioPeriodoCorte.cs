@@ -72,7 +72,7 @@ public class ServicioPeriodoCorte
     /// <summary>
     /// Filtra las transacciones que pertenecen a un período específico.
     /// </summary>
-    public List<Transaccion> ObtenerTransaccionesDelPeriodo(
+    public IEnumerable<Transaccion> ObtenerTransaccionesDelPeriodo(
         IEnumerable<Transaccion> transacciones,
         PeriodoCorte periodo)
     {
