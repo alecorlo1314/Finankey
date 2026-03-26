@@ -38,6 +38,18 @@ public partial class TarjetaFormViewModel(IMediator mediador) : ViewModelBase
     [NotifyPropertyChangedFor(nameof(EsFormularioValido))]
     private string _banco = string.Empty;
 
+    [ObservableProperty]
+    private string _mesVencimiento = string.Empty;
+
+    [ObservableProperty]
+    private string _anioVencimiento = string.Empty;
+
+    [ObservableProperty]
+    private string _diaCorte = string.Empty;
+
+    [ObservableProperty]
+    private string _diaPago = string.Empty;
+
     [ObservableProperty] private string _redTarjeta = "Visa";
     [ObservableProperty] private string _limiteCredito = string.Empty;
     [ObservableProperty] private string _saldoActual = "0";
@@ -148,8 +160,13 @@ public partial class TarjetaFormViewModel(IMediator mediador) : ViewModelBase
     /// Construye el DTO para enviar al backend
     private TarjetaFormDto ConstruirDto()
     {
+        //Parsear valores 
         decimal.TryParse(LimiteCredito, out var limite);
         decimal.TryParse(SaldoActual, out var saldo);
+        int.TryParse(MesVencimiento, out var mesVencimiento);
+        int.TryParse(AnioVencimiento, out var anioVencimiento);
+        int.TryParse(DiaCorte, out var diaCorte);
+        int.TryParse(DiaPago, out var diaPago);
 
         return new TarjetaFormDto(
             Id: EsModoEdicion ? TarjetaId : null,
@@ -160,7 +177,11 @@ public partial class TarjetaFormViewModel(IMediator mediador) : ViewModelBase
             Banco: Banco.Trim(),
             RedTarjeta: RedTarjeta,
             LimiteCredito: TipoSeleccionado == TipoTarjeta.Credito && limite > 0 ? limite : null,
-            SaldoActual: saldo
+            SaldoActual: saldo,
+            MesVencimiento: mesVencimiento,
+            AnioVencimiento: anioVencimiento,
+            DiaCorte: diaCorte,
+            DiaPago: diaPago
         );
     }
 

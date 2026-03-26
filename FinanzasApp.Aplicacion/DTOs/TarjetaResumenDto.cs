@@ -2,7 +2,9 @@
 
 namespace FinanzasApp.Aplicacion.DTOs;
 
-/// <summary>DTO para mostrar el resumen de una tarjeta en listas y dashboard</summary>
+/// <summary>
+/// DTO para mostrar el resumen de una tarjeta en listas y dashboard
+/// </summary>
 public record TarjetaResumenDto(
     int Id,
     string Nombre,
@@ -15,5 +17,15 @@ public record TarjetaResumenDto(
     decimal? LimiteCredito,
     decimal CreditoDisponible,
     double PorcentajeUso,
-    bool EstaActiva
+    bool EstaActiva,
+    int MesVencimiento,
+    int AnioVencimiento,
+    DateTime? FechaVencimiento,
+    bool EstaVencida,
+    int? DiaCorte,
+    int? DiaPago,
+    DateTime? ProximoCorte,
+    DateTime? ProximoPago,
+    int? DiasParaCorte,
+    int? DiasParaPago
 );
