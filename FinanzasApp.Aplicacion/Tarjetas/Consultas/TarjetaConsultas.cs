@@ -6,19 +6,6 @@ using FinanzasApp.Domain.Interfaces;
 
 namespace FinanzasApp.Aplicacion.Tarjetas.Consultas;
 
-// ── Consultas ─────────────────────────────────────────────────────────────────
-
-/// <summary>Obtiene todas las tarjetas activas del usuario</summary>
-public record ObtenerTarjetasConsulta : IConsulta<IEnumerable<TarjetaResumenDto>>;
-
-/// <summary>Obtiene el detalle completo de una tarjeta</summary>
-public record ObtenerTarjetaPorIdConsulta(int TarjetaId) : IConsulta<TarjetaResumenDto?>;
-
-/// <summary>Obtiene el resumen financiero global para el dashboard</summary>
-public record ObtenerResumenFinancieroConsulta(int Anio, int Mes) : IConsulta<ResumenFinancieroDto>;
-
-// ── Manejadores ───────────────────────────────────────────────────────────────
-
 public class ObtenerTarjetasManejador(IRepositorioTarjeta repositorio)
     : IManejadorConsulta<ObtenerTarjetasConsulta, IEnumerable<TarjetaResumenDto>>
 {
