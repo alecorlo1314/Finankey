@@ -6,16 +6,23 @@ public class ServicioPeriodoCorte
 {
     public PeriodoCorte ObtenerPeriodoActual(int diaCorte)
     {
+        //Ejemplo dia corte 15
+
+        //1. Obtiene la fecha de hoy 03/25/2026 00:00:00
         var hoy = DateTime.Today;
 
-        // Calcula el corte de este mes
+        //2. Calcula el corte de este mes
+        //2.1 DiaEnMesActual(2026, 3) = 31 dias
         var diasEnMesActual = DateTime.DaysInMonth(hoy.Year, hoy.Month);
+        //2.2 DiaReal(15, 31) = 15
         var diaReal = Math.Min(diaCorte, diasEnMesActual);
+        //2.3 CorteMesActual(2026, 3, 15) = 03/15/2026 00:00:00
         var corteMesActual = new DateTime(hoy.Year, hoy.Month, diaReal);
 
         DateTime inicioPeriodo;
         DateTime finPeriodo;
 
+        //3. Si (03/25/2026 <= 03/15/2026) --> no cumple
         if (hoy <= corteMesActual)
         {
             // Estamos antes del corte → el período comenzó el mes pasado
@@ -32,6 +39,7 @@ public class ServicioPeriodoCorte
             // Ya pasó el corte → el período comenzó después del corte de este mes
             inicioPeriodo = corteMesActual.AddDays(1);
 
+            
             var mesSiguiente = hoy.AddMonths(1);
             var diasMesSiguiente = DateTime.DaysInMonth(mesSiguiente.Year, mesSiguiente.Month);
             var diaCorteNext = Math.Min(diaCorte, diasMesSiguiente);
