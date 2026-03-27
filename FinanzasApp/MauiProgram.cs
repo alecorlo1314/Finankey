@@ -5,6 +5,7 @@ using FinanzasApp.Aplicacion.Tarjetas.Comandos;
 using FinanzasApp.Aplicacion.Tarjetas.Comandos.Manejadores;
 using FinanzasApp.Aplicacion.Tarjetas.Consultas;
 using FinanzasApp.Aplicacion.Tarjetas.Consultas.Manejadores;
+using FinanzasApp.Aplicacion.Tarjetas.Servicios;
 using FinanzasApp.Aplicacion.Transacciones.Comandos;
 using FinanzasApp.Aplicacion.Transacciones.Consultas;
 using FinanzasApp.Domain.Interfaces;
@@ -63,6 +64,9 @@ namespace FinanzasApp
             // Mediador: Singleton para reutilizar el IServiceProvider interno
             builder.Services.AddSingleton<IMediator, Mediador>();
 
+            //Servicios
+            builder.Services.AddTransient<ServicioPeriodoCorte>();
+
             // Tarjetas
             builder.Services.AddTransient<IManejadorComando<CrearTarjetaComando, int>, CrearTarjetaManejador>();
             builder.Services.AddTransient<IManejadorComando<ActualizarTarjetaComando, bool>, ActualizarTarjetaManejador>();
@@ -75,7 +79,7 @@ namespace FinanzasApp
 
             // Tarjetas
             builder.Services.AddTransient<
-                IManejadorConsulta<ObtenerTarjetasConsulta, IEnumerable<TarjetaResumenDto>>,
+                IManejadorConsulta<ObtenerTarjetasConsulta, IEnumerable<TarjetaResumenDto>?>,
                 ObtenerTarjetasManejador>();
             builder.Services.AddTransient<
                 IManejadorConsulta<ObtenerTarjetaPorIdConsulta, TarjetaResumenDto?>,
@@ -84,7 +88,7 @@ namespace FinanzasApp
                 IManejadorConsulta<ObtenerResumenFinancieroConsulta, ResumenFinancieroDto>,
                 ObtenerResumenFinancieroManejador>();
             builder.Services.AddTransient<
-                IManejadorConsulta<ObtenerResumenCorteConsulta, ResumenCorteDto>,
+                IManejadorConsulta<ObtenerResumenCorteConsulta, ResumenCorteDto?>,
                 ObtenerResumenCorteManejador>();
 
             // Transacciones

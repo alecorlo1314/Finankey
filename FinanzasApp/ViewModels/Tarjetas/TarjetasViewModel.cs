@@ -95,14 +95,19 @@ public partial class TarjetasViewModel(IMediator mediador) : ViewModelBase
     {
         await EjecutarConCargaAsync(async () =>
         {
+            //Paso 1: Obtener tarjetas
             var resultado = await mediador.ConsultarAsync(new ObtenerTarjetasConsulta());
-            var lista = resultado.ToList();
 
+            //Paso 2: Mapear
+            var lista = resultado?.ToList() ?? new List<TarjetaResumenDto>();
+
+            //Paso 3: Asignar los valores a la lista de tarjetas
             Tarjetas = new ObservableCollection<TarjetaResumenDto>(lista);
 
+            //Paso 4: Indicar si no hay tarjetas y muestra el cartel
             SinTarjetas = !lista.Any();
 
-            // Selecciona la primera por defecto
+            // Selección opcional
             TarjetaSeleccionada = lista.FirstOrDefault();
         });
     }
@@ -114,7 +119,7 @@ public partial class TarjetasViewModel(IMediator mediador) : ViewModelBase
     /// Navega a crear nueva tarjeta
     [RelayCommand]
     private static async Task AgregarTarjetaAsync() =>
-        await Shell.Current.GoToAsync("//tarjetas/nueva");
+        await Shell.Current.GoToAsync("/tarjetas/nueva");
 
     /// Navega al detalle de la tarjeta
     [RelayCommand]
@@ -122,15 +127,21 @@ public partial class TarjetasViewModel(IMediator mediador) : ViewModelBase
     {
         if (tarjeta is null) return;
 
-        await Shell.Current.GoToAsync(
-            "//tarjetas/detalle",
-            new Dictionary<string, object>
-            {
-                ["TarjetaId"] = tarjeta.Id,
-                ["NombreTarjeta"] = tarjeta.Nombre,
-                ["TipoTarjeta"] = tarjeta.Tipo
-            }
-        );
+        try
+        {
+            await Shell.Current.GoToAsync(
+                "///tarjetas/detalle",
+                new Dictionary<string, object>
+                {
+                    ["TarjetaId"] = tarjeta.Id,
+                    ["NombreTarjeta"] = tarjeta.Nombre,
+                    ["TipoTarjeta"] = tarjeta.Tipo
+                });
+        }
+        catch (Exception ex)
+        {
+            await MostrarAlertaAsync("Error", ex.Message);
+        }
     }
 
     /// Navega a editar tarjeta

@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinanzasApp.Aplicacion.DTOs;
 using FinanzasApp.Aplicacion.Interfaces;
+using FinanzasApp.Aplicacion.Tarjetas.Consultas;
 using FinanzasApp.Aplicacion.Transacciones.Comandos;
 using FinanzasApp.Aplicacion.Transacciones.Consultas;
 using FinanzasApp.Domain.Enumeraciones;
@@ -32,6 +33,10 @@ public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase
     [ObservableProperty] private decimal _totalGastos;
     [ObservableProperty] private decimal _totalIngresos;
     [ObservableProperty] private decimal _balance;
+
+    // Propiedad para el resumen de corte
+    [ObservableProperty]
+    private ResumenCorteDto? _resumenCorte;
 
     // Estado vacío
     [ObservableProperty] private bool _sinTransacciones;
@@ -108,6 +113,7 @@ public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase
         Titulo = NombreTarjeta;
 
         await CargarTransaccionesAsync();
+        await CargarResumenCorteAsync();
     }
 
     #endregion
@@ -138,6 +144,16 @@ public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase
 
             Balance = TotalIngresos - TotalGastos;
         });
+    }
+
+    private async Task CargarResumenCorteAsync()
+    {
+        //Esto solo carga si la tarjeta tiene DiaCorte configurado
+        var resumen = await mediador.ConsultarAsync(
+            new ObtenerResumenCorteConsulta(TarjetaId));
+
+        // null si no aplica → IsVisible=False automáticamente
+        ResumenCorte = resumen; 
     }
 
     #endregion

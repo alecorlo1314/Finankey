@@ -1,5 +1,6 @@
 ﻿using FinanzasApp.Aplicacion.DTOs;
 using FinanzasApp.Aplicacion.Interfaces;
+using FinanzasApp.Domain.Enumeraciones;
 using FinanzasApp.Domain.Interfaces;
 
 namespace FinanzasApp.Aplicacion.Tarjetas.Consultas.Manejadores;
@@ -36,12 +37,12 @@ public class ObtenerTarjetaPorIdManejador(IRepositorioTarjeta repositorio)
             AnioVencimiento: tarjeta.AnioVencimiento,
             FechaVencimiento: tarjeta.FechaVencimiento,
             EstaVencida: tarjeta.EstaVencida,
-            DiaCorte: tarjeta.DiaCorte,
-            DiaPago: tarjeta.DiaPago,
-            ProximoCorte: tarjeta.ProximoCorte,
-            ProximoPago: tarjeta.ProximoPago,
-            DiasParaCorte: tarjeta.DiasParaCorte,
-            DiasParaPago: tarjeta.DiasParaPago
+            DiaCorte: tarjeta.Tipo == TipoTarjeta.Credito ? tarjeta.DiaCorte : null,
+            DiaPago: tarjeta.Tipo == TipoTarjeta.Credito ? tarjeta.DiaPago : null,
+            ProximoCorte: tarjeta.Tipo == TipoTarjeta.Credito ? tarjeta.ProximoCorte : null,
+            ProximoPago: tarjeta.Tipo == TipoTarjeta.Credito ? tarjeta.ProximoPago : null,
+            DiasParaCorte: tarjeta.Tipo == TipoTarjeta.Credito ? tarjeta.DiasParaCorte : null,
+            DiasParaPago: tarjeta.Tipo == TipoTarjeta.Credito ? tarjeta.DiasParaPago : null
         );
     }
 }

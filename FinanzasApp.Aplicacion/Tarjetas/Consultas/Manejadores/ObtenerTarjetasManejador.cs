@@ -1,6 +1,7 @@
 ﻿using FinanzasApp.Aplicacion.DTOs;
 using FinanzasApp.Aplicacion.Interfaces;
 using FinanzasApp.Domain.Entidades;
+using FinanzasApp.Domain.Enumeraciones;
 using FinanzasApp.Domain.Interfaces;
 
 namespace FinanzasApp.Aplicacion.Tarjetas.Consultas.Manejadores;
@@ -35,19 +36,19 @@ public class ObtenerTarjetasManejador(IRepositorioTarjeta repositorio)
         Banco: t.Banco,
         RedTarjeta: t.RedTarjeta,
         SaldoActual: t.SaldoActual,
-        LimiteCredito: t.LimiteCredito,
-        CreditoDisponible: t.CreditoDisponible,
+        LimiteCredito: t.Tipo == TipoTarjeta.Credito ? t.LimiteCredito : null,
+        CreditoDisponible: t.Tipo == TipoTarjeta.Credito ? t.CreditoDisponible : 0,
         PorcentajeUso: t.PorcentajeUso,
         EstaActiva: t.EstaActiva,
         MesVencimiento: t.MesVencimiento,
         AnioVencimiento: t.AnioVencimiento,
         FechaVencimiento: t.FechaVencimiento,
         EstaVencida: t.EstaVencida,
-        DiaCorte: t.DiaCorte,
-        DiaPago: t.DiaPago,
-        ProximoCorte: t.ProximoCorte,
-        ProximoPago: t.ProximoPago,
-        DiasParaCorte: t.DiasParaCorte,
-        DiasParaPago: t.DiasParaPago
+        DiaCorte: t.Tipo == TipoTarjeta.Credito ? t.DiaCorte : null,
+        DiaPago: t.Tipo == TipoTarjeta.Credito ? t.DiaPago : null,
+        ProximoCorte: t.Tipo == TipoTarjeta.Credito ? t.ProximoCorte : null,
+        ProximoPago: t.Tipo == TipoTarjeta.Credito ? t.ProximoPago : null,
+        DiasParaCorte: t.Tipo == TipoTarjeta.Credito ? t.DiasParaCorte : null,
+        DiasParaPago: t.Tipo == TipoTarjeta.Credito ? t.DiasParaPago : null
     );
 }

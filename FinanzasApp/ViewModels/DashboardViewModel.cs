@@ -65,7 +65,7 @@ public partial class DashboardViewModel(IMediator mediador) : ViewModelBase
     [RelayCommand]
     private static async Task AgregarTarjetaAsync()
     {
-        await Shell.Current.GoToAsync("//tarjetas/nueva");
+        await Shell.Current.GoToAsync("/tarjetas/nueva");
     }
 
     #endregion

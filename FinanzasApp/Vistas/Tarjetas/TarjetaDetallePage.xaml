@@ -104,6 +104,136 @@
                         HeightRequest="1"
                         Opacity="0.3" />
 
+                    <!--  Resumen del período de facturación  -->
+                    <Border
+                        Margin="16,12,16,0"
+                        Padding="16"
+                        BackgroundColor="#FFF0F5"
+                        IsVisible="{Binding ResumenCorte, Converter={StaticResource NullToBoolConverter}}"
+                        Stroke="Transparent"
+                        StrokeShape="RoundRectangle 16">
+
+                        <VerticalStackLayout Spacing="12">
+
+                            <!--  Fila superior: etiqueta del período + badge estado  -->
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                    <Label
+                                        FontFamily="InterBold"
+                                        FontSize="10"
+                                        Text="PERÍODO DE FACTURACIÓN"
+                                        TextColor="#94A3B8" />
+                                    <Label
+                                        FontFamily="InterSemiBold"
+                                        FontSize="13"
+                                        Text="{Binding ResumenCorte.Periodo.Etiqueta}"
+                                        TextColor="#1A2B3C" />
+                                </VerticalStackLayout>
+
+                                <!--
+                                    Badge "En curso" o "Cerrado" según el estado del período.
+                                    EstaCerrado viene de la propiedad calculada del PeriodoCorte.
+                                -->
+                                <Border
+                                    Grid.Column="1"
+                                    Padding="10,4"
+                                    BackgroundColor="{Binding ResumenCorte.Periodo.EstaCerrado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FEE2E2|#DCFCE7'}"
+                                    Stroke="Transparent"
+                                    StrokeShape="RoundRectangle 20"
+                                    VerticalOptions="Center">
+                                    <Label
+                                        FontFamily="InterSemiBold"
+                                        FontSize="11"
+                                        Text="{Binding ResumenCorte.Periodo.EstaCerrado, Converter={StaticResource BoolToStringConverter}, ConverterParameter='Cerrado|En curso'}"
+                                        TextColor="{Binding ResumenCorte.Periodo.EstaCerrado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#DC2626|#16A34A'}" />
+                                </Border>
+                            </Grid>
+
+                            <!--  Separador interno  -->
+                            <BoxView BackgroundColor="#FFD6E7" HeightRequest="1" />
+
+                            <!--  Total del período  -->
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                    <Label
+                                        FontFamily="InterRegular"
+                                        FontSize="12"
+                                        Text="Consumo del período"
+                                        TextColor="#595C5E" />
+                                    <Label
+                                        FontFamily="InterRegular"
+                                        FontSize="11"
+                                        Text="{Binding ResumenCorte.CantidadMovimientos, StringFormat='{0} movimientos'}"
+                                        TextColor="#94A3B8" />
+                                </VerticalStackLayout>
+                                <Label
+                                    Grid.Column="1"
+                                    FontFamily="PoppinsBold"
+                                    FontSize="20"
+                                    Text="{Binding ResumenCorte.TotalPeriodo, StringFormat='₡{0:N0}'}"
+                                    TextColor="#FF006E"
+                                    VerticalOptions="Center" />
+                            </Grid>
+
+                            <!--  Separador interno  -->
+                            <BoxView BackgroundColor="#FFD6E7" HeightRequest="1" />
+
+                            <!--  Días para corte y pago  -->
+                            <Grid ColumnDefinitions="*,*">
+
+                                <!--  Próximo corte  -->
+                                <VerticalStackLayout Grid.Column="0" Spacing="3">
+                                    <Label
+                                        FontFamily="InterBold"
+                                        FontSize="10"
+                                        Text="PRÓXIMO CORTE"
+                                        TextColor="#94A3B8" />
+                                    <Label
+                                        FontFamily="PoppinsSemiBold"
+                                        FontSize="15"
+                                        Text="{Binding ResumenCorte.DiasParaCorte, StringFormat='En {0} días'}"
+                                        TextColor="#1A2B3C" />
+                                    <Label
+                                        FontFamily="InterRegular"
+                                        FontSize="11"
+                                        Text="{Binding ResumenCorte.ProximoCorte, StringFormat='{0:dd MMM yyyy}'}"
+                                        TextColor="#595C5E" />
+                                </VerticalStackLayout>
+
+                                <!--  Divisor vertical  -->
+                                <BoxView
+                                    Grid.Column="0"
+                                    BackgroundColor="#FFD6E7"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Fill"
+                                    WidthRequest="1" />
+
+                                <!--  Fecha límite de pago  -->
+                                <VerticalStackLayout
+                                    Grid.Column="1"
+                                    Padding="16,0,0,0"
+                                    Spacing="3">
+                                    <Label
+                                        FontFamily="InterBold"
+                                        FontSize="10"
+                                        Text="FECHA LÍMITE PAGO"
+                                        TextColor="#94A3B8" />
+                                    <Label
+                                        FontFamily="PoppinsSemiBold"
+                                        FontSize="15"
+                                        Text="{Binding ResumenCorte.DiasParaPago, StringFormat='En {0} días'}"
+                                        TextColor="#1A2B3C" />
+                                    <Label
+                                        FontFamily="InterRegular"
+                                        FontSize="11"
+                                        Text="{Binding ResumenCorte.ProximoPago, StringFormat='{0:dd MMM yyyy}'}"
+                                        TextColor="#595C5E" />
+                                </VerticalStackLayout>
+                            </Grid>
+
+                        </VerticalStackLayout>
+                    </Border>
+
                     <!--  TABS DE FILTROS  -->
                     <Grid
                         Padding="16"

@@ -8,6 +8,7 @@
     x:Class="FinanzasApp.Presentacion.Vistas.DashboardPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dto="clr-namespace:FinanzasApp.Aplicacion.DTOs;assembly=FinanzasApp.Aplicacion"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:FinanzasApp.Presentacion.ViewModels"
     x:DataType="vm:DashboardViewModel"
@@ -205,7 +206,7 @@
                     </CarouselView.EmptyView>
 
                     <CarouselView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="dto:TarjetaResumenDto">
                             <Border
                                 Margin="8"
                                 Padding="24"
@@ -291,7 +292,7 @@
                         Command="{Binding AbrirFiltroCommand}"
                         HeightRequest="24"
                         HorizontalOptions="End"
-                        Source="icono_filtro.png"
+                        Source="icono_alimentacion.png"
                         VerticalOptions="Center"
                         WidthRequest="24" />
                 </Grid>

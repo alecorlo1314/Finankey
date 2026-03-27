@@ -39,7 +39,7 @@ public partial class App : Application
         _ = Task.Run(async () => await _servicioPrediccion.InicializarAsync());
 
         // Determina la página inicial según la configuración biométrica
-        MainPage = await DeterminarPaginaInicialAsync();
+        Application.Current?.Windows[0].Page = await DeterminarPaginaInicialAsync();
     }
 
     /// <summary>

@@ -6,6 +6,7 @@ using FinanzasApp.Aplicacion.Tarjetas.Comandos;
 using FinanzasApp.Aplicacion.Tarjetas.Consultas;
 using FinanzasApp.Domain.Enumeraciones;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace FinanzasApp.Presentacion.ViewModels.Tarjetas;
 
@@ -54,16 +55,92 @@ public partial class TarjetaFormViewModel(IMediator mediador) : ViewModelBase
     [ObservableProperty] private string _limiteCredito = string.Empty;
     [ObservableProperty] private string _saldoActual = "0";
 
+    //Da el mensaje de error
+    [ObservableProperty] private string _descripcionError;
+    [ObservableProperty] private string _bancoError;
+    [ObservableProperty] private string _ultimosDigitosError;
+    [ObservableProperty] private string _mesVencimientoError;
+    [ObservableProperty] private string _anioVencimientoError;
+    [ObservableProperty] private string _saldoActualError;
+    [ObservableProperty] private string _limiteCreditoError;
+
     #endregion
 
     #region 📊 Propiedades calculadas
 
     // Validación del formulario
-    public bool EsFormularioValido =>
-        !string.IsNullOrWhiteSpace(Nombre)
-        && UltimosDigitos.Length == 4
-        && UltimosDigitos.All(char.IsDigit)
-        && !string.IsNullOrWhiteSpace(Banco);
+    public bool EsFormularioValido
+    {
+        get
+        {
+            var cultura = CultureInfo.CurrentCulture;
+
+            // Nombre
+            if (string.IsNullOrWhiteSpace(Nombre) || Nombre.Trim().Length < 3)
+                return false;
+
+            // Banco
+            if (string.IsNullOrWhiteSpace(Banco) || Banco.Trim().Length < 2)
+                return false;
+
+            // Últimos dígitos
+            if (string.IsNullOrWhiteSpace(UltimosDigitos) || UltimosDigitos.Length != 4 || !UltimosDigitos.All(char.IsDigit))
+                return false;
+
+            // Mes de vencimiento (1-12)
+            if (!int.TryParse(MesVencimiento, NumberStyles.Integer, cultura, out var mes) ||
+                mes < 1 || mes > 12)
+                return false;
+
+            // Año de vencimiento (4 dígitos preferible)
+            if (!int.TryParse(AnioVencimiento, NumberStyles.Integer, cultura, out var anio))
+                return false;
+
+            // Validar que la tarjeta no esté vencida (considerando fin de mes)
+            try
+            {
+                // Si el año viene en 2 dígitos, podrías normalizarlo aquí si lo deseas.
+                var ultimoDiaDelMes = DateTime.DaysInMonth(anio, mes);
+                var fechaVencimiento = new DateTime(anio, mes, ultimoDiaDelMes, 23, 59, 59);
+                if (fechaVencimiento < DateTime.Now)
+                    return false;
+            }
+            catch
+            {
+                // Si la combinación mes/año no forma una fecha válida
+                return false;
+            }
+
+            // Saldo actual (decimal) — usar la cultura que corresponda a tu app
+            if (!decimal.TryParse(SaldoActual,
+                                  NumberStyles.Number | NumberStyles.AllowCurrencySymbol,
+                                  cultura,
+                                  out _))
+                return false;
+
+            // Validar límite si es crédito
+            if (TipoSeleccionado == TipoTarjeta.Credito)
+            {
+                if (!decimal.TryParse(LimiteCredito,
+                    NumberStyles.Number,
+                    cultura,
+                    out var limite) || limite <= 0)
+                    return false;
+            }
+
+            // Validar corte y pago si es crédito
+            if (TipoSeleccionado == TipoTarjeta.Credito)
+            {
+                if (!int.TryParse(DiaCorte, out var corte) || corte < 1 || corte > 31)
+                    return false;
+
+                if (!int.TryParse(DiaPago, out var pago) || pago < 1 || pago > 31)
+                    return false;
+            }
+
+            return true;
+        }
+    }
 
     public bool EsModoEdicion => TarjetaId > 0;
 
@@ -109,6 +186,7 @@ public partial class TarjetaFormViewModel(IMediator mediador) : ViewModelBase
         TipoSeleccionado = tipo == "Credito"
             ? TipoTarjeta.Credito
             : TipoTarjeta.Debito;
+        if(!MostrarLimiteCredito) LimpiezaCampos();
 
         OnPropertyChanged(nameof(EsFormularioValido));
     }
@@ -142,14 +220,31 @@ public partial class TarjetaFormViewModel(IMediator mediador) : ViewModelBase
             var t = await mediador.ConsultarAsync(new ObtenerTarjetaPorIdConsulta(TarjetaId));
             if (t is null) return;
 
-            Nombre = t.Nombre;
-            UltimosDigitos = t.UltimosDigitos;
+            var cultura = CultureInfo.CurrentCulture;
+
             TipoSeleccionado = t.Tipo;
-            ColorHex = t.ColorHex;
+
+            Nombre = t.Nombre;
             Banco = t.Banco;
+            UltimosDigitos = t.UltimosDigitos;
+            MesVencimiento = t.MesVencimiento.ToString();
+            AnioVencimiento = t.AnioVencimiento.ToString();
+            SaldoActual = t.SaldoActual.ToString("F2", cultura);
+
+            LimiteCredito = t.Tipo == TipoTarjeta.Credito
+                ? t.LimiteCredito?.ToString("F2", cultura) ?? string.Empty
+                : string.Empty;
+
+            DiaCorte = t.Tipo == TipoTarjeta.Credito
+                ? t.DiaCorte?.ToString() ?? string.Empty
+                : string.Empty;
+
+            DiaPago = t.Tipo == TipoTarjeta.Credito
+                ? t.DiaPago?.ToString() ?? string.Empty
+                : string.Empty;
+
+            ColorHex = t.ColorHex;
             RedTarjeta = t.RedTarjeta;
-            LimiteCredito = t.LimiteCredito?.ToString("F2") ?? string.Empty;
-            SaldoActual = t.SaldoActual.ToString("F2");
         });
     }
 
@@ -185,6 +280,14 @@ public partial class TarjetaFormViewModel(IMediator mediador) : ViewModelBase
         );
     }
 
+    //Limpieza de campos al cambiar Credito / Debito
+    private void LimpiezaCampos()
+    {
+        LimiteCredito = string.Empty;
+        DiaCorte = string.Empty;
+        DiaPago = string.Empty;
+    }
+
     #endregion
 
     #region 🔁 Eventos
@@ -196,5 +299,210 @@ public partial class TarjetaFormViewModel(IMediator mediador) : ViewModelBase
         OnPropertyChanged(nameof(EsFormularioValido));
     }
 
+    #endregion
+
+    #region 📌 Validacion UI
+    partial void OnNombreChanged(string value)
+    {
+        //Validacimos el nombre de la tarjeta
+        ValidacionNombreTarjeta(value);
+    }
+    public void ValidacionNombreTarjeta(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            DescripcionError = "No puede estar vacía.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+        if (value.Length < 3)
+        {
+            DescripcionError = "No puede tener menos de 3 caracteres.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+        // Si pasa validación, limpiar errores
+        DescripcionError = string.Empty;
+    }
+
+    partial void OnBancoChanged(string value)
+    {
+        //Validacimos el nombre de la tarjeta
+        ValidacionNombreBanco(value);
+    }
+    public void ValidacionNombreBanco(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            BancoError = "No puede estar vacía.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+        if (value.Length <= 2)
+        {
+            BancoError = "No puede tener menos de 2 caracteres.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+        // Si pasa validación, limpiar errores
+        BancoError = string.Empty;
+    }
+
+    partial void OnUltimosDigitosChanged(string value)
+    {
+        ValidarUltimosCuatroDigitos(value);
+    }
+    private void ValidarUltimosCuatroDigitos(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            UltimosDigitosError = "No puede estar vacía.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+        if(value.Length < 4)
+        {
+            UltimosDigitosError = "No puede tener menos de 4 caracteres.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+        if(!value.All(char.IsDigit))
+        {
+            UltimosDigitosError = "Solo se aceptan numeros.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+
+        // Si pasa validación, limpiar errores
+        UltimosDigitosError = string.Empty;
+    }
+
+    partial void OnMesVencimientoChanged(string value)
+    {
+        ValidarMesVencimiento(value);
+    }
+    private void ValidarMesVencimiento(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            MesVencimientoError = "No puede estar vacía.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+        if (!value.All(char.IsDigit))
+        {
+            MesVencimientoError = "Solo se aceptan numeros.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+        if (int.Parse(value) < 1 || int.Parse(value) > 12)
+        {
+            MesVencimientoError = "Solo 1 - 12.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+
+        // Si pasa validación, limpiar errores
+        MesVencimientoError = string.Empty;
+    }
+
+    partial void OnAnioVencimientoChanged(string value)
+    {
+        ValidarAnioVencimiento(value);
+    }
+    private void ValidarAnioVencimiento(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            AnioVencimientoError = "No puede estar vacía.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+        if (!value.All(char.IsDigit))
+        {
+            AnioVencimientoError = "Solo se aceptan numeros.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+
+        var anioActual = int.Parse(DateTime.Now.ToString("yyyy"));
+
+        if (int.Parse(value) < anioActual)
+        {
+            AnioVencimientoError = "No puede ser menor al año actual.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+        // Si pasa validación, limpiar errores
+        AnioVencimientoError = string.Empty;
+    }
+
+    partial void OnSaldoActualChanged(string value)
+    {
+        ValidarSaldoActual(value);
+    }
+    private void ValidarSaldoActual(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            SaldoActualError = "No puede estar vacía.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+        if (!decimal.TryParse(value, out _))
+        {
+            SaldoActualError = "Solo se aceptan numeros.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+
+        // Si pasa validación, limpiar errores
+        SaldoActualError = string.Empty;
+    }
+
+    //Validaciones solo para (Credito)
+    partial void OnLimiteCreditoChanged(string value)
+    {
+        ValidarLimiteCreditoActual(value);
+    }
+    private void ValidarLimiteCreditoActual(string value)
+    {
+        //Paso 1: Verificar Credito este seleccionado
+        //Si no es Credito, no pasa validación
+        if (!MostrarLimiteCredito) return;
+
+        //Paso 2: Verificar que no este vacio
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            LimiteCreditoError = "No puede estar vacía.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+
+        //Paso 3: Verificar que sea un valor decimal
+        if(!decimal.TryParse(value, out _))
+        {
+            LimiteCreditoError = "Solo se aceptan numeros.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+
+        //Paso 4: No puede ser negativo
+        if (decimal.Parse(value) < 0)
+        {
+            LimiteCreditoError = "El límite no puede ser negativo.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+        //Paso 4: No puede ser igual a 0
+        if (decimal.Parse(value) == 0)
+        {
+            LimiteCreditoError = "El límite debe ser mayor que cero para tarjetas de crédito.";
+            OnPropertyChanged(nameof(EsFormularioValido));
+            return;
+        }
+
+        LimiteCreditoError = string.Empty;
+    }
     #endregion
 }
