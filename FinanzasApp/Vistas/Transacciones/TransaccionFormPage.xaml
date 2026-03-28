@@ -11,10 +11,28 @@
     BackgroundColor="#FFFFFF"
     Shell.BackgroundColor="#FF006E">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!--  COLORES PARA LOS ICONOS DE CATEGORIA  -->
+            <Color x:Key="iconoColorBlanco">#FFFFFF</Color>
+            <Color x:Key="iconoColorGris">#43474E</Color>
+
+            <!--  CONVERTIDORES DE VALORES  -->
+            <toolkit:BoolToObjectConverter x:Key="ConvertidorIconoColor">
+                <toolkit:BoolToObjectConverter.FalseObject>
+                    <StaticResource Key="iconoColorGris" />
+                </toolkit:BoolToObjectConverter.FalseObject>
+                <toolkit:BoolToObjectConverter.TrueObject>
+                    <StaticResource Key="iconoColorBlanco" />
+                </toolkit:BoolToObjectConverter.TrueObject>
+            </toolkit:BoolToObjectConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="20">
 
-            <!--  ── Descripción (campo clave para la predicción IA) ──────────  -->
+            <!--  Descripción (campo clave para la predicción IA)  -->
             <VerticalStackLayout Spacing="6">
                 <Label Style="{StaticResource TextoEtiqueta}" Text="Descripción" />
                 <Border Style="{StaticResource EntradaContenedor}">
@@ -25,7 +43,7 @@
                         Text="{Binding Descripcion}" />
                 </Border>
 
-                <!--  ── Panel de predicción IA ───────────────────────────────  -->
+                <!--  Panel de predicción IA  -->
                 <Border
                     Padding="12,8"
                     BackgroundColor="{StaticResource AzulPastel}"
@@ -66,7 +84,7 @@
                 </Border>
             </VerticalStackLayout>
 
-            <!--  ── Monto ────────────────────────────────────────────────────  -->
+            <!--  Monto  -->
             <VerticalStackLayout Spacing="6">
                 <Label Style="{StaticResource TextoEtiqueta}" Text="Monto" />
                 <Border Style="{StaticResource EntradaContenedor}">
@@ -89,7 +107,7 @@
                 </Border>
             </VerticalStackLayout>
 
-            <!--  ── Categoría ──────────────────────────────────────────────────  -->
+            <!--  Categoría  -->
             <VerticalStackLayout Spacing="10">
 
                 <!--  Encabezado: título + badge IA + botón  -->
@@ -186,18 +204,33 @@
                                     Spacing="8"
                                     VerticalOptions="Center">
 
-                                    <Image
-                                        Aspect="AspectFit"
-                                        HeightRequest="20"
-                                        MaximumHeightRequest="24"
-                                        MinimumHeightRequest="20"
-                                        Source="{Binding Icono}"
-                                        VerticalOptions="Center"
-                                        WidthRequest="20">
-                                        <Image.Behaviors>
-                                            <toolkit:IconTintColorBehavior TintColor="{Binding EstaSeleccionada, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#43474E|#43474E'}" />
-                                        </Image.Behaviors>
-                                    </Image>
+                                    <Grid HeightRequest="24" WidthRequest="24">
+
+                                        <!--  Icono cuando NO está seleccionado — color #43474E  -->
+                                        <Image
+                                            Aspect="AspectFit"
+                                            HeightRequest="24"
+                                            IsVisible="{Binding EstaSeleccionada, Converter={StaticResource InvertirBoolConverter}}"
+                                            Source="{Binding Icono}"
+                                            WidthRequest="24">
+                                            <Image.Behaviors>
+                                                <toolkit:IconTintColorBehavior TintColor="#43474E" />
+                                            </Image.Behaviors>
+                                        </Image>
+
+                                        <!--  Icono cuando SÍ está seleccionado — color blanco  -->
+                                        <Image
+                                            Aspect="AspectFit"
+                                            HeightRequest="24"
+                                            IsVisible="{Binding EstaSeleccionada}"
+                                            Source="{Binding Icono}"
+                                            WidthRequest="24">
+                                            <Image.Behaviors>
+                                                <toolkit:IconTintColorBehavior TintColor="#FFFFFF" />
+                                            </Image.Behaviors>
+                                        </Image>
+
+                                    </Grid>
 
                                     <Label
                                         FontFamily="InterSemiBold"
