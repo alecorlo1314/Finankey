@@ -41,7 +41,7 @@ public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase,
 
     #endregion
 
-    #region Atributos Consulta
+    #region 🔧 Implementación de IQueryAttributable
     /// <summary>
     /// Aplica los parámetros de navegación a la consulta
     /// </summary>
@@ -52,7 +52,7 @@ public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase,
             TarjetaId = (int)tarjetaId;
 
         if (query.TryGetValue("NombreTarjeta", out var nombre))
-            NombreTarjeta = nombre?.ToString();
+            NombreTarjeta = (string)nombre;
 
         if (query.TryGetValue("TipoTarjeta", out var tipo))
             TipoTarjetaParam = (TipoTarjeta)tipo;
