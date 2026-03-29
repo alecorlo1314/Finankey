@@ -24,13 +24,20 @@
     <ScrollView>
         <VerticalStackLayout Spacing="0">
 
-            <!--  Header con gradiente dentro de un Border  -->
+            <!--  HEADER CON GRADIENTE  -->
             <Border
                 BackgroundColor="#FF006E"
                 HeightRequest="250"
                 Stroke="#FF80B7"
-                StrokeShape="RoundRectangle 0,0,25,25"
+                StrokeShape="RoundRectangle 0,0,56,56"
                 StrokeThickness="0">
+
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Offset="0.0" Color="#FF1A7D" />
+                        <GradientStop Offset="1.0" Color="#FF006E" />
+                    </LinearGradientBrush>
+                </Border.Background>
 
                 <Grid Padding="24,32,24,32">
                     <Grid.RowDefinitions>
@@ -40,21 +47,21 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <!--  Saludo  -->
+                    <!--  SALUDOS  -->
                     <Label
                         Grid.Row="0"
                         Style="{StaticResource TextoCuerpo}"
                         Text="{Binding SaludoUsuario}"
                         TextColor="#F8FAFC" />
 
-                    <!--  Balance del mes  -->
+                    <!--  BALANCE DEL MES  -->
                     <Label
                         Grid.Row="1"
                         Style="{StaticResource TextoMoneda}"
                         Text="{Binding ResumenFinanciero.BalanceMes, StringFormat='₡{0:N0}'}"
                         TextColor="White" />
 
-                    <!--  Selector de mes  -->
+                    <!--  SELECTOR DEL MES  -->
                     <Border
                         Grid.Row="3"
                         BackgroundColor="#FF4D9A"
