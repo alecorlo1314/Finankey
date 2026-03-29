@@ -147,25 +147,28 @@ public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase,
         // - Mensaje Error --> Opcional
         await EjecutarConCargaAsync(async () =>
         {
-            //Paso 1: Obtener transacciones segun la tarjeta y el filtro activo
             var resultado = await CargarTransaccionesSinCargaAsync();
 
             //Paso 3: Actualizar UI en lista de transacciones
-            // Se puede hacer tambien new ObservableCollection<TransaccionResumenDto>(resultado)
-            Transacciones = new (resultado);
+            Transacciones = new ObservableCollection<TransaccionResumenDto>(resultado);
 
             // Paso 4: Si no hay transacciones, mostrar estado vacío
             SinTransacciones = !resultado.Any();
 
-            //Paso 5: Calcular totales de gastos e ingresos
-            CalcularTotales(resultado);
+            // Obtiene el total de gastos e ingresos para mostrar en la UI
+            TotalGastos = resultado
+                .Where(t => t.Tipo == TipoTransaccion.Gasto)
+                .Sum(t => t.Monto);
+
+            TotalIngresos = resultado
+                .Where(t => t.Tipo == TipoTransaccion.Ingreso)
+                .Sum(t => t.Monto);
+
+            //Calcula el balance total
+            Balance = TotalIngresos - TotalGastos;
         });
     }
 
-    /// <summary>
-    /// Cargar las transacciones por idTarjeta y filtroActivo
-    /// </summary>
-    /// <<returns></returns>>
     private async Task<List<TransaccionResumenDto>> CargarTransaccionesSinCargaAsync()
     {
         //Paso 1: Obtener transacciones segun la tarjeta y el filtro activo
@@ -174,26 +177,6 @@ public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase,
 
         //Paso 2: Ejecutar consulta
         return (await mediador.ConsultarAsync(consulta)).ToList();
-    }
-
-    /// <summary>
-    /// Calcula el total de gastos e ingresos a partir 
-    /// de la lista de transacciones obtenida, para mostrar en la UI
-    /// </summary>
-    /// <param name="resultado"></param>
-    private void CalcularTotales(List<TransaccionResumenDto> resultado)
-    {
-        // Obtiene el total de gastos e ingresos para mostrar en la UI
-        TotalGastos = resultado
-            .Where(t => t.Tipo == TipoTransaccion.Gasto)
-            .Sum(t => t.Monto);
-
-        TotalIngresos = resultado
-            .Where(t => t.Tipo == TipoTransaccion.Ingreso)
-            .Sum(t => t.Monto);
-
-        //Calcula el balance total
-        Balance = TotalIngresos - TotalGastos;
     }
 
     private async Task CargarResumenCorteAsync()
