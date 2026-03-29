@@ -41,6 +41,7 @@
             <convertidores:TipoTarjetaFondoColorConverter x:Key="TipoTarjetaFondoColorConverter" />
             <convertidores:TipoTarjetaConverter x:Key="TipoTarjetaConverter" />
             <convertidores:MayorQueCeroConverter x:Key="MayorQueCeroConverter" />
+            <convertidores:BoolToStringConverter x:Key="BoolToStringConverter" />
 
         </ResourceDictionary>
     </Application.Resources>

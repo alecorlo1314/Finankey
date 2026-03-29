@@ -33,13 +33,15 @@
         <!--  CONTENIDO PRINCIPAL  -->
         <Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
             <ScrollView>
-                <VerticalStackLayout Spacing="0">
+                <VerticalStackLayout>
 
+                    <!--  ZONA SUPERIOR  (HEADER)  -->
                     <Grid
                         Padding="0,16"
                         BackgroundColor="White"
                         ColumnDefinitions="*,*,*">
 
+                        <!--  Gastos  -->
                         <VerticalStackLayout
                             Grid.Column="0"
                             HorizontalOptions="Center"
@@ -79,6 +81,7 @@
 
                         </VerticalStackLayout>
 
+                        <!--  Ingresos  -->
                         <VerticalStackLayout
                             Grid.Column="2"
                             HorizontalOptions="Center"
@@ -98,11 +101,164 @@
                         </VerticalStackLayout>
                     </Grid>
 
-                    <!--  Separador sutil  -->
+                    <!--  SEPARADOS SUTIL  -->
                     <BoxView
                         BackgroundColor="{StaticResource Gray100}"
                         HeightRequest="1"
                         Opacity="0.3" />
+
+                    <!--  RESUMEN PERIODO DE FACTURACION  -->
+                    <Border
+                        Margin="16,12,16,0"
+                        Padding="24"
+                        BackgroundColor="#FFFFFF"
+                        IsVisible="{Binding ResumenCorte, Converter={StaticResource NullToBoolConverter}}"
+                        Stroke="Transparent"
+                        StrokeShape="RoundRectangle 16">
+                        <Border.Shadow>
+                            <Shadow
+                                Brush="#FFE5F1"
+                                Opacity="0.8"
+                                Radius="32"
+                                Offset="0,0" />
+                        </Border.Shadow>
+
+
+                        <VerticalStackLayout Spacing="16">
+
+                            <!--  Fila superior: etiqueta del período + badge estado  -->
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                    <Label
+                                        FontFamily="InterBold"
+                                        FontSize="10"
+                                        Text="PERÍODO DE FACTURACIÓN"
+                                        TextColor="#595C5E" />
+                                    <Label
+                                        FontFamily="InterSemiBold"
+                                        FontSize="14"
+                                        Text="{Binding ResumenCorte.Periodo.Etiqueta}"
+                                        TextColor="#2C2F32" />
+                                </VerticalStackLayout>
+
+                                <!--
+                                    Badge "En curso" o "Cerrado" según el estado del período.
+                                    EstaCerrado viene de la propiedad calculada del PeriodoCorte.
+                                -->
+                                <Border
+                                    Grid.Column="1"
+                                    BackgroundColor="{Binding ResumenCorte.Periodo.EstaCerrado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#E6D7FB|#D8E7FF'}"
+                                    HeightRequest="30"
+                                    Stroke="Transparent"
+                                    StrokeShape="RoundRectangle 20"
+                                    VerticalOptions="Center"
+                                    WidthRequest="80">
+                                    <Label
+                                        FontFamily="InterBold"
+                                        FontSize="11"
+                                        HorizontalOptions="Center"
+                                        Text="{Binding ResumenCorte.Periodo.EstaCerrado, Converter={StaticResource BoolToStringConverter}, ConverterParameter='Cerrado|En curso'}"
+                                        TextColor="{Binding ResumenCorte.Periodo.EstaCerrado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#8338EC|#3A86FF'}"
+                                        VerticalOptions="Center" />
+                                </Border>
+                            </Grid>
+
+                            <!--  Total del período  -->
+                            <VerticalStackLayout>
+                                <Label
+                                    FontFamily="InterMedium"
+                                    FontSize="12"
+                                    HeightRequest="18"
+                                    Text="Consumo del período"
+                                    TextColor="#595C5E" />
+                                <Label
+                                    Grid.Column="1"
+                                    FontFamily="PoppinsBold"
+                                    FontSize="36"
+                                    Text="{Binding ResumenCorte.TotalPeriodo, StringFormat='₡{0:N0}'}"
+                                    TextColor="#000000"
+                                    VerticalOptions="Center" />
+                            </VerticalStackLayout>
+
+                            <!--  Días para corte y pago  -->
+                            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
+
+                                <!--  Próximo corte  -->
+                                <Grid
+                                    Grid.Column="0"
+                                    ColumnDefinitions="Auto,*"
+                                    ColumnSpacing="12">
+                                    <!--  Imagen  -->
+                                    <Image
+                                        HeightRequest="32"
+                                        HorizontalOptions="Center"
+                                        Source="icono_corte.svg"
+                                        VerticalOptions="Center"
+                                        WidthRequest="32" />
+
+                                    <!--  Labels en vertical  -->
+                                    <StackLayout
+                                        Grid.Column="1"
+                                        Orientation="Vertical"
+                                        Spacing="5"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontFamily="InterBold"
+                                            FontSize="10"
+                                            Text="CORTE"
+                                            TextColor="#94A3B8" />
+                                        <Label
+                                            FontFamily="PoppinsSemiBold"
+                                            FontSize="15"
+                                            Text="{Binding ResumenCorte.DiasParaCorte, StringFormat='En {0} días'}"
+                                            TextColor="#1A2B3C" />
+                                        <Label
+                                            FontFamily="InterRegular"
+                                            FontSize="11"
+                                            Text="{Binding ResumenCorte.ProximoCorte, StringFormat='{0:dd MMM yyyy}'}"
+                                            TextColor="#595C5E" />
+                                    </StackLayout>
+                                </Grid>
+
+                                <!--  Fecha límite de pago  -->
+                                <Grid
+                                    Grid.Column="1"
+                                    ColumnDefinitions="Auto,*"
+                                    ColumnSpacing="12">
+                                    <!--  Imagen  -->
+                                    <Image
+                                        HeightRequest="32"
+                                        HorizontalOptions="Center"
+                                        Source="icono_limite.png"
+                                        VerticalOptions="Center"
+                                        WidthRequest="32" />
+
+                                    <!--  Labels en vertical  -->
+                                    <StackLayout
+                                        Grid.Column="1"
+                                        Orientation="Vertical"
+                                        Spacing="5"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontFamily="InterBold"
+                                            FontSize="10"
+                                            Text="FECHA LÍMITE PAGO"
+                                            TextColor="#94A3B8" />
+                                        <Label
+                                            FontFamily="PoppinsSemiBold"
+                                            FontSize="15"
+                                            Text="{Binding ResumenCorte.DiasParaPago, StringFormat='En {0} días'}"
+                                            TextColor="#1A2B3C" />
+                                        <Label
+                                            FontFamily="InterRegular"
+                                            FontSize="11"
+                                            Text="{Binding ResumenCorte.ProximoPago, StringFormat='{0:dd MMM yyyy}'}"
+                                            TextColor="#595C5E" />
+                                    </StackLayout>
+                                </Grid>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
 
                     <!--  TABS DE FILTROS  -->
                     <Grid
@@ -301,7 +457,7 @@
                 </VerticalStackLayout>
             </ScrollView>
 
-            <!--  ── Botón flotante para agregar transacción ──────────────────  -->
+            <!--  BOTONES FLOTANTES PARA AGREGAR INGRESOS O GASTOS  -->
             <VerticalStackLayout
                 Margin="0,0,24,24"
                 HorizontalOptions="End"

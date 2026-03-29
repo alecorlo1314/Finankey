@@ -25,18 +25,18 @@ public partial class TarjetaFormViewModel(IMediator mediador) : ViewModelBase
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(EsFormularioValido))]
-    private string? _nombre = string.Empty;
+    private string _nombre = string.Empty;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(EsFormularioValido))]
-    private string? _banco = string.Empty;
+    private string _banco = string.Empty;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(EsFormularioValido))]
-    private string? _ultimosDigitos = string.Empty;
+    private string _ultimosDigitos = string.Empty;
 
     [ObservableProperty]
-    private string? _redTarjeta = "Visa";
+    private string _redTarjeta = "Visa";
 
     #endregion
 
@@ -47,45 +47,46 @@ public partial class TarjetaFormViewModel(IMediator mediador) : ViewModelBase
     private TipoTarjeta _tipoSeleccionado = TipoTarjeta.Debito;
 
     [ObservableProperty]
-    private string? _colorHex = "#3A86FF";
+    private string _colorHex = "#3A86FF";
 
     #endregion
 
     #region 💰 Datos financieros
 
     [ObservableProperty]
-    private string? _saldoActual = "0";
+    private string _saldoActual = "0";
 
     [ObservableProperty]
-    private string? _limiteCredito = string.Empty;
+    private string _limiteCredito = string.Empty;
 
     #endregion
 
     #region 📅 Fechas
 
     [ObservableProperty]
-    private string? _mesVencimiento = string.Empty;
+    private string _mesVencimiento = string.Empty;
 
     [ObservableProperty]
-    private string? _anioVencimiento = string.Empty;
+    private string _anioVencimiento = string.Empty;
 
     [ObservableProperty]
-    private string? _diaCorte = string.Empty;
+    private string _diaCorte = string.Empty;
 
     [ObservableProperty]
-    private string? _diaPago = string.Empty;
+    private string _diaPago = string.Empty;
 
     #endregion
 
+
     #region ⚠️ Errores de validación
 
-    [ObservableProperty] private string? _descripcionError;
-    [ObservableProperty] private string? _bancoError;
-    [ObservableProperty] private string? _ultimosDigitosError;
-    [ObservableProperty] private string? _mesVencimientoError;
-    [ObservableProperty] private string? _anioVencimientoError;
-    [ObservableProperty] private string? _saldoActualError;
-    [ObservableProperty] private string? _limiteCreditoError;
+    [ObservableProperty] private string _descripcionError;
+    [ObservableProperty] private string _bancoError;
+    [ObservableProperty] private string _ultimosDigitosError;
+    [ObservableProperty] private string _mesVencimientoError;
+    [ObservableProperty] private string _anioVencimientoError;
+    [ObservableProperty] private string _saldoActualError;
+    [ObservableProperty] private string _limiteCreditoError;
 
     #endregion
 
@@ -218,6 +219,14 @@ public partial class TarjetaFormViewModel(IMediator mediador) : ViewModelBase
     [RelayCommand(CanExecute = nameof(EsFormularioValido))]
     private async Task GuardarAsync()
     {
+        // Para cancelar el comando en caso de que se desee
+        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        ToastDuration duration = ToastDuration.Short;
+        double fontSize = 14;
+
+        var resultadoActualizar = false;
+        var resultadoCrear = 0;
+
         await EjecutarConCargaAsync(async () =>
         {
             //Paso 1: Mapear los datos a un TarjetaFormDto
@@ -228,29 +237,43 @@ public partial class TarjetaFormViewModel(IMediator mediador) : ViewModelBase
             {
                 //Paso 3: Enviar el comando para actualizar
                 //Solo si estamos en modo edición
-                var actualizado = await mediador.EnviarAsync(new ActualizarTarjetaComando(dto));
+                resultadoActualizar = await mediador.EnviarAsync(new ActualizarTarjetaComando(dto));
 
-                if (!actualizado)
+                if(!resultadoActualizar)
                 {
-                    await MostrarToastAsync("No se pudo actualizar la tarjeta");
+                    await Toast.Make(
+                        "No se pudo actualizar la tarjeta", 
+                        duration, 
+                        fontSize)
+                    .Show(cancellationTokenSource.Token);
                     return;
                 }
-
-                await MostrarToastAsync("Tarjeta actualizada");
+                await Toast.Make(
+                    "Tarjeta actualizada", 
+                    duration, 
+                    fontSize)
+                .Show(cancellationTokenSource.Token);
             }
             else
             {
                 //Paso 3: Enviar el comando para crear
                 //Solo si estamos en modo creación
-                var creado = await mediador.EnviarAsync(new CrearTarjetaComando(dto));
+                resultadoCrear = await mediador.EnviarAsync(new CrearTarjetaComando(dto));
 
-                if (creado == 0)
+                if (resultadoCrear == 0)
                 {
-                    await MostrarToastAsync("No se pudo crear la tarjeta");
+                    await Toast.Make(
+                        "No se pudo crear la tarjeta",
+                        duration,
+                        fontSize)
+                    .Show(cancellationTokenSource.Token);
                     return;
                 }
-
-                await MostrarToastAsync("Tarjeta creada");
+                await Toast.Make(
+                    "Tarjeta creada",
+                    duration,
+                    fontSize)
+                .Show(cancellationTokenSource.Token);
             }
 
             //Paso 4: Navegar a la pantalla anterior

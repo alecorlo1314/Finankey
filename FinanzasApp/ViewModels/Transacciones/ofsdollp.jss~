@@ -7,15 +7,16 @@ using FinanzasApp.Aplicacion.Transacciones.Comandos;
 using FinanzasApp.Aplicacion.Transacciones.Consultas;
 using FinanzasApp.Domain.Enumeraciones;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace FinanzasApp.Presentacion.ViewModels.Transacciones;
 
-public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase, IQueryAttributable
+public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase, IQueryAttributable, INotifyPropertyChanged
 {
     #region 🔧 Parámetros de navegación
 
     [ObservableProperty] private int _tarjetaId;
-    [ObservableProperty] private string? _nombreTarjeta;
+    [ObservableProperty] private string _nombreTarjeta;
     [ObservableProperty] private TipoTarjeta _tipoTarjetaParam;
 
     #endregion
@@ -38,11 +39,9 @@ public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase,
     // Estado vacío
     [ObservableProperty] private bool _sinTransacciones;
 
-    public DateTime FechaHoy => DateTime.Today;
-
     #endregion
 
-    #region 🔧 Implementación de IQueryAttributable
+    #region Atributos Consulta
     /// <summary>
     /// Aplica los parámetros de navegación a la consulta
     /// </summary>
@@ -53,12 +52,12 @@ public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase,
             TarjetaId = (int)tarjetaId;
 
         if (query.TryGetValue("NombreTarjeta", out var nombre))
-            NombreTarjeta = (string)nombre;
+            NombreTarjeta = nombre?.ToString();
 
         if (query.TryGetValue("TipoTarjeta", out var tipo))
             TipoTarjetaParam = (TipoTarjeta)tipo;
 
-        // Actualiza la visibilidad del tab de ingresos para que se vea el boton de ingreso si es debito
+        // Actualiza la visibilidad del tab de ingresos
         OnPropertyChanged(nameof(MostrarTabIngresos_Visible));
     }
 
@@ -142,25 +141,16 @@ public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase,
     [RelayCommand]
     private async Task CargarTransaccionesAsync()
     {
-        // Parametros:
-        // - Func<Task>
-        // - Mensaje Error --> Opcional
         await EjecutarConCargaAsync(async () =>
         {
-            //Paso 1: Obtener transacciones segun la tarjeta y el filtro activo
-            //Retorn --> IEnumerable<TransaccionResumenDto>
             var consulta = new ObtenerTransaccionesPorTarjetaConsulta(TarjetaId, FiltroActivo);
-
-            //Paso 2: Ejecutar consulta
             var resultado = (await mediador.ConsultarAsync(consulta)).ToList();
 
-            //Paso 3: Actualizar UI en lista de transacciones
             Transacciones = new ObservableCollection<TransaccionResumenDto>(resultado);
 
-            // Paso 4: Si no hay transacciones, mostrar estado vacío
             SinTransacciones = !resultado.Any();
 
-            // Obtiene el total de gastos e ingresos para mostrar en la UI
+            // Totales
             TotalGastos = resultado
                 .Where(t => t.Tipo == TipoTransaccion.Gasto)
                 .Sum(t => t.Monto);
@@ -169,7 +159,6 @@ public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase,
                 .Where(t => t.Tipo == TipoTransaccion.Ingreso)
                 .Sum(t => t.Monto);
 
-            //Calcula el balance total
             Balance = TotalIngresos - TotalGastos;
         });
     }

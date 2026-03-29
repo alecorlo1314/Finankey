@@ -1,5 +1,7 @@
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Maui.Alerts;
 
 namespace FinanzasApp.Presentacion.ViewModels;
 
@@ -50,12 +52,14 @@ public abstract partial class ViewModelBase : ObservableObject
     {
         try
         {
+            // Paso 1: Activar el estado de carga
             EstaCargando = true;
 
-            // Limpia errores previos
+            // Paso 2: Limpia errores previos
             MensajeError = null;
             TieneError = false;
 
+            //Paso 3: Ejecutar lógica que estan Func<Task> accion
             await accion();
         }
         catch (KeyNotFoundException ex)
@@ -73,6 +77,7 @@ public abstract partial class ViewModelBase : ObservableObject
         }
         finally
         {
+            // Paso 4: Desactivar el estado de carga
             EstaCargando = false;
         }
     }
@@ -93,6 +98,21 @@ public abstract partial class ViewModelBase : ObservableObject
     {
         MensajeError = null;
         TieneError = false;
+    }
+
+    #endregion
+
+    #region 🎯 Mensaje de exito o fracaso
+    protected async Task MostrarToastAsync(
+    string mensaje,
+    ToastDuration duration = ToastDuration.Short,
+    double fontSize = 14,
+    CancellationToken? token = null)
+    {
+        var cancellationToken = token ?? new CancellationTokenSource().Token;
+
+        await Toast.Make(mensaje, duration, fontSize)
+                   .Show(cancellationToken);
     }
 
     #endregion

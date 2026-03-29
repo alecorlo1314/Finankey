@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinanzasApp.Aplicacion.DTOs;
@@ -8,6 +9,7 @@ using FinanzasApp.Domain.Enumeraciones;
 using FinanzasApp.Domain.Interfaces;
 using FinanzasApp.Presentacion.Modelos;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Maui.Alerts;
 
 namespace FinanzasApp.Presentacion.ViewModels.Transacciones;
 
@@ -143,16 +145,23 @@ public partial class TransaccionFormViewModel(
 
     public override async Task AlAparecerAsync()
     {
+        // Establece el título dinámicamente según tipo y modo
         Titulo = TipoParam == TipoTransaccion.Gasto
             ? (EsModoEdicion ? "Editar gasto" : "Nuevo gasto")
             : (EsModoEdicion ? "Editar ingreso" : "Nuevo ingreso");
 
+        // Verifica disponibilidad de la IA al cargar el formulario
         IaDisponible = servicioPrediccion.ModeloListo;
 
+        //Inicializa las categorías para mostrar en la UI
         InicializarCategorias();
 
+        // Si estamos editando, carga los datos existentes
         if (EsModoEdicion)
             await CargarTransaccionExistenteAsync();
+        else
+            FechaSeleccionada = DateTime.Today;
+
     }
 
     #endregion
@@ -164,27 +173,41 @@ public partial class TransaccionFormViewModel(
     {
         await EjecutarConCargaAsync(async () =>
         {
-            decimal.TryParse(Monto, out var montoDecimal);
+            //Paso 1: Mapear a TransaccionDTO
+            var dto = ConstruirDto();
 
-            var dto = new TransaccionFormDto(
-                Id: EsModoEdicion ? TransaccionId : null,
-                TarjetaId: TarjetaIdParam,
-                Descripcion: Descripcion.Trim(),
-                Monto: montoDecimal,
-                Tipo: TipoParam,
-                Categoria: CategoriaSeleccionada,
-                CategoriaPredicha: CategoriaFuePredicha,
-                ConfianzaPrediccion: ConfianzaPrediccion,
-                Fecha: FechaSeleccionada,
-                Notas: string.IsNullOrWhiteSpace(Notas) ? null : Notas.Trim()
-            );
-
+            //Paso 2: Verificar si es edición o creación
             if (EsModoEdicion)
-                await mediador.EnviarAsync(new ActualizarTransaccionComando(dto));
-            else
-                await mediador.EnviarAsync(new CrearTransaccionComando(dto));
+            {
+                //Paso 3: Enviar el comando para actualizar
+                //Solo si estamos en modo edición
+                var actualizado = await mediador.EnviarAsync(new ActualizarTransaccionComando(dto));
+                if (!actualizado)
+                {
+                    await MostrarToastAsync("No se pudo actualizar la transaccion");
+                    return;
+                }
+                await MostrarToastAsync("Transaccion actualizada");
 
-            await Shell.Current.GoToAsync("..");
+                await Shell.Current.GoToAsync("..");
+            }
+            else
+            {
+                //Paso 3: Enviar el comando para crear
+                //Solo si estamos en modo creación
+                var creado = await mediador.EnviarAsync(new CrearTransaccionComando(dto));
+
+                if (creado == 0)
+                {
+                    await MostrarToastAsync("No se pudo crear la transaccion");
+                    return;
+                }
+
+                await MostrarToastAsync("Transaccion creada");
+
+                //Limpiar campos
+                LimpiarCampos();
+            }
         });
     }
 
@@ -310,5 +333,31 @@ public partial class TransaccionFormViewModel(
         // Aquí puedes abrir un BottomSheet o expandir lista
     }
 
+    private TransaccionFormDto ConstruirDto()
+    {
+        decimal.TryParse(Monto, out var montoDecimal);
+
+        return new TransaccionFormDto(
+                Id: EsModoEdicion ? TransaccionId : null,
+                TarjetaId: TarjetaIdParam,
+                Descripcion: Descripcion.Trim(),
+                Monto: montoDecimal,
+                Tipo: TipoParam,
+                Categoria: CategoriaSeleccionada,
+                CategoriaPredicha: CategoriaFuePredicha,
+                ConfianzaPrediccion: ConfianzaPrediccion,
+                Fecha: FechaSeleccionada,
+                Notas: string.IsNullOrWhiteSpace(Notas) ? null : Notas.Trim()
+            );
+    }
+
+    private void LimpiarCampos()
+    {
+        Descripcion = string.Empty;
+        Monto = string.Empty;
+        CategoriaSeleccionada = CategoriaTransaccion.Otros;
+        Notas = string.Empty;
+    }
+
     #endregion
-}
+    }

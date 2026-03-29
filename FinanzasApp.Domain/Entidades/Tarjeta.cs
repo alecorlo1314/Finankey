@@ -44,6 +44,16 @@ public class Tarjeta
     /// Red de la tarjeta (ej: Visa, MasterCard)
     public string RedTarjeta { get; set; } = "Visa";
 
+
+    //EL VENCIMIENTO SERA PARA AMBOS TIPOS DE TARJETAS
+    public int MesVencimiento { get; set; }
+    public int AnioVencimiento { get; set; }
+
+    //EL DIA DE PAGO Y CORTE SERA SOLO PARA LA TARJETA DE CREDITO
+    public int? DiaCorte { get; set; }
+    public int? DiaPago { get; set; }
+
+
     // ── Propiedades calculadas (no se guardan en BD) ─
     [Ignore]
     public decimal CreditoDisponible =>
@@ -59,4 +69,96 @@ public class Tarjeta
     /// Lista de transacciones asociadas (se llena manualmente)
     [Ignore]
     public List<Transaccion> Transacciones { get; set; } = [];
+
+
+    /// <summary>
+    /// Fecha exacta del próximo corte a partir de hoy.
+    /// Si hoy es después del día de corte, el próximo corte
+    /// es el mes siguiente.
+    /// </summary>
+    [Ignore]
+    public DateTime? ProximoCorte
+    {
+        get
+        {
+            //Si esta vacio devulve null
+            if(!DiaCorte.HasValue) return null;
+
+            var hoy = DateTime.Today;
+            var diaCorte = DiaCorte.Value;
+
+            // Ajusta si el día no existe en el mes (ej: día 31 en febrero)
+            var diasEnMesActual = DateTime.DaysInMonth(hoy.Year, hoy.Month);
+            var diaReal = Math.Min(diaCorte, diasEnMesActual);
+
+            var corteMesActual = new DateTime(hoy.Year, hoy.Month, diaReal);
+
+            // Si el corte de este mes ya pasó, el próximo es el siguiente mes
+            if (hoy > corteMesActual)
+            {
+                var mesSiguiente = hoy.AddMonths(1);
+                var diasEnMesSiguiente = DateTime.DaysInMonth(mesSiguiente.Year, mesSiguiente.Month);
+                diaReal = Math.Min(diaCorte, diasEnMesSiguiente);
+                return new DateTime(mesSiguiente.Year, mesSiguiente.Month, diaReal);
+            }
+            return corteMesActual;
+        }
+    }
+
+    /// <summary>
+    /// Fecha exacta del próximo pago a partir del próximo corte.
+    /// El pago siempre es el mes siguiente al corte.
+    /// </summary>
+    [Ignore]
+    public DateTime? ProximoPago
+    {
+        get
+        {
+            if (!DiaPago.HasValue || !ProximoCorte.HasValue) return null;
+
+            var mesCorte = ProximoCorte.Value.AddMonths(1);
+            var diasEnMes = DateTime.DaysInMonth(mesCorte.Year, mesCorte.Month);
+            var diaReal = Math.Min(DiaPago.Value, diasEnMes);
+
+            return new DateTime(mesCorte.Year, mesCorte.Month, diaReal);
+        }
+    }
+
+    /// <summary>
+    /// Días restantes para el próximo corte desde hoy.
+    /// </summary>
+    [Ignore]
+    public int? DiasParaCorte =>
+        ProximoCorte.HasValue
+            ? (ProximoCorte.Value - DateTime.Today).Days
+            : null;
+
+    /// <summary>
+    /// Días restantes para el próximo pago desde hoy.
+    /// </summary>
+    [Ignore]
+    public int? DiasParaPago =>
+        ProximoPago.HasValue
+            ? (ProximoPago.Value - DateTime.Today).Days
+            : null;
+
+    /// <summary>
+    /// Fecha de vencimiento de la tarjeta física como DateTime.
+    /// Usa el último día del mes de vencimiento.
+    /// </summary>
+    [Ignore]
+    public DateTime? FechaVencimiento =>
+        MesVencimiento > 0 && AnioVencimiento > 0
+            ? new DateTime(
+                AnioVencimiento,
+                MesVencimiento,
+                DateTime.DaysInMonth(AnioVencimiento, MesVencimiento))
+            : null;
+
+    /// <summary>
+    /// Indica si la tarjeta física está vencida.
+    /// </summary>
+    [Ignore]
+    public bool EstaVencida =>
+        FechaVencimiento.HasValue && FechaVencimiento.Value < DateTime.Today;
 }

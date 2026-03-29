@@ -5,10 +5,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:enums="clr-namespace:FinanzasApp.Domain.Enumeraciones;assembly=FinanzasApp.Domain"
     xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:FinanzasApp.Presentacion.ViewModels.Tarjetas"
     Title="{Binding Titulo}"
     x:DataType="vm:TarjetaFormViewModel"
     Shell.BackgroundColor="#FF006E">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding RegresarCommand}" IsVisible="True" />
@@ -52,47 +59,132 @@
                 </Grid>
             </Border>
 
-            <!--  ── Formulario ───────────────────────────────────────────────  -->
+            <!--  FORMULARIO  -->
             <VerticalStackLayout Spacing="16">
 
-                <!--  Nombre  -->
+                <!--  NOMBRE DE LA TARJETA  -->
                 <VerticalStackLayout Spacing="6">
                     <Label Style="{StaticResource TextoEtiqueta}" Text="Nombre de la tarjeta" />
-                    <Border Style="{StaticResource EntradaContenedor}">
-                        <Entry
-                            MaxLength="50"
-                            Placeholder="Ej: Visa Banco Nacional"
-                            Style="{StaticResource EntradaTexto}"
-                            Text="{Binding Nombre}" />
-                    </Border>
+                    <VerticalStackLayout Spacing="4">
+                        <Border Style="{StaticResource EntradaContenedor}">
+                            <Entry
+                                MaxLength="50"
+                                Placeholder="Ej: Visa Banco Nacional"
+                                Style="{StaticResource EntradaTexto}"
+                                Text="{Binding Nombre}" />
+                        </Border>
+
+                        <!--  Mensaje de error  -->
+                        <Label
+                            FontFamily="InterRegular"
+                            FontSize="12"
+                            IsVisible="{Binding DescripcionError, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                            Text="{Binding DescripcionError}"
+                            TextColor="#FF006E" />
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
 
-                <!--  Banco  -->
+                <!--  BANCO  -->
                 <VerticalStackLayout Spacing="6">
                     <Label Style="{StaticResource TextoEtiqueta}" Text="Banco emisor" />
-                    <Border Style="{StaticResource EntradaContenedor}">
-                        <Entry
-                            MaxLength="60"
-                            Placeholder="Ej: Banco Nacional de Costa Rica"
-                            Style="{StaticResource EntradaTexto}"
-                            Text="{Binding Banco}" />
-                    </Border>
+                    <VerticalStackLayout Spacing="4">
+                        <Border Style="{StaticResource EntradaContenedor}">
+                            <Entry
+                                MaxLength="60"
+                                Placeholder="Ej: Banco Nacional de Costa Rica"
+                                Style="{StaticResource EntradaTexto}"
+                                Text="{Binding Banco}" />
+                        </Border>
+                        <!--  Mensaje de error  -->
+                        <Label
+                            FontFamily="InterRegular"
+                            FontSize="12"
+                            IsVisible="{Binding BancoError, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                            Text="{Binding BancoError}"
+                            TextColor="#FF006E" />
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
 
-                <!--  Últimos 4 dígitos  -->
+                <!--  ULTIMOS 4 DIGITOS  -->
                 <VerticalStackLayout Spacing="6">
                     <Label Style="{StaticResource TextoEtiqueta}" Text="Últimos 4 dígitos" />
-                    <Border Style="{StaticResource EntradaContenedor}">
-                        <Entry
-                            Keyboard="Numeric"
-                            MaxLength="4"
-                            Placeholder="0000"
-                            Style="{StaticResource EntradaTexto}"
-                            Text="{Binding UltimosDigitos}" />
-                    </Border>
+                    <VerticalStackLayout Spacing="4">
+                        <Border Style="{StaticResource EntradaContenedor}">
+                            <Entry
+                                Keyboard="Numeric"
+                                MaxLength="4"
+                                Placeholder="0000"
+                                Style="{StaticResource EntradaTexto}"
+                                Text="{Binding UltimosDigitos}" />
+                        </Border>
+                        <!--  Mensaje de error  -->
+                        <Label
+                            FontFamily="InterRegular"
+                            FontSize="12"
+                            IsVisible="{Binding UltimosDigitosError, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                            Text="{Binding UltimosDigitosError}"
+                            TextColor="#FF006E" />
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
 
-                <!--  Tipo de tarjeta  -->
+                <!--  FECHA VENCIMIENTO (AMBOS)  -->
+                <Grid ColumnDefinitions="*,20,*">
+
+                    <!--  Mes del vencimiento  -->
+                    <VerticalStackLayout Grid.Column="0" Spacing="6">
+                        <Label Style="{StaticResource TextoEtiqueta}" Text="Mes vencimiento" />
+                        <VerticalStackLayout Grid.Column="0" Spacing="4">
+                            <Border Style="{StaticResource EntradaContenedor}">
+                                <Entry
+                                    Keyboard="Numeric"
+                                    MaxLength="2"
+                                    Placeholder="MM"
+                                    Style="{StaticResource EntradaTexto}"
+                                    Text="{Binding MesVencimiento}" />
+                            </Border>
+                            <!--  Mensaje de error  -->
+                            <Label
+                                FontFamily="InterRegular"
+                                FontSize="12"
+                                IsVisible="{Binding MesVencimientoError, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                                Text="{Binding MesVencimientoError}"
+                                TextColor="#FF006E" />
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+
+                    <!--  Separador /  -->
+                    <Label
+                        Grid.Column="1"
+                        FontFamily="InterBold"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        Text="/"
+                        TextColor="{StaticResource TextoDeshabilitado}"
+                        VerticalOptions="Center" />
+
+                    <!--  Mes del vencimiento  -->
+                    <VerticalStackLayout Grid.Column="2" Spacing="6">
+                        <Label Style="{StaticResource TextoEtiqueta}" Text="Año vencimiento" />
+                        <Border Style="{StaticResource EntradaContenedor}">
+                            <Entry
+                                Keyboard="Numeric"
+                                MaxLength="4"
+                                Placeholder="AAAA"
+                                Style="{StaticResource EntradaTexto}"
+                                Text="{Binding AnioVencimiento}" />
+                        </Border>
+                        <!--  Mensaje de error  -->
+                        <Label
+                            FontFamily="InterRegular"
+                            FontSize="12"
+                            IsVisible="{Binding AnioVencimientoError, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                            Text="{Binding AnioVencimientoError}"
+                            TextColor="#FF006E" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!--  TIPO DE TARJETA  -->
                 <VerticalStackLayout Spacing="6">
                     <Label Style="{StaticResource TextoEtiqueta}" Text="Tipo de tarjeta" />
                     <Grid ColumnDefinitions="*,12,*" ColumnSpacing="0">
@@ -136,7 +228,7 @@
                     </Grid>
                 </VerticalStackLayout>
 
-                <!--  Límite de crédito (solo crédito)  -->
+                <!--  LIMITE CREDITO (SOLO CREDITO)  -->
                 <VerticalStackLayout IsVisible="{Binding MostrarLimiteCredito}" Spacing="6">
                     <Label Style="{StaticResource TextoEtiqueta}" Text="Límite de crédito" />
                     <Border Style="{StaticResource EntradaContenedor}">
@@ -148,19 +240,67 @@
                     </Border>
                 </VerticalStackLayout>
 
-                <!--  Saldo actual  -->
-                <VerticalStackLayout Spacing="6">
-                    <Label Style="{StaticResource TextoEtiqueta}" Text="Saldo actual" />
-                    <Border Style="{StaticResource EntradaContenedor}">
-                        <Entry
-                            Keyboard="Numeric"
-                            Placeholder="0.00"
-                            Style="{StaticResource EntradaTexto}"
-                            Text="{Binding SaldoActual}" />
-                    </Border>
+                <!--  DIA DE CORTE DIA PAGO (SOLO CREDITO)  -->
+                <VerticalStackLayout IsVisible="{Binding MostrarLimiteCredito}" Spacing="16">
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Style="{StaticResource TextoEtiqueta}" Text="Día de corte" />
+                        <Border Style="{StaticResource EntradaContenedor}">
+                            <Entry
+                                Keyboard="Numeric"
+                                MaxLength="2"
+                                Placeholder="Ej: 15"
+                                Style="{StaticResource EntradaTexto}"
+                                Text="{Binding DiaCorte}" />
+                        </Border>
+                        <Label
+                            FontFamily="InterRegular"
+                            FontSize="12"
+                            Text="Día del mes en que el banco realiza el corte"
+                            TextColor="#94A3B8" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Style="{StaticResource TextoEtiqueta}" Text="Día de pago" />
+                        <Border Style="{StaticResource EntradaContenedor}">
+                            <Entry
+                                Keyboard="Numeric"
+                                MaxLength="2"
+                                Placeholder="Ej: 5"
+                                Style="{StaticResource EntradaTexto}"
+                                Text="{Binding DiaPago}" />
+                        </Border>
+                        <Label
+                            FontFamily="InterRegular"
+                            FontSize="12"
+                            Text="Día del mes siguiente al corte en que vence el pago"
+                            TextColor="#94A3B8" />
+                    </VerticalStackLayout>
+
                 </VerticalStackLayout>
 
-                <!--  Red de tarjeta  -->
+                <!--  SALDO ACTUAL  -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Style="{StaticResource TextoEtiqueta}" Text="Saldo actual" />
+                    <VerticalStackLayout Spacing="4">
+                        <Border Style="{StaticResource EntradaContenedor}">
+                            <Entry
+                                Keyboard="Numeric"
+                                Placeholder="0.00"
+                                Style="{StaticResource EntradaTexto}"
+                                Text="{Binding SaldoActual}" />
+                        </Border>
+                        <!--  Mensaje de error  -->
+                        <Label
+                            FontFamily="InterRegular"
+                            FontSize="12"
+                            IsVisible="{Binding SaldoActualError, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                            Text="{Binding SaldoActualError}"
+                            TextColor="#FF006E" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <!--  RED DE TARJETA  -->
                 <VerticalStackLayout Spacing="6">
                     <Label Style="{StaticResource TextoEtiqueta}" Text="Red de tarjeta" />
                     <Border Style="{StaticResource EntradaContenedor}">
@@ -188,7 +328,7 @@
 
                 </VerticalStackLayout>
 
-                <!--  Selector de color  -->
+                <!--  SELECTOR DE COLOR  -->
                 <VerticalStackLayout Spacing="8">
                     <Label Style="{StaticResource TextoEtiqueta}" Text="Color de la tarjeta" />
 
