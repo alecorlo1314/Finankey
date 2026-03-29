@@ -62,7 +62,7 @@
             <!--  FORMULARIO  -->
             <VerticalStackLayout Spacing="16">
 
-                <!--  Nombre  -->
+                <!--  NOMBRE DE LA TARJETA  -->
                 <VerticalStackLayout Spacing="6">
                     <Label Style="{StaticResource TextoEtiqueta}" Text="Nombre de la tarjeta" />
                     <VerticalStackLayout Spacing="4">
@@ -84,7 +84,7 @@
                     </VerticalStackLayout>
                 </VerticalStackLayout>
 
-                <!--  Banco  -->
+                <!--  BANCO  -->
                 <VerticalStackLayout Spacing="6">
                     <Label Style="{StaticResource TextoEtiqueta}" Text="Banco emisor" />
                     <VerticalStackLayout Spacing="4">
@@ -105,7 +105,7 @@
                     </VerticalStackLayout>
                 </VerticalStackLayout>
 
-                <!--  Últimos 4 dígitos  -->
+                <!--  ULTIMOS 4 DIGITOS  -->
                 <VerticalStackLayout Spacing="6">
                     <Label Style="{StaticResource TextoEtiqueta}" Text="Últimos 4 dígitos" />
                     <VerticalStackLayout Spacing="4">
@@ -127,7 +127,7 @@
                     </VerticalStackLayout>
                 </VerticalStackLayout>
 
-                <!--  Fecha de vencimiento (ambos tipos)  -->
+                <!--  FECHA VENCIMIENTO (AMBOS)  -->
                 <Grid ColumnDefinitions="*,20,*">
 
                     <!--  Mes del vencimiento  -->
@@ -184,7 +184,7 @@
                     </VerticalStackLayout>
                 </Grid>
 
-                <!--  Tipo de tarjeta  -->
+                <!--  TIPO DE TARJETA  -->
                 <VerticalStackLayout Spacing="6">
                     <Label Style="{StaticResource TextoEtiqueta}" Text="Tipo de tarjeta" />
                     <Grid ColumnDefinitions="*,12,*" ColumnSpacing="0">
@@ -228,7 +228,7 @@
                     </Grid>
                 </VerticalStackLayout>
 
-                <!--  Límite de crédito (solo crédito)  -->
+                <!--  LIMITE CREDITO (SOLO CREDITO)  -->
                 <VerticalStackLayout IsVisible="{Binding MostrarLimiteCredito}" Spacing="6">
                     <Label Style="{StaticResource TextoEtiqueta}" Text="Límite de crédito" />
                     <Border Style="{StaticResource EntradaContenedor}">
@@ -240,7 +240,7 @@
                     </Border>
                 </VerticalStackLayout>
 
-                <!--  Día de corte y día de pago (solo crédito)  -->
+                <!--  DIA DE CORTE DIA PAGO (SOLO CREDITO)  -->
                 <VerticalStackLayout IsVisible="{Binding MostrarLimiteCredito}" Spacing="16">
 
                     <VerticalStackLayout Spacing="6">
@@ -279,7 +279,7 @@
 
                 </VerticalStackLayout>
 
-                <!--  Saldo actual  -->
+                <!--  SALDO ACTUAL  -->
                 <VerticalStackLayout Spacing="6">
                     <Label Style="{StaticResource TextoEtiqueta}" Text="Saldo actual" />
                     <VerticalStackLayout Spacing="4">
@@ -300,7 +300,7 @@
                     </VerticalStackLayout>
                 </VerticalStackLayout>
 
-                <!--  Red de tarjeta  -->
+                <!--  RED DE TARJETA  -->
                 <VerticalStackLayout Spacing="6">
                     <Label Style="{StaticResource TextoEtiqueta}" Text="Red de tarjeta" />
                     <Border Style="{StaticResource EntradaContenedor}">
@@ -328,7 +328,7 @@
 
                 </VerticalStackLayout>
 
-                <!--  Selector de color  -->
+                <!--  SELECTOR DE COLOR  -->
                 <VerticalStackLayout Spacing="8">
                     <Label Style="{StaticResource TextoEtiqueta}" Text="Color de la tarjeta" />
 

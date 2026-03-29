@@ -57,7 +57,7 @@ public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase,
         if (query.TryGetValue("TipoTarjeta", out var tipo))
             TipoTarjetaParam = (TipoTarjeta)tipo;
 
-        // Actualiza la visibilidad del tab de ingresos para que se vea el boton de ingreso si es debito
+        // Actualiza la visibilidad del tab de ingresos
         OnPropertyChanged(nameof(MostrarTabIngresos_Visible));
     }
 

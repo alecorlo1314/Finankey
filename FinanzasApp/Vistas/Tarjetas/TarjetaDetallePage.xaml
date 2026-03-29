@@ -33,8 +33,9 @@
         <!--  CONTENIDO PRINCIPAL  -->
         <Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
             <ScrollView>
-                <VerticalStackLayout Spacing="0">
+                <VerticalStackLayout>
 
+                    <!--  ZONA SUPERIOR  (HEADER)  -->
                     <Grid
                         Padding="0,16"
                         BackgroundColor="White"
@@ -100,13 +101,13 @@
                         </VerticalStackLayout>
                     </Grid>
 
-                    <!--  Separador sutil  -->
+                    <!--  SEPARADOS SUTIL  -->
                     <BoxView
                         BackgroundColor="{StaticResource Gray100}"
                         HeightRequest="1"
                         Opacity="0.3" />
 
-                    <!--  Resumen del período de facturación  -->
+                    <!--  RESUMEN PERIODO DE FACTURACION  -->
                     <Border
                         Margin="16,12,16,0"
                         Padding="24"
@@ -456,7 +457,7 @@
                 </VerticalStackLayout>
             </ScrollView>
 
-            <!--  ── Botón flotante para agregar transacción ──────────────────  -->
+            <!--  BOTONES FLOTANTES PARA AGREGAR INGRESOS O GASTOS  -->
             <VerticalStackLayout
                 Margin="0,0,24,24"
                 HorizontalOptions="End"

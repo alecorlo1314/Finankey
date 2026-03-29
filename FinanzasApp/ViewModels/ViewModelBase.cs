@@ -1,5 +1,7 @@
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Maui.Alerts;
 
 namespace FinanzasApp.Presentacion.ViewModels;
 
@@ -93,6 +95,21 @@ public abstract partial class ViewModelBase : ObservableObject
     {
         MensajeError = null;
         TieneError = false;
+    }
+
+    #endregion
+
+    #region 🎯 Mensaje de exito o fracaso
+    protected async Task MostrarToastAsync(
+    string mensaje,
+    ToastDuration duration = ToastDuration.Short,
+    double fontSize = 14,
+    CancellationToken? token = null)
+    {
+        var cancellationToken = token ?? new CancellationTokenSource().Token;
+
+        await Toast.Make(mensaje, duration, fontSize)
+                   .Show(cancellationToken);
     }
 
     #endregion

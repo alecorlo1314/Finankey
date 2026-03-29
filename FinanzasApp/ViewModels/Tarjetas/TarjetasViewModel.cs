@@ -118,8 +118,17 @@ public partial class TarjetasViewModel(IMediator mediador) : ViewModelBase
 
     /// Navega a crear nueva tarjeta
     [RelayCommand]
-    private static async Task AgregarTarjetaAsync() =>
-        await Shell.Current.GoToAsync("/tarjetas/nueva");
+    private static async Task AgregarTarjetaAsync()
+    {
+        try
+        {
+            await Shell.Current.GoToAsync("//tarjetas/nueva");
+        }
+        catch (Exception ex)
+        {
+            await MostrarAlertaAsync("Error al navagar a nueva tarjeta", ex.Message);
+        }
+    }
 
     /// Navega al detalle de la tarjeta
     [RelayCommand]
@@ -129,6 +138,7 @@ public partial class TarjetasViewModel(IMediator mediador) : ViewModelBase
 
         try
         {
+            //Enviar parametros en un Dictionary<string, object>
             await Shell.Current.GoToAsync(
                 "///tarjetas/detalle",
                 new Dictionary<string, object>
@@ -140,20 +150,28 @@ public partial class TarjetasViewModel(IMediator mediador) : ViewModelBase
         }
         catch (Exception ex)
         {
-            await MostrarAlertaAsync("Error", ex.Message);
+            await MostrarAlertaAsync("Error al navagar al detalle de tarjeta", ex.Message);
         }
     }
 
     /// Navega a editar tarjeta
     [RelayCommand]
-    private static async Task EditarTarjetaAsync(TarjetaResumenDto tarjeta) =>
-        await Shell.Current.GoToAsync(
-            "//tarjetas/editar",
-            new Dictionary<string, object>
-            {
-                ["TarjetaId"] = tarjeta.Id
-            }
-        );
+    private static async Task EditarTarjetaAsync(TarjetaResumenDto tarjeta)
+    {
+        try
+        {
+            await Shell.Current.GoToAsync(
+                "//tarjetas/editar",
+                new Dictionary<string, object>
+                {
+                    ["TarjetaId"] = tarjeta.Id
+                });
+        }
+        catch (Exception ex)
+        {
+            await MostrarAlertaAsync("Error al navagar a editar tarjeta", ex.Message);
+        }
+    }
 
     #endregion
 
