@@ -32,6 +32,14 @@
                 StrokeShape="RoundRectangle 0,0,56,56"
                 StrokeThickness="0">
 
+                <Border.Shadow>
+                    <Shadow
+                        Brush="#33000000"
+                        Opacity="0.4"
+                        Radius="6"
+                        Offset="0,2" />
+                </Border.Shadow>
+
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                         <GradientStop Offset="0.0" Color="#FF1A7D" />
@@ -104,10 +112,10 @@
                 </Grid>
             </Border>
 
-            <!--  ── Tarjetas de resumen (gastos / ingresos) ─────────────────  -->
+            <!--  RESUMEN FINANCIERO (GASTO, INGRESO)  -->
             <Grid Margin="16,-45,16,0" ColumnDefinitions="*,8,*">
 
-                <!--  Gastos del mes  -->
+                <!--  GASTO MES  -->
                 <Border
                     Grid.Column="0"
                     Padding="16"
@@ -119,26 +127,47 @@
                             Radius="6"
                             Offset="0,2" />
                     </Border.Shadow>
-                    <VerticalStackLayout Spacing="8">
-                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                            <Image
-                                HeightRequest="24"
-                                Source="icono_gasto_dashboard.png"
-                                WidthRequest="24" />
+
+                    <!--  Grid interno: columna 0 = icono, columna 1 = contenido (titulo + monto)  -->
+                    <Grid
+                        ColumnDefinitions="Auto, *"
+                        ColumnSpacing="4"
+                        HorizontalOptions="Start"
+                        RowDefinitions="Auto"
+                        VerticalOptions="Center">
+                        <Image
+                            Grid.Column="0"
+                            AutomationProperties.IsInAccessibleTree="True"
+                            AutomationProperties.Name="Icono gasto"
+                            HeightRequest="40"
+                            HorizontalOptions="Start"
+                            Source="icono_gasto_dashboard.png"
+                            VerticalOptions="Center"
+                            WidthRequest="40" />
+
+                        <Grid Grid.Column="1" RowDefinitions="Auto,Auto">
+                            <!--  Título  -->
                             <Label
+                                Grid.Row="0"
                                 FontFamily="InterSemiBold"
+                                LineBreakMode="NoWrap"
                                 Style="{StaticResource TextoEtiqueta}"
-                                Text="Gastos" />
-                        </HorizontalStackLayout>
-                        <Label
-                            FontFamily="PoppinsBold"
-                            Style="{StaticResource TextoMonedaChico}"
-                            Text="{Binding ResumenFinanciero.GastosMesActual, StringFormat='₡{0:N0}'}"
-                            TextColor="{StaticResource Gray600}" />
-                    </VerticalStackLayout>
+                                Text="Gastos"
+                                VerticalOptions="End" />
+
+                            <!--  Monto debajo del título  -->
+                            <Label
+                                Grid.Row="1"
+                                FontFamily="PoppinsBold"
+                                Style="{StaticResource TextoMonedaChico}"
+                                Text="{Binding ResumenFinanciero.GastosMesActual, StringFormat='₡{0:N0}'}"
+                                TextColor="{StaticResource Gray600}"
+                                VerticalOptions="Start" />
+                        </Grid>
+                    </Grid>
                 </Border>
 
-                <!--  Ingresos del mes  -->
+                <!--  INGRESO MES  -->
                 <Border
                     Grid.Column="2"
                     Padding="16"
@@ -150,34 +179,66 @@
                             Radius="6"
                             Offset="0,2" />
                     </Border.Shadow>
-                    <VerticalStackLayout Spacing="8">
-                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                            <Image
-                                HeightRequest="24"
-                                Source="icono_ingreso_dashboard.png"
-                                WidthRequest="24" />
+
+                    <Grid
+                        ColumnDefinitions="Auto, *"
+                        ColumnSpacing="4"
+                        HorizontalOptions="Start"
+                        RowDefinitions="Auto"
+                        VerticalOptions="Center">
+                        <Image
+                            Grid.Column="0"
+                            AutomationProperties.IsInAccessibleTree="True"
+                            AutomationProperties.Name="Icono ingreso"
+                            HeightRequest="40"
+                            HorizontalOptions="Start"
+                            Source="icono_ingreso_dashboard.png"
+                            VerticalOptions="Center"
+                            WidthRequest="40" />
+
+                        <Grid Grid.Column="1" RowDefinitions="Auto,Auto">
                             <Label
+                                Grid.Row="0"
                                 FontFamily="InterSemiBold"
+                                LineBreakMode="NoWrap"
                                 Style="{StaticResource TextoEtiqueta}"
-                                Text="Ingresos" />
-                        </HorizontalStackLayout>
-                        <Label
-                            FontFamily="PoppinsBold"
-                            Style="{StaticResource TextoMonedaChico}"
-                            Text="{Binding ResumenFinanciero.IngresosMesActual, StringFormat='₡{0:N0}'}"
-                            TextColor="{StaticResource Gray600}" />
-                    </VerticalStackLayout>
+                                Text="Ingresos"
+                                VerticalOptions="End" />
+
+                            <Label
+                                Grid.Row="1"
+                                FontFamily="PoppinsBold"
+                                Style="{StaticResource TextoMonedaChico}"
+                                Text="{Binding ResumenFinanciero.IngresosMesActual, StringFormat='₡{0:N0}'}"
+                                TextColor="{StaticResource Gray600}"
+                                VerticalOptions="Start" />
+                        </Grid>
+                    </Grid>
                 </Border>
+
             </Grid>
 
-
-            <!--  ── Sección de tarjetas ──────────────────────────────────────  -->
+            <!--  SECCION DE TARJETAS  -->
             <VerticalStackLayout Padding="24,16,24,0" Spacing="8">
-                <Label
-                    FontFamily="PoppinsSemiBold"
-                    FontSize="18"
-                    Style="{StaticResource TextoSubtitulo}"
-                    Text="Mis tarjetas" />
+                <Grid ColumnDefinitions="*,*">
+                    <Label
+                        Grid.Column="0"
+                        FontFamily="PoppinsSemiBold"
+                        FontSize="18"
+                        Style="{StaticResource TextoSubtitulo}"
+                        Text="Mis tarjetas" />
+                    <Button
+                        Grid.Column="1"
+                        BackgroundColor="Transparent"
+                        Command="{Binding VerTarjetasCommand}"
+                        CornerRadius="25"
+                        FontFamily="InterSemiBold"
+                        FontSize="14"
+                        HorizontalOptions="End"
+                        Text="Ver todas"
+                        TextColor="#FF006E"
+                        VerticalOptions="Center" />
+                </Grid>
 
                 <!--  CarouselView horizontal de tarjetas  -->
                 <CarouselView ItemsSource="{Binding Tarjetas}" Loop="False">
