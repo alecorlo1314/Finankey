@@ -52,12 +52,14 @@ public abstract partial class ViewModelBase : ObservableObject
     {
         try
         {
+            // Paso 1: Activar el estado de carga
             EstaCargando = true;
 
-            // Limpia errores previos
+            // Paso 2: Limpia errores previos
             MensajeError = null;
             TieneError = false;
 
+            //Paso 3: Ejecutar lógica que estan Func<Task> accion
             await accion();
         }
         catch (KeyNotFoundException ex)
@@ -75,6 +77,7 @@ public abstract partial class ViewModelBase : ObservableObject
         }
         finally
         {
+            // Paso 4: Desactivar el estado de carga
             EstaCargando = false;
         }
     }

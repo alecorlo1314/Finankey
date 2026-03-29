@@ -142,16 +142,25 @@ public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase,
     [RelayCommand]
     private async Task CargarTransaccionesAsync()
     {
+        // Parametros:
+        // - Func<Task>
+        // - Mensaje Error --> Opcional
         await EjecutarConCargaAsync(async () =>
         {
+            //Paso 1: Obtener transacciones segun la tarjeta y el filtro activo
+            //Retorn --> IEnumerable<TransaccionResumenDto>
             var consulta = new ObtenerTransaccionesPorTarjetaConsulta(TarjetaId, FiltroActivo);
+
+            //Paso 2: Ejecutar consulta
             var resultado = (await mediador.ConsultarAsync(consulta)).ToList();
 
+            //Paso 3: Actualizar UI en lista de transacciones
             Transacciones = new ObservableCollection<TransaccionResumenDto>(resultado);
 
+            // Paso 4: Si no hay transacciones, mostrar estado vacío
             SinTransacciones = !resultado.Any();
 
-            // Totales
+            // Obtiene el total de gastos e ingresos para mostrar en la UI
             TotalGastos = resultado
                 .Where(t => t.Tipo == TipoTransaccion.Gasto)
                 .Sum(t => t.Monto);
@@ -160,6 +169,7 @@ public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase,
                 .Where(t => t.Tipo == TipoTransaccion.Ingreso)
                 .Sum(t => t.Monto);
 
+            //Calcula el balance total
             Balance = TotalIngresos - TotalGastos;
         });
     }
