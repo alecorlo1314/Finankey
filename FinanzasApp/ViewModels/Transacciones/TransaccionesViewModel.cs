@@ -7,16 +7,15 @@ using FinanzasApp.Aplicacion.Transacciones.Comandos;
 using FinanzasApp.Aplicacion.Transacciones.Consultas;
 using FinanzasApp.Domain.Enumeraciones;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 
 namespace FinanzasApp.Presentacion.ViewModels.Transacciones;
 
-public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase, IQueryAttributable, INotifyPropertyChanged
+public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase, IQueryAttributable
 {
     #region 🔧 Parámetros de navegación
 
     [ObservableProperty] private int _tarjetaId;
-    [ObservableProperty] private string _nombreTarjeta;
+    [ObservableProperty] private string? _nombreTarjeta;
     [ObservableProperty] private TipoTarjeta _tipoTarjetaParam;
 
     #endregion
@@ -38,6 +37,8 @@ public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase,
 
     // Estado vacío
     [ObservableProperty] private bool _sinTransacciones;
+
+    public DateTime FechaHoy => DateTime.Today;
 
     #endregion
 

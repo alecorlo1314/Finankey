@@ -145,16 +145,23 @@ public partial class TransaccionFormViewModel(
 
     public override async Task AlAparecerAsync()
     {
+        // Establece el título dinámicamente según tipo y modo
         Titulo = TipoParam == TipoTransaccion.Gasto
             ? (EsModoEdicion ? "Editar gasto" : "Nuevo gasto")
             : (EsModoEdicion ? "Editar ingreso" : "Nuevo ingreso");
 
+        // Verifica disponibilidad de la IA al cargar el formulario
         IaDisponible = servicioPrediccion.ModeloListo;
 
+        //Inicializa las categorías para mostrar en la UI
         InicializarCategorias();
 
+        // Si estamos editando, carga los datos existentes
         if (EsModoEdicion)
             await CargarTransaccionExistenteAsync();
+        else
+            FechaSeleccionada = DateTime.Today;
+
     }
 
     #endregion

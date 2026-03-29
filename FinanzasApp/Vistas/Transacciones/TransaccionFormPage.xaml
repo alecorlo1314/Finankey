@@ -251,7 +251,7 @@
 
             </VerticalStackLayout>
 
-            <!--  ── Fecha ────────────────────────────────────────────────────  -->
+            <!--  Fecha  -->
             <VerticalStackLayout Spacing="6">
                 <Label Style="{StaticResource TextoEtiqueta}" Text="Fecha" />
                 <DatePicker

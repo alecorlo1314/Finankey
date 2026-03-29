@@ -311,7 +311,7 @@
                     </BindableLayout.EmptyView>
 
                     <BindableLayout.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="dto:TransaccionResumenDto">
                             <!--  Fila de transacción  -->
                             <Border
                                 Padding="8"

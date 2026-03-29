@@ -25,18 +25,18 @@ public partial class TarjetaFormViewModel(IMediator mediador) : ViewModelBase
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(EsFormularioValido))]
-    private string _nombre = string.Empty;
+    private string? _nombre = string.Empty;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(EsFormularioValido))]
-    private string _banco = string.Empty;
+    private string? _banco = string.Empty;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(EsFormularioValido))]
-    private string _ultimosDigitos = string.Empty;
+    private string? _ultimosDigitos = string.Empty;
 
     [ObservableProperty]
-    private string _redTarjeta = "Visa";
+    private string? _redTarjeta = "Visa";
 
     #endregion
 
@@ -47,45 +47,45 @@ public partial class TarjetaFormViewModel(IMediator mediador) : ViewModelBase
     private TipoTarjeta _tipoSeleccionado = TipoTarjeta.Debito;
 
     [ObservableProperty]
-    private string _colorHex = "#3A86FF";
+    private string? _colorHex = "#3A86FF";
 
     #endregion
 
     #region 💰 Datos financieros
 
     [ObservableProperty]
-    private string _saldoActual = "0";
+    private string? _saldoActual = "0";
 
     [ObservableProperty]
-    private string _limiteCredito = string.Empty;
+    private string? _limiteCredito = string.Empty;
 
     #endregion
 
     #region 📅 Fechas
 
     [ObservableProperty]
-    private string _mesVencimiento = string.Empty;
+    private string? _mesVencimiento = string.Empty;
 
     [ObservableProperty]
-    private string _anioVencimiento = string.Empty;
+    private string? _anioVencimiento = string.Empty;
 
     [ObservableProperty]
-    private string _diaCorte = string.Empty;
+    private string? _diaCorte = string.Empty;
 
     [ObservableProperty]
-    private string _diaPago = string.Empty;
+    private string? _diaPago = string.Empty;
 
     #endregion
 
     #region ⚠️ Errores de validación
 
-    [ObservableProperty] private string _descripcionError;
-    [ObservableProperty] private string _bancoError;
-    [ObservableProperty] private string _ultimosDigitosError;
-    [ObservableProperty] private string _mesVencimientoError;
-    [ObservableProperty] private string _anioVencimientoError;
-    [ObservableProperty] private string _saldoActualError;
-    [ObservableProperty] private string _limiteCreditoError;
+    [ObservableProperty] private string? _descripcionError;
+    [ObservableProperty] private string? _bancoError;
+    [ObservableProperty] private string? _ultimosDigitosError;
+    [ObservableProperty] private string? _mesVencimientoError;
+    [ObservableProperty] private string? _anioVencimientoError;
+    [ObservableProperty] private string? _saldoActualError;
+    [ObservableProperty] private string? _limiteCreditoError;
 
     #endregion
 
