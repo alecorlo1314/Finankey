@@ -107,7 +107,7 @@
                         HeightRequest="1"
                         Opacity="0.3" />
 
-                    <!--  RESUMEN PERIODO DE FACTURACION  -->
+                    <!--  RESUMEN PERIODO DE FACTURACION (SOLO PARA TARJETA CREDITO)  -->
                     <Border
                         Margin="16,12,16,0"
                         Padding="24"
