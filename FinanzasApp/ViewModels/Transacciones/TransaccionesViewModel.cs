@@ -49,8 +49,8 @@ public partial class TransaccionesViewModel(IMediator mediador) : ViewModelBase,
     /// <param name="query"></param>
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        if (query.TryGetValue("TarjetaId", out var tarjetaId))
-            TarjetaId = (int)tarjetaId;
+        if (query.TryGetValue("TarjetaId", out var tarjetaId) && tarjetaId is int id)
+            TarjetaId = id;
 
         if (query.TryGetValue("NombreTarjeta", out var nombre))
             NombreTarjeta = (string)nombre;
