@@ -9,20 +9,20 @@
     Title="{Binding Titulo}"
     Padding="0,16"
     x:DataType="vm:TarjetasViewModel"
-    BackgroundColor="White"
+    BackgroundColor="#FFFFFF"
     Shell.BackgroundColor="#FF006E"
     Shell.NavBarIsVisible="True">
 
-    <!--  Layout absoluto para permitir que el BottomSheet flote  -->
+    <!--  LAYOUT ABSOLUTO PARA PERMITIR EL BOTTONSHEET  -->
     <AbsoluteLayout>
 
-        <!--  Contenido principal  -->
+        <!--  CONTENIDO PRINCIPAL  -->
         <Grid
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
             RowDefinitions="*,Auto">
 
-            <!--  Scroll principal  -->
+            <!--  SCROLL PRINCIPAL  -->
             <ScrollView Grid.Row="0" Padding="16,16,16,0">
                 <VerticalStackLayout Spacing="12">
 
@@ -84,7 +84,7 @@
                         Margin="0,32"
                         IsRunning="{Binding EstaCargando}"
                         IsVisible="{Binding EstaCargando}"
-                        Color="{StaticResource AzulMedio}" />
+                        Color="#FF006E" />
 
                     <!--  Lista de tarjetas  -->
                     <VerticalStackLayout

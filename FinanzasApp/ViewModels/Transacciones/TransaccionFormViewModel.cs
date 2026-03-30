@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -9,7 +10,7 @@ using FinanzasApp.Domain.Enumeraciones;
 using FinanzasApp.Domain.Interfaces;
 using FinanzasApp.Presentacion.Modelos;
 using System.Collections.ObjectModel;
-using CommunityToolkit.Maui.Alerts;
+using System.Globalization;
 
 namespace FinanzasApp.Presentacion.ViewModels.Transacciones;
 
@@ -335,7 +336,7 @@ public partial class TransaccionFormViewModel(
 
     private TransaccionFormDto ConstruirDto()
     {
-        decimal.TryParse(Monto, out var montoDecimal);
+        decimal.TryParse(Monto, NumberStyles.Number, CultureInfo.CurrentCulture, out var montoDecimal);
 
         return new TransaccionFormDto(
                 Id: EsModoEdicion ? TransaccionId : null,

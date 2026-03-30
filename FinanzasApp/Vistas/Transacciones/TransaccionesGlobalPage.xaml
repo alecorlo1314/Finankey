@@ -8,7 +8,7 @@
     xmlns:vm="clr-namespace:FinanzasApp.Presentacion.ViewModels.Transacciones"
     Title="Movimientos"
     x:DataType="vm:MovimientosViewModel"
-    BackgroundColor="White"
+    BackgroundColor="#FFFFFF"
     Shell.BackgroundColor="#FF006E">
 
     <AbsoluteLayout>
@@ -107,14 +107,17 @@
                 RefreshColor="#FF006E">
 
                 <CollectionView
-                    Margin="16,8,16,0"
+                    Margin="0,8,0,0" BackgroundColor="#F5F7FA"
                     IsGrouped="True"
                     ItemsSource="{Binding TransaccionesAgrupadas}">
 
                     <!--  ENCABEZADO DE GRUPO  ────────────────────────────────────  -->
                     <CollectionView.GroupHeaderTemplate>
                         <DataTemplate x:DataType="vm:GrupoTransacciones">
-                            <Grid Padding="4,16,4,8" ColumnDefinitions="Auto,*,Auto">
+                            <Grid
+                                Margin="16,0"
+                                Padding="4,16,4,8"
+                                ColumnDefinitions="Auto,*,Auto">
 
                                 <!--  Etiqueta del grupo: "Hoy", "Ayer", etc.  -->
                                 <Label
@@ -195,6 +198,7 @@
                                 </SwipeView.LeftItems>
 
                                 <Border
+                                    Margin="16,0"
                                     Padding="8"
                                     HeightRequest="79"
                                     StrokeShape="RoundRectangle 20"

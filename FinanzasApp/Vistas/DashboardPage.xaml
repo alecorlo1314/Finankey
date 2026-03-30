@@ -24,13 +24,28 @@
     <ScrollView>
         <VerticalStackLayout Spacing="0">
 
-            <!--  Header con gradiente dentro de un Border  -->
+            <!--  HEADER CON GRADIENTE  -->
             <Border
                 BackgroundColor="#FF006E"
                 HeightRequest="250"
                 Stroke="#FF80B7"
-                StrokeShape="RoundRectangle 0,0,25,25"
+                StrokeShape="RoundRectangle 0,0,56,56"
                 StrokeThickness="0">
+
+                <Border.Shadow>
+                    <Shadow
+                        Brush="#33000000"
+                        Opacity="0.4"
+                        Radius="6"
+                        Offset="0,2" />
+                </Border.Shadow>
+
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Offset="0.0" Color="#FF1A7D" />
+                        <GradientStop Offset="1.0" Color="#FF006E" />
+                    </LinearGradientBrush>
+                </Border.Background>
 
                 <Grid Padding="24,32,24,32">
                     <Grid.RowDefinitions>
@@ -40,21 +55,21 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <!--  Saludo  -->
+                    <!--  SALUDOS  -->
                     <Label
                         Grid.Row="0"
                         Style="{StaticResource TextoCuerpo}"
                         Text="{Binding SaludoUsuario}"
                         TextColor="#F8FAFC" />
 
-                    <!--  Balance del mes  -->
+                    <!--  BALANCE DEL MES  -->
                     <Label
                         Grid.Row="1"
                         Style="{StaticResource TextoMoneda}"
                         Text="{Binding ResumenFinanciero.BalanceMes, StringFormat='₡{0:N0}'}"
                         TextColor="White" />
 
-                    <!--  Selector de mes  -->
+                    <!--  SELECTOR DEL MES  -->
                     <Border
                         Grid.Row="3"
                         BackgroundColor="#FF4D9A"
@@ -97,10 +112,10 @@
                 </Grid>
             </Border>
 
-            <!--  ── Tarjetas de resumen (gastos / ingresos) ─────────────────  -->
+            <!--  RESUMEN FINANCIERO (GASTO, INGRESO)  -->
             <Grid Margin="16,-45,16,0" ColumnDefinitions="*,8,*">
 
-                <!--  Gastos del mes  -->
+                <!--  GASTO MES  -->
                 <Border
                     Grid.Column="0"
                     Padding="16"
@@ -112,26 +127,47 @@
                             Radius="6"
                             Offset="0,2" />
                     </Border.Shadow>
-                    <VerticalStackLayout Spacing="8">
-                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                            <Image
-                                HeightRequest="24"
-                                Source="icono_gasto_dashboard.png"
-                                WidthRequest="24" />
+
+                    <!--  Grid interno: columna 0 = icono, columna 1 = contenido (titulo + monto)  -->
+                    <Grid
+                        ColumnDefinitions="Auto, *"
+                        ColumnSpacing="4"
+                        HorizontalOptions="Start"
+                        RowDefinitions="Auto"
+                        VerticalOptions="Center">
+                        <Image
+                            Grid.Column="0"
+                            AutomationProperties.IsInAccessibleTree="True"
+                            AutomationProperties.Name="Icono gasto"
+                            HeightRequest="40"
+                            HorizontalOptions="Start"
+                            Source="icono_gasto_dashboard.png"
+                            VerticalOptions="Center"
+                            WidthRequest="40" />
+
+                        <Grid Grid.Column="1" RowDefinitions="Auto,Auto">
+                            <!--  Título  -->
                             <Label
+                                Grid.Row="0"
                                 FontFamily="InterSemiBold"
+                                LineBreakMode="NoWrap"
                                 Style="{StaticResource TextoEtiqueta}"
-                                Text="Gastos" />
-                        </HorizontalStackLayout>
-                        <Label
-                            FontFamily="PoppinsBold"
-                            Style="{StaticResource TextoMonedaChico}"
-                            Text="{Binding ResumenFinanciero.GastosMesActual, StringFormat='₡{0:N0}'}"
-                            TextColor="{StaticResource Gray600}" />
-                    </VerticalStackLayout>
+                                Text="Gastos"
+                                VerticalOptions="End" />
+
+                            <!--  Monto debajo del título  -->
+                            <Label
+                                Grid.Row="1"
+                                FontFamily="PoppinsBold"
+                                Style="{StaticResource TextoMonedaChico}"
+                                Text="{Binding ResumenFinanciero.GastosMesActual, StringFormat='₡{0:N0}'}"
+                                TextColor="{StaticResource Gray600}"
+                                VerticalOptions="Start" />
+                        </Grid>
+                    </Grid>
                 </Border>
 
-                <!--  Ingresos del mes  -->
+                <!--  INGRESO MES  -->
                 <Border
                     Grid.Column="2"
                     Padding="16"
@@ -143,38 +179,73 @@
                             Radius="6"
                             Offset="0,2" />
                     </Border.Shadow>
-                    <VerticalStackLayout Spacing="8">
-                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                            <Image
-                                HeightRequest="24"
-                                Source="icono_ingreso_dashboard.png"
-                                WidthRequest="24" />
+
+                    <Grid
+                        ColumnDefinitions="Auto, *"
+                        ColumnSpacing="4"
+                        HorizontalOptions="Start"
+                        RowDefinitions="Auto"
+                        VerticalOptions="Center">
+                        <Image
+                            Grid.Column="0"
+                            AutomationProperties.IsInAccessibleTree="True"
+                            AutomationProperties.Name="Icono ingreso"
+                            HeightRequest="40"
+                            HorizontalOptions="Start"
+                            Source="icono_ingreso_dashboard.png"
+                            VerticalOptions="Center"
+                            WidthRequest="40" />
+
+                        <Grid Grid.Column="1" RowDefinitions="Auto,Auto">
                             <Label
+                                Grid.Row="0"
                                 FontFamily="InterSemiBold"
+                                LineBreakMode="NoWrap"
                                 Style="{StaticResource TextoEtiqueta}"
-                                Text="Ingresos" />
-                        </HorizontalStackLayout>
-                        <Label
-                            FontFamily="PoppinsBold"
-                            Style="{StaticResource TextoMonedaChico}"
-                            Text="{Binding ResumenFinanciero.IngresosMesActual, StringFormat='₡{0:N0}'}"
-                            TextColor="{StaticResource Gray600}" />
-                    </VerticalStackLayout>
+                                Text="Ingresos"
+                                VerticalOptions="End" />
+
+                            <Label
+                                Grid.Row="1"
+                                FontFamily="PoppinsBold"
+                                Style="{StaticResource TextoMonedaChico}"
+                                Text="{Binding ResumenFinanciero.IngresosMesActual, StringFormat='₡{0:N0}'}"
+                                TextColor="{StaticResource Gray600}"
+                                VerticalOptions="Start" />
+                        </Grid>
+                    </Grid>
                 </Border>
+
             </Grid>
 
-
-            <!--  ── Sección de tarjetas ──────────────────────────────────────  -->
+            <!--  SECCION DE TARJETAS  -->
             <VerticalStackLayout Padding="24,16,24,0" Spacing="8">
-                <Label
-                    FontFamily="PoppinsSemiBold"
-                    FontSize="18"
-                    Style="{StaticResource TextoSubtitulo}"
-                    Text="Mis tarjetas" />
 
-                <!--  CarouselView horizontal de tarjetas  -->
+                <!--  TITULO Y BOTON VER TARJETAS  -->
+                <Grid ColumnDefinitions="*,*">
+                    <Label
+                        Grid.Column="0"
+                        FontFamily="PoppinsSemiBold"
+                        FontSize="18"
+                        Style="{StaticResource TextoSubtitulo}"
+                        Text="Mis tarjetas" />
+                    <Button
+                        Grid.Column="1"
+                        BackgroundColor="Transparent"
+                        Command="{Binding VerTarjetasCommand}"
+                        CornerRadius="25"
+                        FontFamily="InterSemiBold"
+                        FontSize="14"
+                        HorizontalOptions="End"
+                        Text="Ver todas"
+                        TextColor="#FF006E"
+                        VerticalOptions="Center" />
+                </Grid>
+
+                <!--  CARRUSEL HORIZONTAL DE LAS TARJETAS  -->
                 <CarouselView ItemsSource="{Binding Tarjetas}" Loop="False">
-                    <!--  Vista vacía cuando no hay tarjetas  -->
+
+                    <!--  VISTA VACIA CUANDO NO HAY TARJETAS  -->
                     <CarouselView.EmptyView>
                         <StackLayout>
 
@@ -205,15 +276,18 @@
 
                     </CarouselView.EmptyView>
 
+                    <!--  LISTA DE TARJETA  -->
                     <CarouselView.ItemTemplate>
                         <DataTemplate x:DataType="dto:TarjetaResumenDto">
+
+                            <!--  BOSQUEJO DE LA TARJETA  -->
                             <Border
                                 Margin="8"
                                 Padding="24"
                                 BackgroundColor="{Binding ColorHex}"
                                 HeightRequest="200"
                                 Stroke="Transparent"
-                                StrokeShape="RoundRectangle 20"
+                                StrokeShape="RoundRectangle 28"
                                 WidthRequest="320">
 
                                 <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,Auto,Auto">
@@ -256,29 +330,31 @@
                                         <Label
                                             Grid.Column="0"
                                             FontSize="14"
+                                            HorizontalOptions="Start"
                                             Text="{Binding Nombre}"
-                                            TextColor="#CCFFFFFF" />
+                                            TextColor="#CCFFFFFF"
+                                            VerticalOptions="Center" />
                                         <Label
                                             Grid.Column="1"
                                             FontAttributes="Bold"
-                                            FontSize="18"
+                                            FontSize="20"
                                             Text="{Binding SaldoActual, StringFormat='₡{0:N0}'}"
                                             TextColor="White" />
                                     </Grid>
                                 </Grid>
                             </Border>
 
-
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
                 </CarouselView>
             </VerticalStackLayout>
 
-            <!--  Sección de últimos movimientos  -->
+            <!--  SECCION DE LOS MOVIMIENTOS  -->
             <VerticalStackLayout Padding="24,24,24,32" Spacing="16">
 
-                <!--  Header con título y botón de filtro  -->
-                <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding TransaccionesRecientes.Count, Converter={StaticResource MayorQueCeroConverter}}">
+                <!--  HEADER CON EL BOTON DEL FILTRO  -->
+                <Grid ColumnDefinitions="*,*" IsVisible="{Binding TransaccionesRecientes.Count, Converter={StaticResource MayorQueCeroConverter}}">
+
                     <!--  Título  -->
                     <Label
                         Style="{StaticResource TextoSubtitulo}"
@@ -288,17 +364,23 @@
                     <!--  Botón de filtro  -->
                     <ImageButton
                         Grid.Column="1"
+                        Padding="10"
+                        Aspect="AspectFit"
                         BackgroundColor="Transparent"
+                        BorderColor="#E2E8F0"
                         Command="{Binding AbrirFiltroCommand}"
-                        HeightRequest="24"
+                        CornerRadius="100"
+                        HeightRequest="40"
                         HorizontalOptions="End"
-                        Source="icono_alimentacion.png"
+                        Source="icono_filtro_dashoboard.svg"
                         VerticalOptions="Center"
-                        WidthRequest="24" />
+                        WidthRequest="40" />
                 </Grid>
 
                 <!--  Lista de transacciones recientes  -->
                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding TransaccionesRecientes}" Spacing="4">
+
+                    <!--  VISTA VACIA  -->
                     <BindableLayout.EmptyView>
                         <Label
                             Margin="0,40"
@@ -310,14 +392,17 @@
                             TextColor="#808080" />
                     </BindableLayout.EmptyView>
 
+                    <!--  LISTA DE TRANSACCIONES  -->
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="dto:TransaccionResumenDto">
-                            <!--  Fila de transacción  -->
+
+                            <!--  BOSQUEJO DE LA TRANSACCION  -->
                             <Border
                                 Padding="8"
-                                HeightRequest="79"
+                                HeightRequest="80"
                                 StrokeShape="RoundRectangle 20"
                                 Style="{StaticResource TarjetaBase}">
+
                                 <Border.Shadow>
                                     <Shadow
                                         Brush="#33000000"
@@ -370,6 +455,7 @@
                                         VerticalOptions="Center" />
                                 </Grid>
                             </Border>
+
                         </DataTemplate>
 
                     </BindableLayout.ItemTemplate>
