@@ -107,7 +107,8 @@
                 RefreshColor="#FF006E">
 
                 <CollectionView
-                    Margin="0,8,0,0" BackgroundColor="#F5F7FA"
+                    Margin="0,8,0,0"
+                    BackgroundColor="#F5F7FA"
                     IsGrouped="True"
                     ItemsSource="{Binding TransaccionesAgrupadas}">
 
