@@ -109,7 +109,7 @@
 	  <MauiXaml Update="Vistas\Tarjetas\TarjetasPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Vistas\Transacciones\TransaccionesGlobalPage.xaml">
+	  <MauiXaml Update="Vistas\TransaccionesGlobalPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Vistas\Transacciones\TransaccionFormPage.xaml">

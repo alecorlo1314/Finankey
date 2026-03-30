@@ -3,61 +3,183 @@
     x:Class="FinanzasApp.Presentacion.Vistas.Configuracion.ConfiguracionPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:vm="clr-namespace:FinanzasApp.Presentacion.ViewModels.Configuracion"
     Title="{Binding Titulo}"
-    x:DataType="vm:ConfiguracionViewModel">
+    x:DataType="vm:ConfiguracionViewModel"
+    BackgroundColor="#F5F7FA"
+    IconImageSource="bs_eliminar_tarjeta.png"
+    Shell.BackgroundColor="#FF006E">
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="24">
 
-            <!--  ── Encabezado ───────────────────────────────────────────────  -->
+            <!--  ENCABEZADO  -->
             <VerticalStackLayout Margin="0,8,0,0" Spacing="4">
                 <Label Style="{StaticResource TextoTituloPagina}" Text="Ajustes" />
                 <Label Style="{StaticResource TextoCuerpo}" Text="Personaliza tu experiencia" />
             </VerticalStackLayout>
 
-            <!--  ── Sección: Seguridad ───────────────────────────────────────  -->
-            <Border Style="{StaticResource TarjetaBase}">
-                <VerticalStackLayout Spacing="0">
-                    <!--  Encabezado sección  -->
-                    <Label
-                        Margin="0,0,0,16"
-                        Style="{StaticResource TextoEtiqueta}"
-                        Text="🔒  Seguridad" />
+            <!--  SECCION: SEGURIDAD  -->
+            <VerticalStackLayout Spacing="8">
 
-                    <!--  Fila biometría  -->
-                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
-                        <VerticalStackLayout Grid.Column="0" Spacing="2">
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="15"
-                                Text="{Binding DescripcionBiometria}"
-                                TextColor="{StaticResource TextoPrimario}" />
-                            <Label
-                                FontSize="12"
-                                Style="{StaticResource TextoCuerpo}"
-                                Text="Accede con huella o Face ID al abrir la app" />
-                        </VerticalStackLayout>
+                <!--  TITULO SEGURIDAD  -->
+                <Label
+                    Style="{StaticResource TextoEtiqueta}"
+                    Text="SEGURIDAD "
+                    TextColor="#595C5E" />
 
-                        <Switch
+                <!--  BIOMETRIA Y CAMBIAR CLAVE  -->
+                <Border
+                    Padding="16"
+                    HeightRequest="112"
+                    StrokeShape="RoundRectangle 32"
+                    Style="{StaticResource TarjetaBase}">
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="*,*">
+
+                        <!--  ICONO BIOMETRIA Y TITULO  -->
+                        <HorizontalStackLayout
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Spacing="12">
+                            <Image
+                                Aspect="AspectFit"
+                                HeightRequest="20"
+                                HorizontalOptions="Start"
+                                Source="icono_biometria.svg"
+                                VerticalOptions="Center"
+                                WidthRequest="20" />
+                            <Label
+                                FontFamily="InterMedium"
+                                FontSize="16"
+                                Text="Biometría"
+                                TextColor="#2C2F32"
+                                VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <!--  SWITCH BIOMETRIA  -->
+                        <buttons:SfSwitch
+                            Grid.Row="0"
                             Grid.Column="1"
+                            HorizontalOptions="End"
                             IsEnabled="{Binding BiometriaDisponible}"
-                            IsToggled="{Binding BiometriaHabilitada}"
-                            OnColor="{StaticResource AzulMedio}"
-                            ThumbColor="White"
-                            VerticalOptions="Center" />
+                            IsOn="{Binding BiometriaHabilitada}"
+                            VerticalOptions="Center">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="On">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <buttons:SwitchSettings
+                                                        ThumbBackground="#FFFFFF"
+                                                        ThumbStroke="#FFFFFF"
+                                                        TrackBackground="#3A86FF"
+                                                        TrackStroke="#3A86FF" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Off">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <buttons:SwitchSettings
+                                                        ThumbBackground="#FFFFFF"
+                                                        ThumbStroke="#FFFFFF"
+                                                        TrackBackground="#FF006E"
+                                                        TrackStroke="#FF006E" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </buttons:SfSwitch>
+
+                        <!--  ICONO CAMBIAR CLAVE Y TITULO  -->
+                        <Grid Grid.Row="1" Grid.Column="0">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CambiarPinCommand}" NumberOfTapsRequired="1" />
+                            </Grid.GestureRecognizers>
+
+                            <HorizontalStackLayout Spacing="12">
+                                <Image
+                                    Aspect="AspectFit"
+                                    HeightRequest="20"
+                                    Source="icono_clave.svg"
+                                    VerticalOptions="Center"
+                                    WidthRequest="20" />
+                                <Label
+                                    FontFamily="InterMedium"
+                                    FontSize="16"
+                                    Text="Cambiar PIN"
+                                    TextColor="#2C2F32"
+                                    VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Grid>
+
+                        <!--  ICONO FLECHA  -->
+                        <Image
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HeightRequest="24"
+                            HorizontalOptions="End"
+                            Source="icono_ver_detalle_tarjeta"
+                            VerticalOptions="Center"
+                            WidthRequest="24" />
                     </Grid>
+                </Border>
+            </VerticalStackLayout>
 
-                    <!--  Aviso si no hay biometría en el dispositivo  -->
-                    <Label
-                        Margin="0,12,0,0"
-                        FontSize="12"
-                        IsVisible="{Binding BiometriaDisponible, Converter={StaticResource InvertirBoolConverter}}"
-                        Text="⚠️ Tu dispositivo no soporta autenticación biométrica."
-                        TextColor="{StaticResource ColorAlerta}" />
+            <!--  SECCION: SEGURIDAD  -->
+            <VerticalStackLayout Spacing="8">
 
-                </VerticalStackLayout>
-            </Border>
+                <!--  TITULO SEGURIDAD  -->
+                <Label
+                    Style="{StaticResource TextoEtiqueta}"
+                    Text="SEGURIDAD "
+                    TextColor="#595C5E" />
+
+                <!--  BIOMETRIA Y CAMBIAR CLAVE  -->
+                <Border Style="{StaticResource TarjetaBase}">
+
+                    <VerticalStackLayout Spacing="0">
+
+                        <!--  FILA BIOMETRIA  -->
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="15"
+                                    Text="{Binding DescripcionBiometria}"
+                                    TextColor="{StaticResource TextoPrimario}" />
+                                <Label
+                                    FontSize="12"
+                                    Style="{StaticResource TextoCuerpo}"
+                                    Text="Accede con huella o Face ID al abrir la app" />
+                            </VerticalStackLayout>
+
+                            <Switch
+                                Grid.Column="1"
+                                IsEnabled="{Binding BiometriaDisponible}"
+                                IsToggled="{Binding BiometriaHabilitada}"
+                                OnColor="{StaticResource AzulMedio}"
+                                ThumbColor="White"
+                                VerticalOptions="Center" />
+                        </Grid>
+
+                        <!--  Aviso si no hay biometría en el dispositivo  -->
+                        <Label
+                            Margin="0,12,0,0"
+                            FontSize="12"
+                            IsVisible="{Binding BiometriaDisponible, Converter={StaticResource InvertirBoolConverter}}"
+                            Text="⚠️ Tu dispositivo no soporta autenticación biométrica."
+                            TextColor="{StaticResource ColorAlerta}" />
+
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
 
             <!--  ── Sección: Apariencia ──────────────────────────────────────  -->
             <Border Style="{StaticResource TarjetaBase}">
