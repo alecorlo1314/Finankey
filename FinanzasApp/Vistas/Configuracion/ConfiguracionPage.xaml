@@ -12,13 +12,62 @@
     Shell.BackgroundColor="#FF006E">
 
     <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="24">
+        <VerticalStackLayout Padding="24" Spacing="16">
+
 
             <!--  ENCABEZADO  -->
-            <VerticalStackLayout Margin="0,8,0,0" Spacing="4">
-                <Label Style="{StaticResource TextoTituloPagina}" Text="Ajustes" />
-                <Label Style="{StaticResource TextoCuerpo}" Text="Personaliza tu experiencia" />
-            </VerticalStackLayout>
+            <Border
+                Padding="16"
+                HeightRequest="112"
+                StrokeShape="RoundRectangle 32"
+                Style="{StaticResource TarjetaBase}">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+
+                    <!--  AVATAR  -->
+                    <Border
+                        Grid.Column="0"
+                        HeightRequest="56"
+                        Stroke="Transparent"
+                        StrokeShape="RoundRectangle 50"
+                        WidthRequest="56">
+
+                        <!--  LINEAR GRADIENT PARA UN COLOR DE FONDO  -->
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Offset="0.0" Color="#B60055" />
+                                <GradientStop Offset="1.0" Color="#FF4D9A" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+
+                        <!--  LETRA "A" DEL USUARIO  -->
+                        <Label
+                            FontFamily="PoppinsBold"
+                            FontSize="24"
+                            HorizontalOptions="Center"
+                            Text="A"
+                            TextColor="#FFFFFF"
+                            VerticalOptions="Center" />
+                    </Border>
+
+                    <!--  INFORMACION DEL USUARIO  -->
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center">
+                        <Label
+                            FontFamily="InterBold"
+                            FontSize="18"
+                            Text="Alexander"
+                            TextColor="#2C2F32" />
+                        <Label
+                            FontFamily="InterMedium"
+                            FontSize="14"
+                            Text="Finanzas personales"
+                            TextColor="#595C5E" />
+                    </VerticalStackLayout>
+                </Grid>
+
+            </Border>
 
             <!--  SECCION: SEGURIDAD  -->
             <VerticalStackLayout Spacing="8">
@@ -125,139 +174,306 @@
                             Grid.Column="1"
                             HeightRequest="24"
                             HorizontalOptions="End"
-                            Source="icono_ver_detalle_tarjeta"
+                            Source="icono_ver_detalle_tarjeta.svg"
                             VerticalOptions="Center"
                             WidthRequest="24" />
                     </Grid>
                 </Border>
+
             </VerticalStackLayout>
 
-            <!--  SECCION: SEGURIDAD  -->
+            <!--  SECCION: APARIENCIA  -->
             <VerticalStackLayout Spacing="8">
 
-                <!--  TITULO SEGURIDAD  -->
+                <!--  TITULO APARIENCIA  -->
                 <Label
                     Style="{StaticResource TextoEtiqueta}"
-                    Text="SEGURIDAD "
+                    Text="APARIENCIA"
                     TextColor="#595C5E" />
 
-                <!--  BIOMETRIA Y CAMBIAR CLAVE  -->
-                <Border Style="{StaticResource TarjetaBase}">
+                <!--  TARJETA APARIENCIA  -->
+                <Border
+                    Padding="16"
+                    HeightRequest="112"
+                    StrokeShape="RoundRectangle 32"
+                    Style="{StaticResource TarjetaBase}">
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="*,*">
 
-                    <VerticalStackLayout Spacing="0">
+                        <!--  ICONO TEMA E IDIOMA ACTUAL  -->
+                        <Grid Grid.Row="0" Grid.Column="0">
 
-                        <!--  FILA BIOMETRIA  -->
-                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
-                            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CambiarTemaCommand}" NumberOfTapsRequired="1" />
+                            </Grid.GestureRecognizers>
+
+                            <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                                <Image
+                                    Aspect="AspectFit"
+                                    HeightRequest="20"
+                                    Source="icono_tema.svg"
+                                    VerticalOptions="Center"
+                                    WidthRequest="20" />
+
                                 <Label
-                                    FontAttributes="Bold"
-                                    FontSize="15"
-                                    Text="{Binding DescripcionBiometria}"
-                                    TextColor="{StaticResource TextoPrimario}" />
+                                    FontFamily="InterMedium"
+                                    FontSize="16"
+                                    Text="Tema"
+                                    TextColor="#2C2F32"
+                                    VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Grid>
+
+                        <!--  PILL TEMA  -->
+                        <Grid
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            VerticalOptions="Center">
+                            <Border
+                                BackgroundColor="#D8E7FF"
+                                HeightRequest="24"
+                                HorizontalOptions="End"
+                                StrokeShape="RoundRectangle 12"
+                                VerticalOptions="Center"
+                                WidthRequest="60">
                                 <Label
+                                    FontFamily="InterBold"
                                     FontSize="12"
-                                    Style="{StaticResource TextoCuerpo}"
-                                    Text="Accede con huella o Face ID al abrir la app" />
-                            </VerticalStackLayout>
+                                    HorizontalOptions="Center"
+                                    Text="Claro"
+                                    TextColor="#3A86FF"
+                                    VerticalOptions="Center" />
+                            </Border>
+                        </Grid>
 
-                            <Switch
-                                Grid.Column="1"
-                                IsEnabled="{Binding BiometriaDisponible}"
-                                IsToggled="{Binding BiometriaHabilitada}"
-                                OnColor="{StaticResource AzulMedio}"
-                                ThumbColor="White"
+                        <!--  FILA 2: IDIOMA (icono + titulo)  -->
+                        <Grid Grid.Row="1" Grid.Column="0">
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CambiarIdiomaCommand}" NumberOfTapsRequired="1" />
+                            </Grid.GestureRecognizers>
+
+                            <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                                <Image
+                                    Aspect="AspectFit"
+                                    HeightRequest="20"
+                                    Source="icono_idioma.svg"
+                                    VerticalOptions="Center"
+                                    WidthRequest="20" />
+
+                                <Label
+                                    FontFamily="InterMedium"
+                                    FontSize="16"
+                                    Text="Idioma"
+                                    TextColor="#2C2F32"
+                                    VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Grid>
+
+                        <!--  LABEL IDIOMA ACTUAL (derecha)  -->
+                        <Grid
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                            <Label
+                                FontFamily="InterMedium"
+                                FontSize="14"
+                                HorizontalOptions="End"
+                                Text="Español"
+                                TextColor="#595C5E"
                                 VerticalOptions="Center" />
                         </Grid>
 
-                        <!--  Aviso si no hay biometría en el dispositivo  -->
-                        <Label
-                            Margin="0,12,0,0"
-                            FontSize="12"
-                            IsVisible="{Binding BiometriaDisponible, Converter={StaticResource InvertirBoolConverter}}"
-                            Text="⚠️ Tu dispositivo no soporta autenticación biométrica."
-                            TextColor="{StaticResource ColorAlerta}" />
-
-                    </VerticalStackLayout>
+                    </Grid>
                 </Border>
             </VerticalStackLayout>
 
-            <!--  ── Sección: Apariencia ──────────────────────────────────────  -->
-            <Border Style="{StaticResource TarjetaBase}">
-                <VerticalStackLayout Spacing="16">
-                    <Label Style="{StaticResource TextoEtiqueta}" Text="🎨  Apariencia" />
+            <!--  SECCION: DATOS  -->
+            <VerticalStackLayout Spacing="8">
 
-                    <Grid ColumnDefinitions="*,Auto">
-                        <VerticalStackLayout Grid.Column="0" Spacing="2">
+                <!--  TITULO DATOS  -->
+                <Label
+                    Style="{StaticResource TextoEtiqueta}"
+                    Text="DATOS"
+                    TextColor="#595C5E" />
+
+                <!--  TARJETA DATOS  -->
+                <Border
+                    Padding="16"
+                    HeightRequest="112"
+                    StrokeShape="RoundRectangle 32"
+                    Style="{StaticResource TarjetaBase}">
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="*,*">
+
+                        <!--  FILA 1: EXPORTAR MIS DATOS (icono + texto)  -->
+                        <Grid Grid.Row="0" Grid.Column="0">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ExportarDatosCommand}" NumberOfTapsRequired="1" />
+                            </Grid.GestureRecognizers>
+
+                            <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                                <Image
+                                    Aspect="AspectFit"
+                                    HeightRequest="20"
+                                    Source="icono_exportar_datos.svg"
+                                    VerticalOptions="Center"
+                                    WidthRequest="20" />
+
+                                <Label
+                                    FontFamily="InterMedium"
+                                    FontSize="16"
+                                    Text="Exportar mis datos"
+                                    TextColor="#2C2F32"
+                                    VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Grid>
+
+                        <!--  ICONO FLECHA (derecha)  -->
+                        <Grid
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                            <Image
+                                HeightRequest="24"
+                                HorizontalOptions="End"
+                                Source="icono_ver_detalle_tarjeta.svg"
+                                VerticalOptions="Center"
+                                WidthRequest="24">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ExportarDatosCommand}" NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Grid>
+
+                        <!--  FILA 2: ELIMINAR TODOS LOS DATOS (icono + texto en color)  -->
+                        <Grid Grid.Row="1" Grid.Column="0">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding LimpiarDatosCommand}" NumberOfTapsRequired="1" />
+                            </Grid.GestureRecognizers>
+
+                            <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                                <Image
+                                    Aspect="AspectFit"
+                                    HeightRequest="20"
+                                    Source="icono_eliminar_datos.svg"
+                                    VerticalOptions="Center"
+                                    WidthRequest="20" />
+
+                                <Label
+                                    FontFamily="InterMedium"
+                                    FontSize="16"
+                                    Text="Eliminar todos los datos"
+                                    TextColor="#B60055"
+                                    VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Grid>
+
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+
+            <!--  SECCION: ACERCA DE  -->
+            <VerticalStackLayout Spacing="8">
+
+                <!--  TITULO ACERCA DE  -->
+                <Label
+                    Style="{StaticResource TextoEtiqueta}"
+                    Text="ACERCA DE"
+                    TextColor="#595C5E" />
+
+                <!--  TARJETA ACERCA DE  -->
+                <Border
+                    Padding="16"
+                    StrokeShape="RoundRectangle 32"
+                    Style="{StaticResource TarjetaBase}">
+                    <Grid
+                        ColumnDefinitions="*,*"
+                        RowDefinitions="Auto,Auto,Auto,Auto"
+                        RowSpacing="12">
+
+                        <!--  VERSION  -->
+                        <Grid
+                            Grid.Row="0"
+                            Grid.ColumnSpan="2"
+                            ColumnDefinitions="*,*">
                             <Label
-                                FontAttributes="Bold"
-                                FontSize="15"
-                                Text="Tema oscuro"
-                                TextColor="{StaticResource TextoPrimario}" />
+                                Grid.Column="0"
+                                FontFamily="InterMedium"
+                                FontSize="16"
+                                Text="Versión"
+                                TextColor="#595C5E"
+                                VerticalOptions="Center" />
+
                             <Label
-                                FontSize="12"
-                                Style="{StaticResource TextoCuerpo}"
-                                Text="Cambia el tema de la aplicación" />
-                        </VerticalStackLayout>
-                        <!--  En producción conectar a un TemaNightViewModel  -->
-                        <Switch
-                            Grid.Column="1"
-                            OnColor="{StaticResource AzulMedio}"
-                            ThumbColor="White"
-                            VerticalOptions="Center" />
+                                Grid.Column="1"
+                                FontFamily="InterBold"
+                                FontSize="14"
+                                HorizontalOptions="End"
+                                Text="1.0.0"
+                                TextColor="#2C2F32"
+                                VerticalOptions="Center" />
+                        </Grid>
+
+                        <!--  TECNOLOGIAS  -->
+                        <Grid
+                            Grid.Row="1"
+                            Grid.ColumnSpan="2"
+                            ColumnDefinitions="*,Auto">
+                            <Label
+                                Grid.Column="0"
+                                FontFamily="InterMedium"
+                                FontSize="16"
+                                Text="Tecnologías"
+                                TextColor="#595C5E"
+                                VerticalOptions="Center" />
+
+                            <Label
+                                Grid.Column="1"
+                                FontFamily="InterMedium"
+                                FontSize="16"
+                                HorizontalOptions="End"
+                                Text=".NET MAUI 10"
+                                TextColor="#2C2F32"
+                                VerticalOptions="Center" />
+                        </Grid>
+
+                        <!--  SEPARADOR  -->
+                        <Border
+                            Grid.Row="2"
+                            Grid.ColumnSpan="2"
+                            Margin="0,4,0,4"
+                            BackgroundColor="#EEF1F4"
+                            HeightRequest="1" />
+
+                        <!--  TERMINOS Y PRIVACIDAD  -->
+                        <Grid
+                            Grid.Row="3"
+                            Grid.ColumnSpan="2"
+                            ColumnDefinitions="*,Auto">
+                            <Label
+                                Grid.Column="0"
+                                FontFamily="InterMedium"
+                                FontSize="16"
+                                Text="Términos y privacidad"
+                                TextColor="#2C2F32"
+                                VerticalOptions="Center" />
+
+                            <Image
+                                Grid.Column="1"
+                                HeightRequest="20"
+                                HorizontalOptions="End"
+                                Source="icono_terminos_condiciones.svg"
+                                VerticalOptions="Center"
+                                WidthRequest="20" />
+                        </Grid>
+
                     </Grid>
-                </VerticalStackLayout>
-            </Border>
+                </Border>
+            </VerticalStackLayout>
 
-            <!--  ── Sección: Datos ───────────────────────────────────────────  -->
-            <Border Style="{StaticResource TarjetaBase}">
-                <VerticalStackLayout Spacing="16">
-                    <Label Style="{StaticResource TextoEtiqueta}" Text="🗄️  Datos" />
 
-                    <!--  Limpiar datos  -->
-                    <Button
-                        Padding="20,0"
-                        Command="{Binding LimpiarDatosCommand}"
-                        HorizontalOptions="Start"
-                        Style="{StaticResource BotonPeligro}"
-                        Text="Eliminar todos los datos" />
-                </VerticalStackLayout>
-            </Border>
-
-            <!--  ── Sección: Acerca de ───────────────────────────────────────  -->
-            <Border Style="{StaticResource TarjetaBase}">
-                <VerticalStackLayout Spacing="12">
-                    <Label Style="{StaticResource TextoEtiqueta}" Text="ℹ️  Acerca de" />
-
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label
-                            Grid.Column="0"
-                            FontSize="15"
-                            Text="Versión"
-                            TextColor="{StaticResource TextoPrimario}" />
-                        <Label
-                            Grid.Column="1"
-                            Style="{StaticResource TextoCuerpo}"
-                            Text="{Binding VersionApp}" />
-                    </Grid>
-
-                    <BoxView HeightRequest="1" Color="{StaticResource Separador}" />
-
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label
-                            Grid.Column="0"
-                            FontSize="15"
-                            Text="Tecnologías"
-                            TextColor="{StaticResource TextoPrimario}" />
-                        <Label
-                            Grid.Column="1"
-                            FontSize="12"
-                            Style="{StaticResource TextoCuerpo}"
-                            Text=".NET MAUI 10 · SQLite · ONNX" />
-                    </Grid>
-                </VerticalStackLayout>
-            </Border>
-
-            <!--  ── Error ────────────────────────────────────────────────────  -->
+            <!--  MENSAJE DE ERROR  -->
             <Border
                 Padding="16"
                 BackgroundColor="#FEE2E2"
