@@ -343,17 +343,18 @@
                                     </Grid>
                                 </Grid>
                             </Border>
-                            
+
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
                 </CarouselView>
             </VerticalStackLayout>
 
-            <!--  Sección de últimos movimientos  -->
+            <!--  SECCION DE LOS MOVIMIENTOS  -->
             <VerticalStackLayout Padding="24,24,24,32" Spacing="16">
 
-                <!--  Header con título y botón de filtro  -->
-                <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding TransaccionesRecientes.Count, Converter={StaticResource MayorQueCeroConverter}}">
+                <!--  HEADER CON EL BOTON DEL FILTRO  -->
+                <Grid ColumnDefinitions="*,*" IsVisible="{Binding TransaccionesRecientes.Count, Converter={StaticResource MayorQueCeroConverter}}">
+
                     <!--  Título  -->
                     <Label
                         Style="{StaticResource TextoSubtitulo}"
@@ -363,17 +364,23 @@
                     <!--  Botón de filtro  -->
                     <ImageButton
                         Grid.Column="1"
+                        Padding="10"
+                        Aspect="AspectFit"
                         BackgroundColor="Transparent"
+                        BorderColor="#E2E8F0"
                         Command="{Binding AbrirFiltroCommand}"
-                        HeightRequest="24"
+                        CornerRadius="100"
+                        HeightRequest="40"
                         HorizontalOptions="End"
-                        Source="icono_alimentacion.png"
+                        Source="icono_filtro_dashoboard.svg"
                         VerticalOptions="Center"
-                        WidthRequest="24" />
+                        WidthRequest="40" />
                 </Grid>
 
                 <!--  Lista de transacciones recientes  -->
                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding TransaccionesRecientes}" Spacing="4">
+
+                    <!--  VISTA VACIA  -->
                     <BindableLayout.EmptyView>
                         <Label
                             Margin="0,40"
@@ -385,14 +392,17 @@
                             TextColor="#808080" />
                     </BindableLayout.EmptyView>
 
+                    <!--  LISTA DE TRANSACCIONES  -->
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="dto:TransaccionResumenDto">
-                            <!--  Fila de transacción  -->
+
+                            <!--  BOSQUEJO DE LA TRANSACCION  -->
                             <Border
                                 Padding="8"
-                                HeightRequest="79"
+                                HeightRequest="80"
                                 StrokeShape="RoundRectangle 20"
                                 Style="{StaticResource TarjetaBase}">
+
                                 <Border.Shadow>
                                     <Shadow
                                         Brush="#33000000"
@@ -445,6 +455,7 @@
                                         VerticalOptions="Center" />
                                 </Grid>
                             </Border>
+
                         </DataTemplate>
 
                     </BindableLayout.ItemTemplate>
