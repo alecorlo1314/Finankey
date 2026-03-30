@@ -220,6 +220,8 @@
 
             <!--  SECCION DE TARJETAS  -->
             <VerticalStackLayout Padding="24,16,24,0" Spacing="8">
+
+                <!--  TITULO Y BOTON VER TARJETAS  -->
                 <Grid ColumnDefinitions="*,*">
                     <Label
                         Grid.Column="0"
@@ -240,9 +242,10 @@
                         VerticalOptions="Center" />
                 </Grid>
 
-                <!--  CarouselView horizontal de tarjetas  -->
+                <!--  CARRUSEL HORIZONTAL DE LAS TARJETAS  -->
                 <CarouselView ItemsSource="{Binding Tarjetas}" Loop="False">
-                    <!--  Vista vacía cuando no hay tarjetas  -->
+
+                    <!--  VISTA VACIA CUANDO NO HAY TARJETAS  -->
                     <CarouselView.EmptyView>
                         <StackLayout>
 
@@ -273,15 +276,18 @@
 
                     </CarouselView.EmptyView>
 
+                    <!--  LISTA DE TARJETA  -->
                     <CarouselView.ItemTemplate>
                         <DataTemplate x:DataType="dto:TarjetaResumenDto">
+
+                            <!--  BOSQUEJO DE LA TARJETA  -->
                             <Border
                                 Margin="8"
                                 Padding="24"
                                 BackgroundColor="{Binding ColorHex}"
                                 HeightRequest="200"
                                 Stroke="Transparent"
-                                StrokeShape="RoundRectangle 20"
+                                StrokeShape="RoundRectangle 28"
                                 WidthRequest="320">
 
                                 <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,Auto,Auto">
@@ -324,19 +330,20 @@
                                         <Label
                                             Grid.Column="0"
                                             FontSize="14"
+                                            HorizontalOptions="Start"
                                             Text="{Binding Nombre}"
-                                            TextColor="#CCFFFFFF" />
+                                            TextColor="#CCFFFFFF"
+                                            VerticalOptions="Center" />
                                         <Label
                                             Grid.Column="1"
                                             FontAttributes="Bold"
-                                            FontSize="18"
+                                            FontSize="20"
                                             Text="{Binding SaldoActual, StringFormat='₡{0:N0}'}"
                                             TextColor="White" />
                                     </Grid>
                                 </Grid>
                             </Border>
-
-
+                            
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
                 </CarouselView>
