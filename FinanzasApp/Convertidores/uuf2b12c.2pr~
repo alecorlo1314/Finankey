@@ -1,5 +1,4 @@
 using FinanzasApp.Domain.Enumeraciones;
-using FreakyKit.Utils;
 using System.Globalization;
 
 namespace FinanzasApp.Presentacion.Convertidores;
@@ -16,19 +15,15 @@ public class InvertirBoolConverter : IValueConverter
 
 public class SwitchEventArgsConverter : IValueConverter
 {
-    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is Syncfusion.Maui.Buttons.SwitchStateChangedEventArgs args)
-        {
-            return args.NewValue ?? false;
-        }
+            return args.IsOn; // devuelve true/false
         return false;
     }
 
-    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        => throw new NotImplementedException();
 }
 
 

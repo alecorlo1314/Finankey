@@ -27,6 +27,8 @@ public partial class App : Application
 
         //licencia sycnfusion
         Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JHaF5cWWdCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdlWXxccnRUQmJeUkZyVkpWYEo=");
+
+        MainPage = new AppShell();
     }
 
     protected override async void OnStart()
@@ -38,29 +40,38 @@ public partial class App : Application
         // se hará cuando el usuario ya esté en el formulario.
         _ = Task.Run(async () => await _servicioPrediccion.InicializarAsync());
 
-        // Determina la página inicial según la configuración biométrica
-        Application.Current?.Windows[0].Page = await DeterminarPaginaInicialAsync();
+        // Mostrar la pantalla de login biometrico si aplica
+        _ = MostrarLoginBiometricoSiAplicaAsync();
     }
 
     /// <summary>
-    /// Decide la pantalla inicial:
-    /// - Si biometría está habilitada y disponible → LoginBiometricoPage
-    /// - En cualquier otro caso → AppShell (app completa)
+    /// Si la biometría está habilitada y disponible, muestra
+    /// LoginBiometricoPage como modal sobre el AppShell.
     /// </summary>
-    private async Task<Page> DeterminarPaginaInicialAsync()
+    private async Task MostrarLoginBiometricoSiAplicaAsync()
     {
+        //Paso 1: Verificar si la biometria esta habilitada en nuestro celular
+        //Retorna un boleano
         var biometriaHabilitada = _servicioBiometrico.BiometriaHabilitada;
+
+        //Paso 2: Verificar si la biometria esta disponible en nuestro celular
+        //Retorna un boleano
         var biometriaDisponible = await _servicioBiometrico.EsDisponibleAsync();
 
-        if (biometriaHabilitada && biometriaDisponible)
+        //Paso 3: solamente cuando este la biometria habilitada y disponible
+        if (!biometriaHabilitada || !biometriaDisponible) return;
+
+        //Paso 4: Mostrar la pantalla de login biometrico
+        var paginaBiometrica = _servicios.GetService(typeof(LoginBiometricoPage)) as LoginBiometricoPage;
+
+        //Paso 5: Si la pagina biometrica no es null, mostrarla como modal
+        if (paginaBiometrica is null) return;
+
+        // Muestra el login como modal sobre el Shell ya renderizado
+        // El usuario no puede cerrar este modal con el gesto de swipe
+        await MainThread.InvokeOnMainThreadAsync(async () =>
         {
-            // Resuelve la página desde el contenedor para inyectar dependencias
-            return _servicios.GetRequiredService<LoginBiometricoPage>();
-        }
-
-        return new AppShell();
+            await MainPage!.Navigation.PushModalAsync(paginaBiometrica, animated: false);
+        });
     }
-
-    protected override Window CreateWindow(IActivationState? activationState) =>
-        new(new ContentPage()) { Title = "FinanzasApp" };
 }

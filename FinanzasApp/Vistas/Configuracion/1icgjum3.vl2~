@@ -4,7 +4,6 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:FinanzasApp.Presentacion.ViewModels.Configuracion"
     Title="{Binding Titulo}"
     x:DataType="vm:ConfiguracionViewModel"
@@ -109,28 +108,28 @@
 
                         <!--  SWITCH BIOMETRIA  -->
                         <buttons:SfSwitch
-                            x:Name="switchBiometria"
                             Grid.Row="0"
                             Grid.Column="1"
                             HorizontalOptions="End"
                             IsEnabled="{Binding BiometriaDisponible}"
-                            IsOn="{Binding BiometriaHabilitada, Mode=TwoWay}"
+                            IsOn="{Binding BiometriaHabilitada}"
                             VerticalOptions="Center">
-                            <!--  BEHAVIOR ENVIA EL VALOR NUEVO (TRUE/FALSE) AL VIEWMODEL POR MEDIO DEL COMANDO  -->
-                            <!--  VER MAS EN https://learn.microsoft.com/es-es/dotnet/communitytoolkit/maui/behaviors/event-to-command-behavior  -->
-                            <buttons:SfSwitch.Behaviors>
-                                <toolkit:EventToCommandBehavior
-                                    x:DataType="buttons:SwitchStateChangedEventArgs"
-                                    BindingContext="{Binding Source={x:Reference switchBiometria}, Path=BindingContext}"
-                                    Command="{Binding ToggleBiometriaCommand}"
-                                    EventArgsConverter="{StaticResource SwitchEventArgsConverter}"
-                                    EventName="StateChanged" />
-                            </buttons:SfSwitch.Behaviors>
-
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
-
                                     <VisualState x:Name="On">
+                                        <VisualState.Setters>
+                                            <Setter Property="SwitchSettings">
+                                                <Setter.Value>
+                                                    <buttons:SwitchSettings
+                                                        ThumbBackground="#FFFFFF"
+                                                        ThumbStroke="#FFFFFF"
+                                                        TrackBackground="#3A86FF"
+                                                        TrackStroke="#3A86FF" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Off">
                                         <VisualState.Setters>
                                             <Setter Property="SwitchSettings">
                                                 <Setter.Value>
@@ -143,21 +142,6 @@
                                             </Setter>
                                         </VisualState.Setters>
                                     </VisualState>
-
-                                    <VisualState x:Name="Off">
-                                        <VisualState.Setters>
-                                            <Setter Property="SwitchSettings">
-                                                <Setter.Value>
-                                                    <buttons:SwitchSettings
-                                                        ThumbBackground="#FFFFFF"
-                                                        ThumbStroke="#FFFFFF"
-                                                        TrackBackground="#D9DDE1"
-                                                        TrackStroke="#D9DDE1" />
-                                                </Setter.Value>
-                                            </Setter>
-                                        </VisualState.Setters>
-                                    </VisualState>
-
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                         </buttons:SfSwitch>

@@ -24,14 +24,19 @@ public interface IServicioBiometrico
     bool BiometriaHabilitada { get; set; }
 }
 
-/// <summary>Resultado de un intento de autenticación biométrica</summary>
+/// <summary>
+/// Resultado de un intento de autenticación biométrica
+/// </summary>
 public record ResultadoBiometrico(
     bool Exitoso,
     string? MensajeError = null,
-    TipoBiometria TipoBiometria = TipoBiometria.Ninguna
+    TipoBiometria TipoBiometria = TipoBiometria.Ninguna,
+    bool Cancelado = false
 );
 
-/// <summary>Tipo de biometría disponible en el dispositivo</summary>
+/// <summary>
+/// Tipo de biometría disponible en el dispositivo
+/// </summary>
 public enum TipoBiometria
 {
     Ninguna,

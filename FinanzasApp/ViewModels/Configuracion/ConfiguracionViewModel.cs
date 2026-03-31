@@ -34,7 +34,7 @@ public partial class ConfiguracionViewModel(IServicioBiometrico servicioBiometri
 
     public override async Task AlAparecerAsync()
     {
-        Titulo = "Configuración";
+        Titulo = "Ajustes";
 
         await VerificarBiometriaAsync();
 
@@ -48,40 +48,40 @@ public partial class ConfiguracionViewModel(IServicioBiometrico servicioBiometri
     #endregion
 
     #region 🎯 Comandos
-
     /// <summary>
-    /// Activa o desactiva la biometría
+    /// Recibe bool directamente desde el converter.
+    /// El parámetro es el nuevo estado del switch.
     /// </summary>
     [RelayCommand]
-    private async Task ToggleBiometriaAsync()
+    private async Task ToggleBiometriaAsync(bool nuevoEstado)
     {
-        // Si se está desactivando → directo
-        if (!BiometriaHabilitada)
+        if (nuevoEstado)
         {
-            servicioBiometrico.BiometriaHabilitada = false;
-            return;
-        }
+            // Quiere habilitar → verificar que funcione con autenticación real
+            var resultado = await servicioBiometrico.AutenticarAsync(
+                titulo: "Confirmar biometría",
+                descripcion: "Verifica tu identidad para habilitar el acceso biométrico");
 
-        // Si se está activando → validar autenticación
-        var resultado = await servicioBiometrico.AutenticarAsync(
-            titulo: "Confirmar biometría",
-            descripcion: "Verifica tu identidad para habilitar el acceso biométrico");
+            if (resultado.Exitoso)
+            {
+                servicioBiometrico.BiometriaHabilitada = true;
+                BiometriaHabilitada = true;
+            }
+            else
+            {
+                // Revierte el switch si la autenticación falló
+                // Asignar false dispara OnPropertyChanged y el switch vuelve a Off
+                BiometriaHabilitada = false;
 
-        if (resultado.Exitoso)
-        {
-            servicioBiometrico.BiometriaHabilitada = true;
-
-            await MostrarAlertaAsync(
-                "Biometría habilitada",
-                "Ahora podrás usar huella o Face ID.");
+                if (resultado.MensajeError is not null)
+                    MostrarError(resultado.MensajeError);
+            }
         }
         else
         {
-            // Revertir toggle
+            // Deshabilitar no requiere autenticación
+            servicioBiometrico.BiometriaHabilitada = false;
             BiometriaHabilitada = false;
-
-            if (!string.IsNullOrEmpty(resultado.MensajeError))
-                MostrarError(resultado.MensajeError);
         }
     }
 
@@ -116,7 +116,7 @@ public partial class ConfiguracionViewModel(IServicioBiometrico servicioBiometri
 
         // Define texto según plataforma
         DescripcionBiometria = DeviceInfo.Platform == DevicePlatform.iOS
-            ? "Face ID / Touch ID"
+            ? "Face ID"
             : "Huella digital";
     }
 

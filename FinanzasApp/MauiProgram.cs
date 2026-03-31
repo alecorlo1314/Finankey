@@ -24,6 +24,7 @@ using FinanzasApp.Presentacion.Vistas.Tarjetas;
 using FinanzasApp.Presentacion.Vistas.Transacciones;
 using Maui.Biometric;
 using Microsoft.Extensions.Logging;
+using Plugin.Maui.Biometric;
 using Syncfusion.Maui.Core.Hosting;
 using Syncfusion.Maui.Toolkit.Hosting;
 
@@ -63,6 +64,10 @@ namespace FinanzasApp
 
             // Mediador: Singleton para reutilizar el IServiceProvider interno
             builder.Services.AddSingleton<IMediator, Mediador>();
+
+            // Permisos de biometría
+            builder.Services.AddSingleton<IBiometric>(
+                BiometricAuthenticationService.Default);
 
             //Servicios
             builder.Services.AddTransient<ServicioPeriodoCorte>();

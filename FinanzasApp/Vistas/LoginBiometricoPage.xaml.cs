@@ -27,9 +27,7 @@ public partial class LoginBiometricoPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-
-        // Pequeña pausa para que la UI se renderice antes de mostrar el prompt
-        await Task.Delay(300);
+        // Si la biometría está habilitada, solicitar autenticación
         await SolicitarAutenticacionAsync();
     }
 
@@ -39,14 +37,29 @@ public partial class LoginBiometricoPage : ContentPage
     /// </summary>
     private async Task SolicitarAutenticacionAsync()
     {
+        //Paso 1: Realizar la autenticación de la biometría
         var resultado = await _servicioBiometrico.AutenticarAsync(
             titulo: "FinanzasApp",
             descripcion: "Confirma tu identidad para acceder");
 
+        //Paso 2: Validacion si el usuario cancela la autenticacion, no se le bloquea el acceso a la app
+        if (resultado.Cancelado)
+        {
+            return;
+        }
+
+        //Paso 3: Validacion si la autenticación fue exitosa
         if (resultado.Exitoso)
         {
             // Navega al shell principal reemplazando la pila de navegación
-            await Shell.Current.GoToAsync(nameof(AppShell));
+            if (Shell.Current != null)
+            {
+                Application.Current.MainPage = new AppShell();
+            }
+            else
+            {
+                Application.Current.MainPage = new AppShell();
+            }
         }
         else
         {
@@ -54,7 +67,6 @@ public partial class LoginBiometricoPage : ContentPage
 
             if (_intentosFallidos >= MaxIntentos)
             {
-                // Después de 3 fallos, permite entrar sin biometría
                 await DisplayAlertAsync(
                     "Acceso bloqueado",
                     "Demasiados intentos fallidos. Por seguridad, la biometría ha sido desactivada temporalmente.",
