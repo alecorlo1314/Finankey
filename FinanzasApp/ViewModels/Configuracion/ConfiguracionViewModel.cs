@@ -30,18 +30,26 @@ public partial class ConfiguracionViewModel(IServicioBiometrico servicioBiometri
 
     #endregion
 
+    #region 🔒 Estado interno
+    private bool _disponibilidadVerificada = false;
+    private bool _sincronizandoEstado = false;
+
+    #endregion
+
     #region 🔄 Ciclo de vida
 
     public override async Task AlAparecerAsync()
     {
         Titulo = "Ajustes";
 
-        await VerificarBiometriaAsync();
+        if (!_disponibilidadVerificada)
+        {
+            await VerificarBiometriaAsync();
+            _disponibilidadVerificada = true;
+        }
 
-        // Estado persistido
-        BiometriaHabilitada = servicioBiometrico.BiometriaHabilitada;
+        SincronizarEstadoBiometria();
 
-        // Versión app
         VersionApp = AppInfo.VersionString;
     }
 
@@ -55,6 +63,8 @@ public partial class ConfiguracionViewModel(IServicioBiometrico servicioBiometri
     [RelayCommand]
     private async Task ToggleBiometriaAsync(bool nuevoEstado)
     {
+        if (_sincronizandoEstado) return;
+
         if (nuevoEstado)
         {
             // Quiere habilitar → verificar que funcione con autenticación real
@@ -62,16 +72,25 @@ public partial class ConfiguracionViewModel(IServicioBiometrico servicioBiometri
                 titulo: "Confirmar biometría",
                 descripcion: "Verifica tu identidad para habilitar el acceso biométrico");
 
+            if (resultado.Cancelado)
+            {
+                // Revertir sin disparar otra vez el comando
+                _sincronizandoEstado = true;
+                BiometriaHabilitada = false;
+                _sincronizandoEstado = false;
+                return;
+            }
+
             if (resultado.Exitoso)
             {
                 servicioBiometrico.BiometriaHabilitada = true;
-                BiometriaHabilitada = true;
             }
             else
             {
-                // Revierte el switch si la autenticación falló
-                // Asignar false dispara OnPropertyChanged y el switch vuelve a Off
+                // Revertir el switch sin disparar autenticación
+                _sincronizandoEstado = true;
                 BiometriaHabilitada = false;
+                _sincronizandoEstado = false;
 
                 if (resultado.MensajeError is not null)
                     MostrarError(resultado.MensajeError);
@@ -81,7 +100,6 @@ public partial class ConfiguracionViewModel(IServicioBiometrico servicioBiometri
         {
             // Deshabilitar no requiere autenticación
             servicioBiometrico.BiometriaHabilitada = false;
-            BiometriaHabilitada = false;
         }
     }
 
@@ -118,6 +136,16 @@ public partial class ConfiguracionViewModel(IServicioBiometrico servicioBiometri
         DescripcionBiometria = DeviceInfo.Platform == DevicePlatform.iOS
             ? "Face ID"
             : "Huella digital";
+    }
+
+    /// <summary>
+    /// Sincroniza el estado del toggle con lo que estaba guardado en Preferences
+    /// </summary>
+    private void SincronizarEstadoBiometria()
+    {
+        _sincronizandoEstado = true;
+        BiometriaHabilitada = servicioBiometrico.BiometriaHabilitada;
+        _sincronizandoEstado = false;
     }
 
     #endregion
