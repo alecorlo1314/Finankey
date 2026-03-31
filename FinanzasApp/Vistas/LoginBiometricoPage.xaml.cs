@@ -28,8 +28,10 @@ public partial class LoginBiometricoPage : ContentPage
     {
         base.OnAppearing();
 
-        // Pequeña pausa para que la UI se renderice antes de mostrar el prompt
+        // Esperar un poco antes de verificar la biometría
         await Task.Delay(300);
+
+        // Si la biometría está habilitada, solicitar autenticación
         await SolicitarAutenticacionAsync();
     }
 
@@ -39,30 +41,49 @@ public partial class LoginBiometricoPage : ContentPage
     /// </summary>
     private async Task SolicitarAutenticacionAsync()
     {
+        //Paso 1: Realizar la autenticación de la biometría
         var resultado = await _servicioBiometrico.AutenticarAsync(
             titulo: "FinanzasApp",
             descripcion: "Confirma tu identidad para acceder");
 
+        //Paso 2: Validacion si el usuario cancela la autenticacion, no se le bloquea el acceso a la app
+        if (resultado.Cancelado) return;
+
+        //Paso 3: Validacion si la autenticación fue exitosa
         if (resultado.Exitoso)
         {
-            // Navega al shell principal reemplazando la pila de navegación
-            await Shell.Current.GoToAsync(nameof(AppShell));
+            await CerrarLoginYEntrarAsync();
+            return;
         }
-        else
+
+        //Autenticación fallida, incrementar el contador de intentos
+        _intentosFallidos++;
+
+        if (_intentosFallidos >= MaxIntentos)
         {
-            _intentosFallidos++;
+            await DisplayAlertAsync(
+                "Acceso bloqueado",
+                "Demasiados intentos fallidos. Por seguridad, la biometría ha sido desactivada temporalmente.",
+                "Continuar sin biometría");
 
-            if (_intentosFallidos >= MaxIntentos)
-            {
-                // Después de 3 fallos, permite entrar sin biometría
-                await DisplayAlertAsync(
-                    "Acceso bloqueado",
-                    "Demasiados intentos fallidos. Por seguridad, la biometría ha sido desactivada temporalmente.",
-                    "Continuar sin biometría");
-
-                await Shell.Current.GoToAsync(nameof(AppShell));
-            }
+            // Entra a la app sin biometría
+            await CerrarLoginYEntrarAsync();
         }
+    }
+
+    /// <summary>
+    /// Cierra el modal de login correctamente.
+    /// Como el AppShell ya está debajo como MainPage,
+    /// solo necesitamos cerrar el modal para revelar la app.
+    /// </summary>
+    private async Task CerrarLoginYEntrarAsync()
+    {
+        await MainThread.InvokeOnMainThreadAsync(async () =>
+        {
+            // PopModalAsync cierra el modal y revela el AppShell que está debajo
+            // animated: false evita un segundo flash durante la transición
+            await Navigation.PopModalAsync(animated: false);
+        });
     }
 
     private async void OnReintentar_Clicked(object sender, EventArgs e) =>

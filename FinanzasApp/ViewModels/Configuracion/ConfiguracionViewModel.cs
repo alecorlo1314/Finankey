@@ -6,98 +6,147 @@ namespace FinanzasApp.Presentacion.ViewModels.Configuracion;
 
 /// <summary>
 /// ViewModel de la pantalla de configuración.
-/// Gestiona preferencias del usuario incluyendo la configuración biométrica.
+/// Maneja biometría, versión de app y acciones generales.
 /// </summary>
 public partial class ConfiguracionViewModel(IServicioBiometrico servicioBiometrico) : ViewModelBase
 {
-    // ── Propiedades observables ───────────────────────────────────────────────
+    #region 🧾 Propiedades observables
 
     /// <summary>Indica si el dispositivo soporta biometría</summary>
     [ObservableProperty]
     private bool _biometriaDisponible;
 
-    /// <summary>Refleja y controla si la biometría está habilitada en la app</summary>
+    /// <summary>Indica si la biometría está habilitada</summary>
     [ObservableProperty]
     private bool _biometriaHabilitada;
 
-    /// <summary>Descripción del tipo de biometría disponible ("Face ID", "Huella digital")</summary>
+    /// <summary>Texto descriptivo del tipo de biometría</summary>
     [ObservableProperty]
     private string _descripcionBiometria = "Biometría";
 
+    /// <summary>Versión de la app</summary>
     [ObservableProperty]
     private string _versionApp = "1.0.0";
 
-    // ── Ciclo de vida ─────────────────────────────────────────────────────────
+    #endregion
+
+    #region 🔒 Estado interno
+    private bool _disponibilidadVerificada = false;
+    private bool _sincronizandoEstado = false;
+
+    #endregion
+
+    #region 🔄 Ciclo de vida
 
     public override async Task AlAparecerAsync()
     {
-        Titulo = "Configuración";
-        await VerificarBiometriaAsync();
+        Titulo = "Ajustes";
 
-        // Lee el estado actual persistido en Preferences
-        BiometriaHabilitada = servicioBiometrico.BiometriaHabilitada;
+        if (!_disponibilidadVerificada)
+        {
+            await VerificarBiometriaAsync();
+            _disponibilidadVerificada = true;
+        }
+
+        SincronizarEstadoBiometria();
+
         VersionApp = AppInfo.VersionString;
     }
 
-    // ── Comandos ──────────────────────────────────────────────────────────────
+    #endregion
 
+    #region 🎯 Comandos
     /// <summary>
-    /// Alterna el estado de la biometría.
-    /// Al habilitarla, solicita autenticación inmediata para confirmar que funciona.
+    /// Recibe bool directamente desde el converter.
+    /// El parámetro es el nuevo estado del switch.
     /// </summary>
     [RelayCommand]
-    private async Task ToggleBiometriaAsync()
+    private async Task ToggleBiometriaAsync(bool nuevoEstado)
     {
-        if (!BiometriaHabilitada)
-        {
-            // Intenta deshabilitar directamente
-            servicioBiometrico.BiometriaHabilitada = false;
-            return;
-        }
+        if (_sincronizandoEstado) return;
 
-        // Para habilitar, primero verificar que funciona con una prueba real
-        var resultado = await servicioBiometrico.AutenticarAsync(
-            titulo: "Confirmar biometría",
-            descripcion: "Verifica tu identidad para habilitar el acceso biométrico");
-
-        if (resultado.Exitoso)
+        if (nuevoEstado)
         {
-            servicioBiometrico.BiometriaHabilitada = true;
-            await MostrarAlertaAsync("Biometría habilitada",
-                "A partir de ahora podrás acceder con tu huella o Face ID.");
+            // Quiere habilitar → verificar que funcione con autenticación real
+            var resultado = await servicioBiometrico.AutenticarAsync(
+                titulo: "Confirmar biometría",
+                descripcion: "Verifica tu identidad para habilitar el acceso biométrico");
+
+            if (resultado.Cancelado)
+            {
+                // Revertir sin disparar otra vez el comando
+                _sincronizandoEstado = true;
+                BiometriaHabilitada = false;
+                _sincronizandoEstado = false;
+                return;
+            }
+
+            if (resultado.Exitoso)
+            {
+                servicioBiometrico.BiometriaHabilitada = true;
+            }
+            else
+            {
+                // Revertir el switch sin disparar autenticación
+                _sincronizandoEstado = true;
+                BiometriaHabilitada = false;
+                _sincronizandoEstado = false;
+
+                if (resultado.MensajeError is not null)
+                    MostrarError(resultado.MensajeError);
+            }
         }
         else
         {
-            // Revierte el toggle si la autenticación falló
-            BiometriaHabilitada = false;
-            if (resultado.MensajeError is not null)
-                MostrarError(resultado.MensajeError);
+            // Deshabilitar no requiere autenticación
+            servicioBiometrico.BiometriaHabilitada = false;
         }
     }
 
-    /// <summary>Limpia los datos locales tras confirmación (útil para cerrar sesión)</summary>
+    /// <summary>
+    /// Limpia datos locales de la app
+    /// </summary>
     [RelayCommand]
     private async Task LimpiarDatosAsync()
     {
         var confirmar = await ConfirmarAsync(
             "Limpiar datos",
-            "¿Deseas eliminar todos los datos locales? Esta acción no se puede deshacer.");
+            "¿Deseas eliminar todos los datos locales?");
 
         if (!confirmar) return;
 
-        // En producción aquí se llama al repositorio para limpiar la BD
-        await MostrarAlertaAsync("Datos eliminados", "Todos los datos locales han sido eliminados.");
+        // Aquí iría lógica real de limpieza (BD, cache, etc.)
+        await MostrarAlertaAsync(
+            "Datos eliminados",
+            "Todos los datos locales fueron eliminados.");
     }
 
-    // ── Métodos privados ──────────────────────────────────────────────────────
+    #endregion
 
+    #region 🔍 Métodos privados
+
+    /// <summary>
+    /// Verifica si el dispositivo soporta biometría
+    /// </summary>
     private async Task VerificarBiometriaAsync()
     {
         BiometriaDisponible = await servicioBiometrico.EsDisponibleAsync();
 
-        // Determina el nombre descriptivo según el dispositivo
+        // Define texto según plataforma
         DescripcionBiometria = DeviceInfo.Platform == DevicePlatform.iOS
-            ? "Face ID / Touch ID"
+            ? "Face ID"
             : "Huella digital";
     }
+
+    /// <summary>
+    /// Sincroniza el estado del toggle con lo que estaba guardado en Preferences
+    /// </summary>
+    private void SincronizarEstadoBiometria()
+    {
+        _sincronizandoEstado = true;
+        BiometriaHabilitada = servicioBiometrico.BiometriaHabilitada;
+        _sincronizandoEstado = false;
+    }
+
+    #endregion
 }

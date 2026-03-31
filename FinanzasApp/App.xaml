@@ -42,6 +42,7 @@
             <convertidores:TipoTarjetaConverter x:Key="TipoTarjetaConverter" />
             <convertidores:MayorQueCeroConverter x:Key="MayorQueCeroConverter" />
             <convertidores:BoolToStringConverter x:Key="BoolToStringConverter" />
+            <convertidores:SwitchEventArgsConverter x:Key="SwitchEventArgsConverter" />
 
         </ResourceDictionary>
     </Application.Resources>
