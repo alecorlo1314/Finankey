@@ -3,78 +3,113 @@
     x:Class="FinanzasApp.Presentacion.Vistas.LoginBiometricoPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    BackgroundColor="#FFFFFF"
+    BackgroundColor="#ffffff"
     Shell.NavBarIsVisible="False">
 
-    <VerticalStackLayout
-        Padding="48"
-        HorizontalOptions="Center"
-        Spacing="32"
-        VerticalOptions="Center">
+    <VerticalStackLayout Padding="32" HorizontalOptions="Center">
 
-        <!--  Logo / Ícono app  -->
-        <Border
-            BackgroundColor="#33FFFFFF"
-            HeightRequest="120"
-            HorizontalOptions="Center"
-            Stroke="Transparent"
-            StrokeShape="RoundRectangle 32"
-            WidthRequest="120">
-            <Label
-                FontSize="56"
-                HorizontalOptions="Center"
-                Text="💳"
-                VerticalOptions="Center" />
-        </Border>
+        <!--  ICONO APP Y TITULO  -->
+        <VerticalStackLayout Margin="0,45,0,0">
 
-        <!--  Nombre app  -->
-        <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
+            <!--  ICONO APP  -->
+            <Image
+                Aspect="AspectFill"
+                HeightRequest="80"
+                Source="icono_finankey_splash.svg"
+                WidthRequest="80" />
+
+            <!--  TITULO APP  -->
             <Label
-                FontAttributes="Bold"
-                FontSize="32"
+                FontFamily="PoppinsBold"
+                FontSize="30"
                 HorizontalOptions="Center"
                 Text="FinanzasApp"
-                TextColor="White" />
-            <Label
-                FontSize="15"
-                HorizontalOptions="Center"
-                Text="Tus finanzas, bajo control"
-                TextColor="#B0C4DE" />
+                TextColor="#2C2F32" />
+
         </VerticalStackLayout>
 
-        <!--  Ícono biométrico  -->
-        <Border
-            BackgroundColor="#22FFFFFF"
-            HeightRequest="96"
-            HorizontalOptions="Center"
-            Stroke="#44FFFFFF"
-            StrokeShape="RoundRectangle 48"
-            WidthRequest="96">
-            <Label
-                FontSize="44"
+        <!--  ICONO BIOMETRICO Y TITULOS  -->
+        <VerticalStackLayout Padding="0,45">
+
+            <!--  ICONO BIOMETRICO  -->
+            <Image
+                Aspect="AspectFit"
+                HeightRequest="192"
                 HorizontalOptions="Center"
-                Text="👆"
-                VerticalOptions="Center" />
-        </Border>
+                Source="icono_huella_splash.png"
+                VerticalOptions="Start"
+                WidthRequest="192" />
 
-        <!--  Mensaje  -->
-        <Label
-            FontSize="15"
-            HorizontalOptions="Center"
-            HorizontalTextAlignment="Center"
-            Text="Toca el sensor o usa Face ID para acceder"
-            TextColor="#B0C4DE" />
+            <!--  TITULO BIOMETRICO  -->
+            <Label
+                Margin="0,48,0,0"
+                FontFamily="PoppinsBold"
+                FontSize="24"
+                HorizontalOptions="Center"
+                Text="Confirmar identidad"
+                TextColor="#2C2F32" />
 
-        <!--  Botón reintentar  -->
-        <Button
-            x:Name="BtnReintentar"
-            Margin="0,16,0,0"
-            BackgroundColor="#33FFFFFF"
-            Clicked="OnReintentar_Clicked"
-            CornerRadius="14"
-            FontSize="16"
-            HeightRequest="50"
-            Text="Reintentar"
-            TextColor="White" />
+            <!--  SUBTITULO BIOMETRICO  -->
+            <Label
+                FontFamily="InterMedium"
+                FontSize="16"
+                HorizontalOptions="Center"
+                Text="Usa tu huella digital para acceder de forma segura"
+                TextColor="#595C5E"
+                VerticalOptions="Center"
+                WidthRequest="192" />
+        </VerticalStackLayout>
+
+        <!--  BOTONES  -->
+        <VerticalStackLayout>
+
+            <!--  BOTON REINTENTAR  -->
+            <Button
+                x:Name="BtnReintentar"
+                BackgroundColor="Transparent"
+                BorderColor="#FF006E"
+                BorderWidth="2"
+                Clicked="OnReintentar_Clicked"
+                CornerRadius="50"
+                FontFamily="InterSemiBold"
+                FontSize="18"
+                HeightRequest="64"
+                Text="Reintentar"
+                TextColor="#FF006E"
+                WidthRequest="348" />
+
+            <!--  BOTON INICIAR SIN BIOMETRIA  -->
+            <Button
+                x:Name="BtnInicioSinBiometria"
+                Margin="0,10"
+                BackgroundColor="Transparent"
+                Clicked="BtnInicioSinBiometria_Clicked"
+                CornerRadius="50"
+                FontFamily="InterSemiBold"
+                FontSize="14"
+                Text="CONTINUAR SIN BIOMETRÍA"
+                TextColor="#595C5E"
+                WidthRequest="250" />
+
+            <!--  INFORMACION  -->
+            <HorizontalStackLayout
+                Margin="0,20"
+                HorizontalOptions="Center"
+                Spacing="8"
+                VerticalOptions="End">
+                <Image
+                    Aspect="AspectFit"
+                    HeightRequest="24"
+                    Source="icono_check_splash.svg"
+                    WidthRequest="24" />
+                <Label
+                    FontFamily="PoppinsSemiBold"
+                    FontSize="12"
+                    Text="Encriptación de nivel bancario"
+                    TextColor="#595C5E" />
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+
     </VerticalStackLayout>
 </ContentPage>
