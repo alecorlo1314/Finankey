@@ -51,7 +51,9 @@ public class ServicioBiometricoMaui : IServicioBiometrico
             //Paso 3: Si no es disponible, mostrar alerta y retornar resultado de error
             if (!disponibility)
             {
-                return new ResultadoBiometrico(Exitoso: false, MensajeError: "No se pudo autenticar");
+                return new ResultadoBiometrico(
+                    Exitoso: false,
+                    MensajeError: "Biometría no disponible en este dispositivo");
             }
 
             //Paso 4: Intentar autenticar al usuario con biometría
