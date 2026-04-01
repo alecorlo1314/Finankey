@@ -88,4 +88,9 @@ public partial class LoginBiometricoPage : ContentPage
 
     private async void OnReintentar_Clicked(object sender, EventArgs e) =>
         await SolicitarAutenticacionAsync();
+
+    private async void BtnInicioSinBiometria_Clicked(object sender, EventArgs e)
+    {
+        await CerrarLoginYEntrarAsync();
+    }
 }

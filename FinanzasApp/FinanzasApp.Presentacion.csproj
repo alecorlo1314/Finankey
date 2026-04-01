@@ -66,6 +66,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\icono_finankey_splash.svg" />
 	  <MauiImage Remove="Resources\Images\icono_ver_detalle_tarjeta.svg" />
 	</ItemGroup>
 
