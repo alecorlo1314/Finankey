@@ -97,8 +97,8 @@
                             <LinearItemsLayout ItemSpacing="12" Orientation="Vertical" />
                         </CollectionView.ItemsLayout>
 
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="dto:TarjetaResumenDt>
+                        <CollectionView.ItemTemplate
+                            <DataTemplate x:DataType="dto:TarjetaResumenDto">
 
                                 <SwipeView>
 
