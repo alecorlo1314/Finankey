@@ -112,15 +112,16 @@
                     IsGrouped="True"
                     ItemsSource="{Binding TransaccionesAgrupadas}">
 
-                    <!--  ENCABEZADO DE GRUPO  ────────────────────────────────────  -->
+                    <!--  ENCABEZADO DE GRUPO -->
                     <CollectionView.GroupHeaderTemplate>
                         <DataTemplate x:DataType="vm:GrupoTransacciones">
+
                             <Grid
                                 Margin="16,0"
                                 Padding="4,16,4,8"
                                 ColumnDefinitions="Auto,*,Auto">
 
-                                <!--  Etiqueta del grupo: "Hoy", "Ayer", etc.  -->
+                                <!--  ETIQUETA DEL GRUPO: "Hoy", "Ayer", etc.  -->
                                 <Label
                                     Grid.Column="0"
                                     FontFamily="InterBold"
