@@ -32,10 +32,6 @@ public partial class TarjetasViewModel(IMediator mediador) : ViewModelBase
     [ObservableProperty]
     private bool _sinTarjetas;
 
-    // Agrupación por fecha
-    [ObservableProperty]
-    private ObservableCollection<GrupoTarjetas> _tarjetasAgrupadas;
-
     #endregion
 
     #region 🔄 Ciclo de vida
@@ -123,47 +119,10 @@ public partial class TarjetasViewModel(IMediator mediador) : ViewModelBase
     #region 🔍 Filtros
     private void AplicarFiltros()
     {
-        // Paso 1: convertir a lista para aplicar LINQ
-        var filtradas = Tarjetas.AsEnumerable();
-
-        // Paso 2: Orden descendente por fecha
-        var lista = filtradas
-            .OrderByDescending(t => t.AnioVencimiento)
-            .ToList();
-
-        //Paso 3: Lista plana para totales
-        Tarjetas = new ObservableCollection<TarjetaResumenDto>(lista);
-        SinTarjetas = !lista.Any();
-
-        // Agrupación por fecha
-        TarjetasAgrupadas = GenerarGrupos(lista);
+        // Aquí podrías aplicar filtros adicionales a la lista de tarjetas
+        // Por ejemplo, mostrar solo tarjetas de crédito o débito
+        // O filtrar por nombre usando una barra de búsqueda (no implementada aquí)
     }
-
-    private ObservableCollection<GrupoTarjetas> GenerarGrupos(List<TarjetaResumenDto> lista)
-    {
-        var grupos = new ObservableCollection<GrupoTarjetas>();
-
-        var porTipo = lista
-            .GroupBy(t => t.Tipo)
-            .OrderBy(g => g.Key);
-
-        foreach (var grupo in porTipo)
-        {
-            var items = grupo.ToList();
-            var tipo = grupo.Key.ToString() == "Credito" ? "CREDITO" : "DEBITO";
-            var etiqueta = $"{items.Count} {(items.Count == 1 ? "tarjeta" : "tarjetas")}";
-
-            grupos.Add(new GrupoTarjetas(
-                tipoTarjeta: tipo,
-                etiqueta: etiqueta,
-                subtitulo: etiqueta,
-                tarjetas: items
-            ));
-        }
-
-        return grupos;
-    }
-    #endregion
 
     #region 🧭 Navegación
 

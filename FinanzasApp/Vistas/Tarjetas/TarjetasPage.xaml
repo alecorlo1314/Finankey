@@ -86,133 +86,191 @@
                         IsVisible="{Binding EstaCargando}"
                         Color="#FF006E" />
 
-                    <!--  Lista de tarjetas  -->
-                    <VerticalStackLayout
-                        BindableLayout.ItemsSource="{Binding Tarjetas}"
+                    <!--  COLLECTION DE TARJETAS  -->
+                    <CollectionView
+                        Background="Transparent"
+                        BackgroundColor="Transparent"
+                        IsGrouped="True"
                         IsVisible="{Binding SinTarjetas, Converter={StaticResource InvertirBoolConverter}}"
-                        Spacing="0">
-                        <BindableLayout.ItemTemplate>
+                        ItemsSource="{Binding TarjetasAgrupadas}"
+                        SelectionMode="None">
+
+                        <!--  DISPOSICION DE LOS ELEMENTOS  -->
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="8" Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
+
+                        <!--  ENCABEZADO DE GRUPO  -->
+                        <CollectionView.GroupHeaderTemplate>
+                            <DataTemplate x:DataType="vm:GrupoTarjetas">
+                                <Grid
+                                    Margin="16,0"
+                                    Padding="8,0,8,8"
+                                    ColumnDefinitions="Auto,*">
+                                    <Label
+                                        Grid.Column="0"
+                                        FontFamily="PoppinsBold"
+                                        FontSize="12"
+                                        Text="{Binding TipoTarjeta}"
+                                        TextColor="#595C5E"
+                                        VerticalOptions="Center" />
+
+                                    <Border
+                                        Grid.Column="1"
+                                        BackgroundColor="#DFE3E7"
+                                        HeightRequest="20"
+                                        HorizontalOptions="End"
+                                        StrokeShape="RoundRectangle 20"
+                                        VerticalOptions="Center"
+                                        WidthRequest="75">
+                                        <Label
+                                            FontFamily="InterSemiBold"
+                                            FontSize="10"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding Etiqueta}"
+                                            TextColor="#595C5E"
+                                            VerticalOptions="Center" />
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+
+                        </CollectionView.GroupHeaderTemplate>
+
+                        <!--  LISTA DE TARJETAS  -->
+                        <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="dto:TarjetaResumenDto">
 
-                                <SwipeView Margin="0,0,0,12">
+                                <Grid Padding="6">
 
-                                    <!--  Acción eliminar  -->
-                                    <SwipeView.RightItems>
-                                        <SwipeItems Mode="Reveal">
-                                            <SwipeItem
-                                                BackgroundColor="#FF006E"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TarjetasViewModel}}, Path=MostrarConfirmacionEliminarCommand}"
-                                                CommandParameter="{Binding .}"
-                                                Text="Eliminar" />
-                                        </SwipeItems>
-                                    </SwipeView.RightItems>
+                                    <SwipeView>
 
-                                    <!--  Acción editar  -->
-                                    <SwipeView.LeftItems>
-                                        <SwipeItems Mode="Reveal">
-                                            <SwipeItem
-                                                BackgroundColor="#3A86FF"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TarjetasViewModel}}, Path=EditarTarjetaCommand}"
-                                                CommandParameter="{Binding .}"
-                                                Text="Editar" />
-                                        </SwipeItems>
-                                    </SwipeView.LeftItems>
+                                        <!--  Acción eliminar  -->
+                                        <SwipeView.RightItems>
+                                            <SwipeItems Mode="Reveal">
+                                                <SwipeItem
+                                                    BackgroundColor="#FF006E"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TarjetasViewModel}}, Path=MostrarConfirmacionEliminarCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    Text="Eliminar" />
+                                            </SwipeItems>
+                                        </SwipeView.RightItems>
 
-                                    <!--  Tarjeta  -->
-                                    <Border
-                                        Padding="0"
-                                        HeightRequest="80"
-                                        Stroke="#18FFFFFF"
-                                        StrokeShape="RoundRectangle 32"
-                                        StrokeThickness="1"
-                                        WidthRequest="370">
-                                        <Border.Background>
-                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                <GradientStop Offset="0.0" Color="#FAFBFC" />
-                                                <GradientStop Offset="1.0" Color="#F4F6F9" />
-                                            </LinearGradientBrush>
-                                        </Border.Background>
-                                        <Border.Shadow>
-                                            <Shadow
-                                                Brush="#22000000"
-                                                Opacity="0.35"
-                                                Radius="8"
-                                                Offset="0,3" />
-                                        </Border.Shadow>
+                                        <!--  Acción editar  -->
+                                        <SwipeView.LeftItems>
+                                            <SwipeItems Mode="Reveal">
+                                                <SwipeItem
+                                                    BackgroundColor="#3A86FF"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TarjetasViewModel}}, Path=EditarTarjetaCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    Text="Editar" />
+                                            </SwipeItems>
+                                        </SwipeView.LeftItems>
 
-                                        <!--  Contenido de la tarjeta  -->
-                                        <Grid
-                                            Padding="0,12,12,12"
-                                            ColumnDefinitions="Auto,*,Auto,Auto"
-                                            ColumnSpacing="12"
-                                            WidthRequest="370">
+                                        <!--  Tarjeta  -->
+                                        <Border
+                                            Padding="0"
+                                            HeightRequest="80"
+                                            Stroke="#18FFFFFF"
+                                            StrokeShape="RoundRectangle 32"
+                                            StrokeThickness="1">
 
-                                            <!--  Barra de color  -->
-                                            <Border
-                                                Grid.Column="0"
-                                                BackgroundColor="{Binding ColorHex}"
-                                                HeightRequest="80"
-                                                WidthRequest="8" />
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Offset="0.0" Color="#FAFBFC" />
+                                                    <GradientStop Offset="1.0" Color="#F4F6F9" />
+                                                </LinearGradientBrush>
+                                            </Border.Background>
 
-                                            <!--  Nombre y banco  -->
-                                            <VerticalStackLayout
-                                                Grid.Column="1"
-                                                Spacing="4"
-                                                VerticalOptions="Center">
-                                                <Label
-                                                    FontFamily="InterSemiBold"
-                                                    FontSize="14"
-                                                    Text="{Binding Nombre}"
-                                                    TextColor="#1A2B3C" />
-                                                <HorizontalStackLayout Spacing="6">
+                                            <Border.Shadow>
+                                                <Shadow
+                                                    Brush="#22000000"
+                                                    Opacity="0.35"
+                                                    Radius="8"
+                                                    Offset="0,3" />
+                                            </Border.Shadow>
+
+                                            <!--  Contenido  -->
+                                            <Grid
+                                                Padding="0,12,12,12"
+                                                ColumnDefinitions="Auto,*,Auto,Auto"
+                                                ColumnSpacing="12">
+
+                                                <!--  Barra de color  -->
+                                                <Border
+                                                    Grid.Column="0"
+                                                    BackgroundColor="{Binding ColorHex}"
+                                                    HeightRequest="80"
+                                                    WidthRequest="8" />
+
+                                                <!--  Nombre  -->
+                                                <VerticalStackLayout
+                                                    Grid.Column="1"
+                                                    Spacing="4"
+                                                    VerticalOptions="Center">
+
                                                     <Label
-                                                        FontFamily="InterMedium"
-                                                        FontSize="12"
-                                                        Text="{Binding Banco}"
-                                                        TextColor="#595C5E" />
+                                                        FontFamily="InterSemiBold"
+                                                        FontSize="14"
+                                                        Text="{Binding Nombre}"
+                                                        TextColor="#1A2B3C" />
+
+                                                    <HorizontalStackLayout Spacing="6">
+                                                        <Label
+                                                            FontFamily="InterMedium"
+                                                            FontSize="12"
+                                                            Text="{Binding Banco}"
+                                                            TextColor="#595C5E" />
+
+                                                        <Label
+                                                            FontFamily="InterMedium"
+                                                            FontSize="12"
+                                                            Text="{Binding UltimosDigitos, StringFormat='**** {0}'}"
+                                                            TextColor="#595C5E" />
+                                                    </HorizontalStackLayout>
+                                                </VerticalStackLayout>
+
+                                                <!--  Saldo  -->
+                                                <VerticalStackLayout
+                                                    Grid.Column="2"
+                                                    Spacing="4"
+                                                    VerticalOptions="Center">
+
                                                     <Label
-                                                        FontFamily="InterMedium"
-                                                        FontSize="12"
-                                                        Text="{Binding UltimosDigitos, StringFormat='**** {0}'}"
-                                                        TextColor="#595C5E" />
-                                                </HorizontalStackLayout>
-                                            </VerticalStackLayout>
+                                                        FontFamily="PoppinsBold"
+                                                        FontSize="18"
+                                                        Text="{Binding SaldoActual, StringFormat='₡ {0:N2}'}"
+                                                        TextColor="#1A2B3C" />
 
-                                            <!--  Saldo y progreso  -->
-                                            <VerticalStackLayout
-                                                Grid.Column="2"
-                                                Spacing="4"
-                                                VerticalOptions="Center">
-                                                <Label
-                                                    FontFamily="PoppinsBold"
-                                                    FontSize="18"
-                                                    Text="{Binding SaldoActual, StringFormat='₡ {0:N2}'}"
-                                                    TextColor="#1A2B3C" />
-                                                <ProgressBar
-                                                    HeightRequest="6"
-                                                    IsVisible="{Binding LimiteCredito, Converter={StaticResource NullToBoolConverter}}"
-                                                    Progress="{Binding PorcentajeUso, Converter={StaticResource PorcentajeProgressConverter}}"
-                                                    ProgressColor="#FF006E" />
-                                            </VerticalStackLayout>
+                                                    <ProgressBar
+                                                        HeightRequest="6"
+                                                        IsVisible="{Binding LimiteCredito, Converter={StaticResource NullToBoolConverter}}"
+                                                        Progress="{Binding PorcentajeUso, Converter={StaticResource PorcentajeProgressConverter}}"
+                                                        ProgressColor="#FF006E" />
+                                                </VerticalStackLayout>
 
-                                            <!--  Icono detalle  -->
-                                            <Image
-                                                Grid.Column="3"
-                                                Aspect="AspectFit"
-                                                HeightRequest="20"
-                                                Source="icono_ver_detalle_tarjeta.png"
-                                                WidthRequest="20" />
-                                        </Grid>
+                                                <!--  Icono  -->
+                                                <Image
+                                                    Grid.Column="3"
+                                                    Aspect="AspectFit"
+                                                    HeightRequest="20"
+                                                    Source="icono_ver_detalle_tarjeta.png"
+                                                    WidthRequest="20" />
+                                            </Grid>
 
-                                        <!--  Tap para ver detalle  -->
-                                        <Border.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TarjetasViewModel}}, Path=VerDetalleTarjetaCommand}" CommandParameter="{Binding .}" />
-                                        </Border.GestureRecognizers>
-                                    </Border>
-                                </SwipeView>
+                                            <!--  Tap  -->
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TarjetasViewModel}}, Path=VerDetalleTarjetaCommand}" CommandParameter="{Binding .}" />
+                                            </Border.GestureRecognizers>
+
+                                        </Border>
+
+                                    </SwipeView>
+
+                                </Grid>
+
                             </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </VerticalStackLayout>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
 
                     <!--  Espacio al final  -->
                     <BoxView HeightRequest="80" Color="Transparent" />
