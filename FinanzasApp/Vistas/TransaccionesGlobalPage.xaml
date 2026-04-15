@@ -112,7 +112,7 @@
                     IsGrouped="True"
                     ItemsSource="{Binding TransaccionesAgrupadas}">
 
-                    <!--  ENCABEZADO DE GRUPO -->
+                    <!--  ENCABEZADO DE GRUPO  -->
                     <CollectionView.GroupHeaderTemplate>
                         <DataTemplate x:DataType="vm:GrupoTransacciones">
 
